@@ -362,9 +362,7 @@
   "available": true,
   "bear_case": "Every dollar of AI capex (roughly $180 billion) is a dollar the market once counted as free cash flow, and the search franchise faces a slow erosion from choice screens, Apple renegotiations, EU data sharing, and users starting queries in chat products instead of Google. The adtech remedies ruling could force an AdX divestiture. Cloud growth at 82% cannot last and will decelerate into a lower multiple.",
   "killers": [
-   "search revenue growth under 5% for two quarters",
-   "an adtech ruling that breaks up the ad stack",
-   "or Cloud operating margin reversing"
+   "search revenue growth under 5% for two quarters, an adtech ruling that breaks up the ad stack, or Cloud operating margin reversing"
   ],
   "price_trigger": 260.0,
   "price_trigger_note": null,

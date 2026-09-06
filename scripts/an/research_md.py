@@ -137,11 +137,17 @@ class ResearchNote:
 
     @property
     def thesis_killers(self) -> List[str]:
-        """The named, falsifiable conditions. Split on sentence boundaries, keep the specific ones."""
+        """The named, falsifiable conditions, as whole sentences.
+
+        Split on sentence boundaries only. An earlier version also split on commas,
+        which turned "A, B, or C" into three fragments and printed "or buybacks
+        pausing" as if it were a standalone condition. A falsifier that does not
+        parse as a sentence is not one anybody can check.
+        """
         txt = self.section("Key risks and thesis killers")
         m = re.search(r"[Tt]hesis killers?[:\s]+(.*?)(?:\s*[Pp]rice trigger|$)", txt, re.S)
         body = m.group(1) if m else txt
-        parts = re.split(r",\s*(?=[a-z])|\.\s+|;\s*", body)
+        parts = re.split(r"(?<=[a-z0-9%)])\.\s+|;\s+", body)
         return [p.strip(" .") for p in parts if len(p.strip()) > 12]
 
 

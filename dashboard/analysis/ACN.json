@@ -354,8 +354,7 @@
   "available": true,
   "bear_case": "AI does the work that Accenture bills for. Clients are pausing large programs while they figure out what to build in house. Bookings lead revenue by a year, and bookings are negative.",
   "killers": [
-   "Bookings growth staying negative for another quarter",
-   "or another guidance cut"
+   "Bookings growth staying negative for another quarter, or another guidance cut"
   ],
   "price_trigger": null,
   "price_trigger_note": "No price trigger is named in the note. Two of the sixteen notes say so outright; the rest name one. An absent trigger is not a trigger of zero.",

@@ -288,3 +288,36 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 .card .vals span { display: flex; flex-direction: column; gap: 2px; }
 .card .vals em { font-style: normal; color: var(--ink-3); opacity: 0.7; }
 .card .vals span:last-child { color: var(--ink); }
+
+/* ---- positioning: candidate memo ----------------------------------------
+ * Each candidate is one article with three bands: who it is, why it ranks where
+ * it does, and the two things criteria.md insists on, the falsifier and the size.
+ * The falsifier band is not smaller than the reasoning band, for the same reason
+ * the call and the falsifier share a class on the analyse page. */
+.cands { border-top: 1px solid var(--rule); }
+.cand { border-bottom: 1px solid var(--rule); padding: 22px 0 24px; }
+.cand .ch { display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+            flex-wrap: wrap; margin-bottom: 14px; }
+.cand .cn { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.cand .cn .r { font-size: 12px; color: var(--ink-3); }
+.cand .cn .tk { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.cand .cn a { text-decoration: none; }
+.cand .cn a:hover .tk { border-bottom: 1px solid var(--ink); }
+.cand .cn .co { font-size: 14px; color: var(--ink-2); }
+.cand .cb { display: grid; grid-template-columns: 1fr 300px; gap: 36px; align-items: start; }
+@media (max-width: 900px) { .cand .cb { grid-template-columns: 1fr; gap: 18px; } }
+.cand .cb .prose { font-size: 14px; }
+.cand .cs { display: grid; gap: 0; }
+.cand .cs .kv { display: flex; justify-content: space-between; gap: 14px; font-family: var(--mono);
+                font-size: 12px; color: var(--ink-3); padding: 6px 0; border-bottom: 1px solid var(--rule-soft); }
+.cand .cs .kv b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.cand .cf { display: grid; grid-template-columns: 1fr 300px; gap: 36px; margin-top: 20px;
+            padding-top: 16px; border-top: 1px solid var(--rule-soft); align-items: start; }
+@media (max-width: 900px) { .cand .cf { grid-template-columns: 1fr; gap: 18px; } }
+.cand .lab { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 8px; }
+.cand ul.kill { list-style: none; padding: 0; margin: 0; }
+.cand ul.kill li { font-size: 14px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; max-width: 78ch; }
+.cand ul.kill li::before { content: ""; position: absolute; left: 0; top: 11px;
+                           width: 8px; height: 1px; background: var(--down); }
+.cand .amt { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cand .cfz .m { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 7px; max-width: 44ch; }

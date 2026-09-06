@@ -362,9 +362,7 @@
   "available": true,
   "bear_case": "This is a company spending all of its cash flow, and then some, on AI infrastructure with no disclosed return timeline, while the core ad business faces the same AI attention shift as everyone else. The 2026 pattern of raising capex every quarter has no end date.",
   "killers": [
-   "capex guidance rising again in Q3",
-   "free cash flow negative for a full quarter",
-   "ad revenue growth under 10%"
+   "capex guidance rising again in Q3, free cash flow negative for a full quarter, ad revenue growth under 10%"
   ],
   "price_trigger": 450.0,
   "price_trigger_note": null,

@@ -362,8 +362,7 @@
   "available": true,
   "bear_case": "Microsoft is spending roughly $190 billion on capex, up 61%, and depreciation will weigh on reported earnings for years. Forty five percent of the $625 billion commercial backlog is tied to OpenAI, and OpenAI investment losses ($3.1 billion in one quarter) flow through Microsoft's income statement. If AI demand slows or hyperscaler pricing gets competitive, revenue decelerates while costs keep growing. Copilot has had branding and interoperability complaints and could lose seat share to cheaper agents. A 2026 bear target of $340 assumes the multiple stays compressed while free cash flow stays messy.",
   "killers": [
-   "Azure growth under 30% while capex keeps rising, OpenAI restructuring that reduces committed Azure spend",
-   "or free cash flow margin under 20% for a full year"
+   "Azure growth under 30% while capex keeps rising, OpenAI restructuring that reduces committed Azure spend, or free cash flow margin under 20% for a full year"
   ],
   "price_trigger": 400.0,
   "price_trigger_note": null,

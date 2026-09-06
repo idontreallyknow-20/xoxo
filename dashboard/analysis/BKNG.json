@@ -362,9 +362,7 @@
   "available": true,
   "bear_case": "AI agents will talk directly to hotel systems and a 15% commission will not survive that. Growth is already slowing to mid single digits in room nights, the Middle East conflict is hurting travel demand, and Google keeps pushing its own hotel booking. If the take rate compresses by even two points, earnings fall 15%.",
   "killers": [
-   "two consecutive quarters of negative room nights",
-   "take rate falling more than 100 basis points year over year",
-   "or buybacks pausing"
+   "two consecutive quarters of negative room nights, take rate falling more than 100 basis points year over year, or buybacks pausing"
   ],
   "price_trigger": 150.0,
   "price_trigger_note": null,

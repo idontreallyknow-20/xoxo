@@ -112,7 +112,7 @@ Consequences that shape everything below:
       sector-dependent (margins, ROIC) and cross-sectionally where it is not (revisions, drawdown).
       Verify: test asserts a high-margin software name does not automatically outrank a good
       industrial on the margin component
-- [ ] **D3** Score the 150 and write `dashboard/scorecard.json` with per-component contributions so the
+- [x] **D3** Score the 150 and write `dashboard/scorecard.json` with per-component contributions so the
       page can show *why*, not just the number.
       Verify: `python scripts/build_scorecard.py && python -m pytest -q tests/test_scorecard.py`
 
@@ -137,15 +137,15 @@ Consequences that shape everything below:
 
 ## F. Positioning memo
 
-- [ ] **F1** `scripts/an/positioning.py` — given holdings (may be empty), cash, and the scorecard,
+- [x] **F1** `scripts/an/positioning.py` — given holdings (may be empty), cash, and the scorecard,
       produce a ranked candidate list with per-name reasoning, size band, buy zone, what would prove
       it wrong, and concentration/sector checks against `criteria.md` rules.
       Verify: `python -m pytest -q tests/test_positioning.py` (respects 12% position cap, 30% sector
       cap, 30% cyclical cap, 20-30% cash, $25k/month deployment cap)
-- [ ] **F2** Language guard: no "guaranteed", "will", "certain", "risk-free", no price predictions
+- [x] **F2** Language guard: no "guaranteed", "will", "certain", "risk-free", no price predictions
       stated as fact. Every claim carries a confidence and a falsifier.
       Verify: `python -m pytest -q tests/test_language_guard.py` runs over every generated string
-- [ ] **F3** Personal holdings never committed to this public repo. `portfolio/` stays gitignored;
+- [x] **F3** Personal holdings never committed to this public repo. `portfolio/` stays gitignored;
       the memo reads it at build time and the committed JSON contains only non-personal fields
       unless the user opts in.
       Verify: `python -m pytest -q tests/test_privacy.py` + `git check-ignore -q portfolio`
@@ -161,12 +161,12 @@ Consequences that shape everything below:
       same `desk-*` localStorage keys.
       Verify: headless Chromium loads `/analyze/KLAC`, zero console errors, `document.title` contains
       KLAC, and >= 8 sections rendered
-- [ ] **P3** `dashboard/analyze/index.html` — ticker index with search.
+- [x] **P3** `dashboard/analyze/index.html` — ticker index with search.
       Verify: headless load, all analysed tickers present as links
-- [ ] **P4** `dashboard/positioning/index.html` + `assets/positioning.js` — scorecard table, backtest
+- [x] **P4** `dashboard/positioning/index.html` + `assets/positioning.js` — scorecard table, backtest
       results with sample sizes and CIs, where-it-fails section, ranked memo.
       Verify: headless load, zero console errors, sample-size and CI text present
-- [ ] **P5** Two nav links in `dashboard/index.html` (`Analyze`, `Positioning`) and nothing else.
+- [x] **P5** Two nav links in `dashboard/index.html` (`Analyze`, `Positioning`) and nothing else.
       Verify: `git diff --stat dashboard/index.html` shows a single-digit line change, and the six
       existing views still render in headless Chromium
 - [x] **P6** Charts: metric trend sparklines/bars in the existing SVG idiom (no chart library, no CDN).
@@ -174,7 +174,7 @@ Consequences that shape everything below:
 
 ## Q. Quality gates
 
-- [ ] **Q1** Headless Chromium screenshot of every new page in `night` and `paper` themes.
+- [x] **Q1** Headless Chromium screenshot of every new page in `night` and `paper` themes.
       Verify: `python scripts/shoot.py` writes 6 PNGs, each > 20 KB
 - [ ] **Q2** Contrast check of new components against WCAG AA for body text.
       Verify: `python -m pytest -q tests/test_contrast.py`

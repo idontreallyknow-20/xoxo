@@ -107,6 +107,14 @@ def main() -> int:
                     if errors:
                         status = "CONSOLE ERRORS"
                         failures.append((route, theme, errors[:4]))
+                    elif route == "/index.html":
+                        # The original dashboard renders from data.js, which
+                        # build_dashboard.py writes and which needs network access and a
+                        # portfolio file. In a fresh clone data.js is empty, so a thin
+                        # page here is expected and is not a regression in the new pages.
+                        # It is still loaded on every run, because a console error in the
+                        # page the new nav links point back to would be a real break.
+                        status = "thin (data.js not built)" if text < 3000 else "ok"
                     elif size < 12_000 or text < 400:
                         status = "SUSPICIOUSLY EMPTY"
                         failures.append((route, theme, [f"{size} bytes, {text} chars of text"]))
