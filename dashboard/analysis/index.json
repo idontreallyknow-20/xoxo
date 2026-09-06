@@ -10,7 +10,7 @@
    "industry": "Consumer Electronics",
    "depth": "screen",
    "price": 328.21,
-   "score": 51.7,
+   "score": 55.0,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 34.403095,
@@ -26,7 +26,7 @@
    "industry": "Beverages - Brewers",
    "depth": "screen",
    "price": 3.04,
-   "score": 18.8,
+   "score": 22.1,
    "coverage": 0.76,
    "buckets": [],
    "forward_pe": 14.234209,
@@ -42,7 +42,7 @@
    "industry": "Travel Services",
    "depth": "screen",
    "price": 185.25,
-   "score": 79.2,
+   "score": 81.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -60,7 +60,7 @@
    "industry": "Semiconductor Equipment & Materials",
    "depth": "screen",
    "price": 110.37,
-   "score": 15.4,
+   "score": 12.8,
    "coverage": 1.0,
    "buckets": [
     "cyclical turn"
@@ -78,7 +78,7 @@
    "industry": "Information Technology Services",
    "depth": "deep",
    "price": 193.12,
-   "score": 46.3,
+   "score": 48.3,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -114,7 +114,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 283.53,
-   "score": 55.0,
+   "score": 56.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -132,7 +132,7 @@
    "industry": "Software - Application",
    "depth": "deep",
    "price": 237.52,
-   "score": 73.2,
+   "score": 72.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -150,7 +150,7 @@
    "industry": "Engineering & Construction",
    "depth": "screen",
    "price": 411.77,
-   "score": 13.4,
+   "score": 10.1,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 25.374794,
@@ -166,7 +166,7 @@
    "industry": "Auto Parts",
    "depth": "screen",
    "price": 128.44,
-   "score": 9.4,
+   "score": 11.4,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 11.368736,
@@ -182,7 +182,7 @@
    "industry": "Semiconductor Equipment & Materials",
    "depth": "deep",
    "price": 435.91,
-   "score": 75.2,
+   "score": 71.8,
    "coverage": 1.0,
    "buckets": [
     "cyclical turn"
@@ -200,7 +200,7 @@
    "industry": "Specialty Industrial Machinery",
    "depth": "screen",
    "price": 234.2,
-   "score": 81.9,
+   "score": 82.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -218,7 +218,7 @@
    "industry": "Computer Hardware",
    "depth": "screen",
    "price": 191.44,
-   "score": 97.3,
+   "score": 96.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -236,7 +236,7 @@
    "industry": "Specialty Industrial Machinery",
    "depth": "screen",
    "price": 60.53,
-   "score": 26.8,
+   "score": 28.9,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -255,7 +255,7 @@
    "industry": "Advertising Agencies",
    "depth": "screen",
    "price": 313.58,
-   "score": 80.5,
+   "score": 79.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -307,7 +307,7 @@
    "industry": "Travel Services",
    "depth": "deep",
    "price": 195.13,
-   "score": 96.6,
+   "score": 97.3,
    "coverage": 0.96,
    "buckets": [
     "compounder"
@@ -325,7 +325,7 @@
    "industry": "Scientific & Technical Instruments",
    "depth": "screen",
    "price": 136.02,
-   "score": 8.1,
+   "score": 9.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -343,7 +343,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 304.875,
-   "score": 70.5,
+   "score": 68.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -361,7 +361,7 @@
    "industry": "Medical Care Facilities",
    "depth": "screen",
    "price": 524.45,
-   "score": 69.1,
+   "score": 69.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -379,7 +379,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 137.41,
-   "score": 56.4,
+   "score": 55.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -397,7 +397,7 @@
    "industry": "Internet Retail",
    "depth": "screen",
    "price": 23.96,
-   "score": 36.9,
+   "score": 33.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -415,7 +415,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 37.57,
-   "score": 63.8,
+   "score": 65.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -433,7 +433,7 @@
    "industry": "Medical Distribution",
    "depth": "screen",
    "price": 337.22,
-   "score": 45.0,
+   "score": 40.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -451,7 +451,7 @@
    "industry": "Biotechnology",
    "depth": "screen",
    "price": 112.8,
-   "score": 85.9,
+   "score": 74.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -469,7 +469,7 @@
    "industry": "Specialty Business Services",
    "depth": "deep",
    "price": 33.58,
-   "score": 49.0,
+   "score": 51.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -505,7 +505,7 @@
    "industry": "Specialty Business Services",
    "depth": "screen",
    "price": 201.05,
-   "score": 47.0,
+   "score": 46.3,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -523,7 +523,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 137.12,
-   "score": 61.1,
+   "score": 57.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -541,7 +541,7 @@
    "industry": "Education & Training Services",
    "depth": "screen",
    "price": 127.64,
-   "score": 38.3,
+   "score": 35.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -559,7 +559,7 @@
    "industry": "Aerospace & Defense",
    "depth": "screen",
    "price": 568.72,
-   "score": 18.1,
+   "score": 16.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -577,7 +577,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 35.7,
-   "score": 32.9,
+   "score": 36.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -595,7 +595,7 @@
    "industry": "Footwear & Accessories",
    "depth": "screen",
    "price": 84.5,
-   "score": 76.5,
+   "score": 78.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -613,7 +613,7 @@
    "industry": "Specialty Business Services",
    "depth": "screen",
    "price": 61.92,
-   "score": 50.3,
+   "score": 49.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -631,7 +631,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 15.78,
-   "score": 84.6,
+   "score": 85.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -649,7 +649,7 @@
    "industry": "Discount Stores",
    "depth": "screen",
    "price": 131.04,
-   "score": 47.7,
+   "score": 47.0,
    "coverage": 0.79,
    "buckets": [
     "compounder"
@@ -667,7 +667,7 @@
    "industry": "Health Information Services",
    "depth": "screen",
    "price": 27.1,
-   "score": 68.5,
+   "score": 69.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -685,7 +685,7 @@
    "industry": "Gold",
    "depth": "screen",
    "price": 61.68,
-   "score": 35.6,
+   "score": 36.2,
    "coverage": 0.76,
    "buckets": [],
    "forward_pe": 10.554495,
@@ -701,7 +701,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 218.04,
-   "score": 6.0,
+   "score": 8.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -719,7 +719,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 80.75,
-   "score": 55.7,
+   "score": 52.3,
    "coverage": 0.97,
    "buckets": [
     "compounder"
@@ -737,7 +737,7 @@
    "industry": "Medical Devices",
    "depth": "screen",
    "price": 89.71,
-   "score": 57.7,
+   "score": 60.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -755,7 +755,7 @@
    "industry": "Internet Retail",
    "depth": "screen",
    "price": 105.86,
-   "score": 16.1,
+   "score": 21.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -773,7 +773,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 73.28,
-   "score": 16.8,
+   "score": 17.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -791,7 +791,7 @@
    "industry": "Engineering & Construction",
    "depth": "screen",
    "price": 741.32,
-   "score": 90.6,
+   "score": 91.9,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 20.172527,
@@ -807,7 +807,7 @@
    "industry": "Medical Devices",
    "depth": "screen",
    "price": 89.78,
-   "score": 21.5,
+   "score": 26.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -843,7 +843,7 @@
    "industry": "Information Technology Services",
    "depth": "screen",
    "price": 37.32,
-   "score": 65.8,
+   "score": 63.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -861,7 +861,7 @@
    "industry": "Integrated Freight & Logistics",
    "depth": "screen",
    "price": 187.13,
-   "score": 93.3,
+   "score": 94.0,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 23.604876,
@@ -877,7 +877,7 @@
    "industry": "Travel Services",
    "depth": "screen",
    "price": 303.14,
-   "score": 87.2,
+   "score": 85.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -895,7 +895,7 @@
    "industry": "Engineering & Construction",
    "depth": "screen",
    "price": 70.05,
-   "score": 79.9,
+   "score": 81.9,
    "coverage": 0.96,
    "buckets": [
     "compounder",
@@ -914,7 +914,7 @@
    "industry": "Industrial Distribution",
    "depth": "screen",
    "price": 49.23,
-   "score": 40.3,
+   "score": 43.0,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 35.156498,
@@ -930,7 +930,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 392.15,
-   "score": 41.6,
+   "score": 38.3,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -948,7 +948,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 1118.93,
-   "score": 72.5,
+   "score": 73.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -966,7 +966,7 @@
    "industry": "Engineering & Construction",
    "depth": "screen",
    "price": 1580.19,
-   "score": 77.2,
+   "score": 75.2,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 26.25839,
@@ -982,7 +982,7 @@
    "industry": "Electronic Components",
    "depth": "screen",
    "price": 395.0,
-   "score": 59.1,
+   "score": 54.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1016,7 +1016,7 @@
    "industry": "Information Technology Services",
    "depth": "screen",
    "price": 38.08,
-   "score": 28.9,
+   "score": 27.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1034,7 +1034,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 103.63,
-   "score": 73.8,
+   "score": 76.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1052,7 +1052,7 @@
    "industry": "Specialty Industrial Machinery",
    "depth": "screen",
    "price": 77.88,
-   "score": 53.0,
+   "score": 57.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1070,7 +1070,7 @@
    "industry": "Information Technology Services",
    "depth": "screen",
    "price": 74.84,
-   "score": 24.2,
+   "score": 25.5,
    "coverage": 0.76,
    "buckets": [],
    "forward_pe": 10.598299,
@@ -1086,7 +1086,7 @@
    "industry": "Auto Parts",
    "depth": "screen",
    "price": 22.84,
-   "score": 40.9,
+   "score": 45.6,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -1105,7 +1105,7 @@
    "industry": "Internet Content & Information",
    "depth": "deep",
    "price": 342.48,
-   "score": 34.2,
+   "score": 34.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1123,7 +1123,7 @@
    "industry": "Scientific & Technical Instruments",
    "depth": "screen",
    "price": 277.18,
-   "score": 36.2,
+   "score": 38.9,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 25.18664,
@@ -1139,7 +1139,7 @@
    "industry": "Industrial Distribution",
    "depth": "screen",
    "price": 1312.84,
-   "score": 39.6,
+   "score": 44.3,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 25.719725,
@@ -1155,7 +1155,7 @@
    "industry": "Aerospace & Defense",
    "depth": "screen",
    "price": 325.7,
-   "score": 74.5,
+   "score": 77.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1173,7 +1173,7 @@
    "industry": "Personal Services",
    "depth": "screen",
    "price": 51.1,
-   "score": 69.8,
+   "score": 67.1,
    "coverage": 0.81,
    "buckets": [
     "compounder"
@@ -1209,7 +1209,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 335.91,
-   "score": 19.5,
+   "score": 16.8,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 28.988998,
@@ -1225,7 +1225,7 @@
    "industry": "Diagnostics & Research",
    "depth": "deep",
    "price": 529.29,
-   "score": 94.0,
+   "score": 93.3,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1243,7 +1243,7 @@
    "industry": "Lodging",
    "depth": "screen",
    "price": 160.77,
-   "score": 34.9,
+   "score": 19.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1261,7 +1261,7 @@
    "industry": "Biotechnology",
    "depth": "screen",
    "price": 128.0,
-   "score": 64.4,
+   "score": 63.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1279,7 +1279,7 @@
    "industry": "Information Technology Services",
    "depth": "screen",
    "price": 12.09,
-   "score": 30.2,
+   "score": 22.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1297,7 +1297,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 344.3,
-   "score": 6.7,
+   "score": 7.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1333,7 +1333,7 @@
    "industry": "Medical Instruments & Supplies",
    "depth": "deep",
    "price": 369.83,
-   "score": 63.1,
+   "score": 65.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1351,7 +1351,7 @@
    "industry": "Information Technology Services",
    "depth": "screen",
    "price": 195.46,
-   "score": 91.9,
+   "score": 92.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1387,7 +1387,7 @@
    "industry": "Drug Manufacturers - General",
    "depth": "screen",
    "price": 278.43,
-   "score": 12.1,
+   "score": 14.1,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 22.622791,
@@ -1422,7 +1422,7 @@
    "industry": "Education & Training Services",
    "depth": "screen",
    "price": 35.95,
-   "score": 8.7,
+   "score": 4.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1458,7 +1458,7 @@
    "industry": "Computer Hardware",
    "depth": "screen",
    "price": 101.71,
-   "score": 12.8,
+   "score": 15.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1476,7 +1476,7 @@
    "industry": "Education & Training Services",
    "depth": "screen",
    "price": 152.45,
-   "score": 81.2,
+   "score": 83.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1494,7 +1494,7 @@
    "industry": "Semiconductor Equipment & Materials",
    "depth": "deep",
    "price": 292.66,
-   "score": 82.6,
+   "score": 77.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1512,7 +1512,7 @@
    "industry": "Gold",
    "depth": "screen",
    "price": 101.58,
-   "score": 54.4,
+   "score": 53.0,
    "coverage": 0.76,
    "buckets": [],
    "forward_pe": 16.787308,
@@ -1528,7 +1528,7 @@
    "industry": "Apparel Retail",
    "depth": "screen",
    "price": 121.77,
-   "score": 25.5,
+   "score": 28.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1564,7 +1564,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 259.63,
-   "score": 28.2,
+   "score": 29.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1582,7 +1582,7 @@
    "industry": "Medical Distribution",
    "depth": "screen",
    "price": 921.38,
-   "score": 78.5,
+   "score": 80.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1600,7 +1600,7 @@
    "industry": "Resorts & Casinos",
    "depth": "screen",
    "price": 120.59,
-   "score": 37.6,
+   "score": 39.6,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 17.489485,
@@ -1634,7 +1634,7 @@
    "industry": "Internet Retail",
    "depth": "screen",
    "price": 1991.06,
-   "score": 45.6,
+   "score": 42.3,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1652,7 +1652,7 @@
    "industry": "Internet Content & Information",
    "depth": "deep",
    "price": 610.68,
-   "score": 22.1,
+   "score": 26.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1670,7 +1670,7 @@
    "industry": "Metal Fabrication",
    "depth": "screen",
    "price": 62.96,
-   "score": 14.8,
+   "score": 18.1,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 14.374429,
@@ -1686,7 +1686,7 @@
    "industry": "Beverages - Non-Alcoholic",
    "depth": "screen",
    "price": 44.08,
-   "score": 53.7,
+   "score": 58.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1704,7 +1704,7 @@
    "industry": "Tobacco",
    "depth": "screen",
    "price": 69.49,
-   "score": 65.1,
+   "score": 70.5,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1722,7 +1722,7 @@
    "industry": "Semiconductors",
    "depth": "screen",
    "price": 1213.65,
-   "score": 92.6,
+   "score": 90.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1740,7 +1740,7 @@
    "industry": "Software - Infrastructure",
    "depth": "deep",
    "price": 510.12,
-   "score": 86.6,
+   "score": 87.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1758,7 +1758,7 @@
    "industry": "Diagnostics & Research",
    "depth": "screen",
    "price": 1356.23,
-   "score": 85.2,
+   "score": 86.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1776,7 +1776,7 @@
    "industry": "Drug Manufacturers - Specialty & Generic",
    "depth": "screen",
    "price": 158.35,
-   "score": 26.2,
+   "score": 24.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1794,7 +1794,7 @@
    "industry": "Entertainment",
    "depth": "screen",
    "price": 82.67,
-   "score": 7.4,
+   "score": 2.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1812,7 +1812,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 108.31,
-   "score": 24.8,
+   "score": 6.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1848,7 +1848,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 185.38,
-   "score": 20.1,
+   "score": 18.8,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 17.169426,
@@ -1882,7 +1882,7 @@
    "industry": "Semiconductor Equipment & Materials",
    "depth": "screen",
    "price": 352.7,
-   "score": 60.4,
+   "score": 59.1,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -1917,7 +1917,7 @@
    "industry": "Residential Construction",
    "depth": "deep",
    "price": 6373.95,
-   "score": 11.4,
+   "score": 14.8,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -1936,7 +1936,7 @@
    "industry": "Drug Manufacturers - General",
    "depth": "screen",
    "price": 163.09,
-   "score": 29.5,
+   "score": 30.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1954,7 +1954,7 @@
    "industry": "Publishing",
    "depth": "screen",
    "price": 67.06,
-   "score": 2.0,
+   "score": 2.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1972,7 +1972,7 @@
    "industry": "Trucking",
    "depth": "screen",
    "price": 185.75,
-   "score": 59.7,
+   "score": 62.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1990,7 +1990,7 @@
    "industry": "Auto Parts",
    "depth": "screen",
    "price": 87.38,
-   "score": 67.1,
+   "score": 67.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2026,7 +2026,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 125.08,
-   "score": 22.8,
+   "score": 13.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2044,7 +2044,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 154.43,
-   "score": 43.0,
+   "score": 43.6,
    "coverage": 0.79,
    "buckets": [
     "compounder"
@@ -2062,7 +2062,7 @@
    "industry": "Internet Retail",
    "depth": "screen",
    "price": 81.63,
-   "score": 67.8,
+   "score": 66.4,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 6.587733,
@@ -2078,7 +2078,7 @@
    "industry": "Healthcare Plans",
    "depth": "screen",
    "price": 26.61,
-   "score": 83.2,
+   "score": 84.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2096,7 +2096,7 @@
    "industry": "Education & Training Services",
    "depth": "screen",
    "price": 33.19,
-   "score": 4.7,
+   "score": 6.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2132,7 +2132,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 174.35,
-   "score": 83.9,
+   "score": 83.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2150,7 +2150,7 @@
    "industry": "Auto Manufacturers",
    "depth": "screen",
    "price": 417.93,
-   "score": 48.3,
+   "score": 47.7,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 32.90906,
@@ -2184,7 +2184,7 @@
    "industry": "Specialty Business Services",
    "depth": "screen",
    "price": 36.65,
-   "score": 51.0,
+   "score": 50.3,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 16.96461,
@@ -2200,7 +2200,7 @@
    "industry": "Semiconductors",
    "depth": "screen",
    "price": 84.34,
-   "score": 57.0,
+   "score": 61.7,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -2219,7 +2219,7 @@
    "industry": "Medical Instruments & Supplies",
    "depth": "screen",
    "price": 229.19,
-   "score": 58.4,
+   "score": 59.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2237,7 +2237,7 @@
    "industry": "Personal Services",
    "depth": "screen",
    "price": 35.71,
-   "score": 20.8,
+   "score": 24.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2255,7 +2255,7 @@
    "industry": "Apparel Retail",
    "depth": "screen",
    "price": 231.67,
-   "score": 33.6,
+   "score": 37.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2273,7 +2273,7 @@
    "industry": "Airlines",
    "depth": "screen",
    "price": 54.7,
-   "score": 10.1,
+   "score": 12.1,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 11.566927,
@@ -2289,7 +2289,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 217.03,
-   "score": 17.4,
+   "score": 20.8,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 22.434614,
@@ -2305,7 +2305,7 @@
    "industry": "Grocery Stores",
    "depth": "screen",
    "price": 79.13,
-   "score": 32.2,
+   "score": 34.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2323,7 +2323,7 @@
    "industry": "Footwear & Accessories",
    "depth": "screen",
    "price": 42.3,
-   "score": 27.5,
+   "score": 30.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2341,7 +2341,7 @@
    "industry": "Tools & Accessories",
    "depth": "screen",
    "price": 384.19,
-   "score": 14.1,
+   "score": 23.5,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 18.00539,
@@ -2357,7 +2357,7 @@
    "industry": "Engineering & Construction",
    "depth": "screen",
    "price": 460.03,
-   "score": 38.9,
+   "score": 32.2,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -2376,7 +2376,7 @@
    "industry": "Software - Infrastructure",
    "depth": "screen",
    "price": 28.79,
-   "score": 62.4,
+   "score": 61.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2394,7 +2394,7 @@
    "industry": "Semiconductor Equipment & Materials",
    "depth": "screen",
    "price": 338.59,
-   "score": 87.9,
+   "score": 87.2,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2412,7 +2412,7 @@
    "industry": "Oil & Gas E&P",
    "depth": "screen",
    "price": 366.5,
-   "score": 66.4,
+   "score": 51.7,
    "coverage": 1.0,
    "buckets": [
     "compounder",
@@ -2431,7 +2431,7 @@
    "industry": "Specialty Business Services",
    "depth": "screen",
    "price": 111.76,
-   "score": 44.3,
+   "score": 40.3,
    "coverage": 0.97,
    "buckets": [
     "compounder"
@@ -2449,7 +2449,7 @@
    "industry": "Semiconductors",
    "depth": "screen",
    "price": 417.01,
-   "score": 77.9,
+   "score": 79.2,
    "coverage": 0.79,
    "buckets": [],
    "forward_pe": 19.075375,
@@ -2465,7 +2465,7 @@
    "industry": "Advertising Agencies",
    "depth": "screen",
    "price": 15.09,
-   "score": 4.0,
+   "score": 5.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2483,7 +2483,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 189.06,
-   "score": 30.9,
+   "score": 32.9,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2501,7 +2501,7 @@
    "industry": "Communication Equipment",
    "depth": "screen",
    "price": 595.96,
-   "score": 61.7,
+   "score": 64.4,
    "coverage": 0.81,
    "buckets": [
     "cyclical turn"
@@ -2537,7 +2537,7 @@
    "industry": "Drug Manufacturers - Specialty & Generic",
    "depth": "screen",
    "price": 490.24,
-   "score": 2.7,
+   "score": 4.0,
    "coverage": 1.0,
    "buckets": [],
    "forward_pe": 16.322878,
@@ -2553,7 +2553,7 @@
    "industry": "Biotechnology",
    "depth": "screen",
    "price": 557.96,
-   "score": 42.3,
+   "score": 41.6,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2571,7 +2571,7 @@
    "industry": "Diagnostics & Research",
    "depth": "screen",
    "price": 413.56,
-   "score": 23.5,
+   "score": 20.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2589,7 +2589,7 @@
    "industry": "Oil & Gas Equipment & Services",
    "depth": "screen",
    "price": 71.64,
-   "score": 52.3,
+   "score": 53.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2607,7 +2607,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 110.28,
-   "score": 43.6,
+   "score": 45.0,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2625,7 +2625,7 @@
    "industry": "Software - Application",
    "depth": "screen",
    "price": 44.59,
-   "score": 71.8,
+   "score": 73.8,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2643,7 +2643,7 @@
    "industry": "Drug Manufacturers - Specialty & Generic",
    "depth": "screen",
    "price": 76.29,
-   "score": 5.4,
+   "score": 8.7,
    "coverage": 1.0,
    "buckets": [
     "compounder"

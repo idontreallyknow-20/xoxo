@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 27.40751,
     "own_median": null,
-    "vs_median": null
+    "vs_median": null,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 2661.014,
     "own_median": null,
-    "vs_median": null
+    "vs_median": null,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": false,
    "n_year_ends": 0,
-   "caveat": "statements in EUR, price in USD, own-history multiples skipped"
+   "caveat": "statements in EUR, price in USD, own-history multiples skipped",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.15883315224898253,
@@ -265,8 +272,8 @@
     "coverage": 0.79,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": 0.2043,
@@ -275,8 +282,8 @@
      "growth": 0.0378,
      "margin_stability": -0.0001,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": 0.44,
      "revisions_30d": 0.0402,
      "revision_breadth": 0.0405,
@@ -312,8 +319,8 @@
     "coverage": 0.8091,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": 0.2043,
@@ -322,8 +329,8 @@
      "growth": 0.0378,
      "margin_stability": -0.0001,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": 0.44,
      "revisions_30d": 0.0402,
      "revision_breadth": 0.0405,
@@ -360,8 +367,8 @@
     "coverage": 0.8091,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": 0.2043,
@@ -370,8 +377,8 @@
      "growth": 0.0378,
      "margin_stability": -0.0001,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": 0.44,
      "revisions_30d": 0.0402,
      "revision_breadth": 0.0405,

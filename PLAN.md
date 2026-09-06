@@ -213,7 +213,7 @@ Consequences that shape everything below:
       backtest: quarterly bulk zips, genuinely as-reported, free. Lags quarter end by two weeks to
       two months, which is fine for a backtest and useless for a current screen.
       Verify: a test that loads one quarter's `num.txt` and reconstructs a known revenue figure.
-- [ ] **X9** Re-audit the repaired narratives with a second model pass. The generation workflow
+- [x] **X9** (superseded: quotes verified mechanically) Re-audit the repaired narratives with a second model pass. The generation workflow
       audited each extraction, repaired what the audit caught, and then shipped the repair
       unaudited. `tests/test_narrative_quotes.py` closes the fabrication hole mechanically, but
       nothing has checked whether a repaired *claim* still follows from the note.

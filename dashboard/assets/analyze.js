@@ -181,16 +181,21 @@
           <div class="d">This company does not report the line.</div></div>`;
       }
       const isRate = t.unit === "percent";
-      const delta = isRate ? pts(t.change) : pct(t.change_pct, 1, true);
       const good = t.reads_well;
       const cls = good === true ? "up" : good === false ? "down" : "muted";
+      // A series that crosses zero has no meaningful percentage change: net debt
+      // going from $84bn of net cash to $16bn of net debt is not "-118.8%". Show the
+      // move in the metric's own units instead.
       const rate = isRate
         ? `${pts(t.change)} over ${t.periods} intervals`
-        : (has(t.cagr) ? `${pct(t.cagr, 1, true)} a year, ${t.periods} intervals` : `${delta} over ${t.periods} intervals`);
+        : has(t.cagr) ? `${pct(t.cagr, 1, true)} a year, ${t.periods} intervals`
+        : has(t.change_pct) ? `${pct(t.change_pct, 1, true)} over ${t.periods} intervals`
+        : `${byUnit(t.first, t.unit)} to ${byUnit(t.last, t.unit)}`;
       return `<div class="card">
         <div class="k">${esc(t.label)}</div>
         <div class="v">${esc(byUnit(t.last, t.unit))}</div>
         <div class="d"><span class="${cls}">${esc(rate)}</span></div>
+        ${t.span_note ? `<div class="d muted" style="font-size:10.5px">${esc(t.span_note)}</div>` : ""}
         ${D.spark(t.values, t.periods_labels, { zero: t.unit === "currency_bn" })}
         ${D.sparkValues(t.values, t.periods_labels, t.unit)}
         <div class="d muted" style="font-size:10.5px;margin-top:5px">${
@@ -224,7 +229,10 @@
       <td class="n">${esc(mult(m.value))}</td>
       <td class="n">${has(m.own_median) ? esc(mult(m.own_median)) : '<span class="muted">n/a</span>'}</td>
       <td class="n">${has(m.vs_median) ? esc(pct(m.vs_median, 0, true)) : '<span class="muted">n/a</span>'}</td>
-    </tr>`).join("");
+      <td class="${m.like_for_like ? "muted" : "down"}" style="font-size:11px">${esc(m.basis || "")}</td>
+    </tr>`).join("")
+      + v.multiples.filter((m) => m.basis_note && !m.like_for_like).map((m) =>
+          `<tr><td colspan="5" class="muted" style="font-size:12px;padding-top:2px">${esc(m.basis_note)}</td></tr>`).join("");
 
     // The multiple against its own four-year range. Never coloured: cheaper is not
     // better, and a green number would settle that question before the reader has.
@@ -293,10 +301,12 @@
          <div class="note">Source: ${esc(v.written_view.source)}.</div>` : "";
 
     return `<div class="scroll"><table>
-      <thead><tr><th>multiple</th><th class="n">now</th><th class="n">own median</th><th class="n">vs median</th></tr></thead>
+      <thead><tr><th>multiple</th><th class="n">now</th><th class="n">own median</th>
+        <th class="n">vs median</th><th>basis</th></tr></thead>
       <tbody>${mrows}</tbody></table></div>
       ${peRail}
       <div class="note${v.own_history.usable ? "" : " warn"}">${esc(v.own_history.caveat)}</div>
+      ${v.own_history.basis_warning ? `<div class="note warn">${esc(v.own_history.basis_warning)}</div>` : ""}
       ${peerBlock}
       <div class="ledger" style="margin-top:24px">
         <div class="row"><div class="k">off the 52-week high</div>
@@ -307,6 +317,11 @@
           <div class="m">closing basis</div></div>
         <div class="row gap"><div class="k"><span class="mk open"></span>the two are not comparable</div>
           <div class="v">${esc(dd.caveat)}</div><div class="m">method</div></div>
+        ${v.price_basis ? `<div class="row gap"><div class="k"><span class="mk open"></span>which price these use</div>
+          <div class="v">${esc(v.price_basis.note)} The page header shows
+            ${esc(money(v.price_basis.displayed))}; the figures above were computed from
+            ${esc(money(v.price_basis.used_for_derived_figures))}.</div>
+          <div class="m">provenance</div></div>` : ""}
         <div class="row"><div class="k">next-year EPS estimate</div>
           <div class="v">${esc(num(est.eps_fy1, 2))}, moved ${esc(pct(est.fy1_change_90d, 1, true))} in 90 days
             and ${esc(pct(est.fy1_change_30d, 1, true))} in 30</div>

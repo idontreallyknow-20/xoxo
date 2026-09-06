@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 13.796962,
     "own_median": 32.48691868245571,
-    "vs_median": -0.5753071525539621
+    "vs_median": -0.5753071525539621,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 15.272,
     "own_median": 22.52089637197085,
-    "vs_median": -0.3218742385846023
+    "vs_median": -0.3218742385846023,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.07210967253729339,
@@ -266,8 +273,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.4528,
-    "percentile": 84.6,
+    "score": 0.4458,
+    "percentile": 85.2,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -278,8 +285,8 @@
      "growth": 0.2202,
      "margin_stability": -0.16,
      "balance": 0.0494,
-     "value_pe": 0.1297,
-     "value_ev": 0.0686,
+     "value_ev": 0.1115,
+     "value_pe": 0.0798,
      "revisions_90d": 0.0825,
      "revisions_30d": 0.0261,
      "revision_breadth": 0.0405,
@@ -296,8 +303,8 @@
       "value": -0.16
      },
      {
-      "key": "value_pe",
-      "value": 0.1297
+      "key": "value_ev",
+      "value": 0.1115
      },
      {
       "key": "short_interest",
@@ -310,8 +317,8 @@
     ]
    },
    "with_momentum": {
-    "score": 0.5377,
-    "percentile": 87.2,
+    "score": 0.5307,
+    "percentile": 87.9,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -322,8 +329,8 @@
      "growth": 0.2202,
      "margin_stability": -0.16,
      "balance": 0.0494,
-     "value_pe": 0.1297,
-     "value_ev": 0.0686,
+     "value_ev": 0.1115,
+     "value_pe": 0.0798,
      "revisions_90d": 0.0825,
      "revisions_30d": 0.0261,
      "revision_breadth": 0.0405,
@@ -341,8 +348,8 @@
       "value": -0.16
      },
      {
-      "key": "value_pe",
-      "value": 0.1297
+      "key": "value_ev",
+      "value": 0.1115
      },
      {
       "key": "momentum_52w",
@@ -355,8 +362,8 @@
     ]
    },
    "with_reversal": {
-    "score": 0.6753,
-    "percentile": 90.6,
+    "score": 0.6683,
+    "percentile": 91.9,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -367,8 +374,8 @@
      "growth": 0.2202,
      "margin_stability": -0.16,
      "balance": 0.0494,
-     "value_pe": 0.1297,
-     "value_ev": 0.0686,
+     "value_ev": 0.1115,
+     "value_pe": 0.0798,
      "revisions_90d": 0.0825,
      "revisions_30d": 0.0261,
      "revision_breadth": 0.0405,
@@ -390,8 +397,8 @@
       "value": -0.16
      },
      {
-      "key": "value_pe",
-      "value": 0.1297
+      "key": "value_ev",
+      "value": 0.1115
      },
      {
       "key": "short_interest",

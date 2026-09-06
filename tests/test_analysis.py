@@ -103,14 +103,62 @@ def test_what_changed_admits_when_it_needs_a_reader(records):
 
 def test_valuation_carries_both_caveats(records):
     k = records["KLAC"]
-    assert "four-point median" in k["valuation"]["own_history"]["caveat"]
+    assert "4-point median" in k["valuation"]["own_history"]["caveat"]
     assert "not on the same basis" in k["valuation"]["drawdown"]["caveat"]
 
 
-def test_the_twelve_currency_mismatched_names_explain_themselves(records):
+def test_the_median_point_count_is_the_real_one_not_a_constant(records):
+    """Ten names have a three-point median and two have a two-point one. Asserting
+    "four" on all of them is a small lie repeated 150 times."""
+    counts = {}
+    for t, r in records.items():
+        oh = r["valuation"].get("own_history") or {}
+        n = oh.get("n_year_ends")
+        if n:
+            counts[n] = counts.get(n, 0) + 1
+            if oh["usable"]:
+                assert f"{n}-point median" in oh["caveat"], t
+    assert set(counts) >= {2, 3, 4}, counts
+
+
+def test_the_page_and_the_score_agree_on_what_counts_as_history(records):
+    """Two names had a "usable" comparison on the page that the score had already
+    refused as too thin. Both now use three points as the floor."""
+    from an import local, score
+
+    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    s = score.score_universe(recs)
+    for r in recs:
+        usable = r.valuation.has_own_history
+        scored = "value_pe" not in s[r.ticker].missing
+        assert usable == scored, f"{r.ticker}: page says usable={usable}, score says {scored}"
+
+
+def test_the_forward_versus_trailing_mismatch_is_stated(records):
+    """The screen compares a forward P/E against a trailing median, which reads cheap
+    by construction. 85% of names print negative on that column against 51% on
+    EV/EBITDA where both sides are trailing."""
+    k = records["KLAC"]["valuation"]
+    pe = next(m for m in k["multiples"] if m["key"] == "forward_pe")
+    ev = next(m for m in k["multiples"] if m["key"] == "ev_ebitda")
+    assert pe["like_for_like"] is False
+    assert ev["like_for_like"] is True
+    assert "not the same multiple" in pe["basis_note"]
+    assert "cheap by construction" in pe["basis_note"]
+    assert "85%" in k["own_history"]["basis_warning"]
+
+
+def test_the_score_weights_the_like_for_like_comparison_higher(records):
+    from an import score
+
+    w = {r["key"]: r["raw_weight"] for r in score.weights_table()}
+    assert w["value_ev"] > w["value_pe"], "the trailing-vs-trailing comparison should lead"
+
+
+def test_names_without_a_usable_own_history_explain_themselves(records):
     priced = local.load_price_screen()
     no_hist = [t for t, v in priced.items() if not v.has_own_history]
-    assert len(no_hist) == 12
+    assert len(no_hist) == 14  # 12 currency mismatches, 2 with only two year ends
     for t in no_hist:
         oh = records[t]["valuation"]["own_history"]
         assert oh["usable"] is False

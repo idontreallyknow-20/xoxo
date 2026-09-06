@@ -115,3 +115,55 @@ def test_to_dict_is_serialisable(klac):
     for t in M.series_from_rows(klac.financials, "research note", as_of="2026-09-04"):
         blob = json.dumps(t.to_dict())
         assert "span_label" in blob and "source" in blob
+
+
+def test_no_percentage_change_for_a_series_that_crosses_zero():
+    """Alphabet went from $84bn of net cash to $16bn of net debt, a hundred-billion
+    deterioration. last/first - 1 on a negative base reported that as "-118.8%",
+    which is wrong in sign and meaningless in magnitude."""
+    t = M.Trend("net_debt", "Net debt", "currency_bn", [-84.08, -5.0, 2.0, 15.84],
+                ["FY2022", "FY2023", "FY2024", "FY2025"], "s", higher_is_better=False)
+    assert t.crosses_zero is True
+    assert t.change_pct is None
+    assert t.cagr is None
+    assert t.change == pytest.approx(99.92)
+
+
+def test_no_percentage_change_from_a_negative_base_even_without_a_crossing():
+    """Copart's net debt went from -1.26 to -4.69: more net cash, unambiguously good.
+    The ratio printed +272.2% under a "lower is better" label."""
+    t = M.Trend("net_debt", "Net debt", "currency_bn", [-1.26, -2.0, -3.0, -4.69],
+                ["FY2023", "FY2024", "FY2025", "FY2026"], "s", higher_is_better=False)
+    assert t.crosses_zero is False
+    assert t.change_pct is None
+    assert t.change == pytest.approx(-3.43)
+
+
+def test_a_normal_positive_series_still_gets_a_percentage():
+    t = M.Trend("revenue", "Revenue", "currency_bn", [10.0, 11.0, 12.0, 13.0],
+                ["FY2023", "FY2024", "FY2025", "FY2026"], "s")
+    assert t.change_pct == pytest.approx(0.3)
+    assert t.crosses_zero is False
+
+
+def test_periods_counts_elapsed_years_not_surviving_points():
+    """Four points with a year missing spans four years, not three. Dividing by
+    three annualises the growth over the wrong window, which is the exact error the
+    module exists to prevent."""
+    gapped = M.Trend("revenue", "Revenue", "currency_bn", [10.0, None, 12.0, 13.31],
+                     ["FY2022", "FY2023", "FY2024", "FY2025"], "s")
+    assert len(gapped.observed) == 3
+    assert gapped.periods == 3        # FY2022 to FY2025
+    assert gapped.has_gap is True
+    assert "missing from the middle" in gapped.span_note
+    assert gapped.cagr == pytest.approx((13.31 / 10.0) ** (1 / 3) - 1)
+
+    full = M.Trend("revenue", "Revenue", "currency_bn", [10.0, 11.0, 12.0, 13.31],
+                   ["FY2022", "FY2023", "FY2024", "FY2025"], "s")
+    assert full.periods == 3 and full.has_gap is False and full.span_note is None
+
+
+def test_unparseable_period_labels_fall_back_to_counting_points():
+    t = M.Trend("x", "X", "currency_bn", [1.0, 2.0, 3.0], ["a", "b", "c"], "s")
+    assert t.periods == 2
+    assert t.has_gap is False

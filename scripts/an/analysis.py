@@ -106,12 +106,22 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
         return {"available": False,
                 "why": "This name did not reach the price screen, which only runs on the quality top 150."}
 
+    n_hist = v.n_hist_years or 0
     multiples = [
         {"key": "forward_pe", "label": "Forward P/E", "value": v.forward_pe,
-         "own_median": v.median_pe_hist, "vs_median": v.pe_vs_median},
+         "own_median": v.median_pe_hist, "vs_median": v.pe_vs_median,
+         "basis": "forward vs trailing", "like_for_like": False,
+         "basis_note": (
+             "The two sides are not the same multiple. The left is a forward P/E, the Street's "
+             "estimate of next year's earnings. The median on the right is trailing: the price at "
+             "each fiscal year end divided by that year's reported diluted EPS. Where earnings are "
+             "expected to grow, forward is mechanically lower than trailing, so this column reads "
+             "cheap by construction."
+         )},
         {"key": "ev_ebitda", "label": "EV/EBITDA", "value": v.ev_ebitda,
-         "own_median": v.median_ev_ebitda_hist, "vs_median": v.ev_vs_median},
-
+         "own_median": v.median_ev_ebitda_hist, "vs_median": v.ev_vs_median,
+         "basis": "trailing vs trailing", "like_for_like": True,
+         "basis_note": "Both sides are trailing, so this comparison is like for like."},
     ]
     block: Dict[str, Any] = {
         "available": True,
@@ -120,11 +130,21 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
             "usable": v.has_own_history,
             "n_year_ends": v.n_hist_years,
             "caveat": (
-                "The median is taken at four fiscal year ends, so it is a four-point median. That is "
-                "a thin basis for 'cheap against its own history' and it says nothing about whether "
-                "the old multiple was deserved."
+                f"The median is taken at {n_hist} fiscal year end{'s' if n_hist != 1 else ''}, so it "
+                f"is a {n_hist}-point median. That is a thin basis for 'cheap against its own "
+                "history' and it says nothing about whether the old multiple was deserved."
                 if v.has_own_history else
                 (v.multiples_note or "No usable own-history multiples for this name.")
+            ),
+            "basis_warning": (
+                "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% "
+                "print a negative 'vs median' on forward P/E with a median of -29%, against 51% and "
+                "-0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, "
+                "not 138 companies being cheap. It is also correlated with growth: faster-growing "
+                "names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 "
+                "for EV/EBITDA), because their forward earnings are further above their trailing "
+                "ones. The score weights the like-for-like EV/EBITDA comparison more heavily for "
+                "exactly this reason."
             ),
         },
         "drawdown": {

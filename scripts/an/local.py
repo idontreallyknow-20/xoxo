@@ -169,9 +169,19 @@ class Valuation:
     bucket_compounder: bool = False
     bucket_cyclical_turn: bool = False
 
+    MIN_HISTORY_POINTS = 3
+    """Fewer than three fiscal year ends is not a median, it is two numbers.
+
+    The page and the score used to disagree here: the page called two points a
+    usable own-history comparison while ``score.py`` treated anything under three as
+    missing. Two names in the committed data sat in that gap, and their pages
+    asserted a comparison the score had already refused.
+    """
+
     @property
     def has_own_history(self) -> bool:
-        return bool(self.n_hist_years) and self.n_hist_years >= 2 and self.pe_vs_median is not None
+        return (bool(self.n_hist_years) and self.n_hist_years >= self.MIN_HISTORY_POINTS
+                and self.pe_vs_median is not None)
 
     @property
     def buckets(self) -> List[str]:

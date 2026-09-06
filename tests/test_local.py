@@ -69,12 +69,28 @@ def test_missing_values_are_none_not_zero():
     assert all(r.fundamentals.nd_to_ebitda is not zero for r in missing for zero in (0, 0.0))
 
 
-def test_twelve_names_have_no_own_history():
+def test_names_without_a_usable_own_history_split_into_two_causes():
+    """Fourteen names have no usable own-history comparison, for two different
+    reasons that should not be conflated: twelve because their statements are in a
+    different currency from their listing so the screen refused to compute it at
+    all, and two because it only found two fiscal year ends, which is not a median.
+    Three points is the floor, matching what the score already required."""
     p = local.load_price_screen()
     no_hist = [t for t, v in p.items() if not v.has_own_history]
-    assert len(no_hist) == 12
-    for t in no_hist:
+    assert len(no_hist) == 14
+
+    currency = [t for t in no_hist if not p[t].n_hist_years]
+    too_thin = [t for t in no_hist if p[t].n_hist_years and p[t].n_hist_years < 3]
+    assert len(currency) == 12
+    assert len(too_thin) == 2
+    assert len(currency) + len(too_thin) == len(no_hist)
+
+    for t in currency:
         assert p[t].pe_vs_median is None
+        assert p[t].multiples_note
+    for t in too_thin:
+        assert p[t].pe_vs_median is not None, "the number exists; it is just not a median"
+    assert local.Valuation.MIN_HISTORY_POINTS == 3
 
 
 def test_bucket_counts_match_the_written_files():

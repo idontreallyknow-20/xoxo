@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 12.434112,
     "own_median": 28.732700223004464,
-    "vs_median": -0.5672487478206176
+    "vs_median": -0.5672487478206176,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 12.529,
     "own_median": 11.287541129595903,
-    "vs_median": 0.10998488121996686
+    "vs_median": 0.10998488121996686,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.09923977322048616,
@@ -280,8 +287,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.5131,
-    "percentile": 87.2,
+    "score": 0.4501,
+    "percentile": 85.9,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -292,8 +299,8 @@
      "growth": -0.018,
      "margin_stability": -0.0681,
      "balance": -0.0224,
-     "value_pe": 0.126,
-     "value_ev": -0.0233,
+     "value_ev": -0.0379,
+     "value_pe": 0.0775,
      "revisions_90d": 0.1414,
      "revisions_30d": 0.2995,
      "revision_breadth": -0.0018,
@@ -319,13 +326,13 @@
      },
      {
       "key": "value_pe",
-      "value": 0.126
+      "value": 0.0775
      }
     ]
    },
    "with_momentum": {
-    "score": 0.5778,
-    "percentile": 89.3,
+    "score": 0.5148,
+    "percentile": 85.9,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -336,8 +343,8 @@
      "growth": -0.018,
      "margin_stability": -0.0681,
      "balance": -0.0224,
-     "value_pe": 0.126,
-     "value_ev": -0.0233,
+     "value_ev": -0.0379,
+     "value_pe": 0.0775,
      "revisions_90d": 0.1414,
      "revisions_30d": 0.2995,
      "revision_breadth": -0.0018,
@@ -364,13 +371,13 @@
      },
      {
       "key": "value_pe",
-      "value": 0.126
+      "value": 0.0775
      }
     ]
    },
    "with_reversal": {
-    "score": 0.4329,
-    "percentile": 80.5,
+    "score": 0.3699,
+    "percentile": 78.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -381,8 +388,8 @@
      "growth": -0.018,
      "margin_stability": -0.0681,
      "balance": -0.0224,
-     "value_pe": 0.126,
-     "value_ev": -0.0233,
+     "value_ev": -0.0379,
+     "value_pe": 0.0775,
      "revisions_90d": 0.1414,
      "revisions_30d": 0.2995,
      "revision_breadth": -0.0018,
@@ -408,8 +415,8 @@
       "value": 0.1352
      },
      {
-      "key": "value_pe",
-      "value": 0.126
+      "key": "reversal_ath",
+      "value": -0.0802
      }
     ]
    }

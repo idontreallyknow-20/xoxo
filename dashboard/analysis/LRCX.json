@@ -118,6 +118,9 @@
    "last": 23.23,
    "change": 5.800000000000001,
    "change_pct": 0.33275960986804365,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": 0.10048452755464288,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -153,6 +156,9 @@
    "last": 0.505,
    "change": 0.059,
    "change_pct": 0.13228699551569512,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": null,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -188,6 +194,9 @@
    "last": 0.353,
    "change": 0.05399999999999999,
    "change_pct": 0.1806020066889631,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": null,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -223,6 +232,9 @@
    "last": 4.89,
    "change": 0.20999999999999996,
    "change_pct": 0.044871794871794934,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": 0.014738960712040283,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -258,6 +270,9 @@
    "last": 1261.0,
    "change": -97.0,
    "change_pct": -0.0714285714285714,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": -0.024400043652442638,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -292,7 +307,10 @@
    "first": -0.33,
    "last": -1.84,
    "change": -1.51,
-   "change_pct": 4.575757575757576,
+   "change_pct": null,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
    "cagr": null,
    "periods": 3,
    "span_label": "FY2023 to FY2026, 3 intervals",
@@ -489,20 +507,27 @@
     "label": "Forward P/E",
     "value": 25.289024,
     "own_median": 30.087193266009216,
-    "vs_median": -0.15947546929975387
+    "vs_median": -0.15947546929975387,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 42.21,
     "own_median": 23.71970335012206,
-    "vs_median": 0.7795332166235878
+    "vs_median": 0.7795332166235878,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.3424857301614168,
@@ -614,8 +639,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.4316,
-    "percentile": 82.6,
+    "score": 0.3514,
+    "percentile": 77.9,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -626,8 +651,8 @@
      "growth": -0.0075,
      "margin_stability": -0.121,
      "balance": 0.0494,
-     "value_pe": -0.0608,
-     "value_ev": -0.1659,
+     "value_ev": -0.2695,
+     "value_pe": -0.0374,
      "revisions_90d": 0.44,
      "revisions_30d": -0.0205,
      "revision_breadth": 0.0337,
@@ -640,26 +665,26 @@
       "value": 0.44
      },
      {
-      "key": "roic",
-      "value": 0.1779
+      "key": "value_ev",
+      "value": -0.2695
      },
      {
-      "key": "value_ev",
-      "value": -0.1659
+      "key": "roic",
+      "value": 0.1779
      },
      {
       "key": "margin_stability",
       "value": -0.121
      },
      {
-      "key": "value_pe",
-      "value": -0.0608
+      "key": "balance",
+      "value": 0.0494
      }
     ]
    },
    "with_momentum": {
-    "score": 0.3151,
-    "percentile": 77.2,
+    "score": 0.2348,
+    "percentile": 71.8,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -670,8 +695,8 @@
      "growth": -0.0075,
      "margin_stability": -0.121,
      "balance": 0.0494,
-     "value_pe": -0.0608,
-     "value_ev": -0.1659,
+     "value_ev": -0.2695,
+     "value_pe": -0.0374,
      "revisions_90d": 0.44,
      "revisions_30d": -0.0205,
      "revision_breadth": 0.0337,
@@ -685,12 +710,12 @@
       "value": 0.44
      },
      {
-      "key": "roic",
-      "value": 0.1779
+      "key": "value_ev",
+      "value": -0.2695
      },
      {
-      "key": "value_ev",
-      "value": -0.1659
+      "key": "roic",
+      "value": 0.1779
      },
      {
       "key": "margin_stability",
@@ -703,8 +728,8 @@
     ]
    },
    "with_reversal": {
-    "score": 0.4592,
-    "percentile": 83.9,
+    "score": 0.3789,
+    "percentile": 79.2,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -715,8 +740,8 @@
      "growth": -0.0075,
      "margin_stability": -0.121,
      "balance": 0.0494,
-     "value_pe": -0.0608,
-     "value_ev": -0.1659,
+     "value_ev": -0.2695,
+     "value_pe": -0.0374,
      "revisions_90d": 0.44,
      "revisions_30d": -0.0205,
      "revision_breadth": 0.0337,
@@ -730,20 +755,20 @@
       "value": 0.44
      },
      {
-      "key": "roic",
-      "value": 0.1779
+      "key": "value_ev",
+      "value": -0.2695
      },
      {
-      "key": "value_ev",
-      "value": -0.1659
+      "key": "roic",
+      "value": 0.1779
      },
      {
       "key": "margin_stability",
       "value": -0.121
      },
      {
-      "key": "value_pe",
-      "value": -0.0608
+      "key": "balance",
+      "value": 0.0494
      }
     ]
    }

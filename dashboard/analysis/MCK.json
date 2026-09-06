@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 18.255434,
     "own_median": 23.262190240591295,
-    "vs_median": -0.21523150609673758
+    "vs_median": -0.21523150609673758,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 16.546,
     "own_median": 15.469176058852897,
-    "vs_median": 0.06961094353379238
+    "vs_median": 0.06961094353379238,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.0742942649680931,
@@ -281,8 +288,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.3784,
-    "percentile": 78.5,
+    "score": 0.3828,
+    "percentile": 80.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -293,8 +300,8 @@
      "growth": 0.002,
      "margin_stability": 0.0334,
      "balance": -0.0272,
-     "value_pe": -0.0353,
-     "value_ev": -0.0147,
+     "value_ev": -0.024,
+     "value_pe": -0.0217,
      "revisions_90d": -0.0104,
      "revisions_30d": -0.0017,
      "revision_breadth": 0.0101,
@@ -319,14 +326,14 @@
       "value": 0.049
      },
      {
-      "key": "value_pe",
-      "value": -0.0353
+      "key": "margin_stability",
+      "value": 0.0334
      }
     ]
    },
    "with_momentum": {
-    "score": 0.4617,
-    "percentile": 82.6,
+    "score": 0.466,
+    "percentile": 84.6,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -337,8 +344,8 @@
      "growth": 0.002,
      "margin_stability": 0.0334,
      "balance": -0.0272,
-     "value_pe": -0.0353,
-     "value_ev": -0.0147,
+     "value_ev": -0.024,
+     "value_pe": -0.0217,
      "revisions_90d": -0.0104,
      "revisions_30d": -0.0017,
      "revision_breadth": 0.0101,
@@ -370,7 +377,7 @@
     ]
    },
    "with_reversal": {
-    "score": 0.2892,
+    "score": 0.2935,
     "percentile": 70.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
@@ -382,8 +389,8 @@
      "growth": 0.002,
      "margin_stability": 0.0334,
      "balance": -0.0272,
-     "value_pe": -0.0353,
-     "value_ev": -0.0147,
+     "value_ev": -0.024,
+     "value_pe": -0.0217,
      "revisions_90d": -0.0104,
      "revisions_30d": -0.0017,
      "revision_breadth": 0.0101,

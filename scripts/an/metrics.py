@@ -20,6 +20,7 @@ noise into narrative.
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -106,8 +107,40 @@ class Trend:
 
     @property
     def periods(self) -> int:
-        """Intervals, not points. Four fiscal years is three."""
-        return max(0, len(self.observed) - 1)
+        """Elapsed intervals between the first and last observation.
+
+        Counted from the fiscal-year labels, not from how many points survived. Four
+        fiscal years is three intervals; but four points with FY2023 missing spans
+        four years, and dividing by three would annualise the growth over the wrong
+        window. That is the exact error this module's docstring says it exists to
+        prevent, and the first version made it.
+
+        Falls back to the observation count when the labels cannot be parsed, which
+        is the old behaviour and is right for a series whose periods are not years.
+        """
+        obs = self.observed
+        if len(obs) < 2:
+            return 0
+        years = [self._year_of(label) for label, _ in obs]
+        if years[0] is not None and years[-1] is not None and years[-1] > years[0]:
+            return years[-1] - years[0]
+        return len(obs) - 1
+
+    @property
+    def has_gap(self) -> bool:
+        """True when a period is missing from the middle of the series."""
+        obs = self.observed
+        if len(obs) < 2:
+            return False
+        years = [self._year_of(label) for label, _ in obs]
+        if any(y is None for y in years):
+            return False
+        return (years[-1] - years[0]) != (len(obs) - 1)
+
+    @staticmethod
+    def _year_of(label: str) -> Optional[int]:
+        m = re.search(r"(\d{4})", str(label))
+        return int(m.group(1)) if m else None
 
     @property
     def span_label(self) -> str:
@@ -126,15 +159,46 @@ class Trend:
 
     @property
     def change_pct(self) -> Optional[float]:
+        """Relative change, or None when the ratio would be meaningless.
+
+        A percentage change is only defined when the series stays on one side of
+        zero. Net debt does not: nine of the sixteen research notes start the window
+        in net cash, and ``last / first - 1`` on a negative base comes out with the
+        wrong sign and a meaningless magnitude. Alphabet went from $84bn of net cash
+        to $16bn of net debt, a hundred-billion-dollar deterioration, and the naive
+        formula reported it as "-118.8%".
+
+        :attr:`cagr` already refused negative bases; the page fell back to this
+        property precisely when it did, which routed around the guard. So the guard
+        lives here too, and the card prints the absolute move instead.
+        """
         if self.first is None or self.last is None or self.first == 0:
             return None
+        if self.first < 0 or self.last < 0:
+            return None
         return self.last / self.first - 1.0
+
+    @property
+    def crosses_zero(self) -> bool:
+        """Whether the series changes sign, which is why no percentage is offered."""
+        if self.first is None or self.last is None:
+            return False
+        return (self.first < 0) != (self.last < 0)
 
     @property
     def cagr(self) -> Optional[float]:
         if self.unit == "percent":
             return None  # a rate does not compound; the change in points is the story
         return cagr(self.first, self.last, self.periods)
+
+    @property
+    def span_note(self) -> Optional[str]:
+        """Said out loud when the series is not what the reader will assume."""
+        if self.has_gap:
+            return (f"A period is missing from the middle: {len(self.observed)} observations across "
+                    f"{self.periods} years. The annual rate is computed over the elapsed years, not "
+                    "the number of points.")
+        return None
 
     @property
     def direction(self) -> str:
@@ -164,6 +228,9 @@ class Trend:
             "last": self.last,
             "change": self.change,
             "change_pct": self.change_pct,
+            "crosses_zero": self.crosses_zero,
+            "has_gap": self.has_gap,
+            "span_note": self.span_note,
             "cagr": self.cagr,
             "periods": self.periods,
             "span_label": self.span_label,

@@ -244,11 +244,11 @@ def test_scores_the_real_top_150():
     assert all(0 <= b.coverage <= 1 for b in s.values())
 
 
-def test_the_twelve_currency_mismatched_names_lose_value_coverage_not_rank():
+def test_names_without_usable_history_lose_value_coverage_not_rank():
     recs = [r for r in local.load_universe().values() if r.in_top_150]
     s = score.score_universe(recs)
     no_hist = [r.ticker for r in recs if r.valuation and not r.valuation.has_own_history]
-    assert len(no_hist) == 12
+    assert len(no_hist) == 14  # 12 currency mismatches, 2 with only two year ends
     for t in no_hist:
         assert "value_pe" in s[t].missing
         assert s[t].coverage < 1.0

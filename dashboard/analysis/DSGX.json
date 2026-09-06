@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 25.177647,
     "own_median": 63.62351099810901,
-    "vs_median": -0.604271336098564
+    "vs_median": -0.604271336098564,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 20.541,
     "own_median": 31.770197087478298,
-    "vs_median": -0.3534506586962314
+    "vs_median": -0.3534506586962314,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.2799082764791786,
@@ -272,8 +279,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.0926,
-    "percentile": 55.7,
+    "score": 0.0847,
+    "percentile": 52.3,
     "coverage": 0.97,
     "thinly_evidenced": false,
     "missing": [
@@ -286,8 +293,8 @@
      "growth": 0.0289,
      "margin_stability": 0.0229,
      "balance": 0.0494,
-     "value_pe": 0.143,
-     "value_ev": 0.0753,
+     "value_ev": 0.1224,
+     "value_pe": 0.088,
      "revisions_90d": -0.0514,
      "revisions_30d": -0.0877,
      "revision_breadth": 0.0162,
@@ -300,26 +307,26 @@
       "value": -0.1847
      },
      {
-      "key": "value_pe",
-      "value": 0.143
-     },
-     {
       "key": "fcf",
       "value": 0.1399
      },
      {
-      "key": "revisions_30d",
-      "value": -0.0877
+      "key": "value_ev",
+      "value": 0.1224
      },
      {
-      "key": "value_ev",
-      "value": 0.0753
+      "key": "value_pe",
+      "value": 0.088
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0877
      }
     ]
    },
    "with_momentum": {
-    "score": 0.0227,
-    "percentile": 52.3,
+    "score": 0.0148,
+    "percentile": 51.7,
     "coverage": 0.9727,
     "thinly_evidenced": false,
     "missing": [
@@ -332,8 +339,8 @@
      "growth": 0.0289,
      "margin_stability": 0.0229,
      "balance": 0.0494,
-     "value_pe": 0.143,
-     "value_ev": 0.0753,
+     "value_ev": 0.1224,
+     "value_pe": 0.088,
      "revisions_90d": -0.0514,
      "revisions_30d": -0.0877,
      "revision_breadth": 0.0162,
@@ -347,26 +354,26 @@
       "value": -0.1847
      },
      {
-      "key": "value_pe",
-      "value": 0.143
-     },
-     {
       "key": "fcf",
       "value": 0.1399
      },
      {
-      "key": "revisions_30d",
-      "value": -0.0877
+      "key": "value_ev",
+      "value": 0.1224
      },
      {
-      "key": "value_ev",
-      "value": 0.0753
+      "key": "value_pe",
+      "value": 0.088
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0877
      }
     ]
    },
    "with_reversal": {
-    "score": 0.1311,
-    "percentile": 56.4,
+    "score": 0.1232,
+    "percentile": 55.0,
     "coverage": 0.9727,
     "thinly_evidenced": false,
     "missing": [
@@ -379,8 +386,8 @@
      "growth": 0.0289,
      "margin_stability": 0.0229,
      "balance": 0.0494,
-     "value_pe": 0.143,
-     "value_ev": 0.0753,
+     "value_ev": 0.1224,
+     "value_pe": 0.088,
      "revisions_90d": -0.0514,
      "revisions_30d": -0.0877,
      "revision_breadth": 0.0162,
@@ -394,20 +401,20 @@
       "value": -0.1847
      },
      {
-      "key": "value_pe",
-      "value": 0.143
-     },
-     {
       "key": "fcf",
       "value": 0.1399
      },
      {
-      "key": "revisions_30d",
-      "value": -0.0877
+      "key": "value_ev",
+      "value": 0.1224
      },
      {
-      "key": "value_ev",
-      "value": 0.0753
+      "key": "value_pe",
+      "value": 0.088
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0877
      }
     ]
    }

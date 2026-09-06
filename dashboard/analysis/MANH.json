@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 36.236313,
     "own_median": 68.07878447150391,
-    "vs_median": -0.4677297298813021
+    "vs_median": -0.4677297298813021,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 44.412,
     "own_median": 54.16011252554969,
-    "vs_median": -0.17998693265179389
+    "vs_median": -0.17998693265179389,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 4,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.045192246520455726,
@@ -272,7 +279,7 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.9862,
+    "score": 0.9793,
     "percentile": 98.0,
     "coverage": 1.0,
     "thinly_evidenced": false,
@@ -284,8 +291,8 @@
      "growth": 0.0096,
      "margin_stability": -0.0325,
      "balance": 0.0494,
-     "value_pe": 0.0804,
-     "value_ev": 0.0384,
+     "value_ev": 0.0624,
+     "value_pe": 0.0495,
      "revisions_90d": 0.0714,
      "revisions_30d": 0.1201,
      "revision_breadth": 0.0304,
@@ -302,21 +309,21 @@
       "value": 0.1201
      },
      {
-      "key": "value_pe",
-      "value": 0.0804
-     },
-     {
       "key": "revisions_90d",
       "value": 0.0714
      },
      {
-      "key": "balance",
-      "value": 0.0494
+      "key": "value_ev",
+      "value": 0.0624
+     },
+     {
+      "key": "value_pe",
+      "value": 0.0495
      }
     ]
    },
    "with_momentum": {
-    "score": 1.0911,
+    "score": 1.0842,
     "percentile": 98.0,
     "coverage": 1.0,
     "thinly_evidenced": false,
@@ -328,8 +335,8 @@
      "growth": 0.0096,
      "margin_stability": -0.0325,
      "balance": 0.0494,
-     "value_pe": 0.0804,
-     "value_ev": 0.0384,
+     "value_ev": 0.0624,
+     "value_pe": 0.0495,
      "revisions_90d": 0.0714,
      "revisions_30d": 0.1201,
      "revision_breadth": 0.0304,
@@ -351,18 +358,18 @@
       "value": 0.1049
      },
      {
-      "key": "value_pe",
-      "value": 0.0804
-     },
-     {
       "key": "revisions_90d",
       "value": 0.0714
+     },
+     {
+      "key": "value_ev",
+      "value": 0.0624
      }
     ]
    },
    "with_reversal": {
-    "score": 0.9985,
-    "percentile": 98.7,
+    "score": 0.9916,
+    "percentile": 98.0,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -373,8 +380,8 @@
      "growth": 0.0096,
      "margin_stability": -0.0325,
      "balance": 0.0494,
-     "value_pe": 0.0804,
-     "value_ev": 0.0384,
+     "value_ev": 0.0624,
+     "value_pe": 0.0495,
      "revisions_90d": 0.0714,
      "revisions_30d": 0.1201,
      "revision_breadth": 0.0304,
@@ -392,16 +399,16 @@
       "value": 0.1201
      },
      {
-      "key": "value_pe",
-      "value": 0.0804
-     },
-     {
       "key": "revisions_90d",
       "value": 0.0714
      },
      {
-      "key": "balance",
-      "value": 0.0494
+      "key": "value_ev",
+      "value": 0.0624
+     },
+     {
+      "key": "value_pe",
+      "value": 0.0495
      }
     ]
    }

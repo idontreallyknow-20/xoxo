@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 23.37752,
     "own_median": 28.320388423586355,
-    "vs_median": -0.17453392056832584
+    "vs_median": -0.17453392056832584,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 115.185,
     "own_median": 16.2334346829837,
-    "vs_median": 6.095540915980021
+    "vs_median": 6.095540915980021,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
    "usable": true,
    "n_year_ends": 3,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "The median is taken at 3 fiscal year ends, so it is a 3-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.0874410455009611,
@@ -280,8 +287,8 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": -0.1098,
-    "percentile": 34.9,
+    "score": -0.289,
+    "percentile": 19.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -292,8 +299,8 @@
      "growth": 0.0038,
      "margin_stability": -0.0447,
      "balance": -0.131,
-     "value_pe": -0.0539,
-     "value_ev": -0.32,
+     "value_ev": -0.52,
+     "value_pe": -0.0332,
      "revisions_90d": -0.043,
      "revisions_30d": 0.0497,
      "revision_breadth": -0.0809,
@@ -302,12 +309,12 @@
     },
     "top_contributions": [
      {
-      "key": "roic",
-      "value": 0.3924
+      "key": "value_ev",
+      "value": -0.52
      },
      {
-      "key": "value_ev",
-      "value": -0.32
+      "key": "roic",
+      "value": 0.3924
      },
      {
       "key": "balance",
@@ -324,8 +331,8 @@
     ]
    },
    "with_momentum": {
-    "score": -0.0363,
-    "percentile": 45.0,
+    "score": -0.2156,
+    "percentile": 29.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -336,8 +343,8 @@
      "growth": 0.0038,
      "margin_stability": -0.0447,
      "balance": -0.131,
-     "value_pe": -0.0539,
-     "value_ev": -0.32,
+     "value_ev": -0.52,
+     "value_pe": -0.0332,
      "revisions_90d": -0.043,
      "revisions_30d": 0.0497,
      "revision_breadth": -0.0809,
@@ -347,12 +354,12 @@
     },
     "top_contributions": [
      {
-      "key": "roic",
-      "value": 0.3924
+      "key": "value_ev",
+      "value": -0.52
      },
      {
-      "key": "value_ev",
-      "value": -0.32
+      "key": "roic",
+      "value": 0.3924
      },
      {
       "key": "balance",
@@ -369,8 +376,8 @@
     ]
    },
    "with_reversal": {
-    "score": -0.1959,
-    "percentile": 25.5,
+    "score": -0.3752,
+    "percentile": 10.7,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -381,8 +388,8 @@
      "growth": 0.0038,
      "margin_stability": -0.0447,
      "balance": -0.131,
-     "value_pe": -0.0539,
-     "value_ev": -0.32,
+     "value_ev": -0.52,
+     "value_pe": -0.0332,
      "revisions_90d": -0.043,
      "revisions_30d": 0.0497,
      "revision_breadth": -0.0809,
@@ -392,12 +399,12 @@
     },
     "top_contributions": [
      {
-      "key": "roic",
-      "value": 0.3924
+      "key": "value_ev",
+      "value": -0.52
      },
      {
-      "key": "value_ev",
-      "value": -0.32
+      "key": "roic",
+      "value": 0.3924
      },
      {
       "key": "balance",

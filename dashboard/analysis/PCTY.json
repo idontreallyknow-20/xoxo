@@ -141,20 +141,27 @@
     "label": "Forward P/E",
     "value": 15.943663,
     "own_median": 55.21537448784679,
-    "vs_median": -0.7112459501020085
+    "vs_median": -0.7112459501020085,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
    },
    {
     "key": "ev_ebitda",
     "label": "EV/EBITDA",
     "value": 18.82,
     "own_median": 22.848473951826495,
-    "vs_median": -0.17631260452317699
+    "vs_median": -0.17631260452317699,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
    }
   ],
   "own_history": {
-   "usable": true,
+   "usable": false,
    "n_year_ends": 2,
-   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+   "caveat": "No usable own-history multiples for this name.",
+   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.13587834048674963,
@@ -273,12 +280,12 @@
   "variants": {
    "quality_value": {
     "score": -0.0245,
-    "percentile": 43.0,
+    "percentile": 43.6,
     "coverage": 0.79,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": -0.0777,
@@ -287,8 +294,8 @@
      "growth": 0.0306,
      "margin_stability": 0.0548,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": -0.0124,
      "revisions_30d": 0.004,
      "revision_breadth": 0.0125,
@@ -320,12 +327,12 @@
    },
    "with_momentum": {
     "score": 0.0128,
-    "percentile": 48.3,
+    "percentile": 50.3,
     "coverage": 0.8091,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": -0.0777,
@@ -334,8 +341,8 @@
      "growth": 0.0306,
      "margin_stability": 0.0548,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": -0.0124,
      "revisions_30d": 0.004,
      "revision_breadth": 0.0125,
@@ -368,12 +375,12 @@
    },
    "with_reversal": {
     "score": 0.0738,
-    "percentile": 49.7,
+    "percentile": 51.0,
     "coverage": 0.8091,
     "thinly_evidenced": false,
     "missing": [
-     "value_pe",
-     "value_ev"
+     "value_ev",
+     "value_pe"
     ],
     "contributions": {
      "roic": -0.0777,
@@ -382,8 +389,8 @@
      "growth": 0.0306,
      "margin_stability": 0.0548,
      "balance": 0.0494,
-     "value_pe": 0.0,
      "value_ev": 0.0,
+     "value_pe": 0.0,
      "revisions_90d": -0.0124,
      "revisions_30d": 0.004,
      "revision_breadth": 0.0125,
@@ -430,6 +437,7 @@
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
   "No research note. Nobody has read a filing for this name.",
+  "No own-history multiples. The screen could not compute them.",
   "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],

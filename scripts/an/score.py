@@ -30,13 +30,26 @@ Leverage does not predict returns on its own, but it predicts the size of the
 drawdown when a thesis breaks, which is what actually costs money in a 12-name
 portfolio. Included as risk control, not as alpha.
 
-*Value.* Forward P/E and EV/EBITDA against the company's own four-year median,
+*Value.* EV/EBITDA and forward P/E against the company's own four-year median,
 rather than against the market. Comparing a company to its own history sidesteps
 the sector composition problem that makes raw P/E screens buy banks and sell
 software forever. The cost is that four fiscal year-ends is a four-point median,
 which is a thin basis for "cheap versus its own history", and twelve of the 150
 have no usable history at all because their statements are in a different currency
 from their listing.
+
+The EV/EBITDA comparison carries the larger weight of the two, and that is a
+correction rather than a preference. The upstream screen builds its historical P/E
+as the price at each fiscal year end over that year's reported diluted EPS, which
+is trailing, and compares it against a *forward* P/E from the Street. Where
+earnings are expected to grow, forward is mechanically below trailing, so the P/E
+column reads cheap by construction: across the 138 names carrying both, 85% print
+a negative "vs median" on P/E with a median of -29%, against 51% and -0.6% on
+EV/EBITDA where both sides are trailing. Worse, the bias tracks growth (rank
+correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), so the P/E
+component is partly a second helping of the growth component. Both stay in, because
+dropping a signal on a fixable labelling problem is its own error, but the
+like-for-like one leads.
 
 *Estimate revisions.* Change in the next fiscal year consensus EPS over 30 and 90
 days, plus the breadth of analysts moving up versus down. Post-earnings drift and
@@ -239,14 +252,18 @@ COMPONENTS: Tuple[Component, ...] = (
         why="Net debt to EBITDA, net cash pinned to the good end. Risk control rather than alpha: it predicts drawdown size, not return.",
     ),
     Component(
-        "value_pe", "forward P/E vs own median", 0.13,
-        _pe_vs_own_history, False,
-        why="Cheap against its own four-year median, which sidesteps the sector composition problem in a raw P/E screen.",
+        "value_ev", "EV/EBITDA vs own median", 0.13,
+        _ev_vs_own_history, False,
+        why="Cheap against its own four-year median, on an enterprise basis so leverage and cash do "
+            "not distort it. Carries the larger of the two value weights because both sides of the "
+            "comparison are trailing, which the P/E version cannot say.",
     ),
     Component(
-        "value_ev", "EV/EBITDA vs own median", 0.08,
-        _ev_vs_own_history, False,
-        why="The same comparison on an enterprise basis, so leverage and cash do not distort it.",
+        "value_pe", "forward P/E vs own median", 0.08,
+        _pe_vs_own_history, False,
+        why="The same idea on earnings, but the screen compares a forward P/E against a trailing "
+            "median, which reads cheap by construction and does so more for faster-growing names. "
+            "Kept at a reduced weight rather than dropped.",
     ),
     Component(
         "revisions_90d", "next-year EPS revision, 90 days", 0.11,
