@@ -194,6 +194,9 @@ Consequences that shape everything below:
 - [x] **X2** (partial: EDGAR client corrected for point-in-time semantics; the 10-year pull still needs one live run)
 - [ ] **X2b** EDGAR XBRL `companyfacts` -> 10+ years of as-reported fundamentals with filed dates,
       replacing the 4-year yfinance limitation called out in README and criteria.md.
+      **Blocked on a live run**, twice now: neither session's container could reach `data.sec.gov`.
+      The code is written and tested. Command: `SEC_USER_AGENT="Name email" python
+      scripts/fetch_edgar.py --facts --exhibits KLAC`.
 - [ ] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
 - [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
 - [x] **X5** Compare view across up to 4 analysed tickers. `/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA`:

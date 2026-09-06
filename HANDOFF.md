@@ -19,10 +19,11 @@ served by `scripts/serve.py` (`http.server.SimpleHTTPRequestHandler` rooted at `
 inside them. That is the whole routing story. No server change was needed and none was made.
 
 **The build environment has no network access to any market-data host.** `finnhub.io`,
-`data.sec.gov` and `www.sec.gov` are refused at the egress proxy. `scripts/an/edgar.py`,
-`finnhub.py` and `prices.py` have therefore **never made a real request**. They are written to
-documented API shapes and tested against fixtures. Section 5b of `NOTES.md` lists what each one's
-author flagged as most likely to be wrong on the first live run. Do not treat them as verified.
+`data.sec.gov`, `www.sec.gov`, `www.alphavantage.co` and Yahoo are refused at the egress proxy, in
+both sessions so far. `scripts/an/edgar.py`, `finnhub.py`, `prices.py`, `listing_status.py`,
+`dera.py` and `tracker.py` have therefore **never made a real request**. They are written to
+documented API shapes and tested against fixtures. Sections 5b and 7 of `NOTES.md` list what each
+one's author flagged as most likely to be wrong on the first live run. Do not treat them as verified.
 
 ---
 
@@ -50,17 +51,21 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
   synthetic.py       panels with a known answer, for calibrating the engine
   power.py           how long until a backtest here could detect anything
   snapshots.py       dated archives, the thing that makes a real backtest possible
+  listing_status.py  Alpha Vantage delisting list -> the size of the survivorship hole (X7)
+  dera.py            SEC DERA quarterly data sets -> point-in-time fundamentals (X8)
+  tracker.py         every journal call graded against prices, "so far" (X6)
   positioning.py     the memo: three lists, sized from criteria.md
   analysis.py        assembles the record each page renders
   pages.py           writes the static page shells
 
-scripts/build_*.py   the generators. scripts/build_all.py runs all three
-scripts/fetch_*.py   the live pulls. Both have --dry-run
+scripts/build_*.py   the generators. scripts/build_all.py runs all four (track_calls.py is the fourth)
+scripts/fetch_*.py   the live pulls, plus listing_status.py and track_calls.py. All have --dry-run
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
 scripts/shoot.py     headless Chromium: console errors, overflow, screenshots
 
 dashboard/assets/    desk.css (theme tokens copied verbatim from index.html),
-                     desk-common.js, analyze.js, analyze-index.js, positioning.js
+                     desk-common.js, analyze.js, analyze-index.js, compare.js, positioning.js
+dashboard/analyze/compare/   /analyze/compare/?t=A,B,C,D, one shell, selection in the address
 dashboard/analysis/  generated per-ticker JSON + _narrative/ (quote-verified)
 ```
 
@@ -94,9 +99,9 @@ enforces it. `dashboard/index.html` may only gain lines, and only lines that are
 ## Before you commit
 
 ```bash
-python -m pytest -q                                  # 677 tests
+python -m pytest -q                                  # 799 tests, ~80 s
 python scripts/build_all.py                          # regenerate everything
-python scripts/shoot.py --mobile --themes night paper  # 24 page/theme/width combinations
+python scripts/shoot.py --mobile --themes night paper  # 32 page/theme/width combinations
 ```
 
 `shoot.py` fails on console errors and on horizontal overflow. The overflow check exists because a
@@ -109,21 +114,22 @@ intentional. `tests/test_build_determinism.py` compares everything else.
 
 ## What is genuinely unfinished
 
-Ordered by value, and `PLAN.md` carries the same list with verification commands.
+The second session (2026-09-06, `NOTES.md` section 7) built X7, X8, X5 and X6 from the backlog.
+Everything that touches a remote source is fixture-tested and has never made a real request, so
+the list is now mostly **live runs that need a machine with egress**, each a single command that
+prints its own provenance. In order of value:
 
-1. **X7, measure the survivorship hole.** Alpha Vantage's `LISTING_STATUS` returns every delisted US
-   ticker with its date for *two requests total*, affordable on a 25-a-day free key, and it is the
-   only free source of that list found. It cannot repair a backtest but it can size the bias: run the
-   universe filter as of a past date and count how many selected names no longer exist.
-2. **X8, SEC DERA Financial Statement Data Sets** as the point-in-time fundamentals source. Quarterly
-   bulk zips, genuinely as-reported, free, lagging quarter end by two weeks to two months.
-3. **X2b, the 10-year EDGAR pull.** `edgar.py` is written for it and `as_known_on` is tested against
-   a simulated restatement. It needs one live run.
-4. **X5, a compare view** across up to four analysed tickers.
-5. **X6, a score-vs-outcome tracker** wired to `journal.md`, so every past call is graded. Needs
-   price history.
-
----
+1. **X2b, the 10-year EDGAR pull.** `export SEC_USER_AGENT="Name email"` then
+   `python scripts/fetch_edgar.py --facts --exhibits KLAC`. Read the output against the filing.
+2. **X6 live:** `python scripts/track_calls.py --live`, then look at `/positioning/` under
+   "Every call, graded". The file says NOT GRADED until this has run.
+3. **X7 live:** `export ALPHAVANTAGE_KEY=...` then `python scripts/listing_status.py --fetch`. Two
+   requests. The first line of the report says whether it was real.
+4. **X8 live:** `python scripts/fetch_dera.py --since 2023q1`, one 50-100 MB zip per quarter, then
+   `--show 320193 --metric revenue` and check the numbers against Apple's 10-K.
+5. **X3, 8-K Exhibit 99.1 diffing**, still not started. `edgar.py` already resolves the exhibits.
+6. Once X8 and X7 have run for real: feed DERA fundamentals and the measured attrition into
+   `backtest_run.py --live`, which is the first version of the backtest that could be believed.
 
 ## Two things to be careful about
 
