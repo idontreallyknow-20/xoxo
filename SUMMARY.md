@@ -339,6 +339,21 @@ coloured or marked best, and the best cell in a business row is marked only wher
 which way is better. Rendered clean at desktop and phone width in two themes; the row model is
 tested in node over the real records.
 
+### X6, every call graded, ready for prices
+
+```bash
+python scripts/track_calls.py --dry-run       # what --live would pull
+python scripts/track_calls.py --live          # sixteen names plus SPY and QQQ, then grades
+```
+
+Every journal call now has a row on `/positioning/` under "Every call, graded": the price at call,
+the level that would prove it wrong, the score's percentile in the snapshot that preceded the call,
+and (once prices exist) the return since, the excess against SPY, and one sentence that always ends
+in "so far". A close under the named level counts as falsified even if the price came back. A Pass
+that then beat the market reads "missed", not red. Until you run `--live`, the section says NOT
+GRADED and shows the columns that need no prices. Note the file's own caveat: every call is dated
+2026-09-04, so the first grades are one window and one market regime.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -349,7 +364,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 766 (699 from the first session, 29 for X7, 24 for X8, 14 for X5) |
+| tests | 799 (699 from the first session, 29 for X7, 24 for X8, 14 for X5, 30 for X6, plus tracker.json under the language guard and the determinism check) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |

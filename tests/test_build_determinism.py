@@ -19,6 +19,7 @@ GENERATED = [
     "dashboard/scorecard.json",
     "dashboard/positioning.json",
     "dashboard/backtest.json",
+    "dashboard/tracker.json",
 ]
 
 

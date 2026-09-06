@@ -594,3 +594,44 @@ address order (fixed: the address decides), and at 390px the row labels inherite
 `white-space: nowrap` on `th` and ran under the first value cell (fixed: the compare table's row
 headers wrap).
 
+### 7d. X6, every call graded
+
+`scripts/an/tracker.py`, `scripts/track_calls.py`, `dashboard/tracker.json`, and a section on
+`/positioning/` titled "Every call, graded". Wired to `journal.md` through `an.journal`, so the
+five-ticker heading produces five grades and the two SYSTEM entries produce none.
+
+**What a grade is.** Three mechanical facts per call: the return from the journal's price at call to
+the adjusted close on the grading date, against SPY and QQQ over the same window (the journal's own
+inception entry names those two as the bar); whether a falsifier of the form "a close under $X" has
+been closed under since the call, checked against the lowest close in the window so a recovery does
+not undo it; and the score's percentile for the name in the last snapshot dated on or before the
+call, never after, so the analyst is not graded against a score that saw a later screen.
+
+**What it refuses to be.** Final (every verdict says "so far" and a window under 21 trading days
+says it is too short to mean anything); a P&L (it grades calls, not positions; a "Buy in October"
+is measured from its September call price); symmetric (a Pass that then beat the market is labelled
+"missed", not coloured red); or selective (a call it cannot grade stays in the table with the
+reason, because a tracker that drops them is the survivorship problem in miniature). A name that
+stops trading grades to its last print and says so, on the price module's rule.
+
+**Only the close-under falsifier is checked.** Twelve of the sixteen calls name one. "Billings
+growth under 5% twice" and "Dupixent growth under 15%" are real falsifiers that no price series can
+check, and they are left to the reader rather than approximated.
+
+**The committed file is honest about having no prices.** `status: NOT GRADED`, sixteen rows with
+the call, the trigger and the score at call filled in and the return columns `n/a`, three
+paragraphs on why and the exact command. `--synthetic` anchors each name at its price at call (the
+first version started everything at 100 and falsified twelve calls on day one) and labels every
+layer SYNTHETIC. `--live` pulls the journal's names plus SPY and QQQ through `an.prices`.
+
+**Verification.** `tests/test_tracker.py` drives the grader over planted paths: a buy that ran to
++30% against SPY's +10% reads "ahead"; a buy that dipped to 65 against a $70 trigger and recovered
+to 90 is "falsified on its own terms"; a pass that ran +60% is "missed"; a name that stopped trading
+half way grades to its last print; a call with no recorded price is ungraded with the reason.
+`score_at_call` is checked against the real archive. The positioning page renders the section at
+1440px and 390px in two themes with no console errors, and the tracker's prose passes the language
+guard, which now scans `tracker.json` too.
+
+**Caught in review.** The block was written and wired to fetch `tracker.json` but never placed in
+the page's render; a screenshot locator timing out found it, and a test now pins the placement.
+

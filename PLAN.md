@@ -205,7 +205,19 @@ Consequences that shape everything below:
       Verify: `python -m pytest -q tests/test_compare.py tests/test_site_links.py tests/test_css_tokens.py`
       and `python scripts/shoot.py --mobile --themes night paper` (compare page in the default list,
       zero console errors, no horizontal overflow at 390px).
-- [ ] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.
+- [x] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.
+      `scripts/an/tracker.py` grades each non-system entry: return from the price at call against SPY
+      and QQQ over the same window, whether a "close under $X" falsifier has been closed under since,
+      and the score's percentile in the last snapshot on or before the call. Every verdict is "so
+      far"; a Pass that rallied is "missed", not a loss; an ungraded call stays in the table with its
+      reason. `scripts/track_calls.py` writes `dashboard/tracker.json` (`--live`, `--synthetic`,
+      `--dry-run`) and `/positioning/` renders it under "Every call, graded". **Prices not pulled**:
+      the committed file says NOT GRADED and shows the rows that need no prices.
+      Verify: `python -m pytest -q tests/test_tracker.py` (30 tests, planted paths: a breached trigger
+      is falsified even after recovering, a buy that beat SPY is ahead, a pass that rallied is missed,
+      a delisted name grades to its last print), `python scripts/track_calls.py --synthetic --as-of
+      2026-12-04 --out /tmp/t.json` for a labelled demonstration, and `python scripts/shoot.py`.
+      Live: `python scripts/track_calls.py --live`.
 - [x] **X10** Power analysis: how many rebalances until a backtest here could detect anything, and
       what size of edge stays invisible. Answered analytically and re-measured through the real
       engine. The finding changes the snapshot advice from quarterly to monthly.

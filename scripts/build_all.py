@@ -25,6 +25,7 @@ STEPS = [
     ("analysis records and page shells", "build_analysis.py"),
     ("scorecard and positioning memo", "build_positioning.py"),
     ("backtest calibration and score structure", "backtest_run.py"),
+    ("journal calls graded against prices", "track_calls.py"),
 ]
 
 

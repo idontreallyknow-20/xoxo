@@ -15,7 +15,7 @@
  */
 (function () {
   const D = window.Desk;
-  const { esc, has, num, pct, mult, money, cap } = D;
+  const { esc, has, num, pct, pts, mult, money, cap } = D;
 
   const S = { memo: null, card: null, back: null, variant: "quality_value", q: "", sort: "score" };
 
@@ -311,6 +311,52 @@
           <tbody>${calls}</tbody></table></div>` : ""}`;
   }
 
+  /* -- the calls, graded ----------------------------------------------------
+   * tracker.json is optional: the page renders without it. When it is there its
+   * status decides the framing. NOT GRADED shows the rows that need no prices
+   * and says why the rest are empty; SYNTHETIC is labelled on every line so a
+   * demonstration cannot be mistaken for a measurement. */
+  function trackerBlock() {
+    const t = S.track;
+    if (!t) return "";
+    const sum = t.summary || {};
+    const synthetic = t.status === "SYNTHETIC";
+    const banner = t.status === "NOT GRADED"
+      ? `<div class="note warn">${esc((t.why_not_graded || [])[0] || "Not graded.")}</div>`
+      : synthetic ? `<div class="note warn">SYNTHETIC PRICES. ${esc(t.limitations[0] || "")}</div>` : "";
+    const pctile = (v) => (has(v) ? `p${num(v, 0)}` : "n/a");
+    const rows = (t.grades || []).map((g) => {
+      const graded = g.status !== "ungraded";
+      const cls = g.status === "falsified" ? "down" : "";
+      const kind = { buy: "buy", buy_later: "buy later", buy_on_pullback: "buy on pullback", pass: "pass", watch: "watch", other: "" }[g.kind] || "";
+      return `<tr>
+        <td class="mono muted" style="font-size:12px">${esc(g.date)}</td>
+        <td><a href="../analyze/${esc(g.ticker)}/"><span class="tk">${esc(g.ticker)}</span></a></td>
+        <td style="font-size:13px">${esc(kind)}</td>
+        <td class="n">${esc(money(g.price_at_call))}</td>
+        <td class="n">${has(g.trigger) ? esc(money(g.trigger, 0)) : '<span class="muted">none</span>'}</td>
+        <td class="n">${esc(pctile(g.score_percentile_at_call))}</td>
+        <td class="n">${graded ? esc(pct(g.ret, 1, true)) : '<span class="muted">n/a</span>'}</td>
+        <td class="n">${graded && has(g.excess_vs_spy) ? esc(pts(g.excess_vs_spy, 1)) : '<span class="muted">n/a</span>'}</td>
+        <td class="${cls}" style="font-size:13px">${esc(g.verdict)}</td>
+      </tr>`;
+    }).join("");
+    const head = t.status === "GRADED"
+      ? `${sum.n_graded} of ${sum.n_calls} calls graded on ${esc(t.as_of)}: ${sum.buys_ahead_of_spy} of ${sum.buys_graded} buys ahead of SPY, ` +
+        `${sum.n_falsified} falsified on their own terms, ${sum.passes_missed} of ${sum.passes_graded} passes missed a gain`
+      : t.status === "SYNTHETIC" ? `a demonstration of the grading on ${sum.n_calls} calls with invented prices`
+      : `${sum.n_calls} calls, none graded yet`;
+    return `<h2 style="font-size:13px;margin-top:34px">Every call, graded<span class="sub">status ${esc(t.status)}</span></h2>
+      <div class="rule soft"></div>
+      ${banner}
+      <div class="lede" style="font-size:14px">${esc(head)}</div>
+      <div class="scroll"><table><thead><tr><th>date</th><th>ticker</th><th>call</th>
+        <th class="n">at call</th><th class="n">wrong under</th><th class="n">score then</th>
+        <th class="n">since</th><th class="n">vs SPY</th><th>so far</th></tr></thead>
+        <tbody>${rows}</tbody></table></div>
+      <ul class="gaps">${(t.limitations || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  }
+
   /* -- assembly ----------------------------------------------------------- */
   function render() {
     const m = S.memo;
@@ -365,6 +411,7 @@ ${statusBlock()}
 <section class="reveal" style="--i:8">
   ${head("The rules, checked", esc(m.rules.source))}
   ${rulesBlock()}
+  ${trackerBlock()}
   <div class="toolbar" style="margin-top:26px">${D.themeBar()}</div>
 </section>
 
@@ -407,8 +454,9 @@ ${statusBlock()}
       fetch("../positioning.json", { cache: "no-store" }).then((r) => r.json()),
       fetch("../scorecard.json", { cache: "no-store" }).then((r) => r.json()),
       fetch("../backtest.json", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
-    ]).then(([memo, card, back]) => {
-      S.memo = memo; S.card = card; S.back = back;
+      fetch("../tracker.json", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([memo, card, back, track]) => {
+      S.memo = memo; S.card = card; S.back = back; S.track = track;
       render();
     }).catch((e) => D.fail("Positioning data not built",
       `Run "python scripts/build_positioning.py" and reload. (${e.message})`));
