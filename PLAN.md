@@ -61,7 +61,7 @@ Consequences that shape everything below:
 
 ## B. Data adapters (all fetchers behind an injectable transport, so they test offline)
 
-- [ ] **B1** `scripts/an/local.py` — load `quality_scores_latest.csv` + `price_screen_latest.csv` into a
+- [x] **B1** `scripts/an/local.py` — load `quality_scores_latest.csv` + `price_screen_latest.csv` into a
       normalized per-ticker record; typed, NaN-safe, unit-aware.
       Verify: `python -m pytest -q tests/test_local.py` (asserts 1,505 scored rows, 150 priced rows,
       and spot-checks EXEL: rank 1, quality 88.6, forward P/E 13.88, dd_ath -1.99%)
