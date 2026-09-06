@@ -115,3 +115,33 @@ def test_a_component_that_moves_against_the_score_can_be_negative(real):
     assert negatives, "a sum-of-variances denominator could never produce one"
     # The note only fires past 1%, so a -0.7% share is correctly left unremarked.
     assert all(v > -0.01 for v in negatives.values()) or any("negative" in n for n in d.notes)
+
+
+def test_too_few_names_reports_no_effective_signal_count():
+    """With too few names every pairwise correlation is None, the matrix falls back to
+    the identity, and the entropy measure reports one independent signal per
+    component: diagnose([], {}) claimed thirteen. Inferring maximal diversification
+    from no data is the worst possible failure for a measure whose job is to say the
+    score is less diversified than it looks."""
+    from an import local, score
+
+    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    for n in (0, 3, 10, 19):
+        subset = recs[:n]
+        d = D.diagnose(subset, score.score_universe(subset))
+        assert d.effective_signal_count is None, f"{n} names claimed {d.effective_signal_count}"
+        assert any("not thirteen" in x for x in d.notes)
+
+    full = D.diagnose(recs, score.score_universe(recs))
+    assert full.effective_signal_count is not None
+    assert 1.0 < full.effective_signal_count < 13.0
+
+
+def test_the_first_note_does_not_hard_code_a_snapshot_date():
+    """It said "dated 2026-09-04" regardless of what was loaded."""
+    from an import local, score
+
+    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    d = D.diagnose(recs, score.score_universe(recs))
+    assert "2026-09-04" not in d.notes[0]
+    assert "single cross section" in d.notes[0]

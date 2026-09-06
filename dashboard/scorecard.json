@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-06T11:21:10",
+ "built_at": "2026-09-06T16:09:12",
  "snapshot_date": "2026-09-04",
  "universe": "the quality top 150 from universe/quality_top150.csv",
  "n_names": 150,
@@ -5871,7 +5871,7 @@
      }
     ],
     "notes": [
-     "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
+     "This is a single cross section. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
      "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 19% of the weight on what is largely one idea.",
      "revisions_90d drives 26% of realised score variance on a nominal weight of 11%. It spreads names out more than its weight implies.",
      "Rank agreement with the existing quality screen is +0.45. The two disagree substantially. At least one of them is wrong about something."
@@ -11897,7 +11897,7 @@
      }
     ],
     "notes": [
-     "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
+     "This is a single cross section. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
      "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 17% of the weight on what is largely one idea.",
      "revisions_90d drives 25% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
      "Rank agreement with the existing quality screen is +0.42. The two disagree substantially. At least one of them is wrong about something."
@@ -17923,7 +17923,7 @@
      }
     ],
     "notes": [
-     "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
+     "This is a single cross section. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
      "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 17% of the weight on what is largely one idea.",
      "revisions_90d drives 24% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
      "Rank agreement with the existing quality screen is +0.46. The two disagree substantially. At least one of them is wrong about something."

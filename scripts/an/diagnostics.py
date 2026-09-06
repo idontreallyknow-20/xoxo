@@ -39,7 +39,10 @@ from .local import TickerRecord
 from .score import ScoreBreakdown, components_for
 from .stats import mean, spearman, stdev
 
-__all__ = ["ComponentPair", "ScoreDiagnostics", "diagnose"]
+__all__ = ["ComponentPair", "ScoreDiagnostics", "diagnose", "MIN_NAMES_FOR_CORRELATION"]
+
+MIN_NAMES_FOR_CORRELATION = 20
+"""Below this many names, a correlation between two components is not an estimate."""
 
 
 @dataclass(frozen=True)
@@ -175,15 +178,23 @@ def diagnose(
                 continue
             rho = lookup.get((a, b), lookup.get((b, a)))
             corr[i][j] = rho if rho is not None else 0.0
+    # With too few names every pairwise correlation comes back None, the matrix
+    # falls back to the identity, and the entropy measure reports one independent
+    # signal per component: diagnose([], {}) claimed thirteen. Maximal
+    # diversification inferred from no data is the worst possible failure mode for a
+    # measure whose whole job is to say the score is less diversified than it looks.
     eff: Optional[float] = None
-    try:
+    if len(tickers) < MIN_NAMES_FOR_CORRELATION:
+        eff = None
+    else:
+      try:
         eig = [max(e, 0.0) for e in _eigenvalues_symmetric(corr)]
         s = sum(eig)
         if s > 0:
             p = [e / s for e in eig if e / s > 1e-12]
             entropy = -sum(x * math.log(x) for x in p)
             eff = math.exp(entropy)
-    except (ValueError, ZeroDivisionError):
+      except (ValueError, ZeroDivisionError):
         eff = None
 
     # Share of realised score variance, as a covariance decomposition.
@@ -236,10 +247,14 @@ def diagnose(
     disagreements = disagreements[:12]
 
     notes: List[str] = [
-        "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, "
-        "so none of it is evidence that the score predicts returns. It is evidence about what the "
-        "score is made of.",
+        "This is a single cross section. Nothing here observes what happened next, so none of it is "
+        "evidence that the score predicts returns. It is evidence about what the score is made of.",
     ]
+    if eff is None:
+        notes.append(
+            f"Fewer than {MIN_NAMES_FOR_CORRELATION} names, so the component correlations are not "
+            "estimated and the effective-signal count is not reported. It is not thirteen."
+        )
     if redundant:
         worst = redundant[0]
         notes.append(
