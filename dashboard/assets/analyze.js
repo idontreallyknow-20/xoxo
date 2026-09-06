@@ -484,7 +484,10 @@ ${r.business.available ? `<section class="reveal" style="--i:3">
 </section>
 
 <section class="reveal" style="--i:5">
-  ${sectionHead("The numbers, four fiscal years", r.trends.length ? r.trends[0].source : "screen")}
+  ${sectionHead(
+      r.trends.length ? `The numbers, ${r.trends[0].periods_labels.length} fiscal years`
+                      : "The numbers over time",
+      r.trends.length ? r.trends[0].source : "not transcribed")}
   ${trendCards(r)}
 </section>
 

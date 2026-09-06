@@ -383,5 +383,7 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 
 /* .m is the narrow right-hand label column and stays on one line by design, but it
  * must not be allowed to set the row's width when its content is long. */
-.ledger .m { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; }
+/* Wide enough for "Yahoo Finance via yfinance", which is the longest label that
+ * actually appears. 22ch clipped it to "Yahoo Finance via yf...". */
+.ledger .m { max-width: 27ch; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 780px) { .ledger .m { max-width: none; white-space: normal; } }
