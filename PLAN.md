@@ -65,7 +65,7 @@ Consequences that shape everything below:
       normalized per-ticker record; typed, NaN-safe, unit-aware.
       Verify: `python -m pytest -q tests/test_local.py` (asserts 1,505 scored rows, 150 priced rows,
       and spot-checks EXEL: rank 1, quality 88.6, forward P/E 13.88, dd_ath -1.99%)
-- [ ] **B2** `scripts/an/research_md.py` — parse `research/*.md` into sections (what it does, quality,
+- [x] **B2** `scripts/an/research_md.py` — parse `research/*.md` into sections (what it does, quality,
       financial table, valuation, earnings, bear case, risks, verdict, sources).
       Verify: `python -m pytest -q tests/test_research_md.py` (all 16 files parse, every required
       section non-empty, financial tables produce >=3 fiscal-year rows)
