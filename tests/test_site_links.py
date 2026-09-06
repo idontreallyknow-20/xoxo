@@ -24,6 +24,7 @@ PAGES = {
     "dashboard/analyze/index.html": "../",
     "dashboard/positioning/index.html": "../",
     "dashboard/analyze/KLAC/index.html": "../../",
+    "dashboard/analyze/compare/index.html": "../../",
 }
 
 

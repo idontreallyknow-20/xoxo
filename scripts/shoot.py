@@ -12,6 +12,7 @@ here so the quality gate is one command.
 from __future__ import annotations
 
 import argparse
+import re
 import http.server
 import functools
 import socket
@@ -23,7 +24,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from an import paths  # noqa: E402
 
 SHOTS = paths.ROOT / "data" / "shots"
-DEFAULT_PAGES = ["/analyze/", "/analyze/KLAC/", "/analyze/BKNG/", "/analyze/AAPL/", "/positioning/", "/index.html"]
+DEFAULT_PAGES = ["/analyze/", "/analyze/KLAC/", "/analyze/BKNG/", "/analyze/AAPL/",
+                 "/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA", "/analyze/compare/", "/positioning/", "/index.html"]
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -121,7 +123,7 @@ def main() -> int:
                             f"{overflow['vw']}; widest: {'; '.join(overflow['worst'])}")
 
                     suffix = f"__{theme}" + (f"__{width}" if width != a.width else "")
-                    name = (route.strip("/").replace("/", "_") or "home") + suffix + ".png"
+                    name = (re.sub(r"[^\w.-]+", "_", route.strip("/")).strip("_") or "home") + suffix + ".png"
                     out = SHOTS / name
                     page.screenshot(path=str(out), full_page=a.full)
                     size = out.stat().st_size

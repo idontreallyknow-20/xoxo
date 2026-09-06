@@ -493,6 +493,7 @@ ${D.chrome("Analyse", "../../")}
       <span>market cap <b>${esc(cap(id.market_cap_usd))}</b></span>
       ${r.valuation.available && r.valuation.next_earnings
         ? `<span>next report <b>${esc(r.valuation.next_earnings)}</b></span>` : ""}
+      <span><a href="../compare/?t=${esc(id.ticker)}">compare &rarr;</a></span>
     </div>
     <div class="chips" style="margin-top:12px">${chips}</div>
   </div>

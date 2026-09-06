@@ -20,7 +20,7 @@ from typing import Dict, Iterable, List, Optional
 
 from . import paths
 
-__all__ = ["write_ticker_pages", "write_analyze_index", "write_positioning_page", "SHELL"]
+__all__ = ["write_ticker_pages", "write_analyze_index", "write_compare_page", "write_positioning_page", "SHELL"]
 
 FONTS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
@@ -117,3 +117,24 @@ def write_positioning_page() -> Path:
         encoding="utf-8",
     )
     return p
+
+
+def write_compare_page() -> Path:
+    """``/analyze/compare/?t=KLAC,BKNG``: the selection is a query string, so the page is one shell."""
+    d = paths.ANALYZE_PAGES_DIR / "compare"
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / "index.html"
+    p.write_text(
+        _shell(
+            title="Compare · Desk",
+            description="Up to four analysed names side by side: the call, the falsifier, four "
+                        "fiscal years, valuation and the score. Research, not personalised financial advice.",
+            root="../../",
+            script="compare.js",
+            setup="window.DESK_COMPARE = true;",
+            data="analysis/<TICKER>.json",
+        ),
+        encoding="utf-8",
+    )
+    return p
+

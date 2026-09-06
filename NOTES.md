@@ -565,3 +565,32 @@ co-registrant row and the footnote-only row.
    for. Loading a quarter with no filter keeps every row, which for a real set is millions of
    dataclasses; filter by `ciks` for anything real.
 
+### 7c. X5, the compare view
+
+`dashboard/analyze/compare/index.html` and `dashboard/assets/compare.js`. The URL is
+`/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA`: a real directory with one shell, the selection in the
+query string, read by the page rather than by a server, so the existing static server and Vercel
+both serve it unchanged. The index page and every deep page link to it.
+
+**Design.** A table, one column per name, rows grouped in the deep page's order: the names, the
+standing call with its falsifier on the row beneath it and the same class, four fiscal years with the
+sparkline and the move over the window, the screen measures, valuation, the score, provenance. Three
+rules from the deep page carry over. Valuation multiples and drawdowns are never coloured and never
+marked best. The best cell in a row is marked only where the row declares which way is better,
+only with two or more real values, and never on a tie, so a one-name comparison marks nothing and
+"price" and "market cap" never do. Missing is `n/a`, never zero: Booking's gross margin row says so
+because Booking reports no cost of revenue.
+
+**Verification.** The row-building half of the script is pure and exported as
+`window.DeskCompare`; `tests/test_compare.py` evaluates the real function in node over the committed
+records and asserts that each cell is the record's own number, that valuation carries no `best` and
+no colour, that the call and the falsifier share a class, and that the address parser upper-cases,
+de-duplicates, caps at four, and reports unknown names rather than dropping them. `shoot.py` renders
+the page with four names and with none, at 1440px and 390px, in two themes, with zero console errors
+and no horizontal overflow; the table scrolls inside its own container with the row labels sticky.
+
+**Two things the first screenshot caught.** Columns came out in fetch-completion order rather than
+address order (fixed: the address decides), and at 390px the row labels inherited the stylesheet's
+`white-space: nowrap` on `th` and ran under the first value cell (fixed: the compare table's row
+headers wrap).
+

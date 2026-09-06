@@ -86,6 +86,7 @@ def main() -> int:
 
     shells = pages.write_ticker_pages(sorted(records), index=index)
     pages.write_analyze_index()
+    pages.write_compare_page()
     pages.write_positioning_page()
 
     deep = sum(1 for r in records.values() if r["depth"] == "deep")

@@ -196,7 +196,15 @@ Consequences that shape everything below:
       replacing the 4-year yfinance limitation called out in README and criteria.md.
 - [ ] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
 - [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
-- [ ] **X5** Compare view across up to 4 analysed tickers.
+- [x] **X5** Compare view across up to 4 analysed tickers. `/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA`:
+      one shell, the selection in the address so a comparison is a link, every cell from the same
+      `analysis/<TICKER>.json` the deep page renders. Seven sections in the deep page's order; the
+      call and the falsifier on adjacent rows with one class; valuation never coloured and never
+      marked best; the best cell marked only where the row declares a direction. The row model is
+      pure and exported, so the tests run it in node over the real records.
+      Verify: `python -m pytest -q tests/test_compare.py tests/test_site_links.py tests/test_css_tokens.py`
+      and `python scripts/shoot.py --mobile --themes night paper` (compare page in the default list,
+      zero console errors, no horizontal overflow at 390px).
 - [ ] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.
 - [x] **X10** Power analysis: how many rebalances until a backtest here could detect anything, and
       what size of edge stays invisible. Answered analytically and re-measured through the real

@@ -404,3 +404,34 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
 .cols > * { min-width: 0; }
 @media (max-width: 780px) { .cols { grid-template-columns: 1fr; gap: 30px; } }
+
+/* ---- compare: up to four names side by side ------------------------------
+ * The first column is sticky so the row label stays put while the table
+ * scrolls inside .scroll on a phone. The page itself never scrolls sideways.
+ * .best is a weight and a mark, never a colour, and valuation rows never carry
+ * it (compare.js only sets it where a row declares which way is better). */
+.cmp th, .cmp td { min-width: 150px; vertical-align: top; }
+.cmp th:first-child, .cmp td:first-child { position: sticky; left: 0; background: var(--paper); z-index: 1;
+                                            min-width: 150px; max-width: 200px; padding-right: 14px; }
+.cmp thead th:first-child { min-width: 150px; }
+.cmp tbody th { text-align: left; font-family: var(--mono); font-size: 11px; color: var(--ink-2); font-weight: 400;
+                padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule-soft);
+                white-space: normal; overflow-wrap: anywhere; }
+.cmp tbody tr:hover th { background: var(--mark-soft); }
+.cmp td { font-size: 14px; }
+.cmp td.best { font-weight: 500; box-shadow: inset 3px 0 0 var(--ink); padding-left: 10px; }
+.cmp tr.cmp-call td { font-size: 15px; line-height: 1.35; }
+.cmp .cmp-tv { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.cmp .cmp-ts, .cmp .cmp-note { font-family: var(--mono); font-size: 11px; }
+.cmp .cmp-note { margin-top: 3px; white-space: normal; }
+.cmp .spark { display: block; }
+.cmp .conv { display: inline-flex; gap: 3px; margin-left: 6px; vertical-align: middle; }
+.cmp .chip { display: inline-block; margin-bottom: 2px; }
+.cmp-pick { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.cmp-pick .chips { gap: 4px; }
+.cmp-pick .chip button { border: none; padding: 0 0 0 6px; font-size: 13px; line-height: 1; background: none; color: inherit; }
+.cmp-pick input[type="search"] { max-width: 420px; }
+.cmp-hits { display: flex; flex-wrap: wrap; gap: 0; }
+.cmp-hits button { font-size: 12px; margin-right: -1px; margin-bottom: -1px; }
+.cmp-hits button .tk { margin-right: 6px; }
+

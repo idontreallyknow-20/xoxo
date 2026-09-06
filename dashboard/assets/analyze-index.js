@@ -100,7 +100,8 @@ ${D.chrome("Analyse", "../")}
         `<button data-depth="${k}"${k === S.depth ? ' class="on"' : ""}>${esc(l)}</button>`).join("")}
     </div>
     <input type="search" id="q" placeholder="find a ticker, company, sector or industry" value="${esc(S.q)}">
-    <span class="right"><a class="mono" style="font-size:12px" href="../positioning/">positioning &rarr;</a></span>
+    <span class="right"><a class="mono" style="font-size:12px" href="compare/">compare &rarr;</a>
+      <a class="mono" style="font-size:12px;margin-left:14px" href="../positioning/">positioning &rarr;</a></span>
   </div>
   <div id="tbl">${table()}</div>
 </section>

@@ -330,6 +330,15 @@ Apple's FY2023 net sales of $383.285bn from a hand-built `num.txt`, and derives 
 quarters the filings never state ($89.498bn and $90.146bn, both what Apple reported). It has not
 downloaded a real quarter yet, for the same reason as everything else in this session.
 
+### X5, compare up to four names side by side
+
+`/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA`. Linked from the index toolbar and from every deep page.
+The selection is in the address, so a comparison is a link. Every cell is the same field the deep
+page renders, the call and the falsifier sit on adjacent rows at the same weight, valuation is never
+coloured or marked best, and the best cell in a business row is marked only where the row knows
+which way is better. Rendered clean at desktop and phone width in two themes; the row model is
+tested in node over the real records.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -340,7 +349,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 752 (699 from the first session, 29 for X7, 24 for X8) |
+| tests | 766 (699 from the first session, 29 for X7, 24 for X8, 14 for X5) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
