@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-06T10:49:57",
+ "built_at": "2026-09-06T10:57:43",
  "snapshot_date": "2026-09-04",
  "variant": "quality_value",
  "status_of_the_score": {
@@ -303,7 +303,19 @@
     "Sits -12% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Two quarters of negative room nights, take rate down 100 basis points, or a close under $150."
+    {
+     "text": "Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "two consecutive quarters of negative room nights, take rate falling more than 100 basis points year over year, or buybacks pausing.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $150.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -384,7 +396,19 @@
     "Sits -25% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Digital Media ARR growth under 8%, net new ARR down twice, or a close under $220."
+    {
+     "text": "Digital Media ARR growth under 8%, net new ARR down twice, or a close under $220.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "Digital Media ARR growth falling under 8%, two consecutive quarters of net new ARR decline, a cut to fiscal 2027 guidance below fiscal 2026, or a poorly received CEO appointment.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $220.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -469,7 +493,19 @@
     "Sits -30% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "CAG recurring growth under 6%, or a close under $410."
+    {
+     "text": "CAG recurring growth under 6%, or a close under $410.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "CAG recurring growth under 6%, US clinic visits down more than 3% for a full year, or a competitor's in-clinic analyzer winning corporate vet chains.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $410.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -555,7 +591,19 @@
     "Sits -44% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130."
+    {
+     "text": "December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "December quarter guidance under $3.6 billion, calendar 2027 WFE outlook cut by 15% or more, or a new export rule that removes another 10% of revenue.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $130.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     4200.0,
@@ -642,7 +690,19 @@
     "Sits -10% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Azure growth under 30% with capex still rising, or a close under $400."
+    {
+     "text": "Azure growth under 30% with capex still rising, or a close under $400.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "Azure growth under 30% while capex keeps rising, OpenAI restructuring that reduces committed Azure spend, or free cash flow margin under 20% for a full year.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $400.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -731,8 +791,19 @@
     "Sits -34% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "2027 equipment spending guided down, or a close under $215.",
-    "calendar 2027 WFE guided down, December quarter guidance below the September quarter, or gross margin under 47%."
+    {
+     "text": "2027 equipment spending guided down, or a close under $215.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "calendar 2027 WFE guided down, December quarter guidance below the September quarter, or gross margin under 47%.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $215.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -821,7 +892,19 @@
     "Sits -1% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650."
+    {
+     "text": "Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "Dupixent growth under 15%, Eylea HD sales down sequentially for two quarters, or a pricing law that hits Dupixent specifically.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $650.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -910,8 +993,19 @@
     "Sits -27% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Billings growth under 5% twice, or a close under $185.",
-    "billings growth under 5% for two quarters, fiscal 2028 guidance below fiscal 2027, or net revenue retention falling below 100%."
+    {
+     "text": "Billings growth under 5% twice, or a close under $185.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "billings growth under 5% for two quarters, fiscal 2028 guidance below fiscal 2027, or net revenue retention falling below 100%.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $185.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -1000,8 +1094,14 @@
     "Sits -30% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "subscription growth under 18%, operating margin guidance cut, or a large customer publicly replacing it with an agent platform.",
-    "A close under $110."
+    {
+     "text": "subscription growth under 18%, operating margin guidance cut, or a large customer publicly replacing it with an agent platform.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $110.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -1090,7 +1190,19 @@
     "Sits -38% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Procedure growth under 10%, placements down twice, or a close under $290."
+    {
+     "text": "Procedure growth under 10%, placements down twice, or a close under $290.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "da Vinci procedure growth under 10%, system placements down year over year for two quarters, or instrument pricing cuts disclosed on a call.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $290.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -1179,7 +1291,19 @@
     "Sits -35% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Insurance unit declines past 8%, or a close under $25."
+    {
+     "text": "Insurance unit declines past 8%, or a close under $25.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "insurance unit declines accelerating past 8%, service revenue per unit falling, or a large insurer moving volume to IAA.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $25.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,
@@ -1268,8 +1392,19 @@
     "Sits -17% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
-    "Search growth under 5% twice, adtech breakup, or a close under $260.",
-    "search revenue growth under 5% for two quarters, an adtech ruling that breaks up the ad stack, or Cloud operating margin reversing."
+    {
+     "text": "Search growth under 5% twice, adtech breakup, or a close under $260.",
+     "source": "as logged in journal.md",
+     "date": "2026-09-04"
+    },
+    {
+     "text": "search revenue growth under 5% for two quarters, an adtech ruling that breaks up the ad stack, or Cloud operating margin reversing.",
+     "source": "thesis killers, from the research note"
+    },
+    {
+     "text": "A close under $260.",
+     "source": "price trigger, from the research note"
+    }
    ],
    "suggested_band_usd": [
     6000.0,

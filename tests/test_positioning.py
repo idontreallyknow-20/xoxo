@@ -39,23 +39,38 @@ def test_everything_actionable_has_a_falsifier(memo):
     it wrong. A candidate without one is not a candidate."""
     for c in memo["candidates"]:
         assert c["what_would_be_wrong"], c["ticker"]
-        assert all(len(w) > 15 for w in c["what_would_be_wrong"]), c["ticker"]
+        assert all(len(w["text"]) > 15 for w in c["what_would_be_wrong"]), c["ticker"]
 
 
-def test_falsifiers_are_not_printed_twice_in_different_words(memo):
-    """The journal's wrong-if and the note's thesis killers are the same person on
-    the same risks. Printing both restates the condition."""
+def test_every_falsifier_says_where_it_came_from(memo):
+    """No merging, because merging means guessing at semantic equivalence. An earlier
+    version compared shared words against the shorter phrase, which let two common
+    words delete a longer and more specific condition; dividing by the union instead
+    kept obvious restatements. A falsifier is the last thing to quietly drop."""
+    sources = set()
     for c in memo["candidates"]:
-        seen = []
         for w in c["what_would_be_wrong"]:
-            assert not P._covered_by(w, seen), f"{c['ticker']}: {w!r} restates an earlier line"
-            seen.append(w)
+            assert w["source"], c["ticker"]
+            sources.add(w["source"])
+    assert "as logged in journal.md" in sources
+    assert "thesis killers, from the research note" in sources
+    assert "price trigger, from the research note" in sources
+
+
+def test_a_specific_threshold_is_never_deleted_as_a_restatement(memo):
+    """"under 8%" and "under 6%" are different conditions. The first dedup stripped
+    numeric tokens under three characters and could not tell them apart."""
+    idxx = next(c for c in memo["candidates"] if c["ticker"] == "IDXX")
+    texts = " ".join(w["text"] for w in idxx["what_would_be_wrong"])
+    assert "6%" in texts
+    assert "$410" in texts
+    assert "US clinic visits" in texts, "the note's more specific condition must survive"
 
 
 def test_falsifiers_are_whole_sentences_not_fragments(memo):
     for c in memo["candidates"]:
         for w in c["what_would_be_wrong"]:
-            assert not w.lower().startswith(("or ", "and ")), f"{c['ticker']}: {w!r}"
+            assert not w["text"].lower().startswith(("or ", "and ")), f"{c['ticker']}: {w!r}"
 
 
 def test_research_queue_is_labelled_as_not_for_capital(memo):

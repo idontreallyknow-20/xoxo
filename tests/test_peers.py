@@ -147,3 +147,24 @@ def test_deterministic(pv):
     a = peers.build_peer_valuations(recs)
     b = peers.build_peer_valuations(recs)
     assert {t: v.gap for t, v in a.items()} == {t: v.gap for t, v in b.items()}
+
+
+def test_the_gap_sentence_describes_where_the_ranks_actually_are(pv):
+    """"Neither number crosses a quartile line" was a fixed clause on a branch reached
+    whenever the name was not both cheap-and-good or both dear-and-poor, which
+    includes plenty of names that do cross one."""
+    table, _ = pv
+    # Only the names that fall through to the gap branch. A name that is both cheap
+    # and good takes the earlier, more specific quadrant branch, which is right.
+    gapped = [v for v in table.values()
+              if v.verdict in ("priced below where its quality sits",
+                               "priced above where its quality sits")]
+    assert len(gapped) >= 10
+    for v in gapped:
+        assert "Neither number crosses" not in v.reasoning
+        assert "points apart" in v.reasoning
+        assert any(w in v.reasoning for w in ("cheapest quartile", "dearest quartile", "mid-pack"))
+    assert not any("Neither number crosses" in v.reasoning for v in table.values())
+    google = table["GOOGL"]
+    assert "dearest quartile on price" in google.reasoning
+    assert "mid-pack on quality" in google.reasoning

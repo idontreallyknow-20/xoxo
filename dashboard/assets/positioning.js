@@ -45,7 +45,7 @@
     const band = c.suggested_band_usd;
     const chips = [
       ...(c.buckets || []).map((b) => `<span class="chip on">${esc(b)}</span>`),
-      `<span class="chip">score ${esc(num(c.percentile, 0))}</span>`,
+      `<span class="chip">${esc(num(c.percentile, 0))}th pctile</span>`,
       c.thinly_evidenced ? `<span class="chip warn">thin evidence</span>` : "",
       c.depth === "screen" ? `<span class="chip warn">no filing read</span>` : "",
       c.peer_verdict && c.peer_verdict !== "in the middle"
@@ -53,7 +53,10 @@
     ].filter(Boolean).join("");
 
     const why = c.reasoning.map((r) => `<p>${esc(r)}</p>`).join("");
-    const wrong = c.what_would_be_wrong.map((w) => `<li>${esc(w)}</li>`).join("");
+    const wrong = c.what_would_be_wrong.map((w) => typeof w === "string"
+      ? `<li>${esc(w)}</li>`
+      : `<li>${esc(w.text)}<span class="src">${esc(w.source)}${
+          w.date ? ", " + esc(w.date) : ""}</span></li>`).join("");
     const logged = c.already_logged;
 
     return `<article class="cand">
@@ -110,7 +113,7 @@
     return `<div class="note warn">${esc(S.memo.research_queue_note)}</div>
       <div class="scroll"><table><thead><tr>
         <th class="n">#</th><th>ticker</th><th>company</th><th>sector</th>
-        <th class="n">score</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th class="n">off high</th>
+        <th class="n">pctile</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th class="n">off high</th>
         <th>against peers</th>
       </tr></thead><tbody>${rows}</tbody></table></div>`;
   }
@@ -137,7 +140,7 @@
     return `<div class="note warn">${esc(S.memo.reviewed_and_declined_note)}</div>
       <div class="scroll"><table><thead><tr>
         <th>ticker</th><th>company</th><th>stance</th><th>the note's verdict</th>
-        <th class="n">score</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th>against peers</th>
+        <th class="n">pctile</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th>against peers</th>
       </tr></thead><tbody>${body}</tbody></table></div>
       ${gaps.length ? `<div class="note">Where the score and the reading disagree most: ${
         esc(gaps.join("; "))}. Not sized either way; the disagreement is the finding.</div>` : ""}`;
@@ -272,7 +275,7 @@
         <span class="right muted mono" style="font-size:12px">${rows.length} of ${v.rows.length}</span>
       </div>
       <div class="scroll"><table><thead><tr>
-        <th class="n">#</th><th>ticker</th><th>company</th><th>sector</th><th class="n">score</th>
+        <th class="n">#</th><th>ticker</th><th>company</th><th>sector</th><th class="n">pctile</th>
         <th class="n">coverage</th><th class="n">quality screen</th><th class="n">fwd P/E</th>
         <th class="n">vs median</th><th class="n">est 90d</th><th class="n">off high</th><th>bucket</th>
       </tr></thead><tbody>${body}</tbody></table></div>

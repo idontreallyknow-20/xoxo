@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:49:56",
+ "built_at": "2026-09-06T10:57:39",
  "depth": "screen",
  "identity": {
   "ticker": "ZTS",
@@ -244,7 +244,7 @@
    "quality_rank": 0.5,
    "gap": 0.42,
    "verdict": "priced below where its quality sits",
-   "reasoning": "Neither number crosses a quartile line, but they are 42 points apart: the market is pricing it well below where its measured characteristics rank among its peers. That gap is the observation. Whether it is an opportunity depends entirely on something outside these numbers.",
+   "reasoning": "It is the cheapest quartile on price and mid-pack on quality, 42 points apart: the market is pricing it below where its measured characteristics rank among its peers. That gap is the observation. Whether it is an opportunity depends entirely on something outside these numbers.",
    "cheapest_peers": [
     {
      "ticker": "HRMY",

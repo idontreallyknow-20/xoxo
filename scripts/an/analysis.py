@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -489,12 +490,20 @@ def build_all(*, narrative_dir: Optional[Path] = None, built_at: Optional[str] =
     wanted = sorted({r.ticker for r in top150} | set(notes))
     built_at = built_at or dt.datetime.now().replace(microsecond=0).isoformat()
     out: Dict[str, Dict[str, Any]] = {}
+    orphaned: List[str] = []
     for t in wanted:
         rec = universe.get(t)
         if rec is None:
+            # Somebody wrote a deep dive for a name the screen no longer carries.
+            # That is worth a line: the note exists, the page does not, and the
+            # "16 deep" count printed by the build would not change.
+            orphaned.append(t)
             continue
         out[t] = build_record(
             rec, note=notes.get(t), scores=scores, peer=peer_vals.get(t),
             entries=entries.get(t, []), narrative_dir=narrative_dir, built_at=built_at,
         )
+    if orphaned:
+        print(f"research notes with no row in the universe, so no page was built: "
+              f"{', '.join(orphaned)}", file=sys.stderr)
     return out

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-06T10:49:57",
+  "built_at": "2026-09-06T10:57:40",
   "snapshot_date": "2026-09-04",
   "status": "NOT RUN",
   "why_not_run": [
@@ -480,19 +480,19 @@
       ],
       "effective_signal_count": 9.77,
       "variance_share": {
-        "roic": 0.227,
-        "roic_trend": 0.0172,
-        "fcf": 0.1064,
-        "growth": 0.0371,
-        "margin_stability": 0.0246,
-        "balance": 0.0228,
-        "value_ev": 0.1508,
-        "value_pe": 0.0348,
-        "revisions_90d": 0.2051,
-        "revisions_30d": 0.1384,
-        "revision_breadth": 0.0113,
-        "share_count": 0.016,
-        "short_interest": 0.0085
+        "roic": 0.1914,
+        "roic_trend": 0.0204,
+        "fcf": 0.0734,
+        "growth": 0.0444,
+        "margin_stability": -0.0069,
+        "balance": 0.0192,
+        "value_ev": 0.0813,
+        "value_pe": 0.034,
+        "revisions_90d": 0.2625,
+        "revisions_30d": 0.2123,
+        "revision_breadth": 0.0471,
+        "share_count": 0.0133,
+        "short_interest": 0.0074
       },
       "nominal_weight": {
         "roic": 0.15,
@@ -595,7 +595,7 @@
       "notes": [
         "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
         "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 19% of the weight on what is largely one idea.",
-        "revisions_90d drives 21% of realised score variance on a nominal weight of 11%. It spreads names out more than its weight implies.",
+        "revisions_90d drives 26% of realised score variance on a nominal weight of 11%. It spreads names out more than its weight implies.",
         "Rank agreement with the existing quality screen is +0.45. The two disagree substantially. At least one of them is wrong about something."
       ]
     },
@@ -786,20 +786,20 @@
       ],
       "effective_signal_count": 10.49,
       "variance_share": {
-        "roic": 0.2097,
-        "roic_trend": 0.0159,
-        "fcf": 0.0983,
-        "growth": 0.0343,
-        "margin_stability": 0.0227,
-        "balance": 0.0211,
-        "value_ev": 0.1394,
-        "value_pe": 0.0321,
-        "revisions_90d": 0.1895,
-        "revisions_30d": 0.1279,
-        "revision_breadth": 0.0104,
-        "share_count": 0.0148,
-        "short_interest": 0.0079,
-        "momentum_52w": 0.0761
+        "roic": 0.1781,
+        "roic_trend": 0.0135,
+        "fcf": 0.0573,
+        "growth": 0.0329,
+        "margin_stability": -0.0041,
+        "balance": 0.0156,
+        "value_ev": 0.0593,
+        "value_pe": 0.0163,
+        "revisions_90d": 0.2481,
+        "revisions_30d": 0.2076,
+        "revision_breadth": 0.0458,
+        "share_count": 0.017,
+        "short_interest": 0.0106,
+        "momentum_52w": 0.102
       },
       "nominal_weight": {
         "roic": 0.1364,
@@ -903,7 +903,7 @@
       "notes": [
         "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
         "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 17% of the weight on what is largely one idea.",
-        "revisions_90d drives 19% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
+        "revisions_90d drives 25% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
         "Rank agreement with the existing quality screen is +0.42. The two disagree substantially. At least one of them is wrong about something."
       ]
     },
@@ -1094,20 +1094,20 @@
       ],
       "effective_signal_count": 10.28,
       "variance_share": {
-        "roic": 0.216,
-        "roic_trend": 0.0164,
-        "fcf": 0.1013,
-        "growth": 0.0353,
-        "margin_stability": 0.0234,
-        "balance": 0.0217,
-        "value_ev": 0.1436,
-        "value_pe": 0.0331,
-        "revisions_90d": 0.1952,
-        "revisions_30d": 0.1317,
-        "revision_breadth": 0.0107,
-        "share_count": 0.0152,
-        "short_interest": 0.0081,
-        "reversal_ath": 0.0482
+        "roic": 0.1741,
+        "roic_trend": 0.022,
+        "fcf": 0.0741,
+        "growth": 0.0472,
+        "margin_stability": -0.0089,
+        "balance": 0.021,
+        "value_ev": 0.1051,
+        "value_pe": 0.0527,
+        "revisions_90d": 0.2383,
+        "revisions_30d": 0.1929,
+        "revision_breadth": 0.043,
+        "share_count": 0.01,
+        "short_interest": 0.0011,
+        "reversal_ath": 0.0275
       },
       "nominal_weight": {
         "roic": 0.1364,
@@ -1211,7 +1211,7 @@
       "notes": [
         "This is a single cross section dated 2026-09-04. Nothing here observes what happened next, so none of it is evidence that the score predicts returns. It is evidence about what the score is made of.",
         "3 component pair(s) correlate above 0.75. The worst is revisions_90d and revisions_30d at +0.77, which together carry 17% of the weight on what is largely one idea.",
-        "revisions_90d drives 20% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
+        "revisions_90d drives 24% of realised score variance on a nominal weight of 10%. It spreads names out more than its weight implies.",
         "Rank agreement with the existing quality screen is +0.46. The two disagree substantially. At least one of them is wrong about something."
       ]
     }

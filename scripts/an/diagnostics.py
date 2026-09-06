@@ -186,15 +186,28 @@ def diagnose(
     except (ValueError, ZeroDivisionError):
         eff = None
 
-    # Share of realised score variance. A component only matters as much as it
-    # actually varies, which is not what the weights table says.
-    contrib_var: Dict[str, float] = {}
-    for k in keys:
-        col = [scores[t].contributions.get(k, 0.0) for t in tickers]
-        sd = stdev(col) or 0.0
-        contrib_var[k] = sd * sd
-    tot_var = sum(contrib_var.values()) or 1.0
-    variance_share = {k: v / tot_var for k, v in contrib_var.items()}
+    # Share of realised score variance, as a covariance decomposition.
+    #
+    # The first version divided each component's own variance by the sum of those
+    # variances. That denominator is not the variance of the score: the score is a
+    # sum of correlated components, so Var(total) = sum of variances plus twice the
+    # covariances, and on this universe the two differ by a third. It also could
+    # never go negative, when a component that moves against the rest genuinely
+    # subtracts from the spread. Cov(component, total) / Var(total) is the standard
+    # decomposition for a sum: it sums to exactly one and it can be negative.
+    totals = [scores[t].score for t in tickers]
+    mean_total = mean(totals) or 0.0
+    var_total = (stdev(totals) or 0.0) ** 2
+    variance_share: Dict[str, float] = {}
+    if var_total > 0 and len(tickers) > 1:
+        n = len(tickers)
+        for k in keys:
+            col = [scores[t].contributions.get(k, 0.0) for t in tickers]
+            mk = mean(col) or 0.0
+            cov = sum((c - mk) * (tt - mean_total) for c, tt in zip(col, totals)) / (n - 1)
+            variance_share[k] = cov / var_total
+    else:
+        variance_share = {k: 0.0 for k in keys}
 
     covs = [scores[t].coverage for t in tickers]
     coverage_distribution = {
@@ -238,6 +251,14 @@ def diagnose(
         notes.append(
             f"Thirteen named components behave like about {eff:.1f} independent ones. The weights "
             "table overstates how diversified the score is."
+        )
+    negative = sorted((v, k) for k, v in variance_share.items() if v < -0.01)
+    if negative:
+        v, k = negative[0]
+        notes.append(
+            f"{k} contributes {v:.0%} of realised score variance, which is negative: it moves "
+            "against the rest of the score often enough to narrow the spread rather than widen it. "
+            "That is possible because this is a covariance decomposition, not a sum of variances."
         )
     over = sorted(((variance_share[k] - weight_of[k], k) for k in keys), reverse=True)
     if over and over[0][0] > 0.08:

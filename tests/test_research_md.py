@@ -114,3 +114,38 @@ def test_parser_refuses_a_bad_title():
 def test_template_is_skipped(notes):
     assert "TICKER" not in notes
     assert (paths.RESEARCH_DIR / "_TEMPLATE.md").exists()
+
+
+def test_a_short_table_row_raises_rather_than_shifting_every_column():
+    """Padding a short row to seven cells and then indexing positionally does not
+    fail, it silently re-reads every later column as the wrong metric: the gross
+    margin becomes the operating margin, the FCF becomes the share count."""
+    good = (paths.RESEARCH_DIR / "KLAC.md").read_text(encoding="utf-8")
+    broken = good.replace(
+        "| FY2026 (2026-06-30) | 13.58 | 61.3% | 41.7% | 3.77 | 1,320 | 4.24 |",
+        "| FY2026 (2026-06-30) | 13.58 | 41.7% | 3.77 | 1,320 | 4.24 |")
+    with pytest.raises(R.ParseError, match="6 cells"):
+        R.parse(broken)
+
+
+def test_a_note_whose_filename_and_heading_disagree_raises(tmp_path):
+    """A copy of KLAC.md saved as KLAC-old.md parses, keys itself as KLAC and
+    overwrites the real one, last write wins, nothing said."""
+    src = (paths.RESEARCH_DIR / "KLAC.md").read_text(encoding="utf-8")
+    (tmp_path / "KLAC.md").write_text(src, encoding="utf-8")
+    (tmp_path / "KLAC-old.md").write_text(src, encoding="utf-8")
+    with pytest.raises(R.ParseError, match="filename and the heading must agree"):
+        R.load_all(tmp_path)
+
+
+def test_one_malformed_note_does_not_take_the_others_down(tmp_path):
+    for t in ("KLAC", "BKNG"):
+        (tmp_path / f"{t}.md").write_text(
+            (paths.RESEARCH_DIR / f"{t}.md").read_text(encoding="utf-8"), encoding="utf-8")
+    (tmp_path / "BAD.md").write_text("# BAD  Broken Co\n\nstats\n\n## What the company does\nx\n",
+                                     encoding="utf-8")
+    with pytest.raises(R.ParseError):
+        R.load_all(tmp_path)
+    lenient = R.load_all(tmp_path, strict=False)
+    assert set(lenient) == {"KLAC", "BKNG", "_errors"}
+    assert "BAD" in lenient["_errors"]

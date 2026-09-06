@@ -17,7 +17,7 @@
     { key: "company", label: "company", cls: "" },
     { key: "sector", label: "sector", cls: "" },
     { key: "depth", label: "depth", cls: "" },
-    { key: "score", label: "score", cls: "n" },
+    { key: "score", label: "pctile", cls: "n" },
     { key: "coverage", label: "coverage", cls: "n" },
     { key: "price", label: "price", cls: "n" },
     { key: "forward_pe", label: "fwd P/E", cls: "n" },

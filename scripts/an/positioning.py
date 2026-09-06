@@ -246,56 +246,49 @@ def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags,
     return out
 
 
-_STOP = {"a", "an", "and", "the", "or", "of", "in", "to", "under", "over", "for", "at", "on",
-         "is", "than", "more", "less", "two", "close", "that", "with", "by", "from"}
+def _falsifiers(rec: local.TickerRecord, note, logged: Optional[Dict[str, Any]]
+                ) -> List[Dict[str, Any]]:
+    """What would prove the idea wrong, each line labelled with where it came from.
 
+    There is no similarity heuristic here any more, and that is the fix rather than
+    an omission. The journal's "wrong if" line and the note's thesis killers are two
+    renderings of the same underlying conditions by the same person, so any attempt
+    to merge them is guessing at semantic equivalence. The first version divided the
+    shared-word count by the shorter phrase, which let two common words delete a
+    longer and more specific condition. Dividing by the union instead kept obvious
+    restatements. Both are wrong in the same way: a falsifier is the last thing to
+    quietly drop, and "under 8%" and "under 6%" are different conditions.
 
-def _covered_by(candidate: str, existing: Iterable[str]) -> bool:
-    """Is this falsifier already said by one of the others, in different words?
-
-    The journal's "wrong if" line and the note's thesis killers are written by the
-    same person about the same risks, so listing both prints the same condition
-    twice in slightly different phrasing. Comparing content words catches that
-    without needing them to match exactly.
+    So nothing is dropped. Each source gets its own line, the reader can see that
+    they agree, and the exact wording each was written in survives.
     """
-    words = {w.strip(".,;$%") for w in candidate.lower().split()} - _STOP
-    words = {w for w in words if len(w) > 2}
-    if not words:
-        return True
-    for e in existing:
-        other = {w.strip(".,;$%") for w in e.lower().split()} - _STOP
-        other = {w for w in other if len(w) > 2}
-        if not other:
-            continue
-        # Symmetric: one condition can restate another by adding detail as well as
-        # by dropping it, so compare against the shorter of the two.
-        if len(words & other) / min(len(words), len(other)) >= 0.6:
-            return True
-    return False
-
-
-def _falsifiers(rec: local.TickerRecord, note, logged: Optional[Dict[str, Any]]) -> List[str]:
-    out: List[str] = []
+    out: List[Dict[str, Any]] = []
     if logged and logged.get("wrong_if"):
-        out.append(logged["wrong_if"])
+        out.append({"text": logged["wrong_if"], "source": "as logged in journal.md",
+                    "date": logged.get("date")})
     if note:
         for k in note.thesis_killers[:3]:
-            if not _covered_by(k, out):
-                out.append(k if k.endswith(".") else k + ".")
+            out.append({"text": k if k.endswith(".") else k + ".",
+                        "source": "thesis killers, from the research note"})
         if note.price_trigger is not None:
-            line = f"A close under ${note.price_trigger:,.0f}."
-            if not _covered_by(line, out):
-                out.append(line)
+            out.append({"text": f"A close under ${note.price_trigger:,.0f}.",
+                        "source": "price trigger, from the research note"})
     if not out:
+        out.append({
+            "text": (
+                "No falsifier has been written for this name. Nothing should be bought on this page "
+                "until one is: the rule in criteria.md is that every recommendation carries the "
+                "price or event that would prove it wrong."
+            ),
+            "source": "absent",
+        })
         v = rec.valuation
-        out.append(
-            "No falsifier has been written for this name. Nothing should be bought on this page until "
-            "one is: the rule in criteria.md is that every recommendation carries the price or event "
-            "that would prove it wrong."
-        )
         if v and v.eps_fy1_chg_90d is not None:
-            out.append("A mechanical stand-in until then: two consecutive months of next-year "
-                       "consensus falling would remove the revision component that put it here.")
+            out.append({
+                "text": "A mechanical stand-in until then: two consecutive months of next-year "
+                        "consensus falling would remove the revision component that put it here.",
+                "source": "mechanical stand-in, not written by anyone",
+            })
     return out
 
 
@@ -630,8 +623,13 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
             "candidates for the next deep dive, not candidates for capital. The rule in criteria.md is "
             "that every recommendation carries the price or event that would prove it wrong, and a "
             "screen row cannot supply one."
-            + (f" The score's single highest-ranked name, {queue[0].ticker}, is one of them, which is a "
-               "gap in the process rather than a recommendation." if queue else "")
+            + (
+                (f" The score's single highest-ranked name, {queue[0].ticker}, is one of them, which "
+                 "is a gap in the process rather than a recommendation.")
+                if queue and ordered and queue[0].ticker == ordered[0].ticker else
+                (f" The highest-ranked name nobody has read is {queue[0].ticker}, at the "
+                 f"{queue[0].percentile:.0f}th percentile.") if queue else ""
+            )
         ),
         "variant_agreement": {
             "top_n": top_n,

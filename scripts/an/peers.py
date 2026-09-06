@@ -170,18 +170,23 @@ def _verdict(price_rank: Optional[float], quality_rank: Optional[float]) -> Tupl
                 "It trades in the dearer end of its peer set while its measured quality sits in the "
                 "weaker end. That is the pairing that most often ends badly, and it is worth knowing "
                 "before the own-history comparison says it is cheap versus its own past bubble.")
-    if gap >= WIDE_GAP:
-        return ("priced below where its quality sits",
-                f"Neither number crosses a quartile line, but they are {gap * 100:.0f} points apart: "
-                "the market is pricing it well below where its measured characteristics rank among "
-                "its peers. That gap is the observation. Whether it is an opportunity depends "
-                "entirely on something outside these numbers.")
-    if gap <= -WIDE_GAP:
+    if abs(gap) >= WIDE_GAP:
+        # Describe where the two ranks actually sit rather than asserting a fixed
+        # clause. These branches are reached whenever the name is not both cheap and
+        # good or both dear and poor, which includes plenty of names that do cross a
+        # quartile line on one side.
+        where_price = "the cheapest quartile" if cheap else "the dearest quartile" if dear else "mid-pack"
+        where_quality = "the best quartile" if good else "the weakest quartile" if poor else "mid-pack"
+        lead = f"It is {where_price} on price and {where_quality} on quality"
+        if gap > 0:
+            return ("priced below where its quality sits",
+                    f"{lead}, {gap * 100:.0f} points apart: the market is pricing it below where its "
+                    "measured characteristics rank among its peers. That gap is the observation. "
+                    "Whether it is an opportunity depends entirely on something outside these numbers.")
         return ("priced above where its quality sits",
-                f"Neither number crosses a quartile line, but they are {abs(gap) * 100:.0f} points "
-                "apart the other way: it is priced well above where its measured characteristics "
-                "rank among its peers. Sometimes that is the market seeing something these measures "
-                "do not; sometimes it is not.")
+                f"{lead}, {abs(gap) * 100:.0f} points apart the other way: it is priced above where "
+                "its measured characteristics rank among its peers. Sometimes that is the market "
+                "seeing something these measures do not; sometimes it is not.")
     if cheap and poor:
         return ("cheap, and the quality suggests why",
                 "It is cheap against its peers and its measured quality is also in the weaker end. "

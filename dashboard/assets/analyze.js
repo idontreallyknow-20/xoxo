@@ -377,8 +377,18 @@
     if (!s.available) return `<div class="empty">Not scored.</div>`;
     const qv = s.variants.quality_value;
     const contribs = Object.entries(qv.contributions).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
-    const maxAbs = Math.max(...contribs.map(([, v]) => Math.abs(v)), 0.01);
+    const maxAbs = Math.max(...contribs.filter(([k]) => !(qv.missing || []).includes(k))
+      .map(([, v]) => Math.abs(v)), 0.01);
+    const missing = new Set(qv.missing || []);
     const bars = contribs.map(([k, val]) => {
+      // A component with no data contributes exactly 0.0. Drawn as a bar it is
+      // indistinguishable from one that was measured and came out neutral, which is
+      // a different fact entirely.
+      if (missing.has(k)) {
+        return `<div class="bar"><div class="k muted">${esc(k.replace(/_/g, " "))}</div>
+          <div class="t" style="background:none;border-bottom:1px dashed var(--rule)"></div>
+          <div class="v muted">no data</div></div>`;
+      }
       const w = (Math.abs(val) / maxAbs) * 50;
       const style = val >= 0 ? `left:50%;width:${w}%` : `right:50%;width:${w}%`;
       return `<div class="bar"><div class="k">${esc(k.replace(/_/g, " "))}</div>
@@ -434,7 +444,7 @@
 
     const chips = [
       ...buckets.map((b) => `<span class="chip on">${esc(b)}</span>`),
-      r.score.available ? `<span class="chip">score ${esc(num(r.score.variants.quality_value.percentile, 0))}</span>` : "",
+      r.score.available ? `<span class="chip">${esc(num(r.score.variants.quality_value.percentile, 0))}th pctile</span>` : "",
       `<span class="chip${r.depth === "deep" ? "" : " warn"}">${esc(depthLabel)}</span>`,
     ].filter(Boolean).join("");
 

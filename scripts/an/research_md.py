@@ -217,7 +217,13 @@ def _parse_financials(section: str) -> List[FinancialRow]:
         if not fy:
             continue
         end = re.search(r"(\d{4}-\d{2}-\d{2})", cells[0])
-        pad = cells + [""] * (7 - len(cells))
+        if len(cells) != 7:
+            raise ParseError(
+                f"financial table row has {len(cells)} cells, expected 7: {cells[:3]}... "
+                "Padding a short row and then indexing positionally does not fail, it re-reads "
+                "every later column as the wrong metric."
+            )
+        pad = cells
         rows.append(
             FinancialRow(
                 fiscal_year=fy.group(1),
@@ -316,12 +322,40 @@ def parse_file(path: Path) -> ResearchNote:
     return parse(Path(path).read_text(encoding="utf-8"), Path(path))
 
 
-def load_all(directory: Optional[Path] = None) -> Dict[str, ResearchNote]:
+def load_all(directory: Optional[Path] = None, *, strict: bool = True
+             ) -> Dict[str, ResearchNote]:
+    """Every note, keyed by ticker, with two silent failures made loud.
+
+    Notes were keyed by whatever the first line said, and the filename was never
+    compared against it. A copy of ``KLAC.md`` saved as ``KLAC-old.md`` would parse,
+    key itself as KLAC, and overwrite the real one on a last-write-wins basis with
+    nothing said. Both the mismatch and the collision raise now.
+
+    ``strict=False`` collects parse failures instead of raising, so one malformed
+    note cannot take all 150 pages down with it. The failures come back under the
+    ``_errors`` key and the caller is expected to report them.
+    """
     d = Path(directory) if directory else paths.RESEARCH_DIR
     out: Dict[str, ResearchNote] = {}
+    errors: Dict[str, str] = {}
     for p in sorted(d.glob("*.md")):
         if p.stem.startswith("_"):
             continue
-        note = parse_file(p)
+        try:
+            note = parse_file(p)
+        except ParseError as e:
+            if strict:
+                raise
+            errors[p.stem] = str(e)
+            continue
+        if note.ticker != p.stem.upper():
+            raise ParseError(
+                f"{p.name} declares ticker {note.ticker!r} on its first line. The filename and the "
+                "heading must agree, or a stray copy silently replaces the real note."
+            )
+        if note.ticker in out:
+            raise ParseError(f"two notes claim {note.ticker}: {out[note.ticker].path} and {p}")
         out[note.ticker] = note
+    if errors and not strict:
+        out["_errors"] = errors  # type: ignore[assignment]
     return out

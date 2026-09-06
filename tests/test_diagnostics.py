@@ -96,3 +96,22 @@ def test_to_dict_is_json_serialisable(real):
     blob = json.dumps(D.diagnose(recs, s).to_dict())
     assert "component_correlations" in blob
     assert "not really" in blob or "evidence" in blob
+
+
+def test_variance_shares_sum_to_exactly_one(real):
+    """The first version divided each component's variance by the sum of the
+    component variances, which is not the variance of the score: the score is a sum
+    of correlated components, so it also carries twice the covariances. A covariance
+    decomposition is the only version that both sums to one and can go negative."""
+    recs, s = real
+    d = D.diagnose(recs, s)
+    assert sum(d.variance_share.values()) == pytest.approx(1.0, abs=1e-9)
+
+
+def test_a_component_that_moves_against_the_score_can_be_negative(real):
+    recs, s = real
+    d = D.diagnose(recs, s)
+    negatives = {k: v for k, v in d.variance_share.items() if v < 0}
+    assert negatives, "a sum-of-variances denominator could never produce one"
+    # The note only fires past 1%, so a -0.7% share is correctly left unremarked.
+    assert all(v > -0.01 for v in negatives.values()) or any("negative" in n for n in d.notes)

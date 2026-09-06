@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:49:56",
+ "built_at": "2026-09-06T10:57:39",
  "depth": "deep",
  "identity": {
   "ticker": "ISRG",
@@ -576,7 +576,7 @@
    "quality_rank": 0.44,
    "gap": -0.48,
    "verdict": "priced above where its quality sits",
-   "reasoning": "Neither number crosses a quartile line, but they are 48 points apart the other way: it is priced well above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
+   "reasoning": "It is the dearest quartile on price and mid-pack on quality, 48 points apart the other way: it is priced above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
    "cheapest_peers": [
     {
      "ticker": "HRMY",

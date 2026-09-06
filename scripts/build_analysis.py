@@ -36,6 +36,11 @@ def main() -> int:
 
     paths.ensure_dirs()
     records = analysis.build_all()
+    if not records:
+        print("no records built. universe/quality_scores_latest.csv is missing or empty; "
+              "run the pipeline first. Refusing to write an index that says the universe is "
+              "empty while 150 stale pages sit next to it.", file=sys.stderr)
+        return 1
     wanted = {t.upper() for t in a.tickers} or set(records)
     missing = wanted - set(records)
     if missing:
