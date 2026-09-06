@@ -118,11 +118,11 @@ Consequences that shape everything below:
 
 ## E. Backtest, honestly
 
-- [ ] **E1** `scripts/an/backtest.py` — engine: rank-IC per rebalance, decile/quintile forward returns,
+- [x] **E1** `scripts/an/backtest.py` — engine: rank-IC per rebalance, decile/quintile forward returns,
       hit rate, bootstrap CIs, and **required** `limitations` output. Engine refuses to emit a result
       object with an empty limitations list.
       Verify: `python -m pytest -q tests/test_backtest.py`
-- [ ] **E2** Engine validated on synthetic panels: (a) planted alpha is recovered with the right sign
+- [x] **E2** Engine validated on synthetic panels: (a) planted alpha is recovered with the right sign
       and roughly the right magnitude; (b) pure noise is reported as *no edge*, with the CI straddling
       zero; (c) a look-ahead-contaminated panel is flagged.
       Verify: `python -m pytest -q tests/test_backtest_synthetic.py`
@@ -131,7 +131,7 @@ Consequences that shape everything below:
       `dashboard/backtest.json`. Survivorship bias, single-snapshot fundamentals and rebalance count
       are recorded as first-class fields, not footnotes.
       Verify: `python scripts/backtest_run.py --synthetic && python -m pytest -q tests/test_backtest_run.py`
-- [ ] **E4** Where the score fails is computed, not asserted: per-sector IC, per-bucket IC, worst
+- [x] **E4** Where the score fails is computed, not asserted: per-sector IC, per-bucket IC, worst
       deciles, and the named tickers where the score was most wrong.
       Verify: test asserts `failure_modes` is non-empty for the synthetic run
 
