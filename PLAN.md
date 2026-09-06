@@ -180,7 +180,7 @@ Consequences that shape everything below:
       Verify: `python -m pytest -q tests/test_contrast.py`
 - [x] **Q3** Secret scan: no API key, token or personal holding in anything git tracks.
       Verify: `python -m pytest -q tests/test_no_secrets.py`
-- [ ] **Q4** Full suite + a clean rebuild from scratch reproduces byte-identical JSON.
+- [x] **Q4** Full suite + a clean rebuild from scratch reproduces byte-identical JSON.
       Verify: `python -m pytest -q && python scripts/build_all.py && git diff --exit-code dashboard/`
 - [ ] **Q5** NOTES.md records every data source found, what it costs, what it actually returns, and
       every task skipped and why. SUMMARY.md is the morning read.

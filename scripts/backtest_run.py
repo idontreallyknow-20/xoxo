@@ -176,10 +176,12 @@ def main() -> int:
     ap.add_argument("--horizon", type=int, default=63)
     ap.add_argument("--spacing", type=int, default=63)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--check", action="store_true",
+                    help="pin the timestamp so a rebuild is byte-comparable")
     a = ap.parse_args()
 
     paths.ensure_dirs()
-    built_at = dt.datetime.now().replace(microsecond=0).isoformat()
+    built_at = "1970-01-01T00:00:00" if a.check else dt.datetime.now().replace(microsecond=0).isoformat()
 
     payload: Dict[str, object] = {
         "built_at": built_at,
