@@ -1,0 +1,350 @@
+{
+ "schema": 1,
+ "built_at": "1970-01-01T00:00:00",
+ "depth": "screen",
+ "identity": {
+  "ticker": "IPAR",
+  "company": "Interparfums, Inc.",
+  "sector": "Consumer Defensive",
+  "industry": "Household & Personal Products",
+  "country": "United States",
+  "exchange": "NMS",
+  "currency": "USD",
+  "price": 114.01,
+  "market_cap_usd": 3651259136.0,
+  "dollar_volume_usd": 32605720.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "business": {
+  "available": false,
+  "why": "No research note. The screen knows the industry classification and nothing about what the company actually sells.",
+  "industry": "Household & Personal Products"
+ },
+ "headline": null,
+ "fundamentals": {
+  "window": "2022\u20132025",
+  "n_years": 4,
+  "note": "Four fiscal years is all the free source provides, so every growth figure here is computed over three intervals, not five years.",
+  "rows": [
+   {
+    "key": "roic_avg",
+    "label": "Return on invested capital, average",
+    "value": 0.212819,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "roic_latest",
+    "label": "Return on invested capital, latest year",
+    "value": 0.200441,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "fcf_margin_avg",
+    "label": "Free cash flow margin, average",
+    "value": 0.062374,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "rev_cagr",
+    "label": "Revenue CAGR",
+    "value": 0.110589,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_avg",
+    "label": "Gross margin, average",
+    "value": 0.637677,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_std",
+    "label": "Gross margin, standard deviation",
+    "value": 0.001133,
+    "unit": "percent",
+    "higher_is_better": false
+   },
+   {
+    "key": "nd_to_ebitda",
+    "label": "Net debt to EBITDA",
+    "value": 0.08995926050243186,
+    "unit": "x",
+    "higher_is_better": false,
+    "absent_means": null
+   },
+   {
+    "key": "share_change",
+    "label": "Diluted share count change",
+    "value": 0.004664,
+    "unit": "percent",
+    "higher_is_better": false
+   }
+  ],
+  "net_cash": false,
+  "fcf_positive_years": 3.0,
+  "fcf_years": 4.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "trends": [],
+ "what_changed": {
+  "mechanical": [
+   {
+    "label": "Next-year EPS consensus",
+    "detail": "moved -6.4% over 90 days, of which -6.7% came in the last 30. The 60 days before that accounted for +0.3%.",
+    "direction": "down",
+    "accelerating": true,
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Analyst breadth, 30 days",
+    "detail": "0 raised next-year estimates, 2 cut them.",
+    "direction": "down",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Price against its year",
+    "detail": "-9.9% from the 52-week high, -26.1% from the highest close it has ever made.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Next report",
+    "detail": "2026-11-04. Everything on this page is dated 2026-09-04, so the revisions above are stale the moment that lands.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   }
+  ],
+  "read": {
+   "available": false,
+   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. No research note has been written for this name."
+  }
+ },
+ "thesis": {
+  "available": false,
+  "why": "No research note has been written for this name, so there is no thesis to state."
+ },
+ "risks": {
+  "available": false,
+  "why": "No research note has been written for this name. The screen cannot tell you what would break a thesis it never formed."
+ },
+ "valuation": {
+  "available": true,
+  "multiples": [
+   {
+    "key": "forward_pe",
+    "label": "Forward P/E",
+    "value": 21.908148,
+    "own_median": 25.60996822421513,
+    "vs_median": -0.14454606861694297
+   },
+   {
+    "key": "ev_ebitda",
+    "label": "EV/EBITDA",
+    "value": 13.815,
+    "own_median": 14.178106997954545,
+    "vs_median": -0.025610400458039306
+   },
+   {
+    "key": "price_sales",
+    "label": "Price to sales",
+    "value": 116.45999908447266,
+    "own_median": null,
+    "vs_median": null
+   }
+  ],
+  "own_history": {
+   "usable": true,
+   "n_year_ends": 4,
+   "caveat": "The median is taken at four fiscal year ends, so it is a four-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved."
+  },
+  "drawdown": {
+   "from_52w_high": -0.09923428660783773,
+   "from_all_time_high": -0.26099370651186926,
+   "high_52w": 129.29,
+   "all_time_high": 157.58999633789062,
+   "caveat": "The all-time high is the highest closing price; the 52-week high is an intraday high. They are not on the same basis, and the drawdown from the all-time high is therefore understated."
+  },
+  "estimates": {
+   "eps_fy0": 4.89,
+   "eps_fy1": 5.204,
+   "fy1_change_30d": -0.0673835125448029,
+   "fy1_change_90d": -0.06402877697841725,
+   "fy0_change_30d": 0.00696639532800547,
+   "fy0_change_90d": 0.008788216363411205,
+   "analysts_up_30d": 0.0,
+   "analysts_down_30d": 2.0,
+   "net_breadth": -2.0
+  },
+  "short_pct_float": 0.103599995,
+  "insider_pct": 0.43616,
+  "next_earnings": "2026-11-04",
+  "buckets": [
+   "compounder"
+  ],
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "score": {
+  "available": true,
+  "variants": {
+   "quality_value": {
+    "score": -0.8989,
+    "percentile": 0.0,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0088,
+     "roic_trend": -0.0649,
+     "fcf": -0.1726,
+     "growth": 0.0423,
+     "margin_stability": 0.0686,
+     "balance": -0.0122,
+     "value_pe": -0.0676,
+     "value_ev": 0.0055,
+     "revisions_90d": -0.2151,
+     "revisions_30d": -0.32,
+     "revision_breadth": -0.0809,
+     "share_count": -0.0447,
+     "short_interest": -0.0461
+    },
+    "top_contributions": [
+     {
+      "key": "revisions_30d",
+      "value": -0.32
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.2151
+     },
+     {
+      "key": "fcf",
+      "value": -0.1726
+     },
+     {
+      "key": "revision_breadth",
+      "value": -0.0809
+     },
+     {
+      "key": "margin_stability",
+      "value": 0.0686
+     }
+    ]
+   },
+   "with_momentum": {
+    "score": -0.8343,
+    "percentile": 1.3,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0088,
+     "roic_trend": -0.0649,
+     "fcf": -0.1726,
+     "growth": 0.0423,
+     "margin_stability": 0.0686,
+     "balance": -0.0122,
+     "value_pe": -0.0676,
+     "value_ev": 0.0055,
+     "revisions_90d": -0.2151,
+     "revisions_30d": -0.32,
+     "revision_breadth": -0.0809,
+     "share_count": -0.0447,
+     "short_interest": -0.0461,
+     "momentum_52w": 0.0647
+    },
+    "top_contributions": [
+     {
+      "key": "revisions_30d",
+      "value": -0.32
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.2151
+     },
+     {
+      "key": "fcf",
+      "value": -0.1726
+     },
+     {
+      "key": "revision_breadth",
+      "value": -0.0809
+     },
+     {
+      "key": "margin_stability",
+      "value": 0.0686
+     }
+    ]
+   },
+   "with_reversal": {
+    "score": -0.904,
+    "percentile": 0.0,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0088,
+     "roic_trend": -0.0649,
+     "fcf": -0.1726,
+     "growth": 0.0423,
+     "margin_stability": 0.0686,
+     "balance": -0.0122,
+     "value_pe": -0.0676,
+     "value_ev": 0.0055,
+     "revisions_90d": -0.2151,
+     "revisions_30d": -0.32,
+     "revision_breadth": -0.0809,
+     "share_count": -0.0447,
+     "short_interest": -0.0461,
+     "reversal_ath": -0.0051
+    },
+    "top_contributions": [
+     {
+      "key": "revisions_30d",
+      "value": -0.32
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.2151
+     },
+     {
+      "key": "fcf",
+      "value": -0.1726
+     },
+     {
+      "key": "revision_breadth",
+      "value": -0.0809
+     },
+     {
+      "key": "margin_stability",
+      "value": 0.0686
+     }
+    ]
+   }
+  },
+  "universe": "the quality top 150 as of 2026-09-04",
+  "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
+ },
+ "journal": [],
+ "sources": [
+  {
+   "title": "Screen and statement data, Yahoo Finance via yfinance",
+   "url": null,
+   "read_date": "2026-09-04",
+   "kind": "data"
+  }
+ ],
+ "gaps": [
+  "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
+  "No research note. Nobody has read a filing for this name.",
+  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
+  "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
+ ],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

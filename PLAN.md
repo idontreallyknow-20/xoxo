@@ -86,18 +86,18 @@ Consequences that shape everything below:
 
 ## C. The analysis record (one object per ticker, the page renders only this)
 
-- [ ] **C1** `scripts/an/model.py` — the `TickerAnalysis` dataclass + JSON schema. Every field carries
+- [x] **C1** `scripts/an/model.py` — the `TickerAnalysis` dataclass + JSON schema. Every field carries
       `source` and `as_of`. Nothing renders without provenance.
       Verify: `python -m pytest -q tests/test_model.py`
-- [ ] **C2** `scripts/an/metrics.py` — trend series (revenue, margins, FCF, share count, ROIC),
+- [x] **C2** `scripts/an/metrics.py` — trend series (revenue, margins, FCF, share count, ROIC),
       CAGR, YoY, and a `MetricTrend` with direction + magnitude classification.
       Verify: `python -m pytest -q tests/test_metrics.py` (hand-computed KLAC revenue CAGR from the
       committed research table matches to 0.1pp)
-- [ ] **C3** `scripts/an/changes.py` — "what changed this quarter vs last": guidance deltas, estimate
+- [x] **C3** `scripts/an/changes.py` — "what changed this quarter vs last": guidance deltas, estimate
       revisions (30d/90d, up/down counts), drawdown moves, new risks, and an explicit
       `management_dodged` list sourced from the research notes rather than invented.
       Verify: `python -m pytest -q tests/test_changes.py`
-- [ ] **C4** `scripts/an/build_analysis.py` — writes `dashboard/analysis/<TICKER>.json` +
+- [x] **C4** `scripts/an/build_analysis.py` — writes `dashboard/analysis/<TICKER>.json` +
       `dashboard/analysis/index.json`.
       Verify: `python scripts/build_analysis.py && python -m pytest -q tests/test_build_analysis.py`
       (every JSON validates against the C1 schema; 16 rich + rest thin)
@@ -152,11 +152,11 @@ Consequences that shape everything below:
 
 ## P. Pages
 
-- [ ] **P1** `dashboard/assets/desk.css` — the six existing themes' tokens copied verbatim, plus new
+- [x] **P1** `dashboard/assets/desk.css` — the six existing themes' tokens copied verbatim, plus new
       component styles. `index.html` untouched.
       Verify: `python -m pytest -q tests/test_css_tokens.py` (every `--var` used by new pages is
       defined in all six themes, and the token values match `index.html` exactly)
-- [ ] **P2** `dashboard/assets/analyze.js` + the analyze shell. Renders only from
+- [x] **P2** `dashboard/assets/analyze.js` + the analyze shell. Renders only from
       `analysis/<TICKER>.json`. Theme, motion and currency settings shared with the main page via the
       same `desk-*` localStorage keys.
       Verify: headless Chromium loads `/analyze/KLAC`, zero console errors, `document.title` contains
@@ -169,7 +169,7 @@ Consequences that shape everything below:
 - [ ] **P5** Two nav links in `dashboard/index.html` (`Analyze`, `Positioning`) and nothing else.
       Verify: `git diff --stat dashboard/index.html` shows a single-digit line change, and the six
       existing views still render in headless Chromium
-- [ ] **P6** Charts: metric trend sparklines/bars in the existing SVG idiom (no chart library, no CDN).
+- [x] **P6** Charts: metric trend sparklines/bars in the existing SVG idiom (no chart library, no CDN).
       Verify: headless screenshot is non-blank and contains `<svg`
 
 ## Q. Quality gates
