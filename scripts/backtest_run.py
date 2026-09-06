@@ -36,7 +36,7 @@ from typing import Dict, List, Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from an import backtest as B  # noqa: E402
-from an import diagnostics, local, paths, score  # noqa: E402
+from an import diagnostics, local, paths, power, score  # noqa: E402
 from an.store import Offline, is_offline  # noqa: E402
 from an.synthetic import PanelSpec, make_panel  # noqa: E402
 
@@ -58,9 +58,13 @@ NOT_RUN_EXPLANATION = [
     "delisted, acquired or wiped out between the start of the test and now is absent, and those "
     "are disproportionately the ones that lost money.",
     "The single highest-value fix is not a cleverer backtest, it is archiving a dated snapshot on "
-    "every pipeline run (scripts/snapshot.py). After four quarterly runs there are four real "
-    "rebalances with no look-ahead and no survivorship problem, because the universe is recorded "
-    "as it was. That is worth more than any reconstruction of the past from today's data.",
+    "every pipeline run (scripts/snapshot.py). A snapshot holds only what the pipeline could see "
+    "that day, so a panel built from several has no look-ahead and no survivorship problem.",
+    "How long that takes is answered rather than guessed, under how_long_until_this_can_say_anything "
+    "below. The short version: archive MONTHLY, not quarterly. This engine will not return a "
+    "verdict above 'weak' below twelve independent periods, which is three years of quarterly "
+    "snapshots and one year of monthly ones, and detecting a typical published signal takes eight "
+    "years quarterly against under three monthly.",
 ]
 
 
@@ -191,6 +195,32 @@ def main() -> int:
         "engine_calibration": calibrate(),
     }
 
+    payload["how_long_until_this_can_say_anything"] = {
+        "question": (
+            "If snapshot archiving starts today, how many rebalances until a result could mean "
+            "anything, and what size of edge would still be invisible when it got there?"
+        ),
+        "smallest_detectable_rank_ic": [r.to_dict() for r in power.power_table()],
+        "reference_effects": power.REFERENCE_EFFECTS,
+        "measured_detection_rate": {
+            str(k): {str(ic): rate for ic, rate in v.items()}
+            for k, v in power.MEASURED_POWER.items()
+        },
+        "measured_how": (
+            "Sixteen synthetic 150-name panels per cell, run through this same engine with an "
+            "effect planted at the stated rank IC, counting how often the verdict reached "
+            "suggestive or better."
+        ),
+        "verdict_floor_periods": power.VERDICT_FLOOR_PERIODS,
+        "why_zero_below_the_floor": (
+            "At four and eight rebalances the detection rate is exactly zero by policy, not by "
+            "statistics: the engine refuses to say more than 'weak' below twelve independent "
+            "periods. In those same runs the interval excluded zero between 38% and 69% of the "
+            "time, and the engine still declined to call it."
+        ),
+        "cadence": power.archiving_cadence_advice(),
+    }
+
     if not a.calibrate:
         payload["score_structure"] = structure()
         payload["variant_disagreement"] = variant_disagreement()
@@ -207,6 +237,11 @@ def main() -> int:
 
     print(f"wrote {out}")
     print(f"status: {payload['status']}")
+    adv = payload["how_long_until_this_can_say_anything"]["cadence"]
+    for cad in ("quarterly", "monthly"):
+        d = adv[cad]
+        print(f"  archiving {cad:<10} first verdict in {d['years_to_first_verdict']}y, "
+              f"typical signal in {d['years_to_detect']['a typical published signal']}y")
     for c in payload["engine_calibration"]["cases"]:
         print(f"  calibration  {c['case']:<32} ic={c['measured_rank_ic']}  {c['verdict']}")
     if "variant_disagreement" in payload:

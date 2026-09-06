@@ -210,9 +210,24 @@ called a single quarter annual whenever it turned up in a 10-K. All four are fix
    pages look like. Tell me whether that degradation is honest enough or too thin to be worth having.
 4. **Read `dashboard/backtest.json`'s `why_not_run`.** If you disagree that a backtest is impossible
    here, say so and tell me what you think I missed.
-5. **Decide on snapshot archiving** (`PLAN.md` item X1). It is the only thing that turns the backtest
-   question from impossible into merely slow: archive a dated panel every pipeline run and after four
-   quarters you have four real rebalances with no look-ahead and no survivorship problem.
+5. **Start archiving snapshots monthly, not quarterly.** `python scripts/snapshot.py`, added to your
+   pipeline. This is the single most actionable thing in the whole run and the reason is measured,
+   not asserted:
+
+   | archiving | first verdict possible | detects a typical published signal |
+   |---|---|---|
+   | quarterly | 3.0 years | 8.2 years |
+   | monthly | 1.0 years | 2.8 years |
+
+   The engine refuses to say more than "weak" below 12 independent periods, which is 3 years of
+   quarterly snapshots and 1 year of monthly ones. Fundamentals only move quarterly, but the score
+   does not: prices, drawdowns and estimate revisions move continuously and carry most of its
+   realised variance. `/positioning` shows the full table and the detection rates measured through
+   the real engine.
+
+   The sharpest way to put the problem: **one quarter of 150 names can only detect a rank IC of
+   about 0.23, and the engine flags anything above 0.25 as probable look-ahead.** There is no window
+   in which a single-quarter backtest tells you something both detectable and believable.
 6. **The `dd_ath` basis mismatch** in finding 1 above is a one-line change in `price_screen.py`. I did
    not make it, because you said not to modify existing routes and that file drives the bucket
    assignments the whole system rests on.

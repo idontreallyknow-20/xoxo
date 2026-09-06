@@ -7,7 +7,8 @@
     "What is reported instead: the engine's calibration against synthetic panels where the true answer was planted by hand, and the structure of the score itself measured on the one cross section that exists. Neither is evidence that the score predicts returns.",
     "To run the real thing: python scripts/backtest_run.py --live, on a machine with network access. It needs daily prices from yfinance and fundamentals dated by their SEC filing date so that each rebalance only sees what was public on the day.",
     "Even a successful live run inherits survivorship bias that cannot be removed with free data. The universe is the 1,505 names that are listed and screenable today. Every company that was delisted, acquired or wiped out between the start of the test and now is absent, and those are disproportionately the ones that lost money.",
-    "The single highest-value fix is not a cleverer backtest, it is archiving a dated snapshot on every pipeline run (scripts/snapshot.py). After four quarterly runs there are four real rebalances with no look-ahead and no survivorship problem, because the universe is recorded as it was. That is worth more than any reconstruction of the past from today's data."
+    "The single highest-value fix is not a cleverer backtest, it is archiving a dated snapshot on every pipeline run (scripts/snapshot.py). A snapshot holds only what the pipeline could see that day, so a panel built from several has no look-ahead and no survivorship problem.",
+    "How long that takes is answered rather than guessed, under how_long_until_this_can_say_anything below. The short version: archive MONTHLY, not quarterly. This engine will not return a verdict above 'weak' below twelve independent periods, which is three years of quarterly snapshots and one year of monthly ones, and detecting a typical published signal takes eight years quarterly against under three monthly."
   ],
   "engine_calibration": {
     "cases": [
@@ -91,6 +92,160 @@
     ],
     "measured_false_positive_rate": 0.075,
     "note": "These are synthetic panels, not this portfolio. They test the measuring instrument, not the score."
+  },
+  "how_long_until_this_can_say_anything": {
+    "question": "If snapshot archiving starts today, how many rebalances until a result could mean anything, and what size of edge would still be invisible when it got there?",
+    "smallest_detectable_rank_ic": [
+      {
+        "quarters": 1,
+        "years": 0.25,
+        "n_names": 150,
+        "detectable_ic": 0.2295,
+        "detects": {
+          "a strong published cross-sectional signal": false,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 2,
+        "years": 0.5,
+        "n_names": 150,
+        "detectable_ic": 0.1623,
+        "detects": {
+          "a strong published cross-sectional signal": false,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 4,
+        "years": 1.0,
+        "n_names": 150,
+        "detectable_ic": 0.1148,
+        "detects": {
+          "a strong published cross-sectional signal": false,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 8,
+        "years": 2.0,
+        "n_names": 150,
+        "detectable_ic": 0.0811,
+        "detects": {
+          "a strong published cross-sectional signal": false,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 12,
+        "years": 3.0,
+        "n_names": 150,
+        "detectable_ic": 0.0663,
+        "detects": {
+          "a strong published cross-sectional signal": false,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 20,
+        "years": 5.0,
+        "n_names": 150,
+        "detectable_ic": 0.0513,
+        "detects": {
+          "a strong published cross-sectional signal": true,
+          "a typical published signal": false,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 40,
+        "years": 10.0,
+        "n_names": 150,
+        "detectable_ic": 0.0363,
+        "detects": {
+          "a strong published cross-sectional signal": true,
+          "a typical published signal": true,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      },
+      {
+        "quarters": 80,
+        "years": 20.0,
+        "n_names": 150,
+        "detectable_ic": 0.0257,
+        "detects": {
+          "a strong published cross-sectional signal": true,
+          "a typical published signal": true,
+          "a weak but real signal": false
+        },
+        "empirical_detection_rate": null
+      }
+    ],
+    "reference_effects": {
+      "a strong published cross-sectional signal": 0.06,
+      "a typical published signal": 0.04,
+      "a weak but real signal": 0.02,
+      "nothing": 0.0
+    },
+    "measured_detection_rate": {
+      "4": {
+        "0.04": 0.0,
+        "0.06": 0.0
+      },
+      "8": {
+        "0.04": 0.0,
+        "0.06": 0.0
+      },
+      "12": {
+        "0.04": 0.44,
+        "0.06": 0.69
+      },
+      "20": {
+        "0.04": 0.5,
+        "0.06": 0.88
+      },
+      "40": {
+        "0.04": 0.88,
+        "0.06": 1.0
+      }
+    },
+    "measured_how": "Sixteen synthetic 150-name panels per cell, run through this same engine with an effect planted at the stated rank IC, counting how often the verdict reached suggestive or better.",
+    "verdict_floor_periods": 12,
+    "why_zero_below_the_floor": "At four and eight rebalances the detection rate is exactly zero by policy, not by statistics: the engine refuses to say more than 'weak' below twelve independent periods. In those same runs the interval excluded zero between 38% and 69% of the time, and the engine still declined to call it.",
+    "cadence": {
+      "quarterly": {
+        "snapshots_per_year": 4,
+        "years_to_first_verdict": 3.0,
+        "years_to_detect": {
+          "a strong published cross-sectional signal": 3.8,
+          "a typical published signal": 8.2,
+          "a weak but real signal": 33.0
+        }
+      },
+      "monthly": {
+        "snapshots_per_year": 12,
+        "years_to_first_verdict": 1.0,
+        "years_to_detect": {
+          "a strong published cross-sectional signal": 1.2,
+          "a typical published signal": 2.8,
+          "a weak but real signal": 11.0
+        }
+      },
+      "recommendation": "Archive monthly rather than quarterly. The engine will not return a verdict above 'weak' until 12 independent periods, which is three years of quarterly snapshots and one year of monthly ones. Fundamentals only move quarterly, but the score does not: prices, drawdowns and estimate revisions move continuously and carry most of its realised variance. Pair monthly snapshots with a one-month forward return so the observations stay independent; a one-month snapshot with a twelve-month holding period is one observation wearing twelve hats.",
+      "caveat": "All of this assumes the score has a constant true effect and that the names are independent of each other, and neither is true. Stocks in the same sector move together, which makes the effective cross-sectional sample smaller than 150 and every number here optimistic."
+    }
   },
   "score_structure": {
     "quality_value": {

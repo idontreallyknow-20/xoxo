@@ -27,9 +27,14 @@ and its absence later is itself the datum.
 
 *No reconstruction,* because nothing is inferred backwards.
 
-The cost is patience. After four quarterly runs there are three usable forward
-windows: small, but honest, which is worth more than a large dishonest one. The
-first snapshot is free, taken from what is already committed.
+The cost is patience, and ``an.power`` measures exactly how much. The short answer
+is **archive monthly, not quarterly**: the backtest engine will not return a
+verdict above "weak" below twelve independent periods, which is three years of
+quarterly snapshots and one year of monthly ones. The fundamentals only move
+quarterly, but the score does not, because prices, drawdowns and estimate revisions
+move continuously and carry most of its realised variance.
+
+The first snapshot is free, taken from what is already committed.
 
 ``load_panel`` turns the archive into the ``Rebalance`` objects the backtest engine
 takes, and refuses to build one from a single date rather than returning something

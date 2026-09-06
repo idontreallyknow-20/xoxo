@@ -5,10 +5,14 @@
     python scripts/snapshot.py --list       # what is archived
     python scripts/snapshot.py --report     # what the archive can support yet
 
-Run this after every pipeline run, right after build_dashboard.py. It is the only
-thing that turns the backtest question from impossible into merely slow: a
-snapshot contains only what the pipeline could see on the day, so a panel built
-from several of them has no look-ahead and no survivorship problem.
+Run this MONTHLY, not just after the quarterly re-underwrite. It is the only thing
+that turns the backtest question from impossible into merely slow, and the cadence
+decides how slow: the engine will not say more than "weak" below twelve independent
+periods, which is three years of quarterly snapshots and one year of monthly ones.
+See scripts/an/power.py for the measurement behind that.
+
+A snapshot contains only what the pipeline could see on the day, so a panel built
+from several has no look-ahead and no survivorship problem.
 """
 from __future__ import annotations
 
@@ -48,6 +52,16 @@ def main() -> int:
         print(f"  {digest}  {name}")
     rep = snapshots.coverage_report()
     print(f"\n{rep['status']}")
+
+    from an import power
+
+    adv = power.archiving_cadence_advice()
+    n = rep["n_snapshots"]
+    if n < power.VERDICT_FLOOR_PERIODS:
+        need = power.VERDICT_FLOOR_PERIODS - n
+        print(f"{need} more before the engine will return a verdict above 'weak': "
+              f"{need / 12:.1f} years at monthly, {need / 4:.1f} years at quarterly.")
+        print(f"{adv['recommendation'].splitlines()[0]}")
     return 0
 
 

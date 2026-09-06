@@ -198,6 +198,10 @@ Consequences that shape everything below:
 - [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
 - [ ] **X5** Compare view across up to 4 analysed tickers.
 - [ ] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.
+- [x] **X10** Power analysis: how many rebalances until a backtest here could detect anything, and
+      what size of edge stays invisible. Answered analytically and re-measured through the real
+      engine. The finding changes the snapshot advice from quarterly to monthly.
+      Verify: `python -m pytest -q tests/test_power.py`
 - [ ] **X7** Measure the survivorship hole. Alpha Vantage's `LISTING_STATUS` endpoint returns every
       delisted US ticker with its delisting date for **two requests total**, which is affordable even
       on a 25-per-day free key and is the only free source of that list found. It cannot repair a

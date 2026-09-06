@@ -147,10 +147,53 @@
       <div class="v">share <b>${v}</b> of their top ${va.top_n}</div>
       <div class="m">overlap</div></div>`).join("");
 
+    // How long until this could say anything. The most useful thing on the page: it
+    // turns "no backtest yet" from an apology into a schedule.
+    const pw = S.back.how_long_until_this_can_say_anything;
+    let powerBlock = "";
+    if (pw) {
+      const rows = pw.smallest_detectable_rank_ic.map((r) => `<tr>
+        <td class="n">${r.quarters}</td>
+        <td class="n">${esc(num(r.years, 1))}</td>
+        <td class="n">${esc(num(r.quarters / 12, 1))}</td>
+        <td class="n">${esc(num(r.detectable_ic, 3))}</td>
+        <td>${r.detects["a typical published signal"] ? "yes" : '<span class="muted">no</span>'}</td>
+        <td>${r.detects["a strong published cross-sectional signal"] ? "yes" : '<span class="muted">no</span>'}</td>
+      </tr>`).join("");
+      const meas = Object.entries(pw.measured_detection_rate).map(([k, v]) => `<tr>
+        <td class="n">${esc(k)}</td>
+        <td class="n">${esc(pct(v["0.04"], 0))}</td>
+        <td class="n">${esc(pct(v["0.06"], 0))}</td></tr>`).join("");
+      const c = pw.cadence;
+      powerBlock = `
+        <h2 style="font-size:13px;margin-top:34px">How long until this could say anything
+          <span class="sub">answered, not guessed</span></h2>
+        <div class="rule soft"></div>
+        <div class="note">${esc(pw.question)}</div>
+        <div class="callout" style="margin-top:18px">
+          <div class="kicker">what to do about it today</div>
+          <p class="line">${esc(c.recommendation)}</p>
+          <div class="meta">
+            <span>quarterly: first verdict in <b>${esc(c.quarterly.years_to_first_verdict)} years</b></span>
+            <span>monthly: first verdict in <b>${esc(c.monthly.years_to_first_verdict)} years</b></span>
+          </div>
+        </div>
+        <div class="scroll" style="margin-top:20px"><table><thead><tr>
+          <th class="n">rebalances</th><th class="n">years, quarterly</th><th class="n">years, monthly</th>
+          <th class="n">smallest detectable IC</th><th>sees a typical signal</th><th>sees a strong one</th>
+        </tr></thead><tbody>${rows}</tbody></table></div>
+        <div class="scroll" style="margin-top:20px"><table><thead><tr>
+          <th class="n">rebalances</th><th class="n">detected, typical signal</th>
+          <th class="n">detected, strong signal</th></tr></thead><tbody>${meas}</tbody></table></div>
+        <div class="note">${esc(pw.measured_how)} ${esc(pw.why_zero_below_the_floor)}</div>
+        <div class="note warn">${esc(c.caveat)}</div>`;
+    }
+
     return `
       <h2 style="font-size:13px">There is no backtest, and here is why<span class="sub">status ${esc(S.back.status)}</span></h2>
       <div class="rule soft"></div>
       <ul class="gaps">${why}</ul>
+      ${powerBlock}
 
       <h2 style="font-size:13px;margin-top:34px">What the score is made of, measured on one cross section<span class="sub">${esc(S.variant)}</span></h2>
       <div class="rule soft"></div>
