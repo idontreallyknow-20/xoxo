@@ -58,6 +58,21 @@ Each page carries, in this order: the standing call with its falsifier, what cha
 report, what the business does, four fiscal years of numbers, screen measures, valuation, what would
 break it, why it is on the list, where the score comes from, and provenance.
 
+**"What changed since the last report" is the section to judge this on.** For the 16 researched
+names it has guidance changes with the verbatim quote underneath, tone with its evidence and the
+reason its confidence is not higher, new risks flagged as new or already in the thesis, what
+management appears not to have addressed, and a list of what the sources do not contain. All 122
+quotes across the 16 are checked verbatim against their research note by
+`tests/test_narrative_quotes.py`, because a paraphrase presented as a quote is a fabrication with a
+citation attached.
+
+**Valuation has two lenses now, not one.** The pipeline only compared a company to its own four-year
+median, which says nothing about whether the old multiple was deserved. Each page now also places
+the name among its industry peers on price and on the things a price is supposed to reflect, and
+reports the gap. Adobe is cheaper than 94% of application software on forward earnings while ranking
+better than 81% of them on return on capital. 75 of the 150 are genuinely unremarkable and the page
+says so in those words.
+
 Two design rules are enforced in the stylesheet rather than in a comment:
 
 - **The call and the falsifier share one CSS class with no modifier.** The thing that would prove
@@ -144,15 +159,39 @@ These came out of building it and are worth your attention:
 
 ## Data sources: what is actually free
 
-Full detail in `NOTES.md`. The short version:
+Full table in `NOTES.md` section 4, with every "it's free" claim adversarially re-checked.
 
-- **SEC EDGAR** is the real prize: no key, no tier, complete, and its XBRL facts carry filing dates,
-  which is what makes point-in-time backtesting possible at all. Client written, never run.
-- **Earnings call transcripts are not reliably free.** The closest free substitute is the 8-K
-  Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst Q&A. The
-  analysis pages say this explicitly in their gaps section rather than implying a transcript exists.
-- **Finnhub free tier** covers quotes, profile, ~100 pre-computed metrics, earnings and news.
-  Historical candles moved to premium. Client written, never run.
+**SEC EDGAR is the only unconditionally free, complete source here.** Statutory US government
+disclosure, not a freemium product: no key, no account, no tier, no rate card, and no mechanism by
+which a paid tier could appear. Its XBRL facts carry filing dates, which is what makes point-in-time
+work possible at all.
+
+**Earnings call transcripts: the honest answer is no.** There is no free, legal, automatable source
+of full transcripts with Q&A. FMP puts them on a $139/month tier. Alpha Vantage costs a quarter of
+your entire daily quota per ticker-quarter. API Ninjas gates the endpoint and bans commercial use.
+Motley Fool publishes genuinely good ones free to read, and their terms prohibit automated access.
+The closest free substitute is the 8-K Exhibit 99.1 press release, which carries the guidance
+language and the prepared numbers but not the questions, and every analysis page says so in its gaps
+section rather than implying a transcript exists.
+
+**The one find worth acting on: Alpha Vantage's `LISTING_STATUS`.** It returns every delisted US
+ticker with its delisting date for **two requests in total**, which is affordable even on a
+25-per-day free key, and it is the only free source of that list found. It cannot repair a
+survivorship-biased backtest, because it gives no prices for those names, but it can *measure* the
+hole: run the universe filter as of a past date, count how many selected names no longer exist, and
+you have sized the bias instead of guessing at it. On the backlog as X7.
+
+**Other things not worth using**, so you do not waste an evening on them: Stooq now serves a
+JavaScript proof-of-work challenge instead of CSV. Alpha Vantage for prices is 25 requests a day, so
+150 tickers is a six-day refresh. Nasdaq Data Link's WIKI table stopped at 2018-03-27 and will never
+advance.
+
+That research also caught **four real bugs in the EDGAR client I had already written**, all of which
+would have produced quietly wrong numbers rather than errors. The worst: XBRL's `fy` and `fp` fields
+describe the *filing*, not the fact's own period, so a 2018 revenue figure carries `fy=2021` when it
+appears as a comparative column in the FY2021 10-K. My `is_annual` read `fp == "FY"` and would have
+called a single quarter annual whenever it turned up in a 10-K. All four are fixed and documented in
+`NOTES.md`.
 
 ---
 
@@ -193,6 +232,8 @@ See `NOTES.md` section 6 for the running list.
 | tests | see `python -m pytest -q` |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
+| quarter narratives, quote-verified | 16 (122 quotes, 0 unverified) |
+| peer valuations computed | 150 |
 | lines added to `dashboard/index.html` | 2 |
 | existing files otherwise modified | 0 |
 | money spent | none |
