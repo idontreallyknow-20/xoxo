@@ -69,7 +69,7 @@ Consequences that shape everything below:
       financial table, valuation, earnings, bear case, risks, verdict, sources).
       Verify: `python -m pytest -q tests/test_research_md.py` (all 16 files parse, every required
       section non-empty, financial tables produce >=3 fiscal-year rows)
-- [ ] **B3** `scripts/an/journal.py` — parse `journal.md` into entries (date, ticker, thesis, wrong-if,
+- [x] **B3** `scripts/an/journal.py` — parse `journal.md` into entries (date, ticker, thesis, wrong-if,
       size, conviction, bucket) without importing `build_dashboard.py`.
       Verify: `python -m pytest -q tests/test_journal.py`
 - [ ] **B4** `scripts/an/edgar.py` — CIK map, `submissions`, `companyfacts`, `companyconcept`, filing
