@@ -149,13 +149,6 @@
     "value": 13.43,
     "own_median": 14.812503406723081,
     "vs_median": -0.0933335418573199
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 99.13999938964844,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 4.0,
    "net_breadth": 0.0
   },
+  "price_basis": {
+   "displayed": 101.71,
+   "used_for_derived_figures": 99.13999938964844,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0832,
   "insider_pct": 0.00185,
   "next_earnings": "2026-11-03",
@@ -188,7 +186,125 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "LOGI",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Technology",
+    "n": 55,
+    "tickers": [
+     "AAPL",
+     "ACLS",
+     "ACN",
+     "ADBE",
+     "ADP",
+     "ADSK",
+     "AMAT",
+     "ANET",
+     "ASML",
+     "BMI",
+     "CDNS",
+     "CHKP",
+     "CRUS",
+     "CVLT",
+     "DBX",
+     "DLO",
+     "DSGX",
+     "EEFT",
+     "EXLS",
+     "FFIV",
+     "FICO",
+     "FN",
+     "FTNT",
+     "G",
+     "GDDY",
+     "GIB",
+     "GRMN",
+     "IDCC",
+     "INFY",
+     "INTU",
+     "IT",
+     "JKHY",
+     "KLAC",
+     "LOGI",
+     "LRCX",
+     "MANH",
+     "MPWR",
+     "MSFT",
+     "NICE",
+     "NOW",
+     "NTAP",
+     "NVDA",
+     "NVMI",
+     "PAYC",
+     "PAYX",
+     "PCTY",
+     "QCOM",
+     "QLYS",
+     "RMBS",
+     "SAP",
+     "TDC",
+     "TER",
+     "TSM",
+     "UI",
+     "YOU"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 54 others in Technology. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.3519,
+    "EV/EBITDA": 0.2037
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.537,
+    "free cash flow margin": 0.2778,
+    "revenue growth": 0.1111,
+    "gross margin stability": 0.1111
+   },
+   "price_rank": 0.2778,
+   "quality_rank": 0.1944,
+   "gap": -0.0833,
+   "verdict": "cheap, and the quality suggests why",
+   "reasoning": "It is cheap against its peers and its measured quality is also in the weaker end. The own-history comparison would call this cheap too, and it would be describing a derating rather than arguing against one.",
+   "cheapest_peers": [
+    {
+     "ticker": "EEFT",
+     "forward_pe": 6.1392817
+    },
+    {
+     "ticker": "G",
+     "forward_pe": 8.435865
+    },
+    {
+     "ticker": "NICE",
+     "forward_pe": 8.557698
+    },
+    {
+     "ticker": "GDDY",
+     "forward_pe": 9.397415
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "FTNT",
+     "forward_pe": 41.462704
+    },
+    {
+     "ticker": "ANET",
+     "forward_pe": 37.098763
+    },
+    {
+     "ticker": "MANH",
+     "forward_pe": 36.236313
+    },
+    {
+     "ticker": "MPWR",
+     "forward_pe": 34.80429
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

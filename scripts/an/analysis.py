@@ -34,7 +34,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from . import journal as journal_mod
-from . import local, metrics, paths, research_md, score
+from . import local, metrics, paths, peers, research_md, score
 
 __all__ = ["build_record", "build_all", "DEPTHS"]
 
@@ -99,7 +99,8 @@ def _fundamentals_block(rec: local.TickerRecord) -> Dict[str, Any]:
     }
 
 
-def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.ResearchNote]) -> Dict[str, Any]:
+def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
+                     peer: Optional["peers.PeerValuation"] = None) -> Dict[str, Any]:
     v = rec.valuation
     if v is None:
         return {"available": False,
@@ -110,8 +111,7 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
          "own_median": v.median_pe_hist, "vs_median": v.pe_vs_median},
         {"key": "ev_ebitda", "label": "EV/EBITDA", "value": v.ev_ebitda,
          "own_median": v.median_ev_ebitda_hist, "vs_median": v.ev_vs_median},
-        {"key": "price_sales", "label": "Price to sales", "value": v.price_sales,
-         "own_median": None, "vs_median": None},
+
     ]
     block: Dict[str, Any] = {
         "available": True,
@@ -147,6 +147,16 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
             "analysts_down_30d": v.rev_down30_fy1,
             "net_breadth": v.net_revisions_fy1,
         },
+        "price_basis": {
+            "displayed": rec.price,
+            "used_for_derived_figures": v.price_from_price_screen,
+            "note": (
+                "The drawdowns and the multiple-versus-median above were computed inside the price "
+                "screen from its own last close, which is not quite the price shown at the top of "
+                "this page: the two come from different passes of the pipeline and differ by a "
+                "fraction of a percent. Neither is wrong; they are just not the same number."
+            ),
+        },
         "short_pct_float": v.short_pct_float,
         "insider_pct": v.insider_pct,
         "next_earnings": v.next_earnings,
@@ -154,6 +164,13 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
         "source": SOURCE_SCREEN,
         "as_of": rec.pulled,
     }
+    if peer is not None:
+        block["peers"] = peer.to_dict()
+        block["peers"]["why"] = (
+            "The own-history comparison above says nothing about whether the old multiple was "
+            "deserved. This asks a different question: where does this name sit among its peers on "
+            "price, and where does it sit among them on the things a price is supposed to reflect."
+        )
     if note:
         block["written_view"] = {"text": note.section("Valuation"), "source": SOURCE_NOTE}
     return block
@@ -337,6 +354,7 @@ def build_record(
     *,
     note: Optional[research_md.ResearchNote] = None,
     scores: Optional[Dict[str, Dict[str, score.ScoreBreakdown]]] = None,
+    peer: Optional["peers.PeerValuation"] = None,
     entries=None,
     narrative_dir: Optional[Path] = None,
     built_at: Optional[str] = None,
@@ -394,7 +412,7 @@ def build_record(
         "what_changed": _what_changed(rec, note, narrative),
         "thesis": _thesis(note, entries),
         "risks": _risks(note, entries),
-        "valuation": _valuation_block(rec, note),
+        "valuation": _valuation_block(rec, note, peer),
         "score": score_block,
         "journal": [
             {"date": e.date, "action": e.action, "price_at_call": e.price_at_call, "thesis": e.thesis,
@@ -416,6 +434,7 @@ def build_all(*, narrative_dir: Optional[Path] = None, built_at: Optional[str] =
     entries = journal_mod.by_ticker()
     top150 = [r for r in universe.values() if r.in_top_150]
     scores = {v: score.score_universe(top150, variant=v) for v in score.VARIANTS}
+    peer_vals = peers.build_peer_valuations(top150)
 
     wanted = sorted({r.ticker for r in top150} | set(notes))
     built_at = built_at or dt.datetime.now().replace(microsecond=0).isoformat()
@@ -425,7 +444,7 @@ def build_all(*, narrative_dir: Optional[Path] = None, built_at: Optional[str] =
         if rec is None:
             continue
         out[t] = build_record(
-            rec, note=notes.get(t), scores=scores, entries=entries.get(t, []),
-            narrative_dir=narrative_dir, built_at=built_at,
+            rec, note=notes.get(t), scores=scores, peer=peer_vals.get(t),
+            entries=entries.get(t, []), narrative_dir=narrative_dir, built_at=built_at,
         )
     return out

@@ -390,13 +390,6 @@
     "value": 26.267,
     "own_median": 36.06107182659319,
     "vs_median": -0.2715968031590943
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 538.989990234375,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 2.0,
    "net_breadth": 7.0
   },
+  "price_basis": {
+   "displayed": 529.29,
+   "used_for_derived_figures": 538.989990234375,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.028099999,
   "insider_pct": 0.0022,
   "next_earnings": "2026-11-02",
@@ -430,6 +428,95 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "IDXX",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Healthcare",
+    "n": 26,
+    "tickers": [
+     "CHE",
+     "COR",
+     "CORT",
+     "DOCS",
+     "DXCM",
+     "EW",
+     "EXEL",
+     "HRMY",
+     "IDXX",
+     "INCY",
+     "ISRG",
+     "JNJ",
+     "LNTH",
+     "MCK",
+     "MEDP",
+     "MTD",
+     "NBIX",
+     "NVO",
+     "NVS",
+     "PGNY",
+     "REGN",
+     "RMD",
+     "UTHR",
+     "VRTX",
+     "WAT",
+     "ZTS"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 25 others in Healthcare. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 1.0,
+    "EV/EBITDA": 0.8
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.84,
+    "free cash flow margin": 0.36,
+    "revenue growth": 0.24,
+    "gross margin stability": 0.44
+   },
+   "price_rank": 0.9,
+   "quality_rank": 0.4,
+   "gap": -0.5,
+   "verdict": "priced above where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 50 points apart the other way: it is priced well above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
+   "cheapest_peers": [
+    {
+     "ticker": "HRMY",
+     "forward_pe": 6.2605066
+    },
+    {
+     "ticker": "PGNY",
+     "forward_pe": 11.470964
+    },
+    {
+     "ticker": "ZTS",
+     "forward_pe": 11.680427
+    },
+    {
+     "ticker": "NBIX",
+     "forward_pe": 13.2469225
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "IDXX",
+     "forward_pe": 31.618845
+    },
+    {
+     "ticker": "MEDP",
+     "forward_pe": 30.72945
+    },
+    {
+     "ticker": "ISRG",
+     "forward_pe": 30.638323
+    },
+    {
+     "ticker": "DXCM",
+     "forward_pe": 28.715837
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $529 and 31.6x forward with EPS guided to $14.69 to $14.94 (up 12 to 14%). Not cheap in absolute terms; cheap against its own history. Three year view with 12% growth: bear 24x is about $500, flat; base 30x is about $620; bull 36x is about $750.",
    "source": "hand-written research note in research/"

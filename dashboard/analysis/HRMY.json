@@ -149,13 +149,6 @@
     "value": 7.54,
     "own_median": 7.689594355775421,
     "vs_median": -0.019454128378444957
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 42.86000061035156,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 2.0,
    "net_breadth": -1.0
   },
+  "price_basis": {
+   "displayed": 41.86,
+   "used_for_derived_figures": 42.86000061035156,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0949,
   "insider_pct": 0.11627,
   "next_earnings": "2026-11-03",
@@ -188,7 +186,76 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "HRMY",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Biotechnology",
+    "n": 6,
+    "tickers": [
+     "CORT",
+     "EXEL",
+     "HRMY",
+     "INCY",
+     "REGN",
+     "VRTX"
+    ],
+    "caveat": "Compared against 5 other names in Biotechnology."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.0,
+    "EV/EBITDA": 0.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 1.0,
+    "free cash flow margin": 1.0,
+    "revenue growth": 1.0,
+    "gross margin stability": 0.0
+   },
+   "price_rank": 0.0,
+   "quality_rank": 1.0,
+   "gap": 1.0,
+   "verdict": "cheap against peers of better quality",
+   "reasoning": "It sits in the cheaper end of its peer set while its measured quality sits in the better end. That is the combination worth a closer look, and it is also the combination most often explained by something the numbers do not carry: a customer loss, a patent cliff, a regulator. The gap is a question, not an answer.",
+   "cheapest_peers": [
+    {
+     "ticker": "HRMY",
+     "forward_pe": 6.2605066
+    },
+    {
+     "ticker": "EXEL",
+     "forward_pe": 13.877317
+    },
+    {
+     "ticker": "REGN",
+     "forward_pe": 13.915854
+    },
+    {
+     "ticker": "INCY",
+     "forward_pe": 14.317706
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "VRTX",
+     "forward_pe": 25.627602
+    },
+    {
+     "ticker": "CORT",
+     "forward_pe": 25.621805
+    },
+    {
+     "ticker": "INCY",
+     "forward_pe": 14.317706
+    },
+    {
+     "ticker": "REGN",
+     "forward_pe": 13.915854
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

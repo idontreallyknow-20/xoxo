@@ -390,13 +390,6 @@
     "value": 37.525,
     "own_median": 26.553304537718468,
     "vs_median": 0.4131951052154901
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 172.25999450683594,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 1.0,
    "net_breadth": 10.0
   },
+  "price_basis": {
+   "displayed": 172.94,
+   "used_for_derived_figures": 172.25999450683594,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0216,
   "insider_pct": 0.0012899999,
   "next_earnings": "2026-10-28",
@@ -431,6 +429,76 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "KLAC",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Semiconductor Equipment & Materials",
+    "n": 7,
+    "tickers": [
+     "ACLS",
+     "AMAT",
+     "ASML",
+     "KLAC",
+     "LRCX",
+     "NVMI",
+     "TER"
+    ],
+    "caveat": "Compared against 6 other names in Semiconductor Equipment & Materials."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.6667,
+    "EV/EBITDA": 0.6667
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.8333,
+    "free cash flow margin": 1.0,
+    "revenue growth": 0.5,
+    "gross margin stability": 0.8333
+   },
+   "price_rank": 0.6667,
+   "quality_rank": 0.8333,
+   "gap": 0.1667,
+   "verdict": "expensive, and the quality supports it",
+   "reasoning": "It trades in the dearer end of its peer set and its measured quality is in the better end. Nothing here says the price is wrong; it says the price is explained.",
+   "cheapest_peers": [
+    {
+     "ticker": "ACLS",
+     "forward_pe": 20.951025
+    },
+    {
+     "ticker": "AMAT",
+     "forward_pe": 23.620426
+    },
+    {
+     "ticker": "LRCX",
+     "forward_pe": 25.289024
+    },
+    {
+     "ticker": "NVMI",
+     "forward_pe": 25.819534
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "TER",
+     "forward_pe": 29.05736
+    },
+    {
+     "ticker": "ASML",
+     "forward_pe": 27.40751
+    },
+    {
+     "ticker": "KLAC",
+     "forward_pe": 25.852533
+    },
+    {
+     "ticker": "NVMI",
+     "forward_pe": 25.819534
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $172.94 and 25.9x forward. With September quarter EPS guided to $1.16, the run rate is about $4.60, so the stock is about 37x run rate but the estimates are climbing. Three year view: bear (2027 is the peak, revenue down 20% in 2028) 18x on $4 is $72, a real loss; base 24x on $7 is $168, flat to modest gains with the dividend; bull 28x on $9 is $250. This is why it is sized as a cyclical, not a compounder.",
    "source": "hand-written research note in research/"

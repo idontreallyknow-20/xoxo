@@ -82,6 +82,19 @@ reported in a different currency from the listing and the pipeline correctly ref
 They carry a `multiples_note` saying so. The new score does not penalise them; it marks them
 `valuation: unscored` and says why on the page.
 
+**`price_ps` is a second price, not a price-to-sales ratio.** `scripts/price_screen.py:116` merges
+the quality top-150 frame with the price-screen output using `suffixes=("", "_ps")`. Both frames
+carry a `price` column, so the price screen's own last close lands in the CSV under `price_ps`. I
+briefly rendered it as "Price to sales" and gave Adobe a multiple of 280x before catching it.
+
+Two things follow. The column is now named `price_from_price_screen` in the loader and is not shown
+as a multiple anywhere. And more importantly: **every derived figure in that row was computed from
+that price, not from the `price` column the CSV surfaces.** `dd_52w`, `dd_ath` and `pe_vs_median` all
+come out of `one()`, which uses the price screen's last close. The two prices are within a fraction
+of a percent of each other for all 150 names, so nothing is materially wrong, but the price shown at
+the top of an analysis page and the drawdown shown further down are not computed from the same
+number. The pages now say so.
+
 **One snapshot only.** Every row in `universe/` is `pulled = 2026-09-04`. There is no history. This
 is the single biggest constraint on the whole backtest question — see section 5 and
 `dashboard/backtest.json`.
@@ -128,6 +141,46 @@ Deferred to the backtest section, written when the engine landed.
 
 ---
 
+## 5b. Verify these before trusting the two fetchers
+
+Both clients were written against documented API shapes and have never made a request. The subagents
+that built them flagged their own most likely failure points, and these are worth checking on the
+first live run rather than discovering later:
+
+**Finnhub**
+
+- `Profile.market_cap` assumes `marketCapitalization` is in **millions**. If that is wrong, every
+  market cap is out by a factor of a million and nothing in the fixtures can catch it. Check one
+  ticker by eye first.
+- The premium-endpoint table is a 2026 snapshot and Finnhub moves endpoints between tiers without
+  notice. `python scripts/fetch_finnhub.py --probe-premium AAPL` spends one call per endpoint and
+  tells you which the table has wrong.
+- Whether a free key gets a real HTTP 403 or a 200 carrying `{"error": "You don't have access..."}`
+  on a premium endpoint is unverified. Both are mapped to `PremiumEndpoint`, so either way it
+  degrades rather than crashes, but only one path has ever been exercised.
+
+**Prices**
+
+- `YFinanceDownloader.download` is the one unverifiable line: no test calls `yfinance.download`, so
+  the keyword arguments are signature-checked but not behaviour-checked. Compare the returned column
+  layout against `tests/fixtures/yf_download_panel.json` on the first run. If it differs, the fix
+  goes in `closes_from_download`, which is fully unit tested.
+- A ticker whose data merely stops a few rows before the panel's last row (a foreign holiday, a data
+  outage) is reported as `stopped_trading`. That is literally what the data says, but it is a false
+  positive for a still-listed name. If it shows up, the fix is a small staleness tolerance in
+  `_forward_one`.
+- The split fixture is hand-built, so it proves the adjusted-close preference logic but not that
+  Yahoo's own adjustment is right.
+
 ## 6. Tasks skipped, and why
 
-Nothing skipped yet.
+Nothing skipped. Every task in PLAN.md either passed its stated verification or is still open.
+
+One thing was **deliberately not done**: the `dd_ath` basis mismatch in section 3 is a one-line
+change in `scripts/price_screen.py`, and I did not make it. That file drives the bucket assignments
+the whole system rests on, and the brief said not to modify existing routes. It is flagged in
+SUMMARY.md for Joseph to decide.
+
+Similarly, the score was **not retuned** in response to the redundancy findings in section 3.
+Adjusting weights until a diagnostic looks tidy is how overfitting starts, and the finding is more
+useful than a quietly fixed number.

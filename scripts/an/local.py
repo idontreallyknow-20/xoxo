@@ -131,7 +131,18 @@ class Valuation:
 
     forward_pe: Optional[float] = None
     ev_ebitda: Optional[float] = None
-    price_sales: Optional[float] = None
+    price_from_price_screen: Optional[float] = None
+    """The ``price_ps`` column, which is a second price, not a price-to-sales ratio.
+
+    ``scripts/price_screen.py:116`` merges with ``suffixes=("", "_ps")``, and both
+    frames carry a ``price`` column, so the price screen's own last close lands under
+    ``price_ps``. It is within a couple of percent of ``price`` for all 150 names.
+
+    It matters because every derived figure in the row (``dd_52w``, ``dd_ath``,
+    ``pe_vs_median``) was computed inside the price screen from *this* price, while
+    the ``price`` column the CSV surfaces comes from the quality screen. The two are
+    close but not identical.
+    """
     median_pe_hist: Optional[float] = None
     median_ev_ebitda_hist: Optional[float] = None
     n_hist_years: Optional[int] = None
@@ -262,7 +273,7 @@ def _valuation(r: Dict[str, str]) -> Valuation:
     return Valuation(
         forward_pe=_f(r.get("forward_pe")),
         ev_ebitda=_f(r.get("ev_ebitda")),
-        price_sales=_f(r.get("price_ps")),
+        price_from_price_screen=_f(r.get("price_ps")),
         median_pe_hist=_f(r.get("median_pe_hist")),
         median_ev_ebitda_hist=_f(r.get("median_ev_ebitda_hist")),
         n_hist_years=_i(r.get("n_hist_years")),

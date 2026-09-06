@@ -149,13 +149,6 @@
     "value": 10.361,
     "own_median": 5.586570931464379,
     "vs_median": 0.8546260536396921
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 36.185001373291016,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 1.0,
    "net_breadth": 0.0
   },
+  "price_basis": {
+   "displayed": 35.95,
+   "used_for_derived_figures": 36.185001373291016,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0323,
   "insider_pct": 0.08844,
   "next_earnings": "2026-10-29",
@@ -188,7 +186,80 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "LAUR",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Consumer Defensive",
+    "n": 10,
+    "tickers": [
+     "ABEV",
+     "CVSA",
+     "DLTR",
+     "IPAR",
+     "LAUR",
+     "LOPE",
+     "MNST",
+     "MO",
+     "PRDO",
+     "SFM"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 9 others in Consumer Defensive. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.6667,
+    "EV/EBITDA": 0.3333
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.6667,
+    "free cash flow margin": 0.3333,
+    "revenue growth": 0.8889,
+    "gross margin stability": 0.6667
+   },
+   "price_rank": 0.5,
+   "quality_rank": 0.6667,
+   "gap": 0.1667,
+   "verdict": "in the middle",
+   "reasoning": "Neither its multiple nor its quality separates it from its peers, and the two are close to each other. Most of the list is here, and that is the honest answer for most of the list.",
+   "cheapest_peers": [
+    {
+     "ticker": "PRDO",
+     "forward_pe": 10.057575
+    },
+    {
+     "ticker": "MO",
+     "forward_pe": 11.850212
+    },
+    {
+     "ticker": "CVSA",
+     "forward_pe": 12.757621
+    },
+    {
+     "ticker": "SFM",
+     "forward_pe": 13.272079
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MNST",
+     "forward_pe": 33.749332
+    },
+    {
+     "ticker": "IPAR",
+     "forward_pe": 21.908148
+    },
+    {
+     "ticker": "DLTR",
+     "forward_pe": 16.596941
+    },
+    {
+     "ticker": "LAUR",
+     "forward_pe": 14.793203
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

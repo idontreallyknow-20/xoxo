@@ -149,13 +149,6 @@
     "value": 23.885,
     "own_median": 12.08083342978101,
     "vs_median": 0.9770986942937236
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 82.7300033569336,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 25.0,
    "net_breadth": -11.0
   },
+  "price_basis": {
+   "displayed": 82.67,
+   "used_for_derived_figures": 82.7300033569336,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0219,
   "insider_pct": 0.0057200002,
   "next_earnings": "2026-10-20",
@@ -188,7 +186,76 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NFLX",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Communication Services",
+    "n": 6,
+    "tickers": [
+     "APP",
+     "GOOGL",
+     "META",
+     "NFLX",
+     "NYT",
+     "TTD"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 5 others in Communication Services. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.8,
+    "EV/EBITDA": 1.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.4,
+    "free cash flow margin": 0.2,
+    "revenue growth": 0.4,
+    "gross margin stability": 0.2
+   },
+   "price_rank": 0.9,
+   "quality_rank": 0.3,
+   "gap": -0.6,
+   "verdict": "expensive against peers of worse quality",
+   "reasoning": "It trades in the dearer end of its peer set while its measured quality sits in the weaker end. That is the pairing that most often ends badly, and it is worth knowing before the own-history comparison says it is cheap versus its own past bubble.",
+   "cheapest_peers": [
+    {
+     "ticker": "APP",
+     "forward_pe": 14.948903
+    },
+    {
+     "ticker": "TTD",
+     "forward_pe": 15.160802
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "GOOGL",
+     "forward_pe": 23.097359
+    },
+    {
+     "ticker": "NFLX",
+     "forward_pe": 21.636208
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

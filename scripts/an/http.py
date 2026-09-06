@@ -28,7 +28,9 @@ from .store import FetchError, Offline, RateLimited, is_offline
 
 __all__ = ["Transport", "HttpTransport", "FixtureTransport", "RecordingTransport", "DryRunTransport", "redact"]
 
-_SECRET_KEYS = ("token", "apikey", "api_key", "key", "auth", "password", "secret")
+# "crumb" is Yahoo's per session credential, which yfinance puts in the query string
+# of every data URL and urllib3 then copies verbatim into its exception messages.
+_SECRET_KEYS = ("token", "apikey", "api_key", "key", "auth", "password", "secret", "crumb")
 
 
 def redact(url: str) -> str:

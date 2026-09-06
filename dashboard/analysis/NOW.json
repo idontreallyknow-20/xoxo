@@ -377,13 +377,6 @@
     "value": 53.265,
     "own_median": 96.93962599980091,
     "vs_median": -0.45053429440599047
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 136.72000122070312,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -409,6 +402,11 @@
    "analysts_down_30d": 19.0,
    "net_breadth": -2.0
   },
+  "price_basis": {
+   "displayed": 145.59,
+   "used_for_derived_figures": 136.72000122070312,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.028299998,
   "insider_pct": 0.00174,
   "next_earnings": "2026-10-28",
@@ -417,6 +415,86 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NOW",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Software - Application",
+    "n": 17,
+    "tickers": [
+     "ADBE",
+     "ADP",
+     "ADSK",
+     "CDNS",
+     "CVLT",
+     "DSGX",
+     "FICO",
+     "IDCC",
+     "INTU",
+     "MANH",
+     "NICE",
+     "NOW",
+     "PAYC",
+     "PAYX",
+     "PCTY",
+     "SAP",
+     "YOU"
+    ],
+    "caveat": "Compared against 16 other names in Software - Application."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.875,
+    "EV/EBITDA": 0.875
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.0625,
+    "free cash flow margin": 0.625,
+    "revenue growth": 0.9375,
+    "gross margin stability": 0.6875
+   },
+   "price_rank": 0.875,
+   "quality_rank": 0.6562,
+   "gap": -0.2188,
+   "verdict": "expensive, and the quality supports it",
+   "reasoning": "It trades in the dearer end of its peer set and its measured quality is in the better end. Nothing here says the price is wrong; it says the price is explained.",
+   "cheapest_peers": [
+    {
+     "ticker": "NICE",
+     "forward_pe": 8.557698
+    },
+    {
+     "ticker": "ADBE",
+     "forward_pe": 10.391604
+    },
+    {
+     "ticker": "INTU",
+     "forward_pe": 12.597715
+    },
+    {
+     "ticker": "PCTY",
+     "forward_pe": 15.943663
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MANH",
+     "forward_pe": 36.236313
+    },
+    {
+     "ticker": "CDNS",
+     "forward_pe": 31.945393
+    },
+    {
+     "ticker": "NOW",
+     "forward_pe": 29.085947
+    },
+    {
+     "ticker": "IDCC",
+     "forward_pe": 28.988998
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $145.59 and 29x forward, growth of 22% gives a PEG near 1.3, fair rather than cheap. Three year view: bear 22x is roughly $150, flat; base 30x on 20% compounded EPS is about $250; bull 38x is about $320.",
    "source": "hand-written research note in research/"

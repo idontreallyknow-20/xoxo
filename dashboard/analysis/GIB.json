@@ -149,13 +149,6 @@
     "value": 6.558,
     "own_median": null,
     "vs_median": null
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 72.8499984741211,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,12 +174,87 @@
    "analysts_down_30d": 4.0,
    "net_breadth": 6.0
   },
+  "price_basis": {
+   "displayed": 74.84,
+   "used_for_derived_figures": 72.8499984741211,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": null,
   "insider_pct": 0.00398,
   "next_earnings": "2026-11-11",
   "buckets": [],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "GIB",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Information Technology Services",
+    "n": 7,
+    "tickers": [
+     "ACN",
+     "EXLS",
+     "G",
+     "GIB",
+     "INFY",
+     "IT",
+     "JKHY"
+    ],
+    "caveat": "Compared against 6 other names in Information Technology Services."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.1667,
+    "EV/EBITDA": 0.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.1667,
+    "free cash flow margin": 0.3333,
+    "revenue growth": 0.8333,
+    "gross margin stability": 1.0
+   },
+   "price_rank": 0.0833,
+   "quality_rank": 0.5833,
+   "gap": 0.5,
+   "verdict": "priced below where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 50 points apart: the market is pricing it well below where its measured characteristics rank among its peers. That gap is the observation. Whether it is an opportunity depends entirely on something outside these numbers.",
+   "cheapest_peers": [
+    {
+     "ticker": "G",
+     "forward_pe": 8.435865
+    },
+    {
+     "ticker": "GIB",
+     "forward_pe": 10.598299
+    },
+    {
+     "ticker": "IT",
+     "forward_pe": 11.948295
+    },
+    {
+     "ticker": "ACN",
+     "forward_pe": 13.17761
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "JKHY",
+     "forward_pe": 21.497702
+    },
+    {
+     "ticker": "EXLS",
+     "forward_pe": 14.370317
+    },
+    {
+     "ticker": "INFY",
+     "forward_pe": 14.241457
+    },
+    {
+     "ticker": "ACN",
+     "forward_pe": 13.17761
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

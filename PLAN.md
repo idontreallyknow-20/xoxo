@@ -182,7 +182,7 @@ Consequences that shape everything below:
       Verify: `python -m pytest -q tests/test_no_secrets.py`
 - [x] **Q4** Full suite + a clean rebuild from scratch reproduces byte-identical JSON.
       Verify: `python -m pytest -q && python scripts/build_all.py && git diff --exit-code dashboard/`
-- [ ] **Q5** NOTES.md records every data source found, what it costs, what it actually returns, and
+- [x] **Q5** NOTES.md records every data source found, what it costs, what it actually returns, and
       every task skipped and why. SUMMARY.md is the morning read.
       Verify: both files exist, NOTES.md has a source table, SUMMARY.md has a "review this" list
 
@@ -194,6 +194,6 @@ Consequences that shape everything below:
 - [ ] **X2** EDGAR XBRL `companyfacts` -> 10+ years of as-reported fundamentals with filed dates,
       replacing the 4-year yfinance limitation called out in README and criteria.md.
 - [ ] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
-- [ ] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
+- [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
 - [ ] **X5** Compare view across up to 4 analysed tickers.
 - [ ] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.

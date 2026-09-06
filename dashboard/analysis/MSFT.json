@@ -390,13 +390,6 @@
     "value": 19.769,
     "own_median": 24.14539182242578,
     "vs_median": -0.18125163818468548
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 496.82000732421875,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 4.0,
    "net_breadth": 15.0
   },
+  "price_basis": {
+   "displayed": 510.12,
+   "used_for_derived_figures": 496.82000732421875,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0092,
   "insider_pct": 0.00092,
   "next_earnings": "2026-10-28",
@@ -430,6 +428,80 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "MSFT",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Software - Infrastructure",
+    "n": 11,
+    "tickers": [
+     "CHKP",
+     "DBX",
+     "DLO",
+     "EEFT",
+     "FFIV",
+     "FTNT",
+     "GDDY",
+     "MSFT",
+     "NTAP",
+     "QLYS",
+     "TDC"
+    ],
+    "caveat": "Compared against 10 other names in Software - Infrastructure."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.8,
+    "EV/EBITDA": 0.7
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.5,
+    "free cash flow margin": 0.5,
+    "revenue growth": 0.9,
+    "gross margin stability": 0.6
+   },
+   "price_rank": 0.75,
+   "quality_rank": 0.55,
+   "gap": -0.2,
+   "verdict": "in the middle",
+   "reasoning": "Neither its multiple nor its quality separates it from its peers, and the two are close to each other. Most of the list is here, and that is the honest answer for most of the list.",
+   "cheapest_peers": [
+    {
+     "ticker": "EEFT",
+     "forward_pe": 6.1392817
+    },
+    {
+     "ticker": "GDDY",
+     "forward_pe": 9.397415
+    },
+    {
+     "ticker": "TDC",
+     "forward_pe": 9.886168
+    },
+    {
+     "ticker": "DBX",
+     "forward_pe": 10.882919
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "FTNT",
+     "forward_pe": 41.462704
+    },
+    {
+     "ticker": "FFIV",
+     "forward_pe": 21.6936
+    },
+    {
+     "ticker": "MSFT",
+     "forward_pe": 21.639755
+    },
+    {
+     "ticker": "QLYS",
+     "forward_pe": 20.718735
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $510 and 21.6x forward earnings the stock is well below its own 35.8x median and below Alphabet (23x) despite faster cloud growth. Three year view: if EPS compounds 13% a year the stock reaches roughly $34 of EPS in fiscal 2029. Bear: 20x on $30 (capex crushes free cash flow, Copilot seats consolidate) is $600, modest upside because the starting multiple is already low. Base: 26x on $34 is $880. Bull: 30x on $36 is $1,080.",
    "source": "hand-written research note in research/"

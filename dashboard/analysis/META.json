@@ -390,13 +390,6 @@
     "value": 14.388,
     "own_median": 15.785076920968311,
     "vs_median": -0.08850618390794707
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 592.8499755859375,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 39.0,
    "net_breadth": -31.0
   },
+  "price_basis": {
+   "displayed": 610.68,
+   "used_for_derived_figures": 592.8499755859375,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0127,
   "insider_pct": 0.00148,
   "next_earnings": "2026-10-28",
@@ -430,6 +428,75 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "META",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Communication Services",
+    "n": 6,
+    "tickers": [
+     "APP",
+     "GOOGL",
+     "META",
+     "NFLX",
+     "NYT",
+     "TTD"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 5 others in Communication Services. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.4,
+    "EV/EBITDA": 0.2
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.6,
+    "free cash flow margin": 0.6,
+    "revenue growth": 0.6,
+    "gross margin stability": 0.6
+   },
+   "price_rank": 0.3,
+   "quality_rank": 0.6,
+   "gap": 0.3,
+   "verdict": "in the middle",
+   "reasoning": "Neither its multiple nor its quality separates it from its peers, and the two are close to each other. Most of the list is here, and that is the honest answer for most of the list.",
+   "cheapest_peers": [
+    {
+     "ticker": "APP",
+     "forward_pe": 14.948903
+    },
+    {
+     "ticker": "TTD",
+     "forward_pe": 15.160802
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "GOOGL",
+     "forward_pe": 23.097359
+    },
+    {
+     "ticker": "NFLX",
+     "forward_pe": 21.636208
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "17.5x forward looks cheap until you price free cash flow: at the current run rate the free cash flow yield is under 1%. Full year 2026 capex guidance is $135 to $145 billion. Until capex growth slows, the earnings multiple overstates what shareholders actually receive.",
    "source": "hand-written research note in research/"

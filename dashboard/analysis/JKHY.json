@@ -149,13 +149,6 @@
     "value": 16.905,
     "own_median": 17.74613626286288,
     "vs_median": -0.04739827590657664
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 167.02999877929688,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 0.0,
    "net_breadth": 1.0
   },
+  "price_basis": {
+   "displayed": 168.37,
+   "used_for_derived_figures": 167.02999877929688,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0706,
   "insider_pct": 0.0061000003,
   "next_earnings": "2026-11-03",
@@ -188,7 +186,77 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "JKHY",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Information Technology Services",
+    "n": 7,
+    "tickers": [
+     "ACN",
+     "EXLS",
+     "G",
+     "GIB",
+     "INFY",
+     "IT",
+     "JKHY"
+    ],
+    "caveat": "Compared against 6 other names in Information Technology Services."
+   },
+   "price_percentiles": {
+    "forward P/E": 1.0,
+    "EV/EBITDA": 0.8333
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.5,
+    "free cash flow margin": 0.5,
+    "revenue growth": 0.6667,
+    "gross margin stability": 0.1667
+   },
+   "price_rank": 0.9167,
+   "quality_rank": 0.5,
+   "gap": -0.4167,
+   "verdict": "priced above where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 42 points apart the other way: it is priced well above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
+   "cheapest_peers": [
+    {
+     "ticker": "G",
+     "forward_pe": 8.435865
+    },
+    {
+     "ticker": "GIB",
+     "forward_pe": 10.598299
+    },
+    {
+     "ticker": "IT",
+     "forward_pe": 11.948295
+    },
+    {
+     "ticker": "ACN",
+     "forward_pe": 13.17761
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "JKHY",
+     "forward_pe": 21.497702
+    },
+    {
+     "ticker": "EXLS",
+     "forward_pe": 14.370317
+    },
+    {
+     "ticker": "INFY",
+     "forward_pe": 14.241457
+    },
+    {
+     "ticker": "ACN",
+     "forward_pe": 13.17761
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

@@ -149,13 +149,6 @@
     "value": 14.623,
     "own_median": 18.8179900048534,
     "vs_median": -0.22292444643511122
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 61.790000915527344,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 2.0,
    "net_breadth": -1.0
   },
+  "price_basis": {
+   "displayed": 61.92,
+   "used_for_derived_figures": 61.790000915527344,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.13319999,
   "insider_pct": 0.01434,
   "next_earnings": "2026-11-17",
@@ -188,7 +186,93 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "DLB",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Industrials",
+    "n": 23,
+    "tickers": [
+     "AGX",
+     "AME",
+     "AOS",
+     "AWI",
+     "CPRT",
+     "CTAS",
+     "CW",
+     "DLB",
+     "EME",
+     "EXPD",
+     "EXPO",
+     "FAST",
+     "FIX",
+     "GGG",
+     "GWW",
+     "HEI",
+     "MLI",
+     "ODFL",
+     "RELX",
+     "RYAAY",
+     "SNA",
+     "STRL",
+     "TRI"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 22 others in Industrials. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.0455,
+    "EV/EBITDA": 0.2273
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.0,
+    "free cash flow margin": 1.0,
+    "revenue growth": 0.2727,
+    "gross margin stability": 0.9048
+   },
+   "price_rank": 0.1364,
+   "quality_rank": 0.5887,
+   "gap": 0.4524,
+   "verdict": "priced below where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 45 points apart: the market is pricing it well below where its measured characteristics rank among its peers. That gap is the observation. Whether it is an opportunity depends entirely on something outside these numbers.",
+   "cheapest_peers": [
+    {
+     "ticker": "RYAAY",
+     "forward_pe": 11.566927
+    },
+    {
+     "ticker": "DLB",
+     "forward_pe": 13.47062
+    },
+    {
+     "ticker": "MLI",
+     "forward_pe": 14.374429
+    },
+    {
+     "ticker": "AOS",
+     "forward_pe": 14.797376
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "HEI",
+     "forward_pe": 45.240448
+    },
+    {
+     "ticker": "FAST",
+     "forward_pe": 35.156498
+    },
+    {
+     "ticker": "CW",
+     "forward_pe": 33.188435
+    },
+    {
+     "ticker": "CTAS",
+     "forward_pe": 32.88371
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

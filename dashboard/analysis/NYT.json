@@ -149,13 +149,6 @@
     "value": 18.213,
     "own_median": 18.160852035933015,
     "vs_median": 0.0028714492009409565
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 67.68000030517578,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 6.0,
    "net_breadth": -6.0
   },
+  "price_basis": {
+   "displayed": 67.06,
+   "used_for_derived_figures": 67.68000030517578,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.073,
   "insider_pct": 0.1129,
   "next_earnings": "2026-11-04",
@@ -188,7 +186,76 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NYT",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Communication Services",
+    "n": 6,
+    "tickers": [
+     "APP",
+     "GOOGL",
+     "META",
+     "NFLX",
+     "NYT",
+     "TTD"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 5 others in Communication Services. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.6,
+    "EV/EBITDA": 0.4
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.2,
+    "free cash flow margin": 0.0,
+    "revenue growth": 0.0,
+    "gross margin stability": 1.0
+   },
+   "price_rank": 0.5,
+   "quality_rank": 0.1,
+   "gap": -0.4,
+   "verdict": "priced above where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 40 points apart the other way: it is priced well above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
+   "cheapest_peers": [
+    {
+     "ticker": "APP",
+     "forward_pe": 14.948903
+    },
+    {
+     "ticker": "TTD",
+     "forward_pe": 15.160802
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "GOOGL",
+     "forward_pe": 23.097359
+    },
+    {
+     "ticker": "NFLX",
+     "forward_pe": 21.636208
+    },
+    {
+     "ticker": "NYT",
+     "forward_pe": 21.469849
+    },
+    {
+     "ticker": "META",
+     "forward_pe": 17.468134
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

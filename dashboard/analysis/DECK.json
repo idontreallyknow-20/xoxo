@@ -149,13 +149,6 @@
     "value": 7.835,
     "own_median": 13.726840085786145,
     "vs_median": -0.4292204213762949
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 83.76000213623047,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 1.0,
    "net_breadth": 16.0
   },
+  "price_basis": {
+   "displayed": 84.5,
+   "used_for_derived_figures": 83.76000213623047,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0648,
   "insider_pct": 0.00704,
   "next_earnings": "2026-10-22",
@@ -188,7 +186,95 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "DECK",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Consumer Cyclical",
+    "n": 25,
+    "tickers": [
+     "ABNB",
+     "ALSN",
+     "BKNG",
+     "CHWY",
+     "CMG",
+     "DECK",
+     "DRI",
+     "EBAY",
+     "EXPE",
+     "GNTX",
+     "HRB",
+     "IHG",
+     "LULU",
+     "MCD",
+     "MCRI",
+     "MELI",
+     "NVR",
+     "ORLY",
+     "PDD",
+     "RACE",
+     "ROL",
+     "ROST",
+     "SHOO",
+     "TXRH",
+     "WING"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 24 others in Consumer Cyclical. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.0833,
+    "EV/EBITDA": 0.1304
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.7917,
+    "free cash flow margin": 0.625,
+    "revenue growth": 0.8333,
+    "gross margin stability": 0.0435
+   },
+   "price_rank": 0.1069,
+   "quality_rank": 0.7083,
+   "gap": 0.6014,
+   "verdict": "cheap against peers of better quality",
+   "reasoning": "It sits in the cheaper end of its peer set while its measured quality sits in the better end. That is the combination worth a closer look, and it is also the combination most often explained by something the numbers do not carry: a customer loss, a patent cliff, a regulator. The gap is a question, not an answer.",
+   "cheapest_peers": [
+    {
+     "ticker": "PDD",
+     "forward_pe": 6.587733
+    },
+    {
+     "ticker": "HRB",
+     "forward_pe": 7.3993626
+    },
+    {
+     "ticker": "DECK",
+     "forward_pe": 10.103969
+    },
+    {
+     "ticker": "GNTX",
+     "forward_pe": 10.320505
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MELI",
+     "forward_pe": 35.034702
+    },
+    {
+     "ticker": "RACE",
+     "forward_pe": 32.90906
+    },
+    {
+     "ticker": "ABNB",
+     "forward_pe": 30.171648
+    },
+    {
+     "ticker": "ROL",
+     "forward_pe": 27.457191
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

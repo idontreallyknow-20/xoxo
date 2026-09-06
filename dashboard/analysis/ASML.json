@@ -149,13 +149,6 @@
     "value": 2661.014,
     "own_median": null,
     "vs_median": null
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 1682.300048828125,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,12 +174,87 @@
    "analysts_down_30d": 0.0,
    "net_breadth": 28.0
   },
+  "price_basis": {
+   "displayed": 1646.19,
+   "used_for_derived_figures": 1682.300048828125,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0034999999,
   "insider_pct": 0.00016000001,
   "next_earnings": "2026-10-14",
   "buckets": [],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "ASML",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Semiconductor Equipment & Materials",
+    "n": 7,
+    "tickers": [
+     "ACLS",
+     "AMAT",
+     "ASML",
+     "KLAC",
+     "LRCX",
+     "NVMI",
+     "TER"
+    ],
+    "caveat": "Compared against 6 other names in Semiconductor Equipment & Materials."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.8333,
+    "EV/EBITDA": 1.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 1.0,
+    "free cash flow margin": 0.8333,
+    "revenue growth": 0.8333,
+    "gross margin stability": 0.3333
+   },
+   "price_rank": 0.9167,
+   "quality_rank": 0.8333,
+   "gap": -0.0833,
+   "verdict": "expensive, and the quality supports it",
+   "reasoning": "It trades in the dearer end of its peer set and its measured quality is in the better end. Nothing here says the price is wrong; it says the price is explained.",
+   "cheapest_peers": [
+    {
+     "ticker": "ACLS",
+     "forward_pe": 20.951025
+    },
+    {
+     "ticker": "AMAT",
+     "forward_pe": 23.620426
+    },
+    {
+     "ticker": "LRCX",
+     "forward_pe": 25.289024
+    },
+    {
+     "ticker": "NVMI",
+     "forward_pe": 25.819534
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "TER",
+     "forward_pe": 29.05736
+    },
+    {
+     "ticker": "ASML",
+     "forward_pe": 27.40751
+    },
+    {
+     "ticker": "KLAC",
+     "forward_pe": 25.852533
+    },
+    {
+     "ticker": "NVMI",
+     "forward_pe": 25.819534
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

@@ -390,13 +390,6 @@
     "value": 13.766,
     "own_median": 22.64315212020435,
     "vs_median": -0.3920457749468246
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 32.15999984741211,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 1.0,
    "net_breadth": -1.0
   },
+  "price_basis": {
+   "displayed": 33.58,
+   "used_for_derived_figures": 32.15999984741211,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.060599998,
   "insider_pct": 0.09012,
   "next_earnings": "2026-09-10",
@@ -430,6 +428,92 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "CPRT",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Industrials",
+    "n": 23,
+    "tickers": [
+     "AGX",
+     "AME",
+     "AOS",
+     "AWI",
+     "CPRT",
+     "CTAS",
+     "CW",
+     "DLB",
+     "EME",
+     "EXPD",
+     "EXPO",
+     "FAST",
+     "FIX",
+     "GGG",
+     "GWW",
+     "HEI",
+     "MLI",
+     "ODFL",
+     "RELX",
+     "RYAAY",
+     "SNA",
+     "STRL",
+     "TRI"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 22 others in Industrials. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.3636,
+    "EV/EBITDA": 0.1364
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.3636,
+    "free cash flow margin": 0.9091,
+    "revenue growth": 0.6818,
+    "gross margin stability": 0.8571
+   },
+   "price_rank": 0.25,
+   "quality_rank": 0.7695,
+   "gap": 0.5195,
+   "verdict": "cheap against peers of better quality",
+   "reasoning": "It sits in the cheaper end of its peer set while its measured quality sits in the better end. That is the combination worth a closer look, and it is also the combination most often explained by something the numbers do not carry: a customer loss, a patent cliff, a regulator. The gap is a question, not an answer.",
+   "cheapest_peers": [
+    {
+     "ticker": "RYAAY",
+     "forward_pe": 11.566927
+    },
+    {
+     "ticker": "DLB",
+     "forward_pe": 13.47062
+    },
+    {
+     "ticker": "MLI",
+     "forward_pe": 14.374429
+    },
+    {
+     "ticker": "AOS",
+     "forward_pe": 14.797376
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "HEI",
+     "forward_pe": 45.240448
+    },
+    {
+     "ticker": "FAST",
+     "forward_pe": 35.156498
+    },
+    {
+     "ticker": "CW",
+     "forward_pe": 33.188435
+    },
+    {
+     "ticker": "CTAS",
+     "forward_pe": 32.88371
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $33.58 and 20x forward, with a net cash balance sheet and a business that has compounded through every prior cycle. Three year view: bear 16x on flat earnings is about $27; base 24x on 8% growth is about $50; bull 30x is about $63.",
    "source": "hand-written research note in research/"

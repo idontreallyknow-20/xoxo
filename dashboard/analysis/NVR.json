@@ -377,13 +377,6 @@
     "value": 11.052,
     "own_median": 11.46034336992268,
     "vs_median": -0.03563098911978202
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 6326.9501953125,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -409,6 +402,11 @@
    "analysts_down_30d": 4.0,
    "net_breadth": -3.0
   },
+  "price_basis": {
+   "displayed": 6373.95,
+   "used_for_derived_figures": 6326.9501953125,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0625,
   "insider_pct": 0.05551,
   "next_earnings": "2026-10-21",
@@ -418,6 +416,94 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NVR",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Consumer Cyclical",
+    "n": 25,
+    "tickers": [
+     "ABNB",
+     "ALSN",
+     "BKNG",
+     "CHWY",
+     "CMG",
+     "DECK",
+     "DRI",
+     "EBAY",
+     "EXPE",
+     "GNTX",
+     "HRB",
+     "IHG",
+     "LULU",
+     "MCD",
+     "MCRI",
+     "MELI",
+     "NVR",
+     "ORLY",
+     "PDD",
+     "RACE",
+     "ROL",
+     "ROST",
+     "SHOO",
+     "TXRH",
+     "WING"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 24 others in Consumer Cyclical. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.375,
+    "EV/EBITDA": 0.2174
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.6667,
+    "free cash flow margin": 0.3333,
+    "revenue growth": 0.0,
+    "gross margin stability": 0.1739
+   },
+   "price_rank": 0.2962,
+   "quality_rank": 0.2536,
+   "gap": -0.0426,
+   "verdict": "cheap, and the quality suggests why",
+   "reasoning": "It is cheap against its peers and its measured quality is also in the weaker end. The own-history comparison would call this cheap too, and it would be describing a derating rather than arguing against one.",
+   "cheapest_peers": [
+    {
+     "ticker": "PDD",
+     "forward_pe": 6.587733
+    },
+    {
+     "ticker": "HRB",
+     "forward_pe": 7.3993626
+    },
+    {
+     "ticker": "DECK",
+     "forward_pe": 10.103969
+    },
+    {
+     "ticker": "GNTX",
+     "forward_pe": 10.320505
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MELI",
+     "forward_pe": 35.034702
+    },
+    {
+     "ticker": "RACE",
+     "forward_pe": 32.90906
+    },
+    {
+     "ticker": "ABNB",
+     "forward_pe": 30.171648
+    },
+    {
+     "ticker": "ROL",
+     "forward_pe": 27.457191
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "One share costs $6,374, which alone makes position sizing awkward at this account size. Bear case on a housing downturn with rates rising again is a 30% drawdown; base case is mid single digit compounding through buybacks.",
    "source": "hand-written research note in research/"

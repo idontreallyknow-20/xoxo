@@ -149,13 +149,6 @@
     "value": 32.912,
     "own_median": 37.19664798501873,
     "vs_median": -0.115189088724995
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 322.8999938964844,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 0.0,
    "net_breadth": 5.0
   },
+  "price_basis": {
+   "displayed": 325.7,
+   "used_for_derived_figures": 322.8999938964844,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.014400001,
   "insider_pct": 0.22819,
   "next_earnings": "2026-08-25",
@@ -188,7 +186,93 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "HEI",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Industrials",
+    "n": 23,
+    "tickers": [
+     "AGX",
+     "AME",
+     "AOS",
+     "AWI",
+     "CPRT",
+     "CTAS",
+     "CW",
+     "DLB",
+     "EME",
+     "EXPD",
+     "EXPO",
+     "FAST",
+     "FIX",
+     "GGG",
+     "GWW",
+     "HEI",
+     "MLI",
+     "ODFL",
+     "RELX",
+     "RYAAY",
+     "SNA",
+     "STRL",
+     "TRI"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 22 others in Industrials. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 1.0,
+    "EV/EBITDA": 0.9545
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.0455,
+    "free cash flow margin": 0.5909,
+    "revenue growth": 0.9091,
+    "gross margin stability": 0.8095
+   },
+   "price_rank": 0.9773,
+   "quality_rank": 0.7002,
+   "gap": -0.2771,
+   "verdict": "expensive, and the quality supports it",
+   "reasoning": "It trades in the dearer end of its peer set and its measured quality is in the better end. Nothing here says the price is wrong; it says the price is explained.",
+   "cheapest_peers": [
+    {
+     "ticker": "RYAAY",
+     "forward_pe": 11.566927
+    },
+    {
+     "ticker": "DLB",
+     "forward_pe": 13.47062
+    },
+    {
+     "ticker": "MLI",
+     "forward_pe": 14.374429
+    },
+    {
+     "ticker": "AOS",
+     "forward_pe": 14.797376
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "HEI",
+     "forward_pe": 45.240448
+    },
+    {
+     "ticker": "FAST",
+     "forward_pe": 35.156498
+    },
+    {
+     "ticker": "CW",
+     "forward_pe": 33.188435
+    },
+    {
+     "ticker": "CTAS",
+     "forward_pe": 32.88371
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

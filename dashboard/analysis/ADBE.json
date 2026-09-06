@@ -390,13 +390,6 @@
     "value": 11.824,
     "own_median": 26.01344799315254,
     "vs_median": -0.54546586814972
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 279.7900085449219,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -422,6 +415,11 @@
    "analysts_down_30d": 0.0,
    "net_breadth": 0.0
   },
+  "price_basis": {
+   "displayed": 285.75,
+   "used_for_derived_figures": 279.7900085449219,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0506,
   "insider_pct": 0.00223,
   "next_earnings": "2026-09-10",
@@ -430,6 +428,86 @@
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
   "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "ADBE",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Software - Application",
+    "n": 17,
+    "tickers": [
+     "ADBE",
+     "ADP",
+     "ADSK",
+     "CDNS",
+     "CVLT",
+     "DSGX",
+     "FICO",
+     "IDCC",
+     "INTU",
+     "MANH",
+     "NICE",
+     "NOW",
+     "PAYC",
+     "PAYX",
+     "PCTY",
+     "SAP",
+     "YOU"
+    ],
+    "caveat": "Compared against 16 other names in Software - Application."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.0625,
+    "EV/EBITDA": 0.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.8125,
+    "free cash flow margin": 0.9375,
+    "revenue growth": 0.1875,
+    "gross margin stability": 0.5625
+   },
+   "price_rank": 0.0312,
+   "quality_rank": 0.6875,
+   "gap": 0.6562,
+   "verdict": "cheap against peers of better quality",
+   "reasoning": "It sits in the cheaper end of its peer set while its measured quality sits in the better end. That is the combination worth a closer look, and it is also the combination most often explained by something the numbers do not carry: a customer loss, a patent cliff, a regulator. The gap is a question, not an answer.",
+   "cheapest_peers": [
+    {
+     "ticker": "NICE",
+     "forward_pe": 8.557698
+    },
+    {
+     "ticker": "ADBE",
+     "forward_pe": 10.391604
+    },
+    {
+     "ticker": "INTU",
+     "forward_pe": 12.597715
+    },
+    {
+     "ticker": "PCTY",
+     "forward_pe": 15.943663
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MANH",
+     "forward_pe": 36.236313
+    },
+    {
+     "ticker": "CDNS",
+     "forward_pe": 31.945393
+    },
+    {
+     "ticker": "NOW",
+     "forward_pe": 29.085947
+    },
+    {
+     "ticker": "IDCC",
+     "forward_pe": 28.988998
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
   "written_view": {
    "text": "At $285.75 with fiscal 2026 EPS guidance of about $24.40, the stock is about 11.7 times this year's earnings. Six month revenue to May 29, 2026 was $13.0 billion with $4.66 billion of operating income and $8.86 of diluted EPS; the company bought back $4.6 billion of stock in those six months. Cash $4.9 billion, debt $6.6 billion. Peers: Autodesk 16.7x forward, Microsoft 21.6x, ServiceNow 29x, Salesforce not in our universe screen. Three year view at $24.40 growing 8% a year gives roughly $30 to $31 of EPS in fiscal 2029. Bear: 10x on $27 (growth stalls, seat losses) is $270, roughly flat. Base: 15x on $30 is $450. Bull: 20x on $32 is $640. The asymmetry is what makes it a pick, not certainty about AI.",
    "source": "hand-written research note in research/"

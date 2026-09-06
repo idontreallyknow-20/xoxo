@@ -149,13 +149,6 @@
     "value": 58.231,
     "own_median": 51.58892242308056,
     "vs_median": 0.12875007394897264
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 1219.3599853515625,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 1.0,
    "net_breadth": 10.0
   },
+  "price_basis": {
+   "displayed": 1213.65,
+   "used_for_derived_figures": 1219.3599853515625,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.0504,
   "insider_pct": 0.03592,
   "next_earnings": "2026-10-29",
@@ -188,7 +186,76 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "MPWR",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Semiconductors",
+    "n": 6,
+    "tickers": [
+     "CRUS",
+     "MPWR",
+     "NVDA",
+     "QCOM",
+     "RMBS",
+     "TSM"
+    ],
+    "caveat": "Compared against 5 other names in Semiconductors."
+   },
+   "price_percentiles": {
+    "forward P/E": 1.0,
+    "EV/EBITDA": 1.0
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.4,
+    "free cash flow margin": 0.4,
+    "revenue growth": 0.4,
+    "gross margin stability": 0.6
+   },
+   "price_rank": 1.0,
+   "quality_rank": 0.4,
+   "gap": -0.6,
+   "verdict": "priced above where its quality sits",
+   "reasoning": "Neither number crosses a quartile line, but they are 60 points apart the other way: it is priced well above where its measured characteristics rank among its peers. Sometimes that is the market seeing something these measures do not; sometimes it is not.",
+   "cheapest_peers": [
+    {
+     "ticker": "CRUS",
+     "forward_pe": 12.71095
+    },
+    {
+     "ticker": "NVDA",
+     "forward_pe": 14.830322
+    },
+    {
+     "ticker": "QCOM",
+     "forward_pe": 16.523312
+    },
+    {
+     "ticker": "TSM",
+     "forward_pe": 19.075375
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MPWR",
+     "forward_pe": 34.80429
+    },
+    {
+     "ticker": "RMBS",
+     "forward_pe": 22.815126
+    },
+    {
+     "ticker": "TSM",
+     "forward_pe": 19.075375
+    },
+    {
+     "ticker": "QCOM",
+     "forward_pe": 16.523312
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

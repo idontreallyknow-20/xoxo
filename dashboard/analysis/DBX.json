@@ -149,13 +149,6 @@
     "value": 12.799,
     "own_median": 17.638537685686806,
     "vs_median": -0.2743729538086346
-   },
-   {
-    "key": "price_sales",
-    "label": "Price to sales",
-    "value": 34.5,
-    "own_median": null,
-    "vs_median": null
    }
   ],
   "own_history": {
@@ -181,6 +174,11 @@
    "analysts_down_30d": 5.0,
    "net_breadth": -4.0
   },
+  "price_basis": {
+   "displayed": 35.7,
+   "used_for_derived_figures": 34.5,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
   "short_pct_float": 0.2967,
   "insider_pct": 0.08071,
   "next_earnings": "2026-11-05",
@@ -188,7 +186,81 @@
    "compounder"
   ],
   "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
-  "as_of": "2026-09-04"
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "DBX",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Software - Infrastructure",
+    "n": 11,
+    "tickers": [
+     "CHKP",
+     "DBX",
+     "DLO",
+     "EEFT",
+     "FFIV",
+     "FTNT",
+     "GDDY",
+     "MSFT",
+     "NTAP",
+     "QLYS",
+     "TDC"
+    ],
+    "caveat": "Compared against 10 other names in Software - Infrastructure."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.3,
+    "EV/EBITDA": 0.3
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.8,
+    "free cash flow margin": 0.8,
+    "revenue growth": 0.1,
+    "gross margin stability": 0.5
+   },
+   "price_rank": 0.3,
+   "quality_rank": 0.65,
+   "gap": 0.35,
+   "verdict": "cheap against peers of better quality",
+   "reasoning": "It sits in the cheaper end of its peer set while its measured quality sits in the better end. That is the combination worth a closer look, and it is also the combination most often explained by something the numbers do not carry: a customer loss, a patent cliff, a regulator. The gap is a question, not an answer.",
+   "cheapest_peers": [
+    {
+     "ticker": "EEFT",
+     "forward_pe": 6.1392817
+    },
+    {
+     "ticker": "GDDY",
+     "forward_pe": 9.397415
+    },
+    {
+     "ticker": "TDC",
+     "forward_pe": 9.886168
+    },
+    {
+     "ticker": "DBX",
+     "forward_pe": 10.882919
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "FTNT",
+     "forward_pe": 41.462704
+    },
+    {
+     "ticker": "FFIV",
+     "forward_pe": 21.6936
+    },
+    {
+     "ticker": "MSFT",
+     "forward_pe": 21.639755
+    },
+    {
+     "ticker": "QLYS",
+     "forward_pe": 20.718735
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
  },
  "score": {
   "available": true,

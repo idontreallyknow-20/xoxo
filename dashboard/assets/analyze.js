@@ -220,6 +220,52 @@
              + "Not coloured: a lower multiple is not automatically better.", (x) => mult(x, 0));
     }
 
+    // Where it sits among peers, and whether the price matches the quality. This is
+    // the answer to the own-history caveat directly above it: a stock at half its old
+    // multiple is cheap only if the old multiple was deserved.
+    let peerBlock = "";
+    if (v.peers) {
+      const p = v.peers;
+      const pr = p.price_rank, qr = p.quality_rank;
+      const rows = Object.entries(p.price_percentiles).map(([k, x]) => `<div class="row">
+        <div class="k">${esc(k)}, among peers</div>
+        <div class="v">${has(x) ? `cheaper than <b>${esc(num((1 - x) * 100, 0))}%</b> of them` : "not comparable"}</div>
+        <div class="m">price</div></div>`).join("")
+        + Object.entries(p.quality_percentiles).map(([k, x]) => `<div class="row">
+        <div class="k">${esc(k)}, among peers</div>
+        <div class="v">${has(x) ? `better than <b>${esc(num(x * 100, 0))}%</b> of them` : "not comparable"}</div>
+        <div class="m">quality</div></div>`).join("");
+      let gapRail = "";
+      if (has(pr) && has(qr)) {
+        gapRail = D.rail(0, 1, [
+          { value: pr, kind: "now", label: "priced at" },
+          { value: qr, kind: "median", label: "quality at" },
+        ], null,
+          "Both are percentiles inside the same peer set, so the distance between them is the "
+          + "observation. Left is cheaper and worse; right is dearer and better.",
+          (x) => num(x * 100, 0) + "th");
+      }
+      peerBlock = `<h2 style="font-size:13px;margin-top:34px">Against its peers
+          <span class="sub">${esc(p.peer_set.n - 1)} others, by ${esc(p.peer_set.basis)}</span></h2>
+        <div class="rule soft"></div>
+        <div class="note">${esc(p.why)}</div>
+        <div class="callout" style="margin-top:18px">
+          <div class="kicker">${esc(p.peer_set.label)}</div>
+          <p class="line">${esc(p.verdict)}</p>
+          <div class="meta"><span>${esc(p.reasoning)}</span></div>
+        </div>
+        ${gapRail}
+        <div class="ledger" style="margin-top:22px">${rows}
+          <div class="row gap"><div class="k"><span class="mk open"></span>who the peers are</div>
+            <div class="v">${p.peer_set.tickers.filter((t) => t !== p.ticker).slice(0, 24)
+              .map((t) => `<a href="../${esc(t)}/">${esc(t)}</a>`).join(", ")}${
+              p.peer_set.tickers.length > 25 ? ` and ${p.peer_set.tickers.length - 25} more` : ""}</div>
+            <div class="m">inspectable</div></div>
+          <div class="row gap"><div class="k"><span class="mk open"></span>how comparable they are</div>
+            <div class="v">${esc(p.peer_set.caveat)}</div><div class="m">method</div></div>
+        </div>`;
+    }
+
     const dd = v.drawdown;
     const est = v.estimates;
     const written = v.written_view
@@ -231,6 +277,7 @@
       <tbody>${mrows}</tbody></table></div>
       ${peRail}
       <div class="note${v.own_history.usable ? "" : " warn"}">${esc(v.own_history.caveat)}</div>
+      ${peerBlock}
       <div class="ledger" style="margin-top:24px">
         <div class="row"><div class="k">off the 52-week high</div>
           <div class="v">${esc(pct(dd.from_52w_high, 1, true))} from ${esc(money(dd.high_52w))}</div>
