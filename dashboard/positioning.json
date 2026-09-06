@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-06T10:36:30",
+ "built_at": "2026-09-06T10:41:20",
  "snapshot_date": "2026-09-04",
  "variant": "quality_value",
  "status_of_the_score": {
@@ -334,7 +334,7 @@
    "company": "Adobe Inc.",
    "sector": "Technology",
    "percentile": 94.6,
-   "coverage": 1.0,
+   "coverage": 0.94,
    "thinly_evidenced": false,
    "depth": "deep",
    "buckets": [
@@ -366,10 +366,6 @@
    ],
    "drags": [
     {
-     "key": "revision_breadth",
-     "value": -0.0202
-    },
-    {
      "key": "revisions_30d",
      "value": -0.0175
     },
@@ -381,7 +377,7 @@
    "reasoning": [
     "Adobe sells subscription software for making and managing digital content: Photoshop, Illustrator, Premiere and the rest of Creative Cloud for creators, Acrobat and Express for everyone else, and Experience Cloud for marketing teams.",
     "Ranks where it does mainly on EV/EBITDA vs own median, free cash flow margin, forward P/E vs own median.",
-    "The score is held back by analyst agreement, next-year EPS revision, 30 days.",
+    "The score is held back by next-year EPS revision, 30 days, balance sheet.",
     "Trades at 10.4x forward earnings against a four-point median of 37.9x, 73% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +4.2% over 90 days, but no analyst changed their number in the last 30, so the move is older than a month.",
     "Against 16 peers in Software - Application, it is priced at the 3th percentile and its measured quality sits at the 69th: cheap against peers of better quality.",
@@ -1035,7 +1031,7 @@
    "ticker": "ISRG",
    "company": "Intuitive Surgical, Inc.",
    "sector": "Healthcare",
-   "percentile": 65.1,
+   "percentile": 64.4,
    "coverage": 1.0,
    "thinly_evidenced": false,
    "depth": "deep",

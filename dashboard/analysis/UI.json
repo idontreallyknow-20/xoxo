@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "screen",
  "identity": {
   "ticker": "UI",
@@ -310,13 +310,14 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.1703,
-    "percentile": 64.4,
-    "coverage": 0.81,
+    "score": 0.1905,
+    "percentile": 65.8,
+    "coverage": 0.75,
     "thinly_evidenced": false,
     "missing": [
      "revisions_90d",
-     "revisions_30d"
+     "revisions_30d",
+     "revision_breadth"
     ],
     "contributions": {
      "roic": 0.4978,
@@ -329,7 +330,7 @@
      "value_pe": -0.0876,
      "revisions_90d": 0.0,
      "revisions_30d": 0.0,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": -0.0421,
      "short_interest": -0.037
     },
@@ -357,13 +358,14 @@
     ]
    },
    "with_momentum": {
-    "score": -0.0309,
-    "percentile": 45.0,
-    "coverage": 0.8273,
+    "score": -0.0106,
+    "percentile": 46.3,
+    "coverage": 0.7727,
     "thinly_evidenced": false,
     "missing": [
      "revisions_90d",
-     "revisions_30d"
+     "revisions_30d",
+     "revision_breadth"
     ],
     "contributions": {
      "roic": 0.4978,
@@ -376,7 +378,7 @@
      "value_pe": -0.0876,
      "revisions_90d": 0.0,
      "revisions_30d": 0.0,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": -0.0421,
      "short_interest": -0.037,
      "momentum_52w": -0.2012
@@ -405,13 +407,14 @@
     ]
    },
    "with_reversal": {
-    "score": 0.2482,
-    "percentile": 68.5,
-    "coverage": 0.8273,
+    "score": 0.2684,
+    "percentile": 69.1,
+    "coverage": 0.7727,
     "thinly_evidenced": false,
     "missing": [
      "revisions_90d",
-     "revisions_30d"
+     "revisions_30d",
+     "revision_breadth"
     ],
     "contributions": {
      "roic": 0.4978,
@@ -424,7 +427,7 @@
      "value_pe": -0.0876,
      "revisions_90d": 0.0,
      "revisions_30d": 0.0,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": -0.0421,
      "short_interest": -0.037,
      "reversal_ath": 0.0779

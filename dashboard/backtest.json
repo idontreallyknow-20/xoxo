@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-06T10:36:27",
+  "built_at": "2026-09-06T10:41:17",
   "snapshot_date": "2026-09-04",
   "status": "NOT RUN",
   "why_not_run": [
@@ -261,6 +261,14 @@
           "redundant": true
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "n": 147,
+          "combined_weight": 0.17,
+          "redundant": true
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
@@ -269,18 +277,10 @@
           "redundant": true
         },
         {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "n": 148,
-          "combined_weight": 0.17,
-          "redundant": true
-        },
-        {
           "a": "revisions_30d",
           "b": "revision_breadth",
-          "rho": 0.5431,
-          "n": 148,
+          "rho": 0.5415,
+          "n": 147,
           "combined_weight": 0.14,
           "redundant": false
         },
@@ -375,16 +375,16 @@
         {
           "a": "value_ev",
           "b": "revision_breadth",
-          "rho": -0.2198,
-          "n": 136,
+          "rho": -0.2192,
+          "n": 134,
           "combined_weight": 0.19,
           "redundant": false
         },
         {
           "a": "value_pe",
           "b": "revision_breadth",
-          "rho": -0.2164,
-          "n": 136,
+          "rho": -0.2181,
+          "n": 134,
           "combined_weight": 0.14,
           "redundant": false
         },
@@ -421,19 +421,19 @@
           "combined_weight": 0.19
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "combined_weight": 0.17
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
           "combined_weight": 0.21
-        },
-        {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "combined_weight": 0.17
         }
       ],
-      "effective_signal_count": 9.78,
+      "effective_signal_count": 9.77,
       "variance_share": {
         "roic": 0.227,
         "roic_trend": 0.0172,
@@ -465,14 +465,14 @@
         "short_interest": 0.03
       },
       "coverage_distribution": {
-        "min": 0.76,
-        "p10": 0.81,
+        "min": 0.75,
+        "p10": 0.79,
         "median": 1.0,
-        "mean": 0.976,
+        "mean": 0.975,
         "max": 1.0
       },
       "thinly_evidenced": [],
-      "agreement_with_quality_screen": 0.4532,
+      "agreement_with_quality_screen": 0.4531,
       "biggest_disagreements": [
         {
           "ticker": "EXPD",
@@ -567,6 +567,14 @@
           "redundant": true
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "n": 147,
+          "combined_weight": 0.1545,
+          "redundant": true
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
@@ -575,18 +583,10 @@
           "redundant": true
         },
         {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "n": 148,
-          "combined_weight": 0.1545,
-          "redundant": true
-        },
-        {
           "a": "revisions_30d",
           "b": "revision_breadth",
-          "rho": 0.5431,
-          "n": 148,
+          "rho": 0.5415,
+          "n": 147,
           "combined_weight": 0.1273,
           "redundant": false
         },
@@ -713,8 +713,8 @@
         {
           "a": "value_ev",
           "b": "revision_breadth",
-          "rho": -0.2198,
-          "n": 136,
+          "rho": -0.2192,
+          "n": 134,
           "combined_weight": 0.1727,
           "redundant": false
         }
@@ -727,19 +727,19 @@
           "combined_weight": 0.1727
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "combined_weight": 0.1545
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
           "combined_weight": 0.1909
-        },
-        {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "combined_weight": 0.1545
         }
       ],
-      "effective_signal_count": 10.5,
+      "effective_signal_count": 10.49,
       "variance_share": {
         "roic": 0.2097,
         "roic_trend": 0.0159,
@@ -773,14 +773,14 @@
         "momentum_52w": 0.0909
       },
       "coverage_distribution": {
-        "min": 0.782,
-        "p10": 0.827,
+        "min": 0.773,
+        "p10": 0.809,
         "median": 1.0,
         "mean": 0.978,
         "max": 1.0
       },
       "thinly_evidenced": [],
-      "agreement_with_quality_screen": 0.424,
+      "agreement_with_quality_screen": 0.4241,
       "biggest_disagreements": [
         {
           "ticker": "EXPD",
@@ -875,19 +875,19 @@
           "redundant": true
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "n": 147,
+          "combined_weight": 0.1545,
+          "redundant": true
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
           "n": 136,
           "combined_weight": 0.1909,
-          "redundant": true
-        },
-        {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "n": 148,
-          "combined_weight": 0.1545,
           "redundant": true
         },
         {
@@ -901,8 +901,8 @@
         {
           "a": "revisions_30d",
           "b": "revision_breadth",
-          "rho": 0.5431,
-          "n": 148,
+          "rho": 0.5415,
+          "n": 147,
           "combined_weight": 0.1273,
           "redundant": false
         },
@@ -1035,19 +1035,19 @@
           "combined_weight": 0.1727
         },
         {
+          "a": "revisions_90d",
+          "b": "revision_breadth",
+          "rho": 0.7606,
+          "combined_weight": 0.1545
+        },
+        {
           "a": "value_ev",
           "b": "value_pe",
           "rho": 0.7547,
           "combined_weight": 0.1909
-        },
-        {
-          "a": "revisions_90d",
-          "b": "revision_breadth",
-          "rho": 0.7539,
-          "combined_weight": 0.1545
         }
       ],
-      "effective_signal_count": 10.29,
+      "effective_signal_count": 10.28,
       "variance_share": {
         "roic": 0.216,
         "roic_trend": 0.0164,
@@ -1059,7 +1059,7 @@
         "value_pe": 0.0331,
         "revisions_90d": 0.1952,
         "revisions_30d": 0.1317,
-        "revision_breadth": 0.0108,
+        "revision_breadth": 0.0107,
         "share_count": 0.0152,
         "short_interest": 0.0081,
         "reversal_ath": 0.0482
@@ -1081,14 +1081,14 @@
         "reversal_ath": 0.0909
       },
       "coverage_distribution": {
-        "min": 0.782,
-        "p10": 0.827,
+        "min": 0.773,
+        "p10": 0.809,
         "median": 1.0,
         "mean": 0.978,
         "max": 1.0
       },
       "thinly_evidenced": [],
-      "agreement_with_quality_screen": 0.4581,
+      "agreement_with_quality_screen": 0.4582,
       "biggest_disagreements": [
         {
           "ticker": "UTHR",
@@ -1182,7 +1182,7 @@
         "n": 150
       },
       "with_momentum vs with_reversal": {
-        "rank_correlation": 0.8868,
+        "rank_correlation": 0.8869,
         "n": 150
       }
     },

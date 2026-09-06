@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "snapshot_date": "2026-09-04",
  "count": 150,
  "tickers": [
@@ -97,7 +97,7 @@
    "depth": "deep",
    "price": 285.75,
    "score": 94.6,
-   "coverage": 1.0,
+   "coverage": 0.94,
    "buckets": [
     "compounder"
    ],
@@ -415,7 +415,7 @@
    "industry": "Restaurants",
    "depth": "screen",
    "price": 37.57,
-   "score": 65.8,
+   "score": 65.1,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -1333,7 +1333,7 @@
    "industry": "Medical Instruments & Supplies",
    "depth": "deep",
    "price": 369.83,
-   "score": 65.1,
+   "score": 64.4,
    "coverage": 1.0,
    "buckets": [
     "compounder"
@@ -2501,8 +2501,8 @@
    "industry": "Communication Equipment",
    "depth": "screen",
    "price": 595.96,
-   "score": 64.4,
-   "coverage": 0.81,
+   "score": 65.8,
+   "coverage": 0.75,
    "buckets": [
     "cyclical turn"
    ],

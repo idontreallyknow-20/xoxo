@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "screen",
  "identity": {
   "ticker": "CMG",
@@ -288,7 +288,7 @@
   "variants": {
    "quality_value": {
     "score": 0.1757,
-    "percentile": 65.8,
+    "percentile": 65.1,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],
@@ -377,7 +377,7 @@
    },
    "with_reversal": {
     "score": 0.2491,
-    "percentile": 69.1,
+    "percentile": 68.5,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],

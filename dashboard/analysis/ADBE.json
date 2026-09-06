@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "deep",
  "identity": {
   "ticker": "ADBE",
@@ -651,11 +651,13 @@
   "available": true,
   "variants": {
    "quality_value": {
-    "score": 0.7388,
+    "score": 0.7591,
     "percentile": 94.6,
-    "coverage": 1.0,
+    "coverage": 0.94,
     "thinly_evidenced": false,
-    "missing": [],
+    "missing": [
+     "revision_breadth"
+    ],
     "contributions": {
      "roic": 0.0953,
      "roic_trend": 0.0433,
@@ -667,7 +669,7 @@
      "value_pe": 0.1223,
      "revisions_90d": 0.1021,
      "revisions_30d": -0.0175,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": 0.0487,
      "short_interest": -0.0027
     },
@@ -695,11 +697,13 @@
     ]
    },
    "with_momentum": {
-    "score": 0.6945,
+    "score": 0.7147,
     "percentile": 92.6,
-    "coverage": 1.0,
+    "coverage": 0.9455,
     "thinly_evidenced": false,
-    "missing": [],
+    "missing": [
+     "revision_breadth"
+    ],
     "contributions": {
      "roic": 0.0953,
      "roic_trend": 0.0433,
@@ -711,7 +715,7 @@
      "value_pe": 0.1223,
      "revisions_90d": 0.1021,
      "revisions_30d": -0.0175,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": 0.0487,
      "short_interest": -0.0027,
      "momentum_52w": -0.0444
@@ -740,11 +744,13 @@
     ]
    },
    "with_reversal": {
-    "score": 0.8812,
+    "score": 0.9014,
     "percentile": 96.6,
-    "coverage": 1.0,
+    "coverage": 0.9455,
     "thinly_evidenced": false,
-    "missing": [],
+    "missing": [
+     "revision_breadth"
+    ],
     "contributions": {
      "roic": 0.0953,
      "roic_trend": 0.0433,
@@ -756,7 +762,7 @@
      "value_pe": 0.1223,
      "revisions_90d": 0.1021,
      "revisions_30d": -0.0175,
-     "revision_breadth": -0.0202,
+     "revision_breadth": 0.0,
      "share_count": 0.0487,
      "short_interest": -0.0027,
      "reversal_ath": 0.1423

@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "deep",
  "identity": {
   "ticker": "ISRG",
@@ -625,7 +625,7 @@
   "variants": {
    "quality_value": {
     "score": 0.1711,
-    "percentile": 65.1,
+    "percentile": 64.4,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],

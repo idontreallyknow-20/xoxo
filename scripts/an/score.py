@@ -15,11 +15,20 @@ Every component is something the existing pipeline already measures. Nothing new
 is invented; the contribution is combining them properly and being explicit about
 which ones are contested.
 
-*Profitability.* Return on invested capital and free cash flow margin. Gross
-profitability is one of the better-documented cross-sectional characteristics
-(Novy-Marx 2013), and the quality factor in Fama-French's five-factor model is
-built on operating profitability. Scored within sector, because a 12% ROIC in
-utilities and a 12% ROIC in software are not the same statement.
+*Profitability.* Return on invested capital and free cash flow margin, scored
+within sector because a 12% ROIC in utilities and a 12% ROIC in software are not
+the same statement.
+
+A note on what this is and is not standing on. Fama and French's five-factor model
+uses operating profitability, which is the closer relative of what is measured
+here. Novy-Marx (2013) is often cited in this neighbourhood and should not be:
+his result is specifically that *gross* profits over assets predicts returns
+better than bottom-line measures, which is an argument against the measures used
+here rather than for them. Gross margin is loaded and gross profitability is
+computable, so adding it is on the backlog; until then the honest statement is
+that ROIC and FCF margin are the profitability measures the existing screen
+already produces, and they are correlated with the documented one rather than
+being it.
 
 *Stability.* The standard deviation of gross margin, inverted. A stable margin is
 weak evidence of pricing power. This is the softest component here and it is
@@ -61,9 +70,15 @@ component most likely to carry real information here.
 the more robust characteristics in the literature (Daniel and Titman 2006, Pontiff
 and Woodgate 2008), and it is cheap and clean to measure.
 
-*Short interest.* Percent of float short, inverted. Heavily shorted stocks
-underperform on average (Boehmer, Jones and Zhang). Small weight: at this
-universe's liquidity, short interest is mostly noise.
+*Short interest.* Percent of float short, inverted, at a deliberately small weight.
+
+The commonly cited result here is Boehmer, Jones and Zhang, and it is about
+something else: they measure daily short-sale *order flow* from exchange data and
+find that heavily shorted-*into* stocks underperform. What is available free is the
+short interest *level*, a fortnightly snapshot of shares outstanding short, whose
+own literature finds a real but considerably weaker effect. Using the level as a
+proxy for a flow result is a substitution, not a citation, and it is why this
+component carries 0.03 rather than something that would matter.
 
 THE COMPONENT THAT IS DELIBERATELY CONTESTED
 --------------------------------------------
@@ -86,11 +101,16 @@ is to keep the base score and stop pretending the price component adds anything.
 
 MISSING DATA
 ------------
-A missing component contributes zero, which is the sample mean after
-standardisation, so a name with gaps is pulled towards the middle rather than
-punished or flattered. Every scored name carries ``coverage``: the fraction of
-weight backed by a real observation. A name at 0.55 coverage ranked 8th is not
-really ranked 8th and the page says so.
+A missing component contributes zero. Standardisation here is robust, centred on
+the median and scaled by the median absolute deviation, so zero is the sample
+*median* rather than its mean: a name with gaps is pulled towards the middle of the
+distribution, not towards its average. Those differ whenever a component is skewed,
+which several are, so the effect of a gap is a small tilt away from the mean rather
+than exactly nothing. Saying "the mean" would have been tidier and false.
+
+Every scored name carries ``coverage``: the fraction of weight backed by a real
+observation. A name at 0.55 coverage ranked 8th is not really ranked 8th and the
+page says so.
 
 WHAT THIS SCORE CANNOT DO
 -------------------------
@@ -156,10 +176,18 @@ def _nd_to_ebitda(rec: TickerRecord) -> Optional[float]:
 
 
 def _fcf_quality(rec: TickerRecord) -> Optional[float]:
-    """FCF margin, discounted when free cash flow was negative in more than one year.
+    """FCF margin, penalised when free cash flow was negative in more than one year.
 
     An average margin of 15% built out of two good years and two bad ones is not
     the same business as 15% every year, and the average alone cannot tell them apart.
+
+    The penalty has to work in both directions. Multiplying by 0.4 shrinks a positive
+    margin towards zero, which is a penalty; it also shrinks a *negative* margin
+    towards zero, which is a reward, and the companies that burn cash in more than
+    one year of four are exactly the ones with a negative average. The first version
+    of this function did that, so the worst cash generators in the universe were
+    handed the largest improvement. Dividing instead of multiplying below zero makes
+    the penalty push the same way on both sides.
     """
     f = rec.fundamentals
     if f.fcf_margin_avg is None:
@@ -167,7 +195,8 @@ def _fcf_quality(rec: TickerRecord) -> Optional[float]:
     if f.fcf_years and f.fcf_positive_years is not None:
         negatives = f.fcf_years - f.fcf_positive_years
         if negatives > 1:
-            return f.fcf_margin_avg * 0.4
+            m = f.fcf_margin_avg
+            return m * 0.4 if m > 0 else m / 0.4
     return f.fcf_margin_avg
 
 
@@ -186,7 +215,11 @@ def _revision_breadth(rec: TickerRecord) -> Optional[float]:
     up, down = up or 0.0, down or 0.0
     total = up + down
     if total == 0:
-        return 0.0
+        # Nobody moved. That is an absence of evidence, not evidence of balance, and
+        # returning 0.0 fed it to the standardiser as a real observation: the name
+        # was counted as fully covered and, because a raw 0.0 sits below the sample
+        # median, the manufactured value became a small negative contribution.
+        return None
     return (up - down) / total
 
 

@@ -259,3 +259,58 @@ def test_percentiles_span_the_range_on_the_real_universe():
     recs = [r for r in local.load_universe().values() if r.in_top_150]
     d = [b.display for b in score.score_universe(recs).values()]
     assert min(d) == 0.0 and max(d) == 100.0
+
+
+def test_the_inconsistency_penalty_pushes_the_same_way_on_both_sides():
+    """Multiplying by 0.4 shrinks a positive margin towards zero, which is a penalty,
+    and shrinks a negative one towards zero, which is a reward. The companies that
+    burn cash in more than one year of four are exactly the ones with a negative
+    average, so the first version handed the worst cash generators the biggest lift."""
+    others = universe(28)
+    steady_neg = rec("STEADYNEG", fcf_margin_avg=-0.10, fcf_positive_years=4.0, fcf_years=4.0)
+    lumpy_neg = rec("LUMPYNEG", fcf_margin_avg=-0.10, fcf_positive_years=1.0, fcf_years=4.0)
+    s = score.score_universe(others + [steady_neg, lumpy_neg])
+    assert s["LUMPYNEG"].z["fcf"] < s["STEADYNEG"].z["fcf"], (
+        "burning cash in three of four years must not score better than burning it steadily")
+
+    steady_pos = rec("STEADYPOS", fcf_margin_avg=0.20, fcf_positive_years=4.0, fcf_years=4.0)
+    lumpy_pos = rec("LUMPYPOS", fcf_margin_avg=0.20, fcf_positive_years=2.0, fcf_years=4.0)
+    s2 = score.score_universe(others + [steady_pos, lumpy_pos])
+    assert s2["LUMPYPOS"].z["fcf"] < s2["STEADYPOS"].z["fcf"]
+
+
+def test_nobody_revising_is_missing_not_a_neutral_observation():
+    """Zero up and zero down is an absence of evidence. Feeding 0.0 to the
+    standardiser counted the name as fully covered and, because a raw zero sits below
+    the sample median, manufactured a small negative contribution out of silence."""
+    others = universe(28)
+    silent = rec("SILENT", rev_up30_fy1=0.0, rev_down30_fy1=0.0)
+    s = score.score_universe(others + [silent])
+    assert "revision_breadth" in s["SILENT"].missing
+    assert s["SILENT"].contributions["revision_breadth"] == 0.0
+    assert s["SILENT"].coverage < 1.0
+
+
+def test_the_real_universe_has_names_where_nobody_revised():
+    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    s = score.score_universe(recs)
+    silent = [t for t, b in s.items() if "revision_breadth" in b.missing]
+    assert len(silent) == 2, silent
+
+
+def test_the_docstring_says_median_not_mean():
+    """Standardisation is robust, so zero is the sample median. Calling it the mean
+    would have been tidier and false."""
+    doc = " ".join((score.__doc__ or "").split())
+    assert "zero is the sample *median* rather than its mean" in doc
+    assert "would have been tidier and false" in doc
+
+
+def test_the_citations_do_not_claim_more_than_the_papers_say():
+    doc = " ".join((score.__doc__ or "").split())
+    # Novy-Marx argues gross profitability beats bottom-line measures, which is an
+    # argument against what is measured here, not for it.
+    assert "argument against the measures used" in doc
+    # Boehmer, Jones and Zhang measure short-sale flow, not the short-interest level.
+    assert "short-sale *order flow*" in doc
+    assert "a substitution, not a citation" in doc

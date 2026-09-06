@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "screen",
  "identity": {
   "ticker": "ROST",
@@ -332,7 +332,7 @@
    },
    "with_momentum": {
     "score": -0.0178,
-    "percentile": 46.3,
+    "percentile": 45.6,
     "coverage": 1.0,
     "thinly_evidenced": false,
     "missing": [],

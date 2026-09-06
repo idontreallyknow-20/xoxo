@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T10:36:27",
+ "built_at": "2026-09-06T10:41:17",
  "depth": "screen",
  "identity": {
   "ticker": "RELX",
@@ -331,7 +331,7 @@
    },
    "with_momentum": {
     "score": -0.0223,
-    "percentile": 45.6,
+    "percentile": 45.0,
     "coverage": 0.8091,
     "thinly_evidenced": false,
     "missing": [
