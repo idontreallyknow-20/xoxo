@@ -1,0 +1,801 @@
+{
+ "schema": 1,
+ "built_at": "2026-09-06T17:10:11",
+ "depth": "deep",
+ "identity": {
+  "ticker": "NVR",
+  "company": "NVR, Inc.",
+  "sector": "Consumer Cyclical",
+  "industry": "Residential Construction",
+  "country": "United States",
+  "exchange": "NYQ",
+  "currency": "USD",
+  "price": 6373.95,
+  "market_cap_usd": 17070413824.0,
+  "dollar_volume_usd": 201455064.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "business": {
+  "available": true,
+  "text": "NVR builds homes under the Ryan Homes, NVHomes and Heartland brands in the eastern US and runs a mortgage bank for its buyers. It options land rather than owning it, which keeps the balance sheet light.",
+  "source": "hand-written research note in research/"
+ },
+ "headline": "Quality rank 147 of 150, score 73. Bucket: compounder and cyclical turn. Price 6373.95 USD on 2026-09-04. Forward P/E 15.5 vs own 4 year median 15.6 (-1%). EV/EBITDA 11.1. -27% from 52 week high, -36% from all time high. Next fiscal year EPS estimate moved -2.1% in 90 days. Short interest 6.2% of float. Next earnings 2026-10-21. Screen data: Yahoo Finance via yfinance, pulled 2026-09-04.",
+ "fundamentals": {
+  "window": "2022\u20132025",
+  "n_years": 4,
+  "note": "Four fiscal years is all the free source provides, so every growth figure here is computed over three intervals, not five years.",
+  "rows": [
+   {
+    "key": "roic_avg",
+    "label": "Return on invested capital, average",
+    "value": 0.330236,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "roic_latest",
+    "label": "Return on invested capital, latest year",
+    "value": 0.285231,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "fcf_margin_avg",
+    "label": "Free cash flow margin, average",
+    "value": 0.140963,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "rev_cagr",
+    "label": "Revenue CAGR",
+    "value": -0.006253,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_avg",
+    "label": "Gross margin, average",
+    "value": 0.254941,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_std",
+    "label": "Gross margin, standard deviation",
+    "value": 0.015244,
+    "unit": "percent",
+    "higher_is_better": false
+   },
+   {
+    "key": "nd_to_ebitda",
+    "label": "Net debt to EBITDA",
+    "value": null,
+    "unit": "x",
+    "higher_is_better": false,
+    "absent_means": "net cash: net debt is negative, so the ratio is not meaningful and the balance sheet is at the good end rather than the middle"
+   },
+   {
+    "key": "share_change",
+    "label": "Diluted share count change",
+    "value": -0.125362,
+    "unit": "percent",
+    "higher_is_better": false
+   }
+  ],
+  "net_cash": true,
+  "fcf_positive_years": 4.0,
+  "fcf_years": 4.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "trends": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "unit": "currency_bn",
+   "values": [
+    10.54,
+    9.53,
+    10.54,
+    10.34
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    -0.09582542694497154,
+    0.10598111227702,
+    -0.018975332068311146
+   ],
+   "first": 10.54,
+   "last": 10.34,
+   "change": -0.1999999999999993,
+   "change_pct": -0.018975332068311146,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": -0.00636554487333596,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "flat",
+   "reads_well": null,
+   "higher_is_better": true,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  },
+  {
+   "key": "gross_margin",
+   "label": "Gross margin",
+   "unit": "percent",
+   "values": [
+    0.273,
+    0.26,
+    0.255,
+    0.231
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    -0.04761904761904767,
+    -0.019230769230769273,
+    -0.09411764705882353
+   ],
+   "first": 0.273,
+   "last": 0.231,
+   "change": -0.04200000000000001,
+   "change_pct": -0.15384615384615385,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": null,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "down",
+   "reads_well": false,
+   "higher_is_better": true,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  },
+  {
+   "key": "operating_margin",
+   "label": "Operating margin",
+   "unit": "percent",
+   "values": [
+    0.214,
+    0.18899999999999997,
+    0.18899999999999997,
+    0.163
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    -0.11682242990654212,
+    0.0,
+    -0.13756613756613745
+   ],
+   "first": 0.214,
+   "last": 0.163,
+   "change": -0.05099999999999999,
+   "change_pct": -0.23831775700934577,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": null,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "down",
+   "reads_well": false,
+   "higher_is_better": true,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  },
+  {
+   "key": "fcf",
+   "label": "Free cash flow",
+   "unit": "currency_bn",
+   "values": [
+    1.85,
+    1.47,
+    1.35,
+    1.1
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    -0.20540540540540542,
+    -0.08163265306122436,
+    -0.18518518518518512
+   ],
+   "first": 1.85,
+   "last": 1.1,
+   "change": -0.75,
+   "change_pct": -0.4054054054054054,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": -0.15910780992228413,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "down",
+   "reads_well": false,
+   "higher_is_better": true,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  },
+  {
+   "key": "diluted_shares",
+   "label": "Diluted shares",
+   "unit": "count_m",
+   "values": [
+    4.0,
+    3.0,
+    3.0,
+    3.0
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    -0.25,
+    0.0,
+    0.0
+   ],
+   "first": 4.0,
+   "last": 3.0,
+   "change": -1.0,
+   "change_pct": -0.25,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": -0.09143970358393017,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "down",
+   "reads_well": true,
+   "higher_is_better": false,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  },
+  {
+   "key": "net_debt",
+   "label": "Net debt",
+   "unit": "currency_bn",
+   "values": [
+    -1.52,
+    -2.15,
+    -1.59,
+    -0.86
+   ],
+   "periods_labels": [
+    "FY2022",
+    "FY2023",
+    "FY2024",
+    "FY2025"
+   ],
+   "yoy": [
+    null,
+    0.4144736842105263,
+    -0.26046511627906965,
+    -0.4591194968553459
+   ],
+   "first": -1.52,
+   "last": -0.86,
+   "change": 0.66,
+   "change_pct": null,
+   "crosses_zero": false,
+   "has_gap": false,
+   "span_note": null,
+   "cagr": null,
+   "periods": 3,
+   "span_label": "FY2022 to FY2025, 3 intervals",
+   "direction": "up",
+   "reads_well": false,
+   "higher_is_better": false,
+   "source": "hand-written research note in research/",
+   "as_of": "2026-09-04"
+  }
+ ],
+ "what_changed": {
+  "mechanical": [
+   {
+    "label": "Next-year EPS consensus",
+    "detail": "moved -2.1% over 90 days, of which +0.0% came in the last 30. The 60 days before that accounted for -2.1%.",
+    "direction": "down",
+    "accelerating": false,
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Analyst breadth, 30 days",
+    "detail": "1 raised next-year estimates, 4 cut them.",
+    "direction": "down",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Price against its year",
+    "detail": "-26.6% from the 52-week high, -36.2% from the highest close it has ever made.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Next report",
+    "detail": "2026-10-21. Everything on this page is dated 2026-09-04, so the revisions above are stale the moment that lands.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   }
+  ],
+  "earnings_text": {
+   "text": "Q2 2026 (July 23, 2026): revenue $2.33 billion down 10%, net income $236.5 million down 29%, EPS $83.96 down 23%, new orders up 9% to 5,885 units, average price down 5% to $437,100, backlog up 9% to 10,998 units. Stock fell on the margin miss.",
+   "source": "hand-written research note in research/"
+  },
+  "read": {
+   "ticker": "NVR",
+   "quarter_label": "Q2 2026, reported July 23, 2026",
+   "prior_quarter_label": "not stated",
+   "headline": "Gross margin fell to 19.2% from 21.5% and EPS dropped 23% even as new orders grew 9%, so NVR is trading volume for price and the market marked the stock down on the margin miss.",
+   "guidance": [],
+   "tone": {
+    "assessment": "Cannot be assessed from this note. The note contains no management statement, quote, paraphrase, or attribution of any kind \u2014 the words 'management', 'CEO', 'CFO', 'said', 'call' and 'transcript' appear zero times in the file. Its entire earnings coverage is one line of reported figures plus one sentence of market reaction, so there is no managerial voice to read tone from. Every forward-looking judgment in the note ('Margins have further to fall') belongs to the note's own author, not to the company.",
+    "evidence": "Q2 2026 (July 23, 2026): revenue $2.33 billion down 10%, net income $236.5 million down 29%, EPS $83.96 down 23%, new orders up 9% to 5,885 units, average price down 5% to $437,100, backlog up 9% to 10,998 units. Stock fell on the margin miss.",
+    "confidence": "low"
+   },
+   "market_reaction": "The note states the stock reacted negatively to the quarter: \"Stock fell on the margin miss.\" The screen data in the note, pulled 2026-09-04, places the price at 6373.95 USD and \"-27% from 52 week high, -36% from all time high\", with \"Next fiscal year EPS estimate moved -2.1% in 90 days.\" and \"Short interest 6.2% of float.\" Valuation is not depressed on the note's own multiple: \"Forward P/E 15.5 vs own 4 year median 15.6 (-1%).\" The note does not give the size of the move on the earnings date, the volume, or any analyst rating or target-price change, so the magnitude of the reaction is not determinable from this file.",
+   "new_risks": [
+    {
+     "risk": "Land deposit impairments of $21.7 million hit gross margin alongside lot costs and price cuts. Impairments are a distinct cause from the two the bear case names (rates and affordability-driven price cutting), and they are not among the stated thesis killers.",
+     "quote": "Gross margin fell to 19.2% from 21.5% on lot costs, price cuts and $21.7 million of land deposit impairments.",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "Gross margin at 19.2% is 2.2 points above the level the note names as a thesis killer, so the margin decline has moved the position materially closer to its own stated exit trigger.",
+     "quote": "Orders turning negative, gross margin under 17%.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Volume is being bought with price: orders and backlog each rose 9% while average price fell 5% and revenue fell 10%, which is the mechanism the bear case describes rather than a new one.",
+     "quote": "Affordability is the binding constraint and NVR is cutting price to hold volume. Margins have further to fall.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Position-sizing constraint from the share price itself, independent of the business. Named in the note's valuation section, not in the bear case or the thesis killers.",
+     "quote": "One share costs $6,374, which alone makes position sizing awkward at this account size.",
+     "already_in_thesis": false
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Everything. The note records no management commentary on any subject, so it supplies no basis to judge what management addressed, addressed thinly, or avoided.",
+     "reasoning": "The file contains no quote, paraphrase, or attribution to any NVR officer; 'management', 'CEO', 'CFO', 'said', 'call' and 'transcript' each occur zero times. The earnings section is one line of reported figures and one sentence about the stock's move. Absence of management commentary in a third-party research note is not evidence that management avoided anything \u2014 the note simply never captured it.",
+     "confidence": "high"
+    },
+    {
+     "topic": "Whether the 19.2% gross margin stabilizes, and how much of the decline is the one-off impairment versus recurring lot costs and price cuts.",
+     "reasoning": "The note names the three causes of the margin decline in a single sentence but never separates their contributions, and it carries no forward statement about margins from the company or any cited source. The only forward view in the file is the note author's own assertion that margins have further to fall, which is offered without support.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "The prior quarter. The section headed 'Last two earnings reports' contains only one.",
+     "reasoning": "The heading '## Last two earnings reports' is followed by a single line covering Q2 2026 and nothing else; no other quarter label appears anywhere in the file. The note's own structure signals a second report that it does not deliver, so quarter-over-quarter direction on any metric is unavailable.",
+     "confidence": "high"
+    }
+   ],
+   "not_determinable": [
+    "Any guidance, of any kind. The words 'guidance', 'guide' and 'outlook' appear zero times in the file. Whether NVR issued, raised, cut, maintained or withheld guidance is not determinable from this note, and the note gives no basis for inferring which of those it was.",
+    "The prior quarter's results. The section is headed 'Last two earnings reports' but lists only Q2 2026, so no sequential comparison of revenue, margin, orders, price or backlog is possible.",
+    "Any quarterly financial series. The financial table is annual only, covering FY2022-FY2025, with columns for Revenue, Gross margin, Operating margin, Free cash flow, Diluted shares and Net debt. The note states 'Four fiscal years is all the source provides.', so quarterly operating margin and quarterly cash flow cannot be traced.",
+    "SG&A, at any frequency. The string 'SG&A' appears zero times in the file and the annual table has no such column, so the cost line beneath gross margin is absent entirely.",
+    "Segment detail. The note says NVR 'runs a mortgage bank for its buyers' but reports no separate revenue, margin or income for the mortgage segment versus homebuilding, so the source of the margin decline cannot be split between them.",
+    "The size of the stock's move on the earnings date. The note says only that the stock fell on the margin miss; no percentage, price, date-specific move or volume is given.",
+    "Analyst estimate detail behind the '-2.1% in 90 days' figure \u2014 the number of estimates, the direction and count of individual revisions, the current-year (FY0) revision picture, and the absolute EPS estimate. Only the single next-fiscal-year 90-day percentage change appears in the note.",
+    "Order and backlog composition \u2014 community count, absorption pace, cancellation rate, and the regional mix behind the 9% order growth. The note gives only aggregate unit counts and average price.",
+    "Land position detail. The note says NVR 'options land rather than owning it' and reports $21.7 million of land deposit impairments, but gives no lot count, controlled-lot inventory, option deposit balance, or how much further impairment the remaining deposits could carry.",
+    "Backlog conversion economics \u2014 the margin embedded in the 10,998-unit backlog, and therefore whether the reported margin decline has already worked through or is still ahead in deliveries.",
+    "Buyback detail beyond one figure. The note cites '$358 million in one quarter, on a $17 billion company' but gives no authorization size, remaining capacity, average repurchase price, or share count for any quarter; the diluted share column is annual and rounded to whole millions (4, 3, 3, 3), which is too coarse to measure buyback impact.",
+    "Interest rates and mortgage-market data. The bear case turns on the Fed hiking in September and on affordability, but the note contains no rate level, no mortgage rate, and no affordability measure \u2014 the rate view is asserted, not evidenced.",
+    "Valuation inputs behind the bear and base cases. The note gives a 30% drawdown bear case and 'mid single digit compounding through buybacks' as the base case with no underlying EPS, margin, volume or multiple assumptions.",
+    "Whether the note's price and screen figures are still current. All screen and statement data is stamped 'pulled 2026-09-04' and the price is 'Price 6373.95 USD on 2026-09-04'; the note's own next-earnings date is 2026-10-21, so nothing after early September is captured.",
+    "Competitor or peer comparison. No other homebuilder is named anywhere in the file, so whether the margin compression and order growth are company-specific or industry-wide cannot be determined from this note.",
+    "The content of the two cited sources. The note links an 8-K earnings release and a HousingWire article, both read 2026-09-04, but reproduces no text from either, so any management commentary or detail they contain is outside what this note carries."
+   ],
+   "available": true,
+   "source": "research/NVR.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+  }
+ },
+ "thesis": {
+  "available": true,
+  "why_on_the_list": "Cyclical turn bucket, rank 147. 36% off its high, forward P/E 15.5 at its median. Orders grew 9% but margins compressed.",
+  "business_quality": "Best capital allocator in homebuilding: land light model, relentless buybacks ($358 million in one quarter, on a $17 billion company), no debt to speak of. Gross margin fell to 19.2% from 21.5% on lot costs, price cuts and $21.7 million of land deposit impairments.",
+  "verdict": "Watch. A rate cut cycle or a price under $5,400 would make it interesting. Conviction 2 of 5.",
+  "action": "Watch",
+  "conviction": 2,
+  "logged": {
+   "date": "2026-09-04",
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "price_at_call": 6373.95,
+   "bucket": null
+  },
+  "source": "hand-written research note in research/"
+ },
+ "risks": {
+  "available": true,
+  "bear_case": "Mortgage rates are heading up, not down, if the Fed hikes in September. Affordability is the binding constraint and NVR is cutting price to hold volume. Margins have further to fall.",
+  "killers": [
+   "Orders turning negative, gross margin under 17%"
+  ],
+  "price_trigger": null,
+  "price_trigger_note": "No price trigger is named in the note. Two of the sixteen notes say so outright; the rest name one. An absent trigger is not a trigger of zero.",
+  "wrong_if": [],
+  "source": "hand-written research note in research/"
+ },
+ "valuation": {
+  "available": true,
+  "multiples": [
+   {
+    "key": "forward_pe",
+    "label": "Forward P/E",
+    "value": 15.48489,
+    "own_median": 15.62573422719971,
+    "vs_median": -0.009013606986514655,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
+   },
+   {
+    "key": "ev_ebitda",
+    "label": "EV/EBITDA",
+    "value": 11.052,
+    "own_median": 11.46034336992268,
+    "vs_median": -0.03563098911978202,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
+   }
+  ],
+  "own_history": {
+   "usable": true,
+   "n_year_ends": 4,
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 136 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 50% and 0.0% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 136 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.15 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
+  },
+  "drawdown": {
+   "from_52w_high": -0.26586857292725463,
+   "from_all_time_high": -0.3624853949575433,
+   "high_52w": 8618.28,
+   "all_time_high": 9924.400390625,
+   "caveat": "The all-time high is the highest closing price; the 52-week high is an intraday high. They are not on the same basis, and the drawdown from the all-time high is therefore understated."
+  },
+  "estimates": {
+   "eps_fy0": 361.1004,
+   "eps_fy1": 411.62387,
+   "fy1_change_30d": 0.0,
+   "fy1_change_90d": -0.021101995447294297,
+   "fy0_change_30d": 0.0,
+   "fy0_change_90d": -0.0076281459540762375,
+   "analysts_up_30d": 1.0,
+   "analysts_down_30d": 4.0,
+   "net_breadth": -3.0
+  },
+  "price_basis": {
+   "displayed": 6373.95,
+   "used_for_derived_figures": 6326.9501953125,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
+  "short_pct_float": 0.0625,
+  "insider_pct": 0.05551,
+  "next_earnings": "2026-10-21",
+  "buckets": [
+   "compounder",
+   "cyclical turn"
+  ],
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NVR",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Consumer Cyclical",
+    "n": 25,
+    "tickers": [
+     "ABNB",
+     "ALSN",
+     "BKNG",
+     "CHWY",
+     "CMG",
+     "DECK",
+     "DRI",
+     "EBAY",
+     "EXPE",
+     "GNTX",
+     "HRB",
+     "IHG",
+     "LULU",
+     "MCD",
+     "MCRI",
+     "MELI",
+     "NVR",
+     "ORLY",
+     "PDD",
+     "RACE",
+     "ROL",
+     "ROST",
+     "SHOO",
+     "TXRH",
+     "WING"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 24 others in Consumer Cyclical. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.375,
+    "EV/EBITDA": 0.2174
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.6667,
+    "free cash flow margin": 0.3333,
+    "revenue growth": 0.0,
+    "gross margin stability": 0.1739
+   },
+   "price_rank": 0.2962,
+   "quality_rank": 0.2536,
+   "gap": -0.0426,
+   "verdict": "cheap, and the quality suggests why",
+   "reasoning": "It is cheap against its peers and its measured quality is also in the weaker end. The own-history comparison would call this cheap too, and it would be describing a derating rather than arguing against one.",
+   "cheapest_peers": [
+    {
+     "ticker": "PDD",
+     "forward_pe": 6.587733
+    },
+    {
+     "ticker": "HRB",
+     "forward_pe": 7.3993626
+    },
+    {
+     "ticker": "DECK",
+     "forward_pe": 10.103969
+    },
+    {
+     "ticker": "GNTX",
+     "forward_pe": 10.320505
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "MELI",
+     "forward_pe": 35.034702
+    },
+    {
+     "ticker": "RACE",
+     "forward_pe": 32.90906
+    },
+    {
+     "ticker": "ABNB",
+     "forward_pe": 30.171648
+    },
+    {
+     "ticker": "ROL",
+     "forward_pe": 27.457191
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  },
+  "written_view": {
+   "text": "One share costs $6,374, which alone makes position sizing awkward at this account size. Bear case on a housing downturn with rates rising again is a 30% drawdown; base case is mid single digit compounding through buybacks.",
+   "source": "hand-written research note in research/"
+  }
+ },
+ "score": {
+  "available": true,
+  "variants": {
+   "quality_value": {
+    "score": -0.321,
+    "percentile": 14.8,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0485,
+     "roic_trend": -0.0593,
+     "fcf": -0.0332,
+     "growth": -0.1051,
+     "margin_stability": -0.0574,
+     "balance": 0.0494,
+     "value_ev": 0.0124,
+     "value_pe": -0.0798,
+     "revisions_90d": -0.0871,
+     "revisions_30d": -0.0195,
+     "revision_breadth": -0.0567,
+     "share_count": 0.0791,
+     "short_interest": -0.0125
+    },
+    "top_contributions": [
+     {
+      "key": "growth",
+      "value": -0.1051
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0871
+     },
+     {
+      "key": "value_pe",
+      "value": -0.0798
+     },
+     {
+      "key": "share_count",
+      "value": 0.0791
+     },
+     {
+      "key": "roic_trend",
+      "value": -0.0593
+     }
+    ]
+   },
+   "with_momentum": {
+    "score": -0.3805,
+    "percentile": 15.4,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0485,
+     "roic_trend": -0.0593,
+     "fcf": -0.0332,
+     "growth": -0.1051,
+     "margin_stability": -0.0574,
+     "balance": 0.0494,
+     "value_ev": 0.0124,
+     "value_pe": -0.0798,
+     "revisions_90d": -0.0871,
+     "revisions_30d": -0.0195,
+     "revision_breadth": -0.0567,
+     "share_count": 0.0791,
+     "short_interest": -0.0125,
+     "momentum_52w": -0.0595
+    },
+    "top_contributions": [
+     {
+      "key": "growth",
+      "value": -0.1051
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0871
+     },
+     {
+      "key": "value_pe",
+      "value": -0.0798
+     },
+     {
+      "key": "share_count",
+      "value": 0.0791
+     },
+     {
+      "key": "momentum_52w",
+      "value": -0.0595
+     }
+    ]
+   },
+   "with_reversal": {
+    "score": -0.2811,
+    "percentile": 22.1,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0485,
+     "roic_trend": -0.0593,
+     "fcf": -0.0332,
+     "growth": -0.1051,
+     "margin_stability": -0.0574,
+     "balance": 0.0494,
+     "value_ev": 0.0124,
+     "value_pe": -0.0798,
+     "revisions_90d": -0.0871,
+     "revisions_30d": -0.0195,
+     "revision_breadth": -0.0567,
+     "share_count": 0.0791,
+     "short_interest": -0.0125,
+     "reversal_ath": 0.0399
+    },
+    "top_contributions": [
+     {
+      "key": "growth",
+      "value": -0.1051
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0871
+     },
+     {
+      "key": "value_pe",
+      "value": -0.0798
+     },
+     {
+      "key": "share_count",
+      "value": 0.0791
+     },
+     {
+      "key": "roic_trend",
+      "value": -0.0593
+     }
+    ]
+   }
+  },
+  "universe": "the quality top 150 as of 2026-09-04",
+  "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
+ },
+ "journal": [
+  {
+   "date": "2026-09-04",
+   "action": "Watch or Pass",
+   "price_at_call": 6373.95,
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "bucket": null
+  }
+ ],
+ "sources": [
+  {
+   "title": "Screen and statement data, Yahoo Finance via yfinance",
+   "url": null,
+   "read_date": "2026-09-04",
+   "kind": "data"
+  },
+  {
+   "title": "NVR Q2 2026 earnings release, 8-K",
+   "url": "https://www.sec.gov/Archives/edgar/data/0000906163/000090616326000086/q22026ex991_earningsrelease.htm",
+   "read_date": "2026-09-04",
+   "domain": "sec.gov",
+   "kind": "reading"
+  },
+  {
+   "title": "NVR is land light by design, HousingWire",
+   "url": "https://www.housingwire.com/articles/nvr-q2-2026-earnings/",
+   "read_date": "2026-09-04",
+   "domain": "housingwire.com",
+   "kind": "reading"
+  },
+  {
+   "title": "Screen and statement data: Yahoo Finance via yfinance",
+   "url": null,
+   "read_date": "2026-09-04",
+   "domain": null,
+   "kind": "reading"
+  }
+ ],
+ "gaps": [
+  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals. The own-history median is a 4-point median.",
+  "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
+ ],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

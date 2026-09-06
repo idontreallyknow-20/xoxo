@@ -1,0 +1,29 @@
+[
+ {
+  "buy": 21,
+  "hold": 15,
+  "period": "2026-07-01",
+  "sell": 2,
+  "strongBuy": 8,
+  "strongSell": 1,
+  "symbol": "AAPL"
+ },
+ {
+  "buy": 24,
+  "hold": 12,
+  "period": "2026-09-01",
+  "sell": 1,
+  "strongBuy": 9,
+  "strongSell": 0,
+  "symbol": "AAPL"
+ },
+ {
+  "buy": 23,
+  "hold": 13,
+  "period": "2026-08-01",
+  "sell": 2,
+  "strongBuy": 8,
+  "strongSell": 0,
+  "symbol": "AAPL"
+ }
+]

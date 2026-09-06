@@ -1,0 +1,437 @@
+/* Desk, analysis pages.
+ *
+ * The six theme token blocks are copied verbatim from dashboard/index.html so the
+ * new pages sit in the same world as the old one. index.html is not touched and
+ * does not load this file; tests/test_css_tokens.py fails if the values here ever
+ * drift from the values there.
+ *
+ * Two rules this stylesheet enforces rather than merely suggests.
+ *
+ * 1. The call and the falsifier share one class, .callout .line, with no modifier.
+ *    They cannot drift apart in size, weight or colour in a later edit, so the
+ *    thing that would prove the idea wrong can never end up smaller than the idea.
+ *
+ * 2. Up and down colour is reserved for business numbers: revenue, margins, cash
+ *    flow, share count. Valuation multiples are never coloured, because cheaper is
+ *    not better. A stock at eight times earnings is either mispriced or correctly
+ *    priced for a business in decline, and a green number would decide that
+ *    question before the reader has read anything.
+ */
+
+:root, [data-theme="night"] {
+  --paper: #131311; --ink: #f1efe6; --ink-2: #a8a69b; --ink-3: #6f6e66;
+  --rule: #33332e; --rule-soft: #22221f; --mark: #ffcf3f; --mark-soft: #2a2718; --mark-ink: #131311;
+  --up: #4fc97a; --down: #ff6b57; --spy: #3987e5; --qqq: #d95926; --vfv: #199e70; --track: #2a2a26;
+}
+[data-theme="paper"] {
+  --paper: #ffffff; --ink: #121212; --ink-2: #5b5b57; --ink-3: #8f8f89;
+  --rule: #d9d9d3; --rule-soft: #ecece9; --mark: #fff27a; --mark-soft: #fffbd6; --mark-ink: #121212;
+  --up: #0b7a3b; --down: #c2361f; --spy: #2a78d6; --qqq: #eb6834; --vfv: #1baf7a; --track: #ecece9;
+}
+[data-theme="slate"] {
+  --paper: #0f1418; --ink: #e6edf3; --ink-2: #9aa7b2; --ink-3: #61707c;
+  --rule: #26313a; --rule-soft: #1a2229; --mark: #7dd3fc; --mark-soft: #142430; --mark-ink: #0f1418;
+  --up: #3ddc97; --down: #ff7a6b; --spy: #5aa0f2; --qqq: #f0824f; --vfv: #2cc48a; --track: #1f2a33;
+}
+[data-theme="forest"] {
+  --paper: #0c1410; --ink: #e4efe6; --ink-2: #93a897; --ink-3: #5c6f60;
+  --rule: #223328; --rule-soft: #16221a; --mark: #b6f09c; --mark-soft: #16281c; --mark-ink: #0c1410;
+  --up: #7ee787; --down: #ff8d7a; --spy: #6ea8ff; --qqq: #ffa15c; --vfv: #46d39a; --track: #1a2820;
+}
+[data-theme="bone"] {
+  --paper: #f3f1ea; --ink: #1b1a17; --ink-2: #5f5c53; --ink-3: #928e82;
+  --rule: #cfcbbf; --rule-soft: #e4e1d7; --mark: #1b1a17; --mark-soft: #e9e5d8; --mark-ink: #f3f1ea;
+  --up: #2f7d4a; --down: #b83a2a; --spy: #2a6fcf; --qqq: #d9561f; --vfv: #178f63; --track: #e4e1d7;
+}
+[data-theme="amber"] {
+  --paper: #0a0a0a; --ink: #f4b942; --ink-2: #b88a2f; --ink-3: #6e5520;
+  --rule: #2e2410; --rule-soft: #1a1508; --mark: #f4b942; --mark-soft: #1f1809; --mark-ink: #0a0a0a;
+  --up: #9be26b; --down: #ff6f4c; --spy: #7fb2ff; --qqq: #ff9a4a; --vfv: #5fd6a5; --track: #1f1809;
+}
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+* { box-sizing: border-box; border-radius: 0 !important; }
+html { background: var(--paper); color: var(--ink); transition: background 260ms ease, color 260ms ease; }
+html[data-motion="off"] * { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+body { margin: 0; font-family: var(--display); font-size: 16px; line-height: 1.5;
+       font-optical-sizing: auto; -webkit-font-smoothing: antialiased; background: var(--paper); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 24px 40px 96px; }
+@media (max-width: 720px) { .page { padding: 16px 16px 72px; } }
+
+header { display: flex; justify-content: space-between; align-items: center; gap: 20px;
+         padding-bottom: 12px; border-bottom: 1px solid var(--ink); flex-wrap: wrap; }
+header .brand { font-weight: 600; font-size: 20px; letter-spacing: -0.01em; margin-right: 8px;
+                color: var(--ink); text-decoration: none; }
+nav { display: flex; flex-wrap: wrap; }
+nav a { font-family: var(--mono); font-size: 12px; color: var(--ink-2); text-decoration: none;
+        padding: 6px 12px; border: 1px solid var(--rule); margin-right: -1px;
+        transition: background 140ms ease, color 140ms ease, border-color 140ms ease; }
+nav a:hover { color: var(--ink); border-color: var(--ink); position: relative; z-index: 1; }
+nav a.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+header .status { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-left: auto; text-align: right; }
+
+a { color: inherit; }
+/* Focus ring uses --ink, not --mark. In the paper theme --mark is a pale yellow on
+ * a white page, 1.15:1, which is an invisible focus ring and therefore no focus
+ * ring at all. --ink against --paper is the one pairing guaranteed high contrast
+ * in every theme, since that is what the whole palette is built around. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--ink); outline-offset: 2px; }
+
+section { margin-top: 44px; }
+h2 { font-size: 15px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.005em;
+     display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+h2 .sub { font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-weight: 400; text-align: right; }
+.rule { height: 1px; background: var(--ink); margin-bottom: 18px; }
+.rule.soft { background: var(--rule); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.up { color: var(--up); } .down { color: var(--down); } .muted { color: var(--ink-3); }
+.dim { color: var(--ink-2); }
+footer { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule);
+         font-size: 13px; color: var(--ink-3); }
+
+/* ---- nameplate ---------------------------------------------------------- */
+.plate { margin-top: 34px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; }
+@media (max-width: 780px) { .plate { grid-template-columns: 1fr; align-items: start; } }
+.plate .tk { font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+.plate .co { font-size: 17px; color: var(--ink-2); margin-top: 6px; }
+.plate .facts { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 10px;
+                display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.plate .facts b { color: var(--ink-2); font-weight: 400; }
+.chips { display: flex; flex-wrap: wrap; gap: 0; }
+.chip { font-family: var(--mono); font-size: 11px; color: var(--ink-2); border: 1px solid var(--rule);
+        padding: 4px 9px; margin-right: -1px; white-space: nowrap; }
+.chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip.warn { color: var(--mark); border-color: var(--mark); }
+.price { text-align: right; }
+.price .n { font-size: clamp(44px, 6vw, 76px); font-weight: 300; line-height: 0.95;
+            letter-spacing: -0.035em; font-variant-numeric: proportional-nums; white-space: nowrap; }
+.price .n small { font-size: 0.4em; color: var(--ink-3); margin-right: 0.1em; vertical-align: 0.55em; }
+.price .when { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+
+/* ---- the standing call --------------------------------------------------
+ * .callout .line is used for BOTH the recommendation and the falsifier, with no
+ * modifier on either, so the two cannot be given different weight later. */
+.callout { border: 1px solid var(--ink); padding: 20px 22px; margin-top: 30px; }
+.callout .kicker { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 12px; }
+.callout .line { font-size: 19px; font-weight: 400; line-height: 1.35; color: var(--ink); margin: 0 0 4px; }
+.callout .line + .line { margin-top: 14px; }
+.callout .line .lab { font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+                      display: block; margin-bottom: 4px; font-weight: 400; }
+.callout .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-2); margin-top: 16px;
+                 display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.callout .meta b { color: var(--ink); font-weight: 500; }
+.callout.none { border-color: var(--rule); }
+.callout.none .line { color: var(--ink-2); font-size: 16px; }
+
+/* conviction pips */
+.conv { display: inline-flex; gap: 3px; vertical-align: 1px; }
+.conv i { width: 7px; height: 7px; background: var(--track); display: block; }
+.conv i.on { background: var(--ink); }
+
+/* ---- the claim rail -----------------------------------------------------
+ * One grammar used three times: price inside its buy zone, a multiple inside its
+ * own historical range, a scenario spread around today's price. Same component
+ * every time, so the case against is drawn at the same weight as the case for. */
+.rail { margin: 14px 0 4px; }
+.rail .track { position: relative; height: 26px; background: var(--track); }
+.rail .band { position: absolute; top: 0; bottom: 0; background: var(--mark-soft);
+              border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+.rail .tick { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink-2); }
+.rail .tick.now { background: var(--ink); width: 3px; top: -7px; bottom: -7px; }
+.rail .tick.kill { background: var(--down); }
+.rail .tick.median { background: var(--ink-3); }
+.rail .lab { position: absolute; font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+             white-space: nowrap; transform: translateX(-50%); top: 30px; }
+.rail .lab.now { color: var(--ink); }
+.rail .lab.kill { color: var(--down); }
+.rail .ends { display: flex; justify-content: space-between; font-family: var(--mono);
+              font-size: 11px; color: var(--ink-3); margin-top: 30px; }
+.rail .cap { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 8px; }
+
+/* ---- ledger: what changed ------------------------------------------------ */
+.ledger { border-top: 1px solid var(--rule); }
+.ledger .row { display: grid; grid-template-columns: 190px 1fr auto; gap: 18px;
+               padding: 13px 0; border-bottom: 1px solid var(--rule-soft); align-items: baseline; }
+@media (max-width: 780px) { .ledger .row { grid-template-columns: 1fr; gap: 4px; } }
+.ledger .k { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+.ledger .v { font-size: 14px; color: var(--ink); }
+.ledger .v b { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.ledger .m { font-family: var(--mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+/* A quoted line from a source. Wraps, unlike .m, which is nowrap because it holds
+ * short right-hand labels: reusing .m for a 200-character quote forced the whole
+ * page to 3,399px and broke every layout below it. */
+.ledger .q { font-family: var(--mono); font-size: 11px; color: var(--ink-3); line-height: 1.55;
+             margin-top: 6px; white-space: normal; max-width: 88ch; border-left: 1px solid var(--rule);
+             padding-left: 10px; }
+/* The quarter caveat is prose, not a quotation. Same size and colour, no rule
+ * down the left, which would claim it was lifted from a filing. */
+.ledger .q.plain { border-left: none; padding-left: 0; }
+.ledger .row.gap { background: none; }
+.ledger .row.gap .v { color: var(--ink-3); font-size: 13px; }
+.ledger .row.gap .k { color: var(--ink-3); }
+
+/* marker glyphs for the change ledger. A hollow square means asked and not
+ * answered, which is a different fact from "no change" and needs its own mark. */
+.mk { display: inline-block; width: 8px; height: 8px; margin-right: 8px; vertical-align: 0; }
+.mk.up { background: var(--up); }
+.mk.down { background: var(--down); }
+.mk.flat { background: var(--ink-3); }
+.mk.open { background: none; border: 1px solid var(--ink-3); }
+
+/* ---- prose --------------------------------------------------------------- */
+.prose { font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 74ch; }
+.prose p { margin: 0 0 12px; }
+.prose p:last-child { margin-bottom: 0; }
+.prose b, .prose strong { color: var(--ink); font-weight: 500; }
+/* a figure lifted into running prose stays mono but drops a touch, because mono
+ * at the prose size reads larger than the display face around it */
+.prose .n { font-family: var(--mono); font-size: 0.94em; color: var(--ink);
+            font-variant-numeric: tabular-nums; }
+.lede { font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 66ch; }
+.lede .n { font-size: 0.82em; }
+
+/* ---- metric cards -------------------------------------------------------- */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule-soft); border: 1px solid var(--rule-soft); }
+@media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--paper); padding: 16px 18px 14px; }
+.card .k { font-size: 13px; color: var(--ink-2); }
+.card .v { font-family: var(--mono); font-size: 22px; font-variant-numeric: tabular-nums;
+           margin-top: 6px; letter-spacing: -0.01em; }
+.card .d { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+.card .spark { margin-top: 10px; }
+.card.empty .v { color: var(--ink-3); font-size: 15px; }
+
+/* ---- tables -------------------------------------------------------------- */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--ink-3);
+     text-align: left; padding: 0 14px 7px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: baseline; }
+td.n, th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tbody tr:hover td { background: var(--mark-soft); }
+.tk { font-weight: 600; letter-spacing: -0.005em; }
+table a { text-decoration: none; }
+table a:hover { text-decoration: underline; }
+
+/* ---- score bars ---------------------------------------------------------- */
+.bars { display: grid; gap: 7px; }
+.bar { display: grid; grid-template-columns: 190px 1fr 64px; gap: 14px; align-items: center;
+       font-size: 13px; }
+@media (max-width: 720px) { .bar { grid-template-columns: 140px 1fr 56px; gap: 10px; font-size: 12px; } }
+.bar .k { color: var(--ink-2); }
+.bar .t { position: relative; height: 12px; background: var(--rule-soft); }
+.bar .t i { position: absolute; top: 0; bottom: 0; background: var(--ink); display: block; }
+.bar .t i.neg { background: var(--ink-3); }
+.bar .t .zero { position: absolute; top: -2px; bottom: -2px; width: 1px; background: var(--rule); }
+.bar .v { font-family: var(--mono); font-size: 12px; text-align: right;
+          font-variant-numeric: tabular-nums; color: var(--ink-2); }
+
+/* ---- notes, gaps, sources ------------------------------------------------ */
+.note { border-left: 2px solid var(--rule); padding: 2px 0 2px 14px; margin: 14px 0;
+        font-size: 13px; color: var(--ink-3); max-width: 78ch; }
+.note.warn { border-left-color: var(--mark); color: var(--ink-2); }
+.gaps { list-style: none; padding: 0; margin: 0; }
+.gaps li { font-size: 13px; color: var(--ink-3); padding: 9px 0 9px 20px; position: relative;
+           border-bottom: 1px solid var(--rule-soft); max-width: 86ch; }
+.gaps li::before { content: ""; position: absolute; left: 0; top: 15px; width: 8px; height: 8px;
+                   border: 1px solid var(--ink-3); }
+.srcs { list-style: none; padding: 0; margin: 0; }
+.srcs li { font-size: 13px; padding: 7px 0; border-bottom: 1px solid var(--rule-soft); color: var(--ink-2); }
+.srcs .d { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-left: 8px; }
+.srcs a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.srcs a:hover { border-bottom-color: var(--ink); }
+
+/* ---- controls ------------------------------------------------------------ */
+button, input, select { font: inherit; font-family: var(--mono); font-size: 12px; background: none;
+                        border: 1px solid var(--rule); color: var(--ink); padding: 6px 10px; }
+button { color: var(--ink-2); cursor: pointer;
+         transition: background 140ms ease, color 140ms ease, border-color 140ms ease; }
+button:hover { border-color: var(--ink); color: var(--ink); }
+button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg-btns { display: flex; flex-wrap: wrap; } .seg-btns button { margin-right: -1px; }
+.toolbar { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.toolbar input[type="search"] { width: 240px; }
+.toolbar .right { margin-left: auto; }
+input::placeholder { color: var(--ink-3); }
+
+/* ---- svg ----------------------------------------------------------------- */
+svg text { font-family: var(--mono); font-size: 11px; fill: var(--ink-3); }
+svg .axis { stroke: var(--rule); stroke-width: 1; shape-rendering: crispEdges; }
+svg .grid { stroke: var(--rule-soft); stroke-width: 1; shape-rendering: crispEdges; }
+svg .line { fill: none; stroke: var(--ink); stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+svg .line.soft { stroke: var(--ink-3); stroke-width: 1.25; }
+svg .dot { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+svg .barfill { fill: var(--ink-3); }
+svg .barfill.last { fill: var(--ink); }
+
+/* ---- reveal -------------------------------------------------------------- */
+.reveal { opacity: 0; animation: rise 520ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 55ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+html[data-motion="off"] .reveal { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+.empty { padding: 20px 0; color: var(--ink-2); font-size: 14px;
+         border-bottom: 1px solid var(--rule-soft); max-width: 72ch; }
+
+/* rail legend: mark labels live here rather than floating over the track, so
+ * today's price and the price that says you were wrong cannot overprint. */
+.rail .keys { display: flex; flex-wrap: wrap; gap: 5px 20px; margin-top: 9px;
+              font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.rail .keys .key { display: inline-flex; align-items: center; gap: 7px; }
+.rail .keys .key i { width: 2px; height: 11px; background: var(--ink-2); display: block; }
+.rail .keys .key.now i { background: var(--ink); width: 3px; }
+.rail .keys .key.kill i { background: var(--down); }
+.rail .keys .key.median i { background: var(--ink-3); }
+.rail .keys .key b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.rail .keys .key.kill b { color: var(--down); }
+.rail .ends { margin-top: 7px; }
+
+/* the four fiscal-year values printed under a sparkline */
+.card .vals { display: flex; justify-content: space-between; gap: 6px; margin-top: 7px;
+              font-family: var(--mono); font-size: 10.5px; color: var(--ink-3);
+              font-variant-numeric: tabular-nums; }
+.card .vals span { display: flex; flex-direction: column; gap: 2px; }
+.card .vals em { font-style: normal; color: var(--ink-3); opacity: 0.7; }
+.card .vals span:last-child { color: var(--ink); }
+
+/* ---- positioning: candidate memo ----------------------------------------
+ * Each candidate is one article with three bands: who it is, why it ranks where
+ * it does, and the two things criteria.md insists on, the falsifier and the size.
+ * The falsifier band is not smaller than the reasoning band, for the same reason
+ * the call and the falsifier share a class on the analyse page. */
+.cands { border-top: 1px solid var(--rule); }
+.cand { border-bottom: 1px solid var(--rule); padding: 22px 0 24px; }
+.cand .ch { display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+            flex-wrap: wrap; margin-bottom: 14px; }
+.cand .cn { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.cand .cn .r { font-size: 12px; color: var(--ink-3); }
+.cand .cn .tk { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.cand .cn a { text-decoration: none; }
+.cand .cn a:hover .tk { border-bottom: 1px solid var(--ink); }
+.cand .cn .co { font-size: 14px; color: var(--ink-2); }
+.cand .cb { display: grid; grid-template-columns: 1fr 300px; gap: 36px; align-items: start; }
+@media (max-width: 900px) { .cand .cb { grid-template-columns: 1fr; gap: 18px; } }
+.cand .cb .prose { font-size: 14px; }
+.cand .cs { display: grid; gap: 0; }
+.cand .cs .kv { display: flex; justify-content: space-between; gap: 14px; font-family: var(--mono);
+                font-size: 12px; color: var(--ink-3); padding: 6px 0; border-bottom: 1px solid var(--rule-soft); }
+.cand .cs .kv b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.cand .cf { display: grid; grid-template-columns: 1fr 300px; gap: 36px; margin-top: 20px;
+            padding-top: 16px; border-top: 1px solid var(--rule-soft); align-items: start; }
+@media (max-width: 900px) { .cand .cf { grid-template-columns: 1fr; gap: 18px; } }
+/* The two halves of the candidate footer. Both are structural: they exist so the
+ * label and the list under it stay one grid item instead of two. Declared by name
+ * rather than left to the wildcard below, so a class in the markup always has a
+ * rule to point at. */
+.cand .cfx, .cand .cfz { min-width: 0; }
+.cand .lab { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 8px; }
+.cand ul.kill { list-style: none; padding: 0; margin: 0; }
+.cand ul.kill li { font-size: 14px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; max-width: 78ch; }
+.cand ul.kill li::before { content: ""; position: absolute; left: 0; top: 11px;
+                           width: 8px; height: 1px; background: var(--down); }
+.cand .amt { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cand .cfz .m { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 7px; max-width: 44ch; }
+
+/* Reading instructions are not caveats. The gaps list is deliberately dim because
+ * it lists what is missing; the same treatment on "how to read this" would bury
+ * the four sentences that make the page interpretable. */
+.howto { list-style: none; padding: 0; margin: 0; counter-reset: h; }
+.howto li { font-size: 14px; color: var(--ink-2); padding: 11px 0 11px 34px; position: relative;
+            border-bottom: 1px solid var(--rule-soft); max-width: 92ch; line-height: 1.55; }
+.howto li::before { counter-increment: h; content: counter(h); position: absolute; left: 0; top: 12px;
+                    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+                    border: 1px solid var(--rule); width: 20px; height: 20px;
+                    display: flex; align-items: center; justify-content: center; }
+.howto li b, .howto li strong { color: var(--ink); font-weight: 500; }
+
+/* On a phone the heading and its provenance label fight for one line and both wrap
+ * badly. Stack them: the heading is what you are reading, the source is what you
+ * check afterwards, so the reading order is already the right one. */
+@media (max-width: 620px) {
+  h2 { flex-direction: column; align-items: flex-start; gap: 3px; }
+  h2 .sub { text-align: left; }
+  .plate .price { text-align: left; }
+  .plate .price .n { font-size: clamp(38px, 13vw, 56px); }
+  .cand .cb, .cand .cf { gap: 16px; }
+  .ledger .row { padding: 11px 0; }
+  .callout { padding: 16px 15px; }
+  .callout .line { font-size: 17px; }
+  table { font-size: 13px; }
+  th, td { padding-right: 10px; }
+}
+
+/* Each falsifier says where it came from. The journal's line and the research
+ * note's thesis killers are two renderings of the same conditions, and merging them
+ * meant guessing at semantic equivalence and dropping one. */
+.cand ul.kill .src { display: block; font-family: var(--mono); font-size: 10.5px;
+                     color: var(--ink-3); margin-top: 3px; }
+
+/* Grid blowout.
+ *
+ * A grid item's default min-width is auto, which resolves to its min-content size,
+ * so a single long unbroken run of text expands its track past the container and
+ * takes the whole page with it. At 390px one narrative headline pushed a page to
+ * 586px. min-width: 0 lets the track shrink and the text wrap, which is what every
+ * one of these was already assuming.
+ */
+.ledger .row > *,
+.cand .cb > *, .cand .cf > *,
+.bar > *, .grid > *, .plate > *, .stat > * { min-width: 0; }
+
+.ledger .k, .ledger .v, .cand ul.kill li, .prose, .lede, .note, .gaps li, .howto li,
+.card .k, .card .d, .rail .cap, .rail .keys .key { overflow-wrap: anywhere; }
+
+/* .m is the narrow right-hand label column and stays on one line by design, but it
+ * must not be allowed to set the row's width when its content is long. */
+/* Wide enough for "Yahoo Finance via yfinance", which is the longest label that
+ * actually appears. 22ch clipped it to "Yahoo Finance via yf...". */
+.ledger .m { max-width: 27ch; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 780px) { .ledger .m { max-width: none; white-space: normal; } }
+
+/* Two equal columns, used for the sources-and-gaps footer. This lived as an
+ * inline style on the element, where no media query could reach it, so at 390px
+ * the two columns were 157px each either side of a 44px gutter. `min-width: 0`
+ * for the usual reason: a grid item defaults to min-content, and a long URL in
+ * the sources list would otherwise widen the whole page. */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.cols > * { min-width: 0; }
+@media (max-width: 780px) { .cols { grid-template-columns: 1fr; gap: 30px; } }
+
+/* ---- compare: up to four names side by side ------------------------------
+ * The first column is sticky so the row label stays put while the table
+ * scrolls inside .scroll on a phone. The page itself never scrolls sideways.
+ * .best is a weight and a mark, never a colour, and valuation rows never carry
+ * it (compare.js only sets it where a row declares which way is better). */
+.cmp th, .cmp td { min-width: 150px; vertical-align: top; }
+.cmp th:first-child, .cmp td:first-child { position: sticky; left: 0; background: var(--paper); z-index: 1;
+                                            min-width: 150px; max-width: 200px; padding-right: 14px; }
+.cmp thead th:first-child { min-width: 150px; }
+.cmp tbody th { text-align: left; font-family: var(--mono); font-size: 11px; color: var(--ink-2); font-weight: 400;
+                padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule-soft);
+                white-space: normal; overflow-wrap: anywhere; }
+.cmp tbody tr:hover th { background: var(--mark-soft); }
+.cmp td { font-size: 14px; }
+.cmp td.best { font-weight: 500; box-shadow: inset 3px 0 0 var(--ink); padding-left: 10px; }
+.cmp tr.cmp-call td { font-size: 15px; line-height: 1.35; }
+.cmp .cmp-tv { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.cmp .cmp-ts, .cmp .cmp-note { font-family: var(--mono); font-size: 11px; }
+.cmp .cmp-note { margin-top: 3px; white-space: normal; }
+.cmp .spark { display: block; }
+.cmp .conv { display: inline-flex; gap: 3px; margin-left: 6px; vertical-align: middle; }
+.cmp .chip { display: inline-block; margin-bottom: 2px; }
+.cmp-pick { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.cmp-pick .chips { gap: 4px; }
+.cmp-pick .chip button { border: none; padding: 0 0 0 6px; font-size: 13px; line-height: 1; background: none; color: inherit; }
+.cmp-pick input[type="search"] { max-width: 420px; }
+.cmp-hits { display: flex; flex-wrap: wrap; gap: 0; }
+.cmp-hits button { font-size: 12px; margin-right: -1px; margin-bottom: -1px; }
+.cmp-hits button .tk { margin-right: 6px; }
+

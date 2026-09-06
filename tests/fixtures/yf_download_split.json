@@ -1,0 +1,12 @@
+{
+  "_note": "Shape of yf.download(['SPLT'], auto_adjust=False), which is the only setting that returns both a raw Close and an Adj Close. SPLT does a two for one split on 2026-01-07: the raw close halves, the adjusted series does not. Reading the raw column would score that day as a 49 percent loss.",
+  "index": ["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08"],
+  "columns": [["Close", "SPLT"], ["Adj Close", "SPLT"]],
+  "data": [
+    [200.0, 100.0],
+    [202.0, 101.0],
+    [204.0, 102.0],
+    [103.0, 103.0],
+    [104.0, 104.0]
+  ]
+}

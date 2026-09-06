@@ -1,0 +1,429 @@
+{
+ "schema": 1,
+ "built_at": "2026-09-06T17:10:11",
+ "depth": "screen",
+ "identity": {
+  "ticker": "CHKP",
+  "company": "Check Point Software Technologies Ltd.",
+  "sector": "Technology",
+  "industry": "Software - Infrastructure",
+  "country": "Israel",
+  "exchange": "NMS",
+  "currency": "USD",
+  "price": 137.41,
+  "market_cap_usd": 14029647872.0,
+  "dollar_volume_usd": 162432911.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "business": {
+  "available": false,
+  "why": "No research note. The screen knows the industry classification and nothing about what the company actually sells.",
+  "industry": "Software - Infrastructure"
+ },
+ "headline": null,
+ "fundamentals": {
+  "window": "2022\u20132025",
+  "n_years": 4,
+  "note": "Four fiscal years is all the free source provides, so every growth figure here is computed over three intervals, not five years.",
+  "rows": [
+   {
+    "key": "roic_avg",
+    "label": "Return on invested capital, average",
+    "value": 0.256407,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "roic_latest",
+    "label": "Return on invested capital, latest year",
+    "value": 0.150234,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "fcf_margin_avg",
+    "label": "Free cash flow margin, average",
+    "value": 0.428824,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "rev_cagr",
+    "label": "Revenue CAGR",
+    "value": 0.053653,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_avg",
+    "label": "Gross margin, average",
+    "value": 0.873771,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_std",
+    "label": "Gross margin, standard deviation",
+    "value": 0.006117,
+    "unit": "percent",
+    "higher_is_better": false
+   },
+   {
+    "key": "nd_to_ebitda",
+    "label": "Net debt to EBITDA",
+    "value": 0.16548076923076924,
+    "unit": "x",
+    "higher_is_better": false,
+    "absent_means": null
+   },
+   {
+    "key": "share_change",
+    "label": "Diluted share count change",
+    "value": -0.12974,
+    "unit": "percent",
+    "higher_is_better": false
+   }
+  ],
+  "net_cash": false,
+  "fcf_positive_years": 4.0,
+  "fcf_years": 4.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "trends": [],
+ "what_changed": {
+  "mechanical": [
+   {
+    "label": "Next-year EPS consensus",
+    "detail": "moved -1.1% over 90 days, of which -1.0% came in the last 30. The 60 days before that accounted for -0.1%.",
+    "direction": "down",
+    "accelerating": true,
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Analyst breadth, 30 days",
+    "detail": "8 raised next-year estimates, 20 cut them.",
+    "direction": "down",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Price against its year",
+    "detail": "-36.4% from the 52-week high, -42.7% from the highest close it has ever made.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Next report",
+    "detail": "2026-11-04. Everything on this page is dated 2026-09-04, so the revisions above are stale the moment that lands.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   }
+  ],
+  "read": {
+   "available": false,
+   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. No research note has been written for this name."
+  }
+ },
+ "thesis": {
+  "available": false,
+  "why": "No research note has been written for this name, so there is no thesis to state."
+ },
+ "risks": {
+  "available": false,
+  "why": "No research note has been written for this name. The screen cannot tell you what would break a thesis it never formed."
+ },
+ "valuation": {
+  "available": true,
+  "multiples": [
+   {
+    "key": "forward_pe",
+    "label": "Forward P/E",
+    "value": 12.158294,
+    "own_median": 20.75668940019726,
+    "vs_median": -0.41424695597726413,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
+   },
+   {
+    "key": "ev_ebitda",
+    "label": "EV/EBITDA",
+    "value": 16.349,
+    "own_median": 17.43004286896378,
+    "vs_median": -0.06202181354864611,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
+   }
+  ],
+  "own_history": {
+   "usable": true,
+   "n_year_ends": 4,
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 136 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 50% and 0.0% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 136 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.15 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
+  },
+  "drawdown": {
+   "from_52w_high": -0.36442609233054,
+   "from_all_time_high": -0.4265216143847107,
+   "high_52w": 210.66,
+   "all_time_high": 233.47000122070312,
+   "caveat": "The all-time high is the highest closing price; the 52-week high is an intraday high. They are not on the same basis, and the drawdown from the all-time high is therefore understated."
+  },
+  "estimates": {
+   "eps_fy0": 10.43491,
+   "eps_fy1": 11.30175,
+   "fy1_change_30d": -0.010126675407734043,
+   "fy1_change_90d": -0.01112963133096223,
+   "fy0_change_30d": 0.0011820478403161694,
+   "fy0_change_90d": 0.0007269358503088075,
+   "analysts_up_30d": 8.0,
+   "analysts_down_30d": 20.0,
+   "net_breadth": -12.0
+  },
+  "price_basis": {
+   "displayed": 137.41,
+   "used_for_derived_figures": 133.88999938964844,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
+  "short_pct_float": 0.0714,
+  "insider_pct": 0.24365,
+  "next_earnings": "2026-11-04",
+  "buckets": [
+   "compounder"
+  ],
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "CHKP",
+   "peer_set": {
+    "basis": "industry",
+    "label": "Software - Infrastructure",
+    "n": 11,
+    "tickers": [
+     "CHKP",
+     "DBX",
+     "DLO",
+     "EEFT",
+     "FFIV",
+     "FTNT",
+     "GDDY",
+     "MSFT",
+     "NTAP",
+     "QLYS",
+     "TDC"
+    ],
+    "caveat": "Compared against 10 other names in Software - Infrastructure."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.4,
+    "EV/EBITDA": 0.5
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.4,
+    "free cash flow margin": 1.0,
+    "revenue growth": 0.4,
+    "gross margin stability": 0.8
+   },
+   "price_rank": 0.45,
+   "quality_rank": 0.6,
+   "gap": 0.15,
+   "verdict": "in the middle",
+   "reasoning": "Neither its multiple nor its quality separates it from its peers, and the two are close to each other. Most of the list is here, and that is the honest answer for most of the list.",
+   "cheapest_peers": [
+    {
+     "ticker": "EEFT",
+     "forward_pe": 6.1392817
+    },
+    {
+     "ticker": "GDDY",
+     "forward_pe": 9.397415
+    },
+    {
+     "ticker": "TDC",
+     "forward_pe": 9.886168
+    },
+    {
+     "ticker": "DBX",
+     "forward_pe": 10.882919
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "FTNT",
+     "forward_pe": 41.462704
+    },
+    {
+     "ticker": "FFIV",
+     "forward_pe": 21.6936
+    },
+    {
+     "ticker": "MSFT",
+     "forward_pe": 21.639755
+    },
+    {
+     "ticker": "QLYS",
+     "forward_pe": 20.718735
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
+ },
+ "score": {
+  "available": true,
+  "variants": {
+   "quality_value": {
+    "score": 0.0939,
+    "percentile": 55.7,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0239,
+     "roic_trend": -0.0532,
+     "fcf": 0.2189,
+     "growth": -0.0461,
+     "margin_stability": 0.0207,
+     "balance": -0.0165,
+     "value_ev": 0.0216,
+     "value_pe": 0.0344,
+     "revisions_90d": -0.0573,
+     "revisions_30d": -0.0697,
+     "revision_breadth": -0.0463,
+     "share_count": 0.0833,
+     "short_interest": -0.0197
+    },
+    "top_contributions": [
+     {
+      "key": "fcf",
+      "value": 0.2189
+     },
+     {
+      "key": "share_count",
+      "value": 0.0833
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0697
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0573
+     },
+     {
+      "key": "roic_trend",
+      "value": -0.0532
+     }
+    ]
+   },
+   "with_momentum": {
+    "score": -0.0391,
+    "percentile": 43.0,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0239,
+     "roic_trend": -0.0532,
+     "fcf": 0.2189,
+     "growth": -0.0461,
+     "margin_stability": 0.0207,
+     "balance": -0.0165,
+     "value_ev": 0.0216,
+     "value_pe": 0.0344,
+     "revisions_90d": -0.0573,
+     "revisions_30d": -0.0697,
+     "revision_breadth": -0.0463,
+     "share_count": 0.0833,
+     "short_interest": -0.0197,
+     "momentum_52w": -0.1329
+    },
+    "top_contributions": [
+     {
+      "key": "fcf",
+      "value": 0.2189
+     },
+     {
+      "key": "momentum_52w",
+      "value": -0.1329
+     },
+     {
+      "key": "share_count",
+      "value": 0.0833
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0697
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0573
+     }
+    ]
+   },
+   "with_reversal": {
+    "score": 0.1621,
+    "percentile": 57.7,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": 0.0239,
+     "roic_trend": -0.0532,
+     "fcf": 0.2189,
+     "growth": -0.0461,
+     "margin_stability": 0.0207,
+     "balance": -0.0165,
+     "value_ev": 0.0216,
+     "value_pe": 0.0344,
+     "revisions_90d": -0.0573,
+     "revisions_30d": -0.0697,
+     "revision_breadth": -0.0463,
+     "share_count": 0.0833,
+     "short_interest": -0.0197,
+     "reversal_ath": 0.0683
+    },
+    "top_contributions": [
+     {
+      "key": "fcf",
+      "value": 0.2189
+     },
+     {
+      "key": "share_count",
+      "value": 0.0833
+     },
+     {
+      "key": "revisions_30d",
+      "value": -0.0697
+     },
+     {
+      "key": "reversal_ath",
+      "value": 0.0683
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0573
+     }
+    ]
+   }
+  },
+  "universe": "the quality top 150 as of 2026-09-04",
+  "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
+ },
+ "journal": [],
+ "sources": [
+  {
+   "title": "Screen and statement data, Yahoo Finance via yfinance",
+   "url": null,
+   "read_date": "2026-09-04",
+   "kind": "data"
+  }
+ ],
+ "gaps": [
+  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals. The own-history median is a 4-point median.",
+  "No research note. Nobody has read a filing for this name.",
+  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
+  "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
+ ],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

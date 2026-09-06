@@ -1,0 +1,87 @@
+{
+ "ticker": "META",
+ "quarter_label": "Q2 2026, reported 2026-07-29",
+ "prior_quarter_label": "Q1 2026 (the note names the quarter but gives no report date)",
+ "headline": "Q2 2026 broke the cash flow rather than the earnings: free cash flow shrank to $784 million from $8.55 billion as capex nearly doubled to $31.1 billion in one quarter, and full-year 2026 capex guidance was raised to $135 to $145 billion.",
+ "guidance": [
+  {
+   "what": "Full year 2026 capital expenditure",
+   "change": "raised",
+   "detail": "Raised at the Q2 2026 report to a $135 to $145 billion range, with the low end up $10 billion in a single quarter. The valuation section restates the same $135 to $145 billion range as the standing full-year 2026 figure. The note gives no capex figure or range for any period beyond full-year 2026.",
+   "quote": "capex guidance raised to $135 to $145 billion with the low end up $10 billion in a quarter, revenue forecast below expectations, stock down about 8% after hours"
+  },
+  {
+   "what": "Forward revenue forecast",
+   "change": "not stated",
+   "detail": "The note records only that the revenue forecast issued with the Q2 2026 print came in below expectations. No dollar range, growth rate, or forecast period is given, and the note does not say whether the forecast was above or below any prior guide, so no direction of change can be assigned.",
+   "quote": "revenue forecast below expectations"
+  }
+ ],
+ "tone": {
+  "assessment": "Not directly determinable. The note contains no management commentary, no call quotes, and no characterization of how management sounded. The only management-attributable actions it records are raising the full-year capex range with the low end up $10 billion in a single quarter and issuing a revenue forecast below expectations, alongside the note's own statement that the spend carries no disclosed return timeline. Read narrowly, that is a company continuing to commit to the spend rather than moderating it, but the note supplies no language from management to confirm any posture.",
+  "evidence": "capex guidance raised to $135 to $145 billion with the low end up $10 billion in a quarter, revenue forecast below expectations, stock down about 8% after hours",
+  "confidence": "low, and it is not higher because the note is a summary with no transcript, no prepared-remarks language, and no attributed quotes from any executive; the assessment rests entirely on inferring posture from the two guidance actions the note reports"
+ },
+ "market_reaction": "The Q2 2026 print landed after the close on July 29, 2026, and the note records the \"stock down about 8% after hours\" on a quarter that missed EPS at $6.18 versus a $7.14 estimate, raised full-year capex guidance, and carried a revenue forecast below expectations. The note describes the prior quarter only as \"Q1 2026: also a capex driven reaction\" and gives no direction, size, or date for that move. As of the 2026-09-04 screen pull, the shares are at 610.68 USD, \"-25% from 52 week high, -25% from all time high\", on a forward P/E of 17.5 against a four-year median of 24.2 (-28%), with the next fiscal year EPS estimate moved -2.4% in 90 days and short interest at 1.3% of float. The note does not trace the price path between the July 29 report and the September 4 screen date.",
+ "new_risks": [
+  {
+   "risk": "Free cash flow has effectively vanished at the quarterly run rate, with capex nearly doubling in a single quarter to $31.1 billion and free cash flow falling to $784 million from $8.55 billion.",
+   "quote": "free cash flow shrank to $784 million from $8.55 billion as capex nearly doubled to $31.1 billion in one quarter",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Profitability deteriorated alongside the cash flow: net income fell 14% to $15.8 billion and operating margin dropped from 43% to 31%, even as revenue grew 28%. The bear case and the thesis-killer list are framed around capex, cash flow, and ad revenue growth, not around the margin and net income compression itself.",
+   "quote": "net income fell 14% to $15.8 billion, operating margin dropped from 43% to 31%",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "The balance sheet flipped from net cash to net debt across FY2025: the financials table shows net debt of +22.87 USD bn at FY2025 against -28.75 (net cash) at FY2024, under a column defined as negative equals net cash. Neither the bear case nor the thesis killers mention the balance sheet.",
+   "quote": "| FY2025 (2025-12-31) | 200.97 | 82.0% | 41.4% | 46.11 | 2,574 | 22.87 |",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "The valuation support collapses once cash flow rather than earnings is used: the 17.5x forward multiple sits against a free cash flow yield under 1% at the current run rate, so the cheap multiple does not translate into shareholder cash.",
+   "quote": "at the current run rate the free cash flow yield is under 1%",
+   "already_in_thesis": false
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "Any return timeline or payback period on the AI infrastructure spend, and any end date for the escalation",
+   "reasoning": "The note states outright that the spend carries \"no disclosed return timeline\" and, separately, that \"The 2026 pattern of raising capex every quarter has no end date.\" Both are the note author's characterizations in the bear case section. They establish that the note found no disclosed timeline or end date; because the note contains no call transcript or management commentary, it cannot show whether the question was asked and deflected on the call versus simply never addressed.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "When free cash flow recovers, and what the spending does to margins or EPS going forward",
+   "reasoning": "The note records forward guidance on exactly two items: the full-year 2026 capex range and a revenue forecast described only as below expectations. Free cash flow fell to $784 million and operating margin dropped from 43% to 31%, yet the note carries no forward figure, range, or commentary for either. Whether that absence reflects management not addressing it or the note's own compression cannot be distinguished from the source.",
+   "confidence": "low"
+  },
+  {
+   "topic": "How the capex is being funded now that the balance sheet has turned",
+   "reasoning": "The financials table shows net debt swinging from -28.75 (net cash) at FY2024 to +22.87 at FY2025 while annual free cash flow fell from 54.07 to 46.11, but no section of the note discusses financing, debt issuance, or the funding of the capex program. The swing is visible in the table and left uncommented everywhere else in the note.",
+   "confidence": "low"
+  }
+ ],
+ "not_determinable": [
+  "Any management language from the Q2 2026 call. The note carries no quotes, no attributed remarks, no Q&A, and no description of executive tone, so posture can only be inferred from the guidance actions reported.",
+  "Whether guidance was given on anything beyond full-year 2026 capex and the unquantified revenue forecast. No EPS, operating margin, opex, headcount, or FY2027 guidance appears in the note, and its absence does not establish that none was given.",
+  "The direction, magnitude, or date of the Q1 2026 price move. The note says only \"Q1 2026: also a capex driven reaction\" with no sign attached.",
+  "The exact revenue forecast that came in below expectations. No dollar figure, growth rate, period, or consensus comparison is given.",
+  "Q2 2026 revenue in dollars, and revenue actual versus estimate. The note gives only \"Revenue grew 28% last quarter\" and an EPS actual-versus-estimate pair of $6.18 vs $7.14.",
+  "The price path between the July 29 print and the 2026-09-04 screen date. The note gives the after-hours move of about 8% and the 610.68 price on 2026-09-04, with nothing in between, so whether the drop persisted, deepened, or partially recovered cannot be told.",
+  "Analyst estimate revision breadth or counts. The note's only revision datum is \"Next fiscal year EPS estimate moved -2.4% in 90 days\"; it names no analysts, no up or down counts, and no revenue revisions.",
+  "Quarterly financial history. The table is annual only, FY2022 through FY2025, and the note states \"Four fiscal years is all the source provides,\" so the $784 million and $8.55 billion free cash flow figures and the 43% to 31% margin move cannot be placed in a quarterly series.",
+  "Whether Q3 2026 capex guidance has been issued. The first thesis killer is \"capex guidance rising again in Q3\" and next earnings are dated 2026-10-28, but the note does not say what, if anything, has been said about Q3 capex.",
+  "Depreciation, amortization, or the cost path of the capex already spent. The note reports the $31.1 billion quarterly capex figure and the $135 to $145 billion annual range but never addresses how that spend flows into future expense.",
+  "Any AI monetization or return metric. The note describes building \"AI models and infrastructure at enormous scale\" but reports no revenue, usage, or return figure attached to it.",
+  "Segment-level detail. No Reality Labs, Family of Apps, or other segment breakdown appears anywhere in the note.",
+  "Ad business operating detail: pricing, impression growth, user growth beyond \"3 billion plus daily users\", or any evidence for or against the \"AI attention shift\" the bear case names.",
+  "Capital returns. Buybacks and dividends are never mentioned; diluted shares fall from 2,702m (FY2022) to 2,574m (FY2025) in the table, but the note offers no repurchase program, authorization, or policy.",
+  "What action the \"$450\" price trigger and the \"$520 to $580\" watch zone are meant to prompt. The note lists both without saying what happens at those levels.",
+  "Whether the -25% drawdown from the 52-week and all-time highs is attributable to this quarter or accumulated over multiple quarters. The note reports both drawdowns as of the 2026-09-04 screen pull without decomposing them.",
+  "Any position, sizing, conviction history, or prior stance beyond the note's own \"Conviction 2 of 5\" and \"Watch\" verdict. The note contains no record of a prior rating or of how the stance changed after this print."
+ ],
+ "available": true,
+ "source": "research/META.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

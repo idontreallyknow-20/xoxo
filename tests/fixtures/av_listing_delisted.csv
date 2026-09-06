@@ -1,0 +1,11 @@
+symbol,name,exchange,assetType,ipoDate,delistingDate,status
+TWTR,Twitter Inc,NYSE,Stock,2013-11-07,2022-11-08,Delisted
+ZZZA,Fictional Original Holder of the Symbol,NASDAQ,Stock,1995-01-03,2012-03-15,Delisted
+FAKA,Fictional Acquired Industries,NYSE,Stock,1990-05-01,2019-02-01,Delisted
+FAKB,Fictional Bankrupt Systems,NASDAQ,Stock,2001-06-15,2024-07-31,Delisted
+FAKC,Fictional Short Lived Co,NYSE,Stock,2014-10-01,2020-05-20,Delisted
+FAKD,Fictional Recently Departed Inc,NASDAQ,Stock,1998-03-03,2026-01-15,Delisted
+FAKE,Fictional Closed Fund,NYSE ARCA,ETF,2005-01-01,2018-01-01,Delisted
+FAKF,Fictional Unknown Listing Date Ltd,NYSE,Stock,null,2015-01-01,Delisted
+FAKG,Fictional Left On The Day Corp,NASDAQ,Stock,2000-01-01,2016-09-06,Delisted
+FAKH,Fictional Left The Day After Corp,NYSE,Stock,2000-01-01,2016-09-07,Delisted

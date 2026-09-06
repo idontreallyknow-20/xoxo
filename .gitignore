@@ -17,3 +17,6 @@ dashboard/_*
 # personal positions - never commit
 portfolio/
 portfolio.md
+
+# rendered screenshots, regenerable with scripts/shoot.py
+data/shots/

@@ -1,0 +1,73 @@
+{
+ "ticker": "NVR",
+ "quarter_label": "Q2 2026, reported July 23, 2026",
+ "prior_quarter_label": "not stated",
+ "headline": "Gross margin fell to 19.2% from 21.5% and EPS dropped 23% even as new orders grew 9%, so NVR is trading volume for price and the market marked the stock down on the margin miss.",
+ "guidance": [],
+ "tone": {
+  "assessment": "Cannot be assessed from this note. The note contains no management statement, quote, paraphrase, or attribution of any kind \u2014 the words 'management', 'CEO', 'CFO', 'said', 'call' and 'transcript' appear zero times in the file. Its entire earnings coverage is one line of reported figures plus one sentence of market reaction, so there is no managerial voice to read tone from. Every forward-looking judgment in the note ('Margins have further to fall') belongs to the note's own author, not to the company.",
+  "evidence": "Q2 2026 (July 23, 2026): revenue $2.33 billion down 10%, net income $236.5 million down 29%, EPS $83.96 down 23%, new orders up 9% to 5,885 units, average price down 5% to $437,100, backlog up 9% to 10,998 units. Stock fell on the margin miss.",
+  "confidence": "low"
+ },
+ "market_reaction": "The note states the stock reacted negatively to the quarter: \"Stock fell on the margin miss.\" The screen data in the note, pulled 2026-09-04, places the price at 6373.95 USD and \"-27% from 52 week high, -36% from all time high\", with \"Next fiscal year EPS estimate moved -2.1% in 90 days.\" and \"Short interest 6.2% of float.\" Valuation is not depressed on the note's own multiple: \"Forward P/E 15.5 vs own 4 year median 15.6 (-1%).\" The note does not give the size of the move on the earnings date, the volume, or any analyst rating or target-price change, so the magnitude of the reaction is not determinable from this file.",
+ "new_risks": [
+  {
+   "risk": "Land deposit impairments of $21.7 million hit gross margin alongside lot costs and price cuts. Impairments are a distinct cause from the two the bear case names (rates and affordability-driven price cutting), and they are not among the stated thesis killers.",
+   "quote": "Gross margin fell to 19.2% from 21.5% on lot costs, price cuts and $21.7 million of land deposit impairments.",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "Gross margin at 19.2% is 2.2 points above the level the note names as a thesis killer, so the margin decline has moved the position materially closer to its own stated exit trigger.",
+   "quote": "Orders turning negative, gross margin under 17%.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Volume is being bought with price: orders and backlog each rose 9% while average price fell 5% and revenue fell 10%, which is the mechanism the bear case describes rather than a new one.",
+   "quote": "Affordability is the binding constraint and NVR is cutting price to hold volume. Margins have further to fall.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Position-sizing constraint from the share price itself, independent of the business. Named in the note's valuation section, not in the bear case or the thesis killers.",
+   "quote": "One share costs $6,374, which alone makes position sizing awkward at this account size.",
+   "already_in_thesis": false
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "Everything. The note records no management commentary on any subject, so it supplies no basis to judge what management addressed, addressed thinly, or avoided.",
+   "reasoning": "The file contains no quote, paraphrase, or attribution to any NVR officer; 'management', 'CEO', 'CFO', 'said', 'call' and 'transcript' each occur zero times. The earnings section is one line of reported figures and one sentence about the stock's move. Absence of management commentary in a third-party research note is not evidence that management avoided anything \u2014 the note simply never captured it.",
+   "confidence": "high"
+  },
+  {
+   "topic": "Whether the 19.2% gross margin stabilizes, and how much of the decline is the one-off impairment versus recurring lot costs and price cuts.",
+   "reasoning": "The note names the three causes of the margin decline in a single sentence but never separates their contributions, and it carries no forward statement about margins from the company or any cited source. The only forward view in the file is the note author's own assertion that margins have further to fall, which is offered without support.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "The prior quarter. The section headed 'Last two earnings reports' contains only one.",
+   "reasoning": "The heading '## Last two earnings reports' is followed by a single line covering Q2 2026 and nothing else; no other quarter label appears anywhere in the file. The note's own structure signals a second report that it does not deliver, so quarter-over-quarter direction on any metric is unavailable.",
+   "confidence": "high"
+  }
+ ],
+ "not_determinable": [
+  "Any guidance, of any kind. The words 'guidance', 'guide' and 'outlook' appear zero times in the file. Whether NVR issued, raised, cut, maintained or withheld guidance is not determinable from this note, and the note gives no basis for inferring which of those it was.",
+  "The prior quarter's results. The section is headed 'Last two earnings reports' but lists only Q2 2026, so no sequential comparison of revenue, margin, orders, price or backlog is possible.",
+  "Any quarterly financial series. The financial table is annual only, covering FY2022-FY2025, with columns for Revenue, Gross margin, Operating margin, Free cash flow, Diluted shares and Net debt. The note states 'Four fiscal years is all the source provides.', so quarterly operating margin and quarterly cash flow cannot be traced.",
+  "SG&A, at any frequency. The string 'SG&A' appears zero times in the file and the annual table has no such column, so the cost line beneath gross margin is absent entirely.",
+  "Segment detail. The note says NVR 'runs a mortgage bank for its buyers' but reports no separate revenue, margin or income for the mortgage segment versus homebuilding, so the source of the margin decline cannot be split between them.",
+  "The size of the stock's move on the earnings date. The note says only that the stock fell on the margin miss; no percentage, price, date-specific move or volume is given.",
+  "Analyst estimate detail behind the '-2.1% in 90 days' figure \u2014 the number of estimates, the direction and count of individual revisions, the current-year (FY0) revision picture, and the absolute EPS estimate. Only the single next-fiscal-year 90-day percentage change appears in the note.",
+  "Order and backlog composition \u2014 community count, absorption pace, cancellation rate, and the regional mix behind the 9% order growth. The note gives only aggregate unit counts and average price.",
+  "Land position detail. The note says NVR 'options land rather than owning it' and reports $21.7 million of land deposit impairments, but gives no lot count, controlled-lot inventory, option deposit balance, or how much further impairment the remaining deposits could carry.",
+  "Backlog conversion economics \u2014 the margin embedded in the 10,998-unit backlog, and therefore whether the reported margin decline has already worked through or is still ahead in deliveries.",
+  "Buyback detail beyond one figure. The note cites '$358 million in one quarter, on a $17 billion company' but gives no authorization size, remaining capacity, average repurchase price, or share count for any quarter; the diluted share column is annual and rounded to whole millions (4, 3, 3, 3), which is too coarse to measure buyback impact.",
+  "Interest rates and mortgage-market data. The bear case turns on the Fed hiking in September and on affordability, but the note contains no rate level, no mortgage rate, and no affordability measure \u2014 the rate view is asserted, not evidenced.",
+  "Valuation inputs behind the bear and base cases. The note gives a 30% drawdown bear case and 'mid single digit compounding through buybacks' as the base case with no underlying EPS, margin, volume or multiple assumptions.",
+  "Whether the note's price and screen figures are still current. All screen and statement data is stamped 'pulled 2026-09-04' and the price is 'Price 6373.95 USD on 2026-09-04'; the note's own next-earnings date is 2026-10-21, so nothing after early September is captured.",
+  "Competitor or peer comparison. No other homebuilder is named anywhere in the file, so whether the margin compression and order growth are company-specific or industry-wide cannot be determined from this note.",
+  "The content of the two cited sources. The note links an 8-K earnings release and a HousingWire article, both read 2026-09-04, but reproduces no text from either, so any management commentary or detail they contain is outside what this note carries."
+ ],
+ "available": true,
+ "source": "research/NVR.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

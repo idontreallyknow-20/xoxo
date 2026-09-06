@@ -1,0 +1,27 @@
+{
+ "data": [
+  {
+   "change": 511000,
+   "filingDate": "2026-02-13",
+   "id": "911000",
+   "name": "COOK TIMOTHY D",
+   "share": 3791000,
+   "symbol": "AAPL",
+   "transactionCode": "M",
+   "transactionDate": "2026-02-11",
+   "transactionPrice": 0
+  },
+  {
+   "change": -511000,
+   "filingDate": "2026-04-03",
+   "id": "911001",
+   "name": "COOK TIMOTHY D",
+   "share": 3280000,
+   "symbol": "AAPL",
+   "transactionCode": "S",
+   "transactionDate": "2026-04-01",
+   "transactionPrice": 223.42
+  }
+ ],
+ "symbol": "AAPL"
+}

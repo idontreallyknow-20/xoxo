@@ -1,0 +1,444 @@
+{
+ "schema": 1,
+ "built_at": "2026-09-06T17:10:11",
+ "depth": "screen",
+ "identity": {
+  "ticker": "NVS",
+  "company": "Novartis AG",
+  "sector": "Healthcare",
+  "industry": "Drug Manufacturers - General",
+  "country": "Switzerland",
+  "exchange": "NYQ",
+  "currency": "USD",
+  "price": 163.09,
+  "market_cap_usd": 309987573760.0,
+  "dollar_volume_usd": 314926464.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "business": {
+  "available": false,
+  "why": "No research note. The screen knows the industry classification and nothing about what the company actually sells.",
+  "industry": "Drug Manufacturers - General"
+ },
+ "headline": null,
+ "fundamentals": {
+  "window": "2022\u20132025",
+  "n_years": 4,
+  "note": "Four fiscal years is all the free source provides, so every growth figure here is computed over three intervals, not five years.",
+  "rows": [
+   {
+    "key": "roic_avg",
+    "label": "Return on invested capital, average",
+    "value": 0.143157,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "roic_latest",
+    "label": "Return on invested capital, latest year",
+    "value": 0.187773,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "fcf_margin_avg",
+    "label": "Free cash flow margin, average",
+    "value": 0.265696,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "rev_cagr",
+    "label": "Revenue CAGR",
+    "value": 0.092517,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_avg",
+    "label": "Gross margin, average",
+    "value": 0.744125,
+    "unit": "percent",
+    "higher_is_better": true
+   },
+   {
+    "key": "gm_std",
+    "label": "Gross margin, standard deviation",
+    "value": 0.011243,
+    "unit": "percent",
+    "higher_is_better": false
+   },
+   {
+    "key": "nd_to_ebitda",
+    "label": "Net debt to EBITDA",
+    "value": 1.0447833136146532,
+    "unit": "x",
+    "higher_is_better": false,
+    "absent_means": null
+   },
+   {
+    "key": "share_change",
+    "label": "Diluted share count change",
+    "value": -0.11015,
+    "unit": "percent",
+    "higher_is_better": false
+   }
+  ],
+  "net_cash": false,
+  "fcf_positive_years": 4.0,
+  "fcf_years": 4.0,
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04"
+ },
+ "trends": [],
+ "what_changed": {
+  "mechanical": [
+   {
+    "label": "Next-year EPS consensus",
+    "detail": "moved -1.5% over 90 days, of which +0.6% came in the last 30. The 60 days before that accounted for -2.0%.",
+    "direction": "down",
+    "accelerating": false,
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Analyst breadth, 30 days",
+    "detail": "2 raised next-year estimates, 2 cut them.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Price against its year",
+    "detail": "-4.7% from the 52-week high, -3.7% from the highest close it has ever made.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   },
+   {
+    "label": "Next report",
+    "detail": "2026-10-27. Everything on this page is dated 2026-09-04, so the revisions above are stale the moment that lands.",
+    "direction": "flat",
+    "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
+   }
+  ],
+  "read": {
+   "available": false,
+   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. No research note has been written for this name."
+  }
+ },
+ "thesis": {
+  "available": false,
+  "why": "No research note has been written for this name, so there is no thesis to state."
+ },
+ "risks": {
+  "available": false,
+  "why": "No research note has been written for this name. The screen cannot tell you what would break a thesis it never formed."
+ },
+ "valuation": {
+  "available": true,
+  "multiples": [
+   {
+    "key": "forward_pe",
+    "label": "Forward P/E",
+    "value": 16.626669,
+    "own_median": 17.930014580262757,
+    "vs_median": -0.07269071502582447,
+    "basis": "forward vs trailing",
+    "like_for_like": false,
+    "basis_note": "The two sides are not the same multiple. The left is a forward P/E, the Street's estimate of next year's earnings. The median on the right is trailing: the price at each fiscal year end divided by that year's reported diluted EPS. Where earnings are expected to grow, forward is mechanically lower than trailing, so this column reads cheap by construction."
+   },
+   {
+    "key": "ev_ebitda",
+    "label": "EV/EBITDA",
+    "value": 15.23,
+    "own_median": 12.552593118129447,
+    "vs_median": 0.2132951221053785,
+    "basis": "trailing vs trailing",
+    "like_for_like": true,
+    "basis_note": "Both sides are trailing, so this comparison is like for like."
+   }
+  ],
+  "own_history": {
+   "usable": true,
+   "n_year_ends": 4,
+   "caveat": "The median is taken at 4 fiscal year ends, so it is a 4-point median. That is a thin basis for 'cheap against its own history' and it says nothing about whether the old multiple was deserved.",
+   "basis_warning": "Read the P/E row with care. Across the 136 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 50% and 0.0% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 136 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.15 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
+  },
+  "drawdown": {
+   "from_52w_high": -0.0469317921279645,
+   "from_all_time_high": -0.03653177903984184,
+   "high_52w": 170.46,
+   "all_time_high": 168.6199951171875,
+   "caveat": "The all-time high is the highest closing price; the 52-week high is an intraday high. They are not on the same basis, and the drawdown from the all-time high is therefore understated."
+  },
+  "estimates": {
+   "eps_fy0": 8.80321,
+   "eps_fy1": 9.80894,
+   "fy1_change_30d": 0.005936796550115142,
+   "fy1_change_90d": -0.01462154264055715,
+   "fy0_change_30d": 0.013774241098162054,
+   "fy0_change_90d": -0.009450670627419222,
+   "analysts_up_30d": 2.0,
+   "analysts_down_30d": 2.0,
+   "net_breadth": 0.0
+  },
+  "price_basis": {
+   "displayed": 163.09,
+   "used_for_derived_figures": 162.4600067138672,
+   "note": "The drawdowns and the multiple-versus-median above were computed inside the price screen from its own last close, which is not quite the price shown at the top of this page: the two come from different passes of the pipeline and differ by a fraction of a percent. Neither is wrong; they are just not the same number."
+  },
+  "short_pct_float": 0.0026,
+  "insider_pct": 0.000120000004,
+  "next_earnings": "2026-10-27",
+  "buckets": [
+   "compounder"
+  ],
+  "source": "Yahoo Finance via yfinance, pulled 2026-09-04",
+  "as_of": "2026-09-04",
+  "peers": {
+   "ticker": "NVS",
+   "peer_set": {
+    "basis": "sector",
+    "label": "Healthcare",
+    "n": 26,
+    "tickers": [
+     "CHE",
+     "COR",
+     "CORT",
+     "DOCS",
+     "DXCM",
+     "EW",
+     "EXEL",
+     "HRMY",
+     "IDXX",
+     "INCY",
+     "ISRG",
+     "JNJ",
+     "LNTH",
+     "MCK",
+     "MEDP",
+     "MTD",
+     "NBIX",
+     "NVO",
+     "NVS",
+     "PGNY",
+     "REGN",
+     "RMD",
+     "UTHR",
+     "VRTX",
+     "WAT",
+     "ZTS"
+    ],
+    "caveat": "Not enough names in its industry to compare against, so this is against 25 others in Healthcare. A sector holds businesses that are not really comparable, so read the percentile loosely."
+   },
+   "price_percentiles": {
+    "forward P/E": 0.4,
+    "EV/EBITDA": 0.32
+   },
+   "quality_percentiles": {
+    "return on invested capital": 0.2,
+    "free cash flow margin": 0.84,
+    "revenue growth": 0.28,
+    "gross margin stability": 0.36
+   },
+   "price_rank": 0.36,
+   "quality_rank": 0.32,
+   "gap": -0.04,
+   "verdict": "in the middle",
+   "reasoning": "Neither its multiple nor its quality separates it from its peers, and the two are close to each other. Most of the list is here, and that is the honest answer for most of the list.",
+   "cheapest_peers": [
+    {
+     "ticker": "HRMY",
+     "forward_pe": 6.2605066
+    },
+    {
+     "ticker": "PGNY",
+     "forward_pe": 11.470964
+    },
+    {
+     "ticker": "ZTS",
+     "forward_pe": 11.680427
+    },
+    {
+     "ticker": "NBIX",
+     "forward_pe": 13.2469225
+    }
+   ],
+   "dearest_peers": [
+    {
+     "ticker": "IDXX",
+     "forward_pe": 31.618845
+    },
+    {
+     "ticker": "MEDP",
+     "forward_pe": 30.72945
+    },
+    {
+     "ticker": "ISRG",
+     "forward_pe": 30.638323
+    },
+    {
+     "ticker": "DXCM",
+     "forward_pe": 28.715837
+    }
+   ],
+   "why": "The own-history comparison above says nothing about whether the old multiple was deserved. This asks a different question: where does this name sit among its peers on price, and where does it sit among them on the things a price is supposed to reflect."
+  }
+ },
+ "score": {
+  "available": true,
+  "variants": {
+   "quality_value": {
+    "score": -0.1857,
+    "percentile": 30.9,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": -0.0734,
+     "roic_trend": 0.0266,
+     "fcf": 0.0902,
+     "growth": -0.0331,
+     "margin_stability": -0.0166,
+     "balance": -0.0662,
+     "value_ev": -0.0737,
+     "value_pe": -0.0619,
+     "revisions_90d": -0.0677,
+     "revisions_30d": 0.0099,
+     "revision_breadth": -0.0202,
+     "share_count": 0.0646,
+     "short_interest": 0.0358
+    },
+    "top_contributions": [
+     {
+      "key": "fcf",
+      "value": 0.0902
+     },
+     {
+      "key": "value_ev",
+      "value": -0.0737
+     },
+     {
+      "key": "roic",
+      "value": -0.0734
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0677
+     },
+     {
+      "key": "balance",
+      "value": -0.0662
+     }
+    ]
+   },
+   "with_momentum": {
+    "score": -0.0821,
+    "percentile": 39.6,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": -0.0734,
+     "roic_trend": 0.0266,
+     "fcf": 0.0902,
+     "growth": -0.0331,
+     "margin_stability": -0.0166,
+     "balance": -0.0662,
+     "value_ev": -0.0737,
+     "value_pe": -0.0619,
+     "revisions_90d": -0.0677,
+     "revisions_30d": 0.0099,
+     "revision_breadth": -0.0202,
+     "share_count": 0.0646,
+     "short_interest": 0.0358,
+     "momentum_52w": 0.1036
+    },
+    "top_contributions": [
+     {
+      "key": "momentum_52w",
+      "value": 0.1036
+     },
+     {
+      "key": "fcf",
+      "value": 0.0902
+     },
+     {
+      "key": "value_ev",
+      "value": -0.0737
+     },
+     {
+      "key": "roic",
+      "value": -0.0734
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0677
+     }
+    ]
+   },
+   "with_reversal": {
+    "score": -0.2903,
+    "percentile": 21.5,
+    "coverage": 1.0,
+    "thinly_evidenced": false,
+    "missing": [],
+    "contributions": {
+     "roic": -0.0734,
+     "roic_trend": 0.0266,
+     "fcf": 0.0902,
+     "growth": -0.0331,
+     "margin_stability": -0.0166,
+     "balance": -0.0662,
+     "value_ev": -0.0737,
+     "value_pe": -0.0619,
+     "revisions_90d": -0.0677,
+     "revisions_30d": 0.0099,
+     "revision_breadth": -0.0202,
+     "share_count": 0.0646,
+     "short_interest": 0.0358,
+     "reversal_ath": -0.1046
+    },
+    "top_contributions": [
+     {
+      "key": "reversal_ath",
+      "value": -0.1046
+     },
+     {
+      "key": "fcf",
+      "value": 0.0902
+     },
+     {
+      "key": "value_ev",
+      "value": -0.0737
+     },
+     {
+      "key": "roic",
+      "value": -0.0734
+     },
+     {
+      "key": "revisions_90d",
+      "value": -0.0677
+     }
+    ]
+   }
+  },
+  "universe": "the quality top 150 as of 2026-09-04",
+  "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
+ },
+ "journal": [],
+ "sources": [
+  {
+   "title": "Screen and statement data, Yahoo Finance via yfinance",
+   "url": null,
+   "read_date": "2026-09-04",
+   "kind": "data"
+  }
+ ],
+ "gaps": [
+  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals. The own-history median is a 4-point median.",
+  "No research note. Nobody has read a filing for this name.",
+  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
+  "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
+ ],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

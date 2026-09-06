@@ -1,0 +1,361 @@
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+from an import analysis, local, paths, research_md, score
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+@pytest.fixture(scope="module")
+def records():
+    return analysis.build_all(built_at="1970-01-01T00:00:00")
+
+
+def test_one_record_per_top_150_plus_every_note(records):
+    assert len(records) == 150
+    assert set(research_md.load_all()) <= set(records)
+
+
+def test_depth_is_labelled(records):
+    deep = [t for t, r in records.items() if r["depth"] == "deep"]
+    assert sorted(deep) == sorted(research_md.load_all())
+    assert all(r["depth"] in analysis.DEPTHS for r in records.values())
+
+
+def test_every_record_carries_provenance(records):
+    for t, r in records.items():
+        assert r["identity"]["source"], t
+        assert r["identity"]["as_of"] == "2026-09-04", t
+        assert r["fundamentals"]["source"], t
+        assert r["sources"], t
+        assert r["disclaimer"].startswith("Research and analysis from public data")
+
+
+def test_every_record_says_what_it_does_not_know(records):
+    """The gaps list is a first-class field, not a footnote."""
+    for t, r in records.items():
+        assert r["gaps"], t
+        assert any("Four fiscal years" in g for g in r["gaps"]), t
+        assert any("dated 2026-09-04" in g for g in r["gaps"]), t
+
+
+def test_a_screen_only_name_says_so_rather_than_faking_depth(records):
+    r = records["AAPL"] if "AAPL" in records else records[[t for t, x in records.items()
+                                                           if x["depth"] == "screen"][0]]
+    assert r["depth"] == "screen"
+    assert r["business"]["available"] is False
+    assert "No research note" in r["business"]["why"]
+    assert r["thesis"]["available"] is False
+    assert r["risks"]["available"] is False
+    assert any("No research note" in g for g in r["gaps"])
+
+
+def test_a_deep_name_has_the_full_set(records):
+    k = records["KLAC"]
+    assert k["business"]["available"] is True
+    assert "inspection" in k["business"]["text"]
+    assert len(k["trends"]) == 6
+    assert k["thesis"]["available"] and k["thesis"]["conviction"] == 4
+    assert k["risks"]["available"] and k["risks"]["price_trigger"] == 130.0
+    assert k["risks"]["killers"]
+    assert k["valuation"]["available"] and k["valuation"]["written_view"]["text"]
+    assert k["journal"] and k["journal"][0]["action"]
+
+
+def test_missing_price_trigger_is_explained_not_zeroed(records):
+    """Three notes name no trigger and AMAT says so outright. An absent trigger is
+    not a trigger of zero."""
+    for t in ("ACN", "AMAT", "NVR"):
+        r = records[t]
+        assert r["risks"]["price_trigger"] is None
+        assert "not a trigger of zero" in r["risks"]["price_trigger_note"]
+
+
+def test_what_changed_is_mechanical_where_it_can_be(records):
+    k = records["KLAC"]
+    labels = [m["label"] for m in k["what_changed"]["mechanical"]]
+    assert "Next-year EPS consensus" in labels
+    assert "Analyst breadth, 30 days" in labels
+    assert "Next report" in labels
+    detail = next(m for m in k["what_changed"]["mechanical"] if m["label"] == "Next-year EPS consensus")["detail"]
+    assert "90 days" in detail and "last 30" in detail
+
+
+def test_revision_acceleration_is_computed_not_asserted(records):
+    """Splitting a 90-day revision into the last 30 and the 60 before it says whether
+    the estimate move is fresh or stale. A single 90-day number cannot."""
+    for t, r in records.items():
+        for m in r["what_changed"]["mechanical"]:
+            if m["label"] == "Next-year EPS consensus":
+                assert m["accelerating"] in (True, False, None)
+
+
+def test_what_changed_admits_when_it_needs_a_reader(records):
+    r = records["KLAC"]
+    read = r["what_changed"]["read"]
+    if read.get("available") is False:
+        assert "cannot be parsed out of a screen" in read["why"]
+
+
+def test_valuation_carries_both_caveats(records):
+    k = records["KLAC"]
+    assert "4-point median" in k["valuation"]["own_history"]["caveat"]
+    assert "not on the same basis" in k["valuation"]["drawdown"]["caveat"]
+
+
+def test_the_median_point_count_is_the_real_one_not_a_constant(records):
+    """Ten names have a three-point median and two have a two-point one. Asserting
+    "four" on all of them is a small lie repeated 150 times."""
+    counts = {}
+    for t, r in records.items():
+        oh = r["valuation"].get("own_history") or {}
+        n = oh.get("n_year_ends")
+        if n:
+            counts[n] = counts.get(n, 0) + 1
+            if oh["usable"]:
+                assert f"{n}-point median" in oh["caveat"], t
+    assert set(counts) >= {2, 3, 4}, counts
+
+
+def test_the_page_and_the_score_agree_on_what_counts_as_history(records):
+    """Two names had a "usable" comparison on the page that the score had already
+    refused as too thin. Both now use three points as the floor."""
+    from an import local, score
+
+    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    s = score.score_universe(recs)
+    for r in recs:
+        usable = r.valuation.has_own_history
+        scored = "value_pe" not in s[r.ticker].missing
+        assert usable == scored, f"{r.ticker}: page says usable={usable}, score says {scored}"
+
+
+def test_the_forward_versus_trailing_mismatch_is_stated(records):
+    """The screen compares a forward P/E against a trailing median, which reads cheap
+    by construction. 85% of names print negative on that column against 51% on
+    EV/EBITDA where both sides are trailing."""
+    k = records["KLAC"]["valuation"]
+    pe = next(m for m in k["multiples"] if m["key"] == "forward_pe")
+    ev = next(m for m in k["multiples"] if m["key"] == "ev_ebitda")
+    assert pe["like_for_like"] is False
+    assert ev["like_for_like"] is True
+    assert "not the same multiple" in pe["basis_note"]
+    assert "cheap by construction" in pe["basis_note"]
+    assert "85%" in k["own_history"]["basis_warning"]
+
+
+def test_the_score_weights_the_like_for_like_comparison_higher(records):
+    from an import score
+
+    w = {r["key"]: r["raw_weight"] for r in score.weights_table()}
+    assert w["value_ev"] > w["value_pe"], "the trailing-vs-trailing comparison should lead"
+
+
+def test_names_without_a_usable_own_history_explain_themselves(records):
+    priced = local.load_price_screen()
+    no_hist = [t for t, v in priced.items() if not v.has_own_history]
+    assert len(no_hist) == 14  # 12 currency mismatches, 2 with only two year ends
+    for t in no_hist:
+        oh = records[t]["valuation"]["own_history"]
+        assert oh["usable"] is False
+        assert oh["caveat"]
+        assert any("own-history multiples" in g for g in records[t]["gaps"])
+
+
+def test_scores_are_attached_for_all_three_variants(records):
+    for t, r in records.items():
+        assert r["score"]["available"] is True, t
+        assert set(r["score"]["variants"]) == set(score.VARIANTS), t
+        qv = r["score"]["variants"]["quality_value"]
+        assert 0 <= qv["percentile"] <= 100
+        assert 0 <= qv["coverage"] <= 1
+        assert "not been backtested" in r["score"]["caveat"]
+
+
+def test_bkng_gross_margin_absence_survives_to_the_record(records):
+    gm = next(t for t in records["BKNG"]["trends"] if t["key"] == "gross_margin")
+    assert gm["values"] == [None, None, None, None]
+    assert gm["span_label"] == "no data"
+
+
+def test_records_are_json_serialisable_and_reasonably_sized(records):
+    for t, r in records.items():
+        blob = json.dumps(r)
+        assert len(blob) < 200_000, t
+
+
+def test_build_is_deterministic():
+    a = analysis.build_all(built_at="X")
+    b = analysis.build_all(built_at="X")
+    assert json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def test_narrative_merges_when_present(tmp_path):
+    d = tmp_path / "_narrative"
+    d.mkdir()
+    (d / "KLAC.json").write_text(json.dumps({"headline": "a thing happened", "guidance": []}))
+    rec = local.load_universe()["KLAC"]
+    note = research_md.load_all()["KLAC"]
+    r = analysis.build_record(rec, note=note, narrative_dir=d)
+    assert r["what_changed"]["read"]["headline"] == "a thing happened"
+    assert not any("No earnings-call transcript" in g for g in r["gaps"])
+
+
+def test_corrupt_narrative_is_ignored_not_fatal(tmp_path):
+    d = tmp_path / "_narrative"
+    d.mkdir()
+    (d / "KLAC.json").write_text("{not json")
+    rec = local.load_universe()["KLAC"]
+    r = analysis.build_record(rec, note=research_md.load_all()["KLAC"], narrative_dir=d)
+    assert r["what_changed"]["read"]["available"] is False
+
+
+def test_cli_writes_files_and_an_index(tmp_path, monkeypatch):
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
+                       capture_output=True, text=True, cwd=str(ROOT))
+    assert r.returncode == 0, r.stderr
+    idx = json.loads((ROOT / "dashboard" / "analysis" / "index.json").read_text())
+    assert idx["count"] == 150
+    assert len(idx["tickers"]) == 150
+    klac = next(t for t in idx["tickers"] if t["ticker"] == "KLAC")
+    assert klac["depth"] == "deep" and klac["score"] is not None
+    assert "cyclical turn" in klac["buckets"]
+
+
+def test_rebuild_is_identical_apart_from_the_timestamp():
+    """Everything except when the build ran. If anything else drifts, the build has
+    become nondeterministic and the git history stops being meaningful."""
+    import re
+
+    p = ROOT / "dashboard" / "analysis" / "KLAC.json"
+    strip = lambda t: re.sub(r'"built_at":\s*"[^"]*"', '"built_at": "<stamp>"', t)
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
+                   capture_output=True, text=True, cwd=str(ROOT), check=True)
+    first = strip(p.read_text())
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
+                   capture_output=True, text=True, cwd=str(ROOT), check=True)
+    assert strip(p.read_text()) == first
+
+
+def test_a_net_cash_company_does_not_read_as_zero_leverage(records):
+    """The upstream screen writes 0.0 for every net-cash name and NaN only when the
+    ratio is genuinely undefined. A bare "0.0x" under a "lower is better" column
+    reads as the middle of the range when it means the best end of it. 80 of the
+    150 are affected."""
+    net_cash = [t for t, r in records.items() if r["fundamentals"]["net_cash"]]
+    assert len(net_cash) == 80
+    for t in net_cash:
+        row = next(x for x in records[t]["fundamentals"]["rows"] if x["key"] == "nd_to_ebitda")
+        assert row["value"] is None, t
+        assert "net cash" in row["absent_means"]
+        assert "good end rather than the middle" in row["absent_means"]
+
+
+def test_an_undefined_ratio_says_why_rather_than_offering_two_reasons(records):
+    """"net cash, or EBITDA not meaningful" offered an explanation that could never
+    apply, because a net-cash name never reaches that branch."""
+    for t, r in records.items():
+        row = next(x for x in r["fundamentals"]["rows"] if x["key"] == "nd_to_ebitda")
+        if row["value"] is None and not r["fundamentals"]["net_cash"]:
+            assert "EBITDA is negative or not reported" in row["absent_means"], t
+
+
+def test_the_estimate_split_compounds_rather_than_subtracting(records):
+    """Two relative changes over different windows are not additive. A +13.1% over 90
+    days containing +2.1% in the last 30 leaves (1.131/1.021)-1 for the 60 before it,
+    which is +10.7%, not +11.0%."""
+    d = next(m for m in records["KLAC"]["what_changed"]["mechanical"]
+             if m["label"] == "Next-year EPS consensus")["detail"]
+    assert "+10.7%" in d
+
+
+def test_provenance_carries_the_data_s_own_date_not_a_literal(records):
+    """Every provenance string used to end in a hard-coded 2026-09-04. After the next
+    pipeline run the pages would have kept saying so while showing new numbers."""
+    from an import analysis
+
+    assert "2027-01-01" in analysis.source_screen("2027-01-01")
+    assert "unrecorded" in analysis.source_screen(None)
+    for t, r in records.items():
+        assert r["identity"]["as_of"] in r["identity"]["source"], t
+        assert r["sources"][0]["read_date"] == r["identity"]["as_of"], t
+        assert r["identity"]["as_of"] in r["score"]["universe"], t
+
+
+def test_a_withheld_median_is_not_also_printed(records):
+    """DLTR and PCTY have two year ends. The page called that unusable in the caveat
+    and printed ``own median 19.9x / vs median -16%`` two rows above it, which is
+    the page contradicting itself in the reader's field of view."""
+    priced = local.load_price_screen()
+    thin = [t for t, v in priced.items() if not v.has_own_history]
+    assert thin, "expected some names below the history floor"
+    for t in thin:
+        v = records[t]["valuation"]
+        assert v["own_history"]["usable"] is False
+        for m in v["multiples"]:
+            assert m["own_median"] is None, f"{t}: {m['key']} printed a withheld median"
+            assert m["vs_median"] is None, f"{t}: {m['key']} printed a withheld comparison"
+
+
+def test_a_two_point_history_says_two_not_none_at_all(records):
+    """The generic "no usable own-history multiples" reads as no data. Two names do
+    have data, just not enough of it, and the difference is worth a sentence."""
+    priced = local.load_price_screen()
+    two = [t for t, v in priced.items()
+           if v.n_hist_years == 2 and not v.multiples_note]
+    assert two, "expected the two-year-end names to have no currency note"
+    for t in two:
+        c = records[t]["valuation"]["own_history"]["caveat"]
+        assert "2 fiscal year ends" in c, c
+        assert "Two numbers" in c, c
+
+
+def test_the_gaps_line_counts_the_statements_it_actually_has(records):
+    """"Four fiscal years ... a four-point median" was printed on all 150 pages, and
+    was wrong about the median on 24 of them."""
+    from an import local as _local
+
+    u = _local.load_universe()
+    for t, r in records.items():
+        line = r["gaps"][0]
+        n_fy = int(u[t].fundamentals.fcf_years or 0)
+        if n_fy:
+            assert f"{n_fy - 1} interval" in line, (t, line)
+        v = u[t].valuation
+        if v is not None and v.has_own_history:
+            assert f"{v.n_hist_years}-point median" in line, (t, line)
+        else:
+            assert "point median" not in line, (t, line)
+
+
+def test_the_basis_warning_quotes_the_panel_it_is_looking_at(records):
+    """This paragraph was hand-written and said 138 names after the history floor
+    moved and left 136. It is computed now, and this checks it against a fresh
+    count rather than against a string I typed."""
+    both = [v for v in local.load_price_screen().values()
+            if v.has_own_history and v.ev_vs_median is not None]
+    w = records["KLAC"]["valuation"]["own_history"]["basis_warning"]
+    assert f"{len(both)} names that carry both" in w, w
+    neg = 100.0 * sum(1 for v in both if v.pe_vs_median < 0) / len(both)
+    assert f"{neg:.0f}% print a negative" in w, w
+    assert all(records[t]["valuation"]["own_history"]["basis_warning"] == w
+               for t in records if records[t]["valuation"].get("available")), \
+        "the warning describes the panel, not the name; it should be identical everywhere"
+
+
+def test_the_score_docstring_still_matches_the_measurement():
+    """A docstring cannot recompute itself, so this is what keeps it honest."""
+    from an import analysis as _a
+    from an import score as _s
+
+    w = _a._basis_warning()
+    doc = _s.__doc__
+    n = len([v for v in local.load_price_screen().values()
+             if v.has_own_history and v.ev_vs_median is not None])
+    assert f"{n} names carrying both" in doc, "score.py's docstring quotes a stale count"
+    for frag in ("85%", "-29%"):
+        assert frag in w and frag in doc, frag

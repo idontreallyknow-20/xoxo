@@ -1,0 +1,27 @@
+{
+ "directory": {
+  "name": "/Archives/edgar/data/320193/000032019326000070",
+  "item": [
+   {
+    "name": "aapl-20260731.htm",
+    "type": "8-K",
+    "size": "12000"
+   },
+   {
+    "name": "a8-kex991q3202607.htm",
+    "type": "EX-99.1",
+    "size": "45000"
+   },
+   {
+    "name": "ex992slides.htm",
+    "type": "EX-99.2",
+    "size": "900000"
+   },
+   {
+    "name": "aapl-20260731.xsd",
+    "type": "XML",
+    "size": "3000"
+   }
+  ]
+ }
+}

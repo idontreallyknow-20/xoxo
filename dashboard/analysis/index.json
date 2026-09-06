@@ -1,0 +1,2658 @@
+{
+ "built_at": "2026-09-06T17:10:11",
+ "snapshot_date": "2026-09-04",
+ "count": 150,
+ "tickers": [
+  {
+   "ticker": "AAPL",
+   "company": "Apple Inc.",
+   "sector": "Technology",
+   "industry": "Consumer Electronics",
+   "depth": "screen",
+   "price": 328.21,
+   "score": 55.0,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 34.403095,
+   "pe_vs_median": 0.10865853745562237,
+   "dd_52w": -0.05691153769893453,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ABEV",
+   "company": "Ambev S.A.",
+   "sector": "Consumer Defensive",
+   "industry": "Beverages - Brewers",
+   "depth": "screen",
+   "price": 3.04,
+   "score": 22.1,
+   "coverage": 0.76,
+   "buckets": [],
+   "forward_pe": 14.234209,
+   "pe_vs_median": null,
+   "dd_52w": -0.13333333056906005,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ABNB",
+   "company": "Airbnb, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Travel Services",
+   "depth": "screen",
+   "price": 185.25,
+   "score": 81.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 30.171648,
+   "pe_vs_median": -0.03633280723880339,
+   "dd_52w": -0.05268982901874908,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ACLS",
+   "company": "Axcelis Technologies, Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "screen",
+   "price": 110.37,
+   "score": 12.8,
+   "coverage": 1.0,
+   "buckets": [
+    "cyclical turn"
+   ],
+   "forward_pe": 20.951025,
+   "pe_vs_median": 0.30986020334957654,
+   "dd_52w": -0.42837239837410257,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ACN",
+   "company": "Accenture plc",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "deep",
+   "price": 193.12,
+   "score": 48.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.17761,
+   "pe_vs_median": -0.5361992239007278,
+   "dd_52w": -0.35525097847476295,
+   "next_earnings": "2026-10-01",
+   "has_narrative": true
+  },
+  {
+   "ticker": "ADBE",
+   "company": "Adobe Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "deep",
+   "price": 285.75,
+   "score": 94.6,
+   "coverage": 0.94,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 10.391604,
+   "pe_vs_median": -0.7261526053937154,
+   "dd_52w": -0.24556434087008072,
+   "next_earnings": "2026-09-10",
+   "has_narrative": true
+  },
+  {
+   "ticker": "ADP",
+   "company": "Automatic Data Processing, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 283.53,
+   "score": 56.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.161419,
+   "pe_vs_median": -0.20953976387895246,
+   "dd_52w": -0.07109817740812285,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ADSK",
+   "company": "Autodesk, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "deep",
+   "price": 237.52,
+   "score": 72.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 16.741108,
+   "pe_vs_median": -0.7150348189148197,
+   "dd_52w": -0.2654593098315382,
+   "next_earnings": "2026-11-27",
+   "has_narrative": true
+  },
+  {
+   "ticker": "AGX",
+   "company": "Argan, Inc.",
+   "sector": "Industrials",
+   "industry": "Engineering & Construction",
+   "depth": "screen",
+   "price": 411.77,
+   "score": 10.1,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 25.374794,
+   "pe_vs_median": 0.2441057573224099,
+   "dd_52w": -0.4906608825361658,
+   "next_earnings": "2026-09-02",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ALSN",
+   "company": "Allison Transmission Holdings, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Auto Parts",
+   "depth": "screen",
+   "price": 128.44,
+   "score": 11.4,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 11.368736,
+   "pe_vs_median": 0.08991368110706377,
+   "dd_52w": -0.07927627463687947,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "AMAT",
+   "company": "Applied Materials, Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "deep",
+   "price": 435.91,
+   "score": 71.8,
+   "coverage": 1.0,
+   "buckets": [
+    "cyclical turn"
+   ],
+   "forward_pe": 23.620426,
+   "pe_vs_median": 0.26282756396364126,
+   "dd_52w": -0.40722215115513927,
+   "next_earnings": "2026-11-12",
+   "has_narrative": true
+  },
+  {
+   "ticker": "AME",
+   "company": "AMETEK, Inc.",
+   "sector": "Industrials",
+   "industry": "Specialty Industrial Machinery",
+   "depth": "screen",
+   "price": 234.2,
+   "score": 82.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 24.404121,
+   "pe_vs_median": -0.17940522584537033,
+   "dd_52w": -0.10709908699109272,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ANET",
+   "company": "Arista Networks, Inc.",
+   "sector": "Technology",
+   "industry": "Computer Hardware",
+   "depth": "screen",
+   "price": 191.44,
+   "score": 96.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 37.098763,
+   "pe_vs_median": -0.11075793799972888,
+   "dd_52w": -0.1339754939573008,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "AOS",
+   "company": "A. O. Smith Corporation",
+   "sector": "Industrials",
+   "industry": "Specialty Industrial Machinery",
+   "depth": "screen",
+   "price": 60.53,
+   "score": 28.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 14.797376,
+   "pe_vs_median": -0.28114407447863254,
+   "dd_52w": -0.276169557572576,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "APP",
+   "company": "AppLovin Corporation",
+   "sector": "Communication Services",
+   "industry": "Advertising Agencies",
+   "depth": "screen",
+   "price": 313.58,
+   "score": 79.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.948903,
+   "pe_vs_median": -0.7836932672438898,
+   "dd_52w": -0.5720953477113119,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ASML",
+   "company": "ASML Holding N.V.",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "screen",
+   "price": 1646.19,
+   "score": 96.0,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 27.40751,
+   "pe_vs_median": null,
+   "dd_52w": -0.15883315224898253,
+   "next_earnings": "2026-10-14",
+   "has_narrative": false
+  },
+  {
+   "ticker": "AWI",
+   "company": "Armstrong World Industries, Inc.",
+   "sector": "Industrials",
+   "industry": "Building Products & Equipment",
+   "depth": "screen",
+   "price": 170.84,
+   "score": 31.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.82848,
+   "pe_vs_median": -0.17422799657177834,
+   "dd_52w": -0.17939634796995563,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "BKNG",
+   "company": "Booking Holdings Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Travel Services",
+   "depth": "deep",
+   "price": 195.13,
+   "score": 97.3,
+   "coverage": 0.96,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.765393,
+   "pe_vs_median": -0.4654491169636006,
+   "dd_52w": -0.11720631142839366,
+   "next_earnings": "2026-10-27",
+   "has_narrative": true
+  },
+  {
+   "ticker": "BMI",
+   "company": "Badger Meter, Inc.",
+   "sector": "Technology",
+   "industry": "Scientific & Technical Instruments",
+   "depth": "screen",
+   "price": 136.02,
+   "score": 9.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 27.321428,
+   "pe_vs_median": -0.43901834806575746,
+   "dd_52w": -0.34999997008080574,
+   "next_earnings": "2026-10-21",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CDNS",
+   "company": "Cadence Design Systems, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 304.875,
+   "score": 68.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 31.945393,
+   "pe_vs_median": -0.5691531920207962,
+   "dd_52w": -0.26403318191525027,
+   "next_earnings": "2026-10-26",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CHE",
+   "company": "Chemed Corporation",
+   "sector": "Healthcare",
+   "industry": "Medical Care Facilities",
+   "depth": "screen",
+   "price": 524.45,
+   "score": 69.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 19.053589,
+   "pe_vs_median": -0.3374451584376825,
+   "dd_52w": -0.0592639313565978,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CHKP",
+   "company": "Check Point Software Technologies Ltd.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 137.41,
+   "score": 55.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 12.158294,
+   "pe_vs_median": -0.41424695597726413,
+   "dd_52w": -0.36442609233054,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CHWY",
+   "company": "Chewy, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Internet Retail",
+   "depth": "screen",
+   "price": 23.96,
+   "score": 33.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.082958,
+   "pe_vs_median": -0.8969767817159533,
+   "dd_52w": -0.44436781433807027,
+   "next_earnings": "2026-09-09",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CMG",
+   "company": "Chipotle Mexican Grill, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Restaurants",
+   "depth": "screen",
+   "price": 37.57,
+   "score": 65.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 27.429565,
+   "pe_vs_median": -0.42182181574121524,
+   "dd_52w": -0.10042035362532298,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "COR",
+   "company": "Cencora, Inc.",
+   "sector": "Healthcare",
+   "industry": "Medical Distribution",
+   "depth": "screen",
+   "price": 337.22,
+   "score": 40.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.029224,
+   "pe_vs_median": -0.33205080473845605,
+   "dd_52w": -0.10907457394829034,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CORT",
+   "company": "Corcept Therapeutics Incorporated",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "screen",
+   "price": 112.8,
+   "score": 74.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 25.621805,
+   "pe_vs_median": -0.32146245687153985,
+   "dd_52w": -0.12620667585713097,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CPRT",
+   "company": "Copart, Inc.",
+   "sector": "Industrials",
+   "industry": "Specialty Business Services",
+   "depth": "deep",
+   "price": 33.58,
+   "score": 51.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 19.994642,
+   "pe_vs_median": -0.36561980367674485,
+   "dd_52w": -0.3458096044057748,
+   "next_earnings": "2026-09-10",
+   "has_narrative": true
+  },
+  {
+   "ticker": "CRUS",
+   "company": "Cirrus Logic, Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 113.13,
+   "score": 3.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 12.71095,
+   "pe_vs_median": -0.3186801505129955,
+   "dd_52w": -0.37335108325798827,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CTAS",
+   "company": "Cintas Corporation",
+   "sector": "Industrials",
+   "industry": "Specialty Business Services",
+   "depth": "screen",
+   "price": 201.05,
+   "score": 46.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 32.88371,
+   "pe_vs_median": -0.1890268532239051,
+   "dd_52w": -0.09618106338508625,
+   "next_earnings": "2026-09-23",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CVLT",
+   "company": "Commvault Systems, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 137.12,
+   "score": 57.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 22.11217,
+   "pe_vs_median": -0.5514542447840467,
+   "dd_52w": -0.3361590596498448,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CVSA",
+   "company": "Covista Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Education & Training Services",
+   "depth": "screen",
+   "price": 127.64,
+   "score": 35.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 12.757621,
+   "pe_vs_median": -0.32549912676937187,
+   "dd_52w": -0.141430924983301,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "CW",
+   "company": "Curtiss-Wright Corporation",
+   "sector": "Industrials",
+   "industry": "Aerospace & Defense",
+   "depth": "screen",
+   "price": 568.72,
+   "score": 16.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 33.188435,
+   "pe_vs_median": -0.13199592877986543,
+   "dd_52w": -0.3051746816263178,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DBX",
+   "company": "Dropbox, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 35.7,
+   "score": 36.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 10.882919,
+   "pe_vs_median": -0.40209293194039797,
+   "dd_52w": -0.05131166474179183,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DECK",
+   "company": "Deckers Outdoor Corporation",
+   "sector": "Consumer Cyclical",
+   "industry": "Footwear & Accessories",
+   "depth": "screen",
+   "price": 84.5,
+   "score": 78.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 10.103969,
+   "pe_vs_median": -0.5055808759707483,
+   "dd_52w": -0.3292760879545926,
+   "next_earnings": "2026-10-22",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DLB",
+   "company": "Dolby Laboratories, Inc.",
+   "sector": "Industrials",
+   "industry": "Specialty Business Services",
+   "depth": "screen",
+   "price": 61.92,
+   "score": 49.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.47062,
+   "pe_vs_median": -0.5819452717261435,
+   "dd_52w": -0.16251015294758275,
+   "next_earnings": "2026-11-17",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DLO",
+   "company": "DLocal Limited",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 15.78,
+   "score": 85.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.796962,
+   "pe_vs_median": -0.5753071525539621,
+   "dd_52w": -0.07210967253729339,
+   "next_earnings": "2026-11-11",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DLTR",
+   "company": "Dollar Tree, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Discount Stores",
+   "depth": "screen",
+   "price": 131.04,
+   "score": 47.0,
+   "coverage": 0.79,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 16.596941,
+   "pe_vs_median": null,
+   "dd_52w": -0.07366570462001842,
+   "next_earnings": "2026-08-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DOCS",
+   "company": "Doximity, Inc.",
+   "sector": "Healthcare",
+   "industry": "Health Information Services",
+   "depth": "screen",
+   "price": 27.1,
+   "score": 69.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.491093,
+   "pe_vs_median": -0.6098101864962351,
+   "dd_52w": -0.6559926846840385,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DPM.TO",
+   "company": "DPM Metals Inc.",
+   "sector": "Basic Materials",
+   "industry": "Gold",
+   "depth": "screen",
+   "price": 61.68,
+   "score": 36.2,
+   "coverage": 0.76,
+   "buckets": [],
+   "forward_pe": 10.554495,
+   "pe_vs_median": null,
+   "dd_52w": -0.1719051599831236,
+   "next_earnings": "2026-11-12",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DRI",
+   "company": "Darden Restaurants, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Restaurants",
+   "depth": "screen",
+   "price": 218.04,
+   "score": 8.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.59934,
+   "pe_vs_median": -0.10854006016252826,
+   "dd_52w": -0.04234854291740564,
+   "next_earnings": "2026-09-24",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DSGX",
+   "company": "The Descartes Systems Group Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 80.75,
+   "score": 52.3,
+   "coverage": 0.97,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 25.177647,
+   "pe_vs_median": -0.604271336098564,
+   "dd_52w": -0.2799082764791786,
+   "next_earnings": "2026-09-10",
+   "has_narrative": false
+  },
+  {
+   "ticker": "DXCM",
+   "company": "DexCom, Inc.",
+   "sector": "Healthcare",
+   "industry": "Medical Devices",
+   "depth": "screen",
+   "price": 89.71,
+   "score": 60.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 28.715837,
+   "pe_vs_median": -0.6176865867202,
+   "dd_52w": -0.031320850616629814,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EBAY",
+   "company": "eBay Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Internet Retail",
+   "depth": "screen",
+   "price": 105.86,
+   "score": 21.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.722817,
+   "pe_vs_median": -3.3927084964857634e-05,
+   "dd_52w": -0.10569108248895998,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EEFT",
+   "company": "Euronet Worldwide, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 73.28,
+   "score": 17.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 6.1392817,
+   "pe_vs_median": -0.6430329771928958,
+   "dd_52w": -0.2107084778723297,
+   "next_earnings": "2026-10-21",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EME",
+   "company": "EMCOR Group, Inc.",
+   "sector": "Industrials",
+   "industry": "Engineering & Construction",
+   "depth": "screen",
+   "price": 741.32,
+   "score": 91.9,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 20.172527,
+   "pe_vs_median": 0.02457924318259952,
+   "dd_52w": -0.2286860689885868,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EW",
+   "company": "Edwards Lifesciences Corporation",
+   "sector": "Healthcare",
+   "industry": "Medical Devices",
+   "depth": "screen",
+   "price": 89.78,
+   "score": 26.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 26.58179,
+   "pe_vs_median": -0.165800343380474,
+   "dd_52w": -0.05680756366368045,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EXEL",
+   "company": "Exelixis, Inc.",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "screen",
+   "price": 59.13,
+   "score": 89.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.877317,
+   "pe_vs_median": -0.41646970503574643,
+   "dd_52w": -0.01992634328036036,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EXLS",
+   "company": "ExlService Holdings, Inc.",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 37.32,
+   "score": 63.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.370317,
+   "pe_vs_median": -0.555945010797865,
+   "dd_52w": -0.18123336629520603,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EXPD",
+   "company": "Expeditors International of Washington, Inc.",
+   "sector": "Industrials",
+   "industry": "Integrated Freight & Logistics",
+   "depth": "screen",
+   "price": 187.13,
+   "score": 94.0,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 23.604876,
+   "pe_vs_median": 0.06306528707357661,
+   "dd_52w": -0.03182856427028613,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EXPE",
+   "company": "Expedia Group, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Travel Services",
+   "depth": "screen",
+   "price": 303.14,
+   "score": 85.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 12.434112,
+   "pe_vs_median": -0.5672487478206176,
+   "dd_52w": -0.09923977322048616,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "EXPO",
+   "company": "Exponent, Inc.",
+   "sector": "Industrials",
+   "industry": "Engineering & Construction",
+   "depth": "screen",
+   "price": 70.05,
+   "score": 81.9,
+   "coverage": 0.96,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 24.684093,
+   "pe_vs_median": -0.43649368478601824,
+   "dd_52w": -0.14545456035025173,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FAST",
+   "company": "Fastenal Company",
+   "sector": "Industrials",
+   "industry": "Industrial Distribution",
+   "depth": "screen",
+   "price": 49.23,
+   "score": 43.0,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 35.156498,
+   "pe_vs_median": 0.03372039239469249,
+   "dd_52w": -0.09429326709796337,
+   "next_earnings": "2026-10-14",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FFIV",
+   "company": "F5, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 392.15,
+   "score": 38.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.6936,
+   "pe_vs_median": -0.1654784671592312,
+   "dd_52w": -0.10096554810973424,
+   "next_earnings": "2026-10-26",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FICO",
+   "company": "Fair Isaac Corporation",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 1118.93,
+   "score": 73.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.088799,
+   "pe_vs_median": -0.608338700243364,
+   "dd_52w": -0.4497275032798259,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FIX",
+   "company": "Comfort Systems USA, Inc.",
+   "sector": "Industrials",
+   "industry": "Engineering & Construction",
+   "depth": "screen",
+   "price": 1580.19,
+   "score": 75.2,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 26.25839,
+   "pe_vs_median": 0.012428960674609746,
+   "dd_52w": -0.24776396950669355,
+   "next_earnings": "2026-10-22",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FN",
+   "company": "Fabrinet",
+   "sector": "Technology",
+   "industry": "Electronic Components",
+   "depth": "screen",
+   "price": 395.0,
+   "score": 54.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 18.129478,
+   "pe_vs_median": -0.41851892148074776,
+   "dd_52w": -0.47208534483900755,
+   "next_earnings": "2026-11-02",
+   "has_narrative": false
+  },
+  {
+   "ticker": "FTNT",
+   "company": "Fortinet, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 156.36,
+   "score": 91.3,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 41.462704,
+   "pe_vs_median": 0.012590081021416788,
+   "dd_52w": -0.11127728284471317,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "G",
+   "company": "Genpact Limited",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 38.08,
+   "score": 27.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 8.435865,
+   "pe_vs_median": -0.4379062017981029,
+   "dd_52w": -0.22923516286046886,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GDDY",
+   "company": "GoDaddy Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 103.63,
+   "score": 76.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 9.397415,
+   "pe_vs_median": -0.6281826276670187,
+   "dd_52w": -0.3229879527707714,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GGG",
+   "company": "Graco Inc.",
+   "sector": "Industrials",
+   "industry": "Specialty Industrial Machinery",
+   "depth": "screen",
+   "price": 77.88,
+   "score": 57.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 22.200684,
+   "pe_vs_median": -0.20886798267298357,
+   "dd_52w": -0.18842090435667913,
+   "next_earnings": "2026-10-21",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GIB",
+   "company": "CGI Inc.",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 74.84,
+   "score": 25.5,
+   "coverage": 0.76,
+   "buckets": [],
+   "forward_pe": 10.598299,
+   "pe_vs_median": null,
+   "dd_52w": -0.2528205284705529,
+   "next_earnings": "2026-11-11",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GNTX",
+   "company": "Gentex Corporation",
+   "sector": "Consumer Cyclical",
+   "industry": "Auto Parts",
+   "depth": "screen",
+   "price": 22.84,
+   "score": 45.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 10.320505,
+   "pe_vs_median": -0.39422748097856675,
+   "dd_52w": -0.2219196524727174,
+   "next_earnings": "2026-10-23",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GOOGL",
+   "company": "Alphabet Inc.",
+   "sector": "Communication Services",
+   "industry": "Internet Content & Information",
+   "depth": "deep",
+   "price": 342.48,
+   "score": 34.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 23.097359,
+   "pe_vs_median": -0.030118916149653785,
+   "dd_52w": -0.17495901931624902,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "GRMN",
+   "company": "Garmin Ltd.",
+   "sector": "Technology",
+   "industry": "Scientific & Technical Instruments",
+   "depth": "screen",
+   "price": 277.18,
+   "score": 38.9,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 25.18664,
+   "pe_vs_median": 0.17773964621772786,
+   "dd_52w": -0.12167491235547312,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "GWW",
+   "company": "W.W. Grainger, Inc.",
+   "sector": "Industrials",
+   "industry": "Industrial Distribution",
+   "depth": "screen",
+   "price": 1312.84,
+   "score": 44.3,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 25.719725,
+   "pe_vs_median": 0.026685673928963594,
+   "dd_52w": -0.0951187219007279,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "HEI",
+   "company": "HEICO Corporation",
+   "sector": "Industrials",
+   "industry": "Aerospace & Defense",
+   "depth": "screen",
+   "price": 325.7,
+   "score": 77.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 45.240448,
+   "pe_vs_median": -0.29658785563168755,
+   "dd_52w": -0.14318316113016938,
+   "next_earnings": "2026-08-25",
+   "has_narrative": false
+  },
+  {
+   "ticker": "HRB",
+   "company": "H&R Block, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Personal Services",
+   "depth": "screen",
+   "price": 51.1,
+   "score": 67.1,
+   "coverage": 0.81,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 7.3993626,
+   "pe_vs_median": -0.40821274958647713,
+   "dd_52w": -0.13141300350310803,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "HRMY",
+   "company": "Harmony Biosciences Holdings, Inc.",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "screen",
+   "price": 41.86,
+   "score": 99.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 6.2605066,
+   "pe_vs_median": -0.5678301585682566,
+   "dd_52w": -0.01448607472173924,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "IDCC",
+   "company": "InterDigital, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 335.91,
+   "score": 16.8,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 28.988998,
+   "pe_vs_median": 0.8024075352402864,
+   "dd_52w": -0.20070283920280696,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "IDXX",
+   "company": "IDEXX Laboratories, Inc.",
+   "sector": "Healthcare",
+   "industry": "Diagnostics & Research",
+   "depth": "deep",
+   "price": 529.29,
+   "score": 93.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 31.618845,
+   "pe_vs_median": -0.3832091664548932,
+   "dd_52w": -0.299994817742831,
+   "next_earnings": "2026-11-02",
+   "has_narrative": true
+  },
+  {
+   "ticker": "IHG",
+   "company": "InterContinental Hotels Group PLC",
+   "sector": "Consumer Cyclical",
+   "industry": "Lodging",
+   "depth": "screen",
+   "price": 160.77,
+   "score": 19.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 23.37752,
+   "pe_vs_median": -0.17453392056832584,
+   "dd_52w": -0.0874410455009611,
+   "next_earnings": "2026-08-11",
+   "has_narrative": false
+  },
+  {
+   "ticker": "INCY",
+   "company": "Incyte Corporation",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "screen",
+   "price": 128.0,
+   "score": 63.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.317706,
+   "pe_vs_median": -0.625859131704043,
+   "dd_52w": -0.028431358740160673,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "INFY",
+   "company": "Infosys Limited",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 12.09,
+   "score": 22.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.241457,
+   "pe_vs_median": -0.4016856147758723,
+   "dd_52w": -0.6009999910990398,
+   "next_earnings": "2026-10-23",
+   "has_narrative": false
+  },
+  {
+   "ticker": "INTU",
+   "company": "Intuit Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 344.3,
+   "score": 7.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 12.597715,
+   "pe_vs_median": -0.7948891697106542,
+   "dd_52w": -0.5136154727954186,
+   "next_earnings": "2026-11-19",
+   "has_narrative": false
+  },
+  {
+   "ticker": "IPAR",
+   "company": "Interparfums, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Household & Personal Products",
+   "depth": "screen",
+   "price": 114.01,
+   "score": 0.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.908148,
+   "pe_vs_median": -0.14454606861694297,
+   "dd_52w": -0.09923428660783773,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ISRG",
+   "company": "Intuitive Surgical, Inc.",
+   "sector": "Healthcare",
+   "industry": "Medical Instruments & Supplies",
+   "depth": "deep",
+   "price": 369.83,
+   "score": 64.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 30.638323,
+   "pe_vs_median": -0.5764181300182032,
+   "dd_52w": -0.3841822797860295,
+   "next_earnings": "2026-10-20",
+   "has_narrative": true
+  },
+  {
+   "ticker": "IT",
+   "company": "Gartner, Inc.",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 195.46,
+   "score": 92.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 11.948295,
+   "pe_vs_median": -0.6267812368892164,
+   "dd_52w": -0.2975362046266692,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "JKHY",
+   "company": "Jack Henry & Associates, Inc.",
+   "sector": "Technology",
+   "industry": "Information Technology Services",
+   "depth": "screen",
+   "price": 168.37,
+   "score": 49.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.497702,
+   "pe_vs_median": -0.3393093845599222,
+   "dd_52w": -0.13630488246911998,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "JNJ",
+   "company": "Johnson & Johnson",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - General",
+   "depth": "screen",
+   "price": 278.43,
+   "score": 14.1,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 22.622791,
+   "pe_vs_median": 0.03442087783393544,
+   "dd_52w": -0.02084892925222137,
+   "next_earnings": "2026-10-13",
+   "has_narrative": false
+  },
+  {
+   "ticker": "KLAC",
+   "company": "KLA Corporation",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "deep",
+   "price": 172.94,
+   "score": 89.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 25.852533,
+   "pe_vs_median": -0.2622139831127581,
+   "dd_52w": -0.4395679652964313,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "LAUR",
+   "company": "Laureate Education, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Education & Training Services",
+   "depth": "screen",
+   "price": 35.95,
+   "score": 4.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.793203,
+   "pe_vs_median": -0.2209301868552167,
+   "dd_52w": -0.11582159136735448,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "LNTH",
+   "company": "Lantheus Holdings, Inc.",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - Specialty & Generic",
+   "depth": "screen",
+   "price": 100.98,
+   "score": 10.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.967919,
+   "pe_vs_median": -0.2022916415214817,
+   "dd_52w": -0.09878421635442736,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "LOGI",
+   "company": "Logitech International S.A.",
+   "sector": "Technology",
+   "industry": "Computer Hardware",
+   "depth": "screen",
+   "price": 101.71,
+   "score": 15.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 16.729279,
+   "pe_vs_median": -0.23139046591872225,
+   "dd_52w": -0.23538485739897852,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "LOPE",
+   "company": "Grand Canyon Education, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Education & Training Services",
+   "depth": "screen",
+   "price": 152.45,
+   "score": 83.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.463354,
+   "pe_vs_median": -0.3369082222907186,
+   "dd_52w": -0.32931314410917045,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "LRCX",
+   "company": "Lam Research Corporation",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "deep",
+   "price": 292.66,
+   "score": 77.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 25.289024,
+   "pe_vs_median": -0.15947546929975387,
+   "dd_52w": -0.3424857301614168,
+   "next_earnings": "2026-10-21",
+   "has_narrative": true
+  },
+  {
+   "ticker": "LUG.TO",
+   "company": "Lundin Gold Inc.",
+   "sector": "Basic Materials",
+   "industry": "Gold",
+   "depth": "screen",
+   "price": 101.58,
+   "score": 53.0,
+   "coverage": 0.76,
+   "buckets": [],
+   "forward_pe": 16.787308,
+   "pe_vs_median": null,
+   "dd_52w": -0.2149118165580458,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "LULU",
+   "company": "lululemon athletica inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Apparel Retail",
+   "depth": "screen",
+   "price": 121.77,
+   "score": 28.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 10.86976,
+   "pe_vs_median": -0.6680518596155278,
+   "dd_52w": -0.4686697951375156,
+   "next_earnings": "2026-09-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MANH",
+   "company": "Manhattan Associates, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 222.35,
+   "score": 98.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 36.236313,
+   "pe_vs_median": -0.4677297298813021,
+   "dd_52w": -0.045192246520455726,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MCD",
+   "company": "McDonald's Corporation",
+   "sector": "Consumer Cyclical",
+   "industry": "Restaurants",
+   "depth": "screen",
+   "price": 259.63,
+   "score": 29.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 18.573645,
+   "pe_vs_median": -0.2748265684448191,
+   "dd_52w": -0.23643010327130576,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MCK",
+   "company": "McKesson Corporation",
+   "sector": "Healthcare",
+   "industry": "Medical Distribution",
+   "depth": "screen",
+   "price": 921.38,
+   "score": 80.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 18.255434,
+   "pe_vs_median": -0.21523150609673758,
+   "dd_52w": -0.0742942649680931,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MCRI",
+   "company": "Monarch Casino & Resort, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Resorts & Casinos",
+   "depth": "screen",
+   "price": 120.59,
+   "score": 39.6,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 17.489485,
+   "pe_vs_median": 0.0390113550942206,
+   "dd_52w": -0.12771279559461335,
+   "next_earnings": "2026-10-20",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MEDP",
+   "company": "Medpace Holdings, Inc.",
+   "sector": "Healthcare",
+   "industry": "Diagnostics & Research",
+   "depth": "screen",
+   "price": 593.39,
+   "score": 98.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 30.72945,
+   "pe_vs_median": -0.035126700069462724,
+   "dd_52w": -0.12521017918387667,
+   "next_earnings": "2026-10-19",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MELI",
+   "company": "MercadoLibre, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Internet Retail",
+   "depth": "screen",
+   "price": 1991.06,
+   "score": 42.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 35.034702,
+   "pe_vs_median": -0.46869140891628536,
+   "dd_52w": -0.21264274826184515,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "META",
+   "company": "Meta Platforms, Inc.",
+   "sector": "Communication Services",
+   "industry": "Internet Content & Information",
+   "depth": "deep",
+   "price": 610.68,
+   "score": 26.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.468134,
+   "pe_vs_median": -0.277325612412602,
+   "dd_52w": -0.25031616643154075,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "MLI",
+   "company": "Mueller Industries, Inc.",
+   "sector": "Industrials",
+   "industry": "Metal Fabrication",
+   "depth": "screen",
+   "price": 62.96,
+   "score": 18.1,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 14.374429,
+   "pe_vs_median": 0.20582689360505113,
+   "dd_52w": -0.12724972307615,
+   "next_earnings": "2026-10-20",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MNST",
+   "company": "Monster Beverage Corporation",
+   "sector": "Consumer Defensive",
+   "industry": "Beverages - Non-Alcoholic",
+   "depth": "screen",
+   "price": 44.08,
+   "score": 58.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 33.749332,
+   "pe_vs_median": -0.12259301446596682,
+   "dd_52w": -0.1146103613923598,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MO",
+   "company": "Altria Group, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Tobacco",
+   "depth": "screen",
+   "price": 69.49,
+   "score": 70.5,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 11.850212,
+   "pe_vs_median": 0.03847752843892849,
+   "dd_52w": -0.09732679005198874,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MPWR",
+   "company": "Monolithic Power Systems, Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 1213.65,
+   "score": 90.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 34.80429,
+   "pe_vs_median": -0.364606539143999,
+   "dd_52w": -0.2886254599515996,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "MSFT",
+   "company": "Microsoft Corporation",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "deep",
+   "price": 510.12,
+   "score": 87.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.639755,
+   "pe_vs_median": -0.395932087050306,
+   "dd_52w": -0.10275950421834368,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "MTD",
+   "company": "Mettler-Toledo International Inc.",
+   "sector": "Healthcare",
+   "industry": "Diagnostics & Research",
+   "depth": "screen",
+   "price": 1356.23,
+   "score": 86.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 26.220095,
+   "pe_vs_median": -0.2166408047927877,
+   "dd_52w": -0.1032212866537009,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NBIX",
+   "company": "Neurocrine Biosciences, Inc.",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - Specialty & Generic",
+   "depth": "screen",
+   "price": 158.35,
+   "score": 24.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.2469225,
+   "pe_vs_median": -0.7206277521769965,
+   "dd_52w": -0.1522136616906683,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NFLX",
+   "company": "Netflix, Inc.",
+   "sector": "Communication Services",
+   "industry": "Entertainment",
+   "depth": "screen",
+   "price": 82.67,
+   "score": 2.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.636208,
+   "pe_vs_median": -0.44187267996839963,
+   "dd_52w": -0.34709175789650704,
+   "next_earnings": "2026-10-20",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NICE",
+   "company": "NICE Ltd.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 108.31,
+   "score": 6.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 8.557698,
+   "pe_vs_median": -0.7332692366305789,
+   "dd_52w": -0.30465902778272025,
+   "next_earnings": "2026-11-12",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NOW",
+   "company": "ServiceNow, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "deep",
+   "price": 145.59,
+   "score": 71.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 29.085947,
+   "pe_vs_median": -0.7642178741332408,
+   "dd_52w": -0.29788522734147915,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "NTAP",
+   "company": "NetApp, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 185.38,
+   "score": 18.8,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 17.169426,
+   "pe_vs_median": 0.032032978622588804,
+   "dd_52w": -0.13531998339012274,
+   "next_earnings": "2026-12-01",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NVDA",
+   "company": "NVIDIA Corporation",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 228.45,
+   "score": 100.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 14.830322,
+   "pe_vs_median": -0.6794951049847474,
+   "dd_52w": -0.0512809517962739,
+   "next_earnings": "2026-11-17",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NVMI",
+   "company": "Nova Ltd.",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "screen",
+   "price": 352.7,
+   "score": 59.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 25.819534,
+   "pe_vs_median": -0.22174810847043702,
+   "dd_52w": -0.4324583092200919,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NVO",
+   "company": "Novo Nordisk A/S",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - General",
+   "depth": "screen",
+   "price": 47.51,
+   "score": 88.6,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 13.937146,
+   "pe_vs_median": null,
+   "dd_52w": -0.27104113999744894,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NVR",
+   "company": "NVR, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Residential Construction",
+   "depth": "deep",
+   "price": 6373.95,
+   "score": 14.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 15.48489,
+   "pe_vs_median": -0.009013606986514655,
+   "dd_52w": -0.26586857292725463,
+   "next_earnings": "2026-10-21",
+   "has_narrative": true
+  },
+  {
+   "ticker": "NVS",
+   "company": "Novartis AG",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - General",
+   "depth": "screen",
+   "price": 163.09,
+   "score": 30.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 16.626669,
+   "pe_vs_median": -0.07269071502582447,
+   "dd_52w": -0.0469317921279645,
+   "next_earnings": "2026-10-27",
+   "has_narrative": false
+  },
+  {
+   "ticker": "NYT",
+   "company": "The New York Times Company",
+   "sector": "Communication Services",
+   "industry": "Publishing",
+   "depth": "screen",
+   "price": 67.06,
+   "score": 2.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.469849,
+   "pe_vs_median": -0.33351235507681076,
+   "dd_52w": -0.22296210901061098,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ODFL",
+   "company": "Old Dominion Freight Line, Inc.",
+   "sector": "Industrials",
+   "industry": "Trucking",
+   "depth": "screen",
+   "price": 185.75,
+   "score": 62.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 27.95301,
+   "pe_vs_median": -0.1344005039235978,
+   "dd_52w": -0.2556044891070446,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ORLY",
+   "company": "O'Reilly Automotive, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Auto Parts",
+   "depth": "screen",
+   "price": 87.38,
+   "score": 67.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 23.93153,
+   "pe_vs_median": -0.12022784804052633,
+   "dd_52w": -0.20005517641001536,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PAYC",
+   "company": "Paycom Software, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 240.52,
+   "score": 95.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.241453,
+   "pe_vs_median": -0.4068494087165144,
+   "dd_52w": -0.035635562086700934,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PAYX",
+   "company": "Paychex, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 125.08,
+   "score": 13.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 19.5721,
+   "pe_vs_median": -0.21918545768327746,
+   "dd_52w": -0.10268470945799257,
+   "next_earnings": "2026-09-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PCTY",
+   "company": "Paylocity Holding Corporation",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 154.43,
+   "score": 43.6,
+   "coverage": 0.79,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.943663,
+   "pe_vs_median": null,
+   "dd_52w": -0.13587834048674963,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PDD",
+   "company": "PDD Holdings Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Internet Retail",
+   "depth": "screen",
+   "price": 81.63,
+   "score": 66.4,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 6.587733,
+   "pe_vs_median": null,
+   "dd_52w": -0.41001362886450043,
+   "next_earnings": "2026-11-18",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PGNY",
+   "company": "Progyny, Inc.",
+   "sector": "Healthcare",
+   "industry": "Healthcare Plans",
+   "depth": "screen",
+   "price": 26.61,
+   "score": 84.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 11.470964,
+   "pe_vs_median": -0.7693709210445279,
+   "dd_52w": -0.2048994128072782,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "PRDO",
+   "company": "Perdoceo Education Corporation",
+   "sector": "Consumer Defensive",
+   "industry": "Education & Training Services",
+   "depth": "screen",
+   "price": 33.19,
+   "score": 6.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 10.057575,
+   "pe_vs_median": -0.08926649425841005,
+   "dd_52w": -0.1405194765561587,
+   "next_earnings": "2026-11-09",
+   "has_narrative": false
+  },
+  {
+   "ticker": "QCOM",
+   "company": "QUALCOMM Incorporated",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 168.57,
+   "score": 1.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 16.523312,
+   "pe_vs_median": -0.0885375054669183,
+   "dd_52w": -0.34610646847542637,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "QLYS",
+   "company": "Qualys, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 174.35,
+   "score": 83.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 20.718735,
+   "pe_vs_median": -0.4173149380843949,
+   "dd_52w": -0.15237669032919177,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "RACE",
+   "company": "Ferrari N.V.",
+   "sector": "Consumer Cyclical",
+   "industry": "Auto Manufacturers",
+   "depth": "screen",
+   "price": 417.93,
+   "score": 47.7,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 32.90906,
+   "pe_vs_median": null,
+   "dd_52w": -0.18089553611304854,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "REGN",
+   "company": "Regeneron Pharmaceuticals, Inc.",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "deep",
+   "price": 843.47,
+   "score": 75.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.915854,
+   "pe_vs_median": -0.2575347054274004,
+   "dd_52w": -0.008506494173580958,
+   "next_earnings": "2026-10-28",
+   "has_narrative": true
+  },
+  {
+   "ticker": "RELX",
+   "company": "RELX PLC",
+   "sector": "Industrials",
+   "industry": "Specialty Business Services",
+   "depth": "screen",
+   "price": 36.65,
+   "score": 50.3,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 16.96461,
+   "pe_vs_median": null,
+   "dd_52w": -0.27376029905208865,
+   "next_earnings": "2026-07-23",
+   "has_narrative": false
+  },
+  {
+   "ticker": "RMBS",
+   "company": "Rambus Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 84.34,
+   "score": 61.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 22.815126,
+   "pe_vs_median": -0.2878365973263347,
+   "dd_52w": -0.5133831061418546,
+   "next_earnings": "2026-10-26",
+   "has_narrative": false
+  },
+  {
+   "ticker": "RMD",
+   "company": "ResMed Inc.",
+   "sector": "Healthcare",
+   "industry": "Medical Instruments & Supplies",
+   "depth": "screen",
+   "price": 229.19,
+   "score": 59.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.346912,
+   "pe_vs_median": -0.5165094092448512,
+   "dd_52w": -0.1895601673844649,
+   "next_earnings": "2026-10-29",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ROL",
+   "company": "Rollins, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Personal Services",
+   "depth": "screen",
+   "price": 35.71,
+   "score": 24.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 27.457191,
+   "pe_vs_median": -0.43843098767148503,
+   "dd_52w": -0.4600846827264491,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ROST",
+   "company": "Ross Stores, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Apparel Retail",
+   "depth": "screen",
+   "price": 231.67,
+   "score": 37.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 25.907001,
+   "pe_vs_median": -0.007665197707005467,
+   "dd_52w": -0.10175094901355786,
+   "next_earnings": "2026-11-19",
+   "has_narrative": false
+  },
+  {
+   "ticker": "RYAAY",
+   "company": "Ryanair Holdings plc",
+   "sector": "Industrials",
+   "industry": "Airlines",
+   "depth": "screen",
+   "price": 54.7,
+   "score": 12.1,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 11.566927,
+   "pe_vs_median": null,
+   "dd_52w": -0.2669720074226116,
+   "next_earnings": "2026-11-02",
+   "has_narrative": false
+  },
+  {
+   "ticker": "SAP",
+   "company": "SAP SE",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 217.03,
+   "score": 20.8,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 22.434614,
+   "pe_vs_median": null,
+   "dd_52w": -0.25475351870701834,
+   "next_earnings": "2026-10-21",
+   "has_narrative": false
+  },
+  {
+   "ticker": "SFM",
+   "company": "Sprouts Farmers Market, Inc.",
+   "sector": "Consumer Defensive",
+   "industry": "Grocery Stores",
+   "depth": "screen",
+   "price": 79.13,
+   "score": 34.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 13.272079,
+   "pe_vs_median": -0.22493754169845348,
+   "dd_52w": -0.4423675861212797,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "SHOO",
+   "company": "Steven Madden, Ltd.",
+   "sector": "Consumer Cyclical",
+   "industry": "Footwear & Accessories",
+   "depth": "screen",
+   "price": 42.3,
+   "score": 30.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.248188,
+   "pe_vs_median": -0.16113859113264706,
+   "dd_52w": -0.1551307509362818,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "SNA",
+   "company": "Snap-on Incorporated",
+   "sector": "Industrials",
+   "industry": "Tools & Accessories",
+   "depth": "screen",
+   "price": 384.19,
+   "score": 23.5,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 18.00539,
+   "pe_vs_median": 0.09799352881665668,
+   "dd_52w": -0.10030259482319837,
+   "next_earnings": "2026-10-15",
+   "has_narrative": false
+  },
+  {
+   "ticker": "STRL",
+   "company": "Sterling Infrastructure, Inc.",
+   "sector": "Industrials",
+   "industry": "Engineering & Construction",
+   "depth": "screen",
+   "price": 460.03,
+   "score": 32.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 18.114092,
+   "pe_vs_median": -0.09819248577771444,
+   "dd_52w": -0.5449844820385057,
+   "next_earnings": "2026-11-02",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TDC",
+   "company": "Teradata Corporation",
+   "sector": "Technology",
+   "industry": "Software - Infrastructure",
+   "depth": "screen",
+   "price": 28.79,
+   "score": 61.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 9.886168,
+   "pe_vs_median": -0.7986140622404275,
+   "dd_52w": -0.3235998030425602,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TER",
+   "company": "Teradyne, Inc.",
+   "sector": "Technology",
+   "industry": "Semiconductor Equipment & Materials",
+   "depth": "screen",
+   "price": 338.59,
+   "score": 87.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 29.05736,
+   "pe_vs_median": -0.25185699232173064,
+   "dd_52w": -0.29982989666703397,
+   "next_earnings": "2026-10-21",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TPL",
+   "company": "Texas Pacific Land Corporation",
+   "sector": "Energy",
+   "industry": "Oil & Gas E&P",
+   "depth": "screen",
+   "price": 366.5,
+   "score": 51.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "forward_pe": 5.012308,
+   "pe_vs_median": -0.8774297654601293,
+   "dd_52w": -0.32872805679053596,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TRI",
+   "company": "Thomson Reuters Corporation",
+   "sector": "Industrials",
+   "industry": "Specialty Business Services",
+   "depth": "screen",
+   "price": 111.76,
+   "score": 40.3,
+   "coverage": 0.97,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 21.984203,
+   "pe_vs_median": -0.3832132530272736,
+   "dd_52w": -0.41183331807454426,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TSM",
+   "company": "Taiwan Semiconductor Manufacturing Company Limited",
+   "sector": "Technology",
+   "industry": "Semiconductors",
+   "depth": "screen",
+   "price": 417.01,
+   "score": 79.2,
+   "coverage": 0.79,
+   "buckets": [],
+   "forward_pe": 19.075375,
+   "pe_vs_median": null,
+   "dd_52w": -0.13256784968684765,
+   "next_earnings": "2026-10-15",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TTD",
+   "company": "The Trade Desk, Inc.",
+   "sector": "Communication Services",
+   "industry": "Advertising Agencies",
+   "depth": "screen",
+   "price": 15.09,
+   "score": 5.4,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 15.160802,
+   "pe_vs_median": -0.9135073029250942,
+   "dd_52w": -0.7419755241933879,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "TXRH",
+   "company": "Texas Roadhouse, Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Restaurants",
+   "depth": "screen",
+   "price": 189.06,
+   "score": 32.9,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 24.268892,
+   "pe_vs_median": -0.10341060672867941,
+   "dd_52w": -0.1175219376661466,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "UI",
+   "company": "Ubiquiti Inc.",
+   "sector": "Technology",
+   "industry": "Communication Equipment",
+   "depth": "screen",
+   "price": 595.96,
+   "score": 65.8,
+   "coverage": 0.75,
+   "buckets": [
+    "cyclical turn"
+   ],
+   "forward_pe": 30.438736,
+   "pe_vs_median": 0.018555921805758713,
+   "dd_52w": -0.4560223319146651,
+   "next_earnings": "2026-11-06",
+   "has_narrative": false
+  },
+  {
+   "ticker": "USLM",
+   "company": "United States Lime & Minerals, Inc.",
+   "sector": "Basic Materials",
+   "industry": "Building Materials",
+   "depth": "screen",
+   "price": 115.83,
+   "score": 0.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 20.321054,
+   "pe_vs_median": -0.060907824380490694,
+   "dd_52w": -0.18361141670882974,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "UTHR",
+   "company": "United Therapeutics Corporation",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - Specialty & Generic",
+   "depth": "screen",
+   "price": 490.24,
+   "score": 4.0,
+   "coverage": 1.0,
+   "buckets": [],
+   "forward_pe": 16.322878,
+   "pe_vs_median": 0.026304445566022405,
+   "dd_52w": -0.1925494559552443,
+   "next_earnings": "2026-10-28",
+   "has_narrative": false
+  },
+  {
+   "ticker": "VRTX",
+   "company": "Vertex Pharmaceuticals Incorporated",
+   "sector": "Healthcare",
+   "industry": "Biotechnology",
+   "depth": "screen",
+   "price": 557.96,
+   "score": 41.6,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 25.627602,
+   "pe_vs_median": -0.12515082954895274,
+   "dd_52w": -0.006247211066488179,
+   "next_earnings": "2026-11-02",
+   "has_narrative": false
+  },
+  {
+   "ticker": "WAT",
+   "company": "Waters Corporation",
+   "sector": "Healthcare",
+   "industry": "Diagnostics & Research",
+   "depth": "screen",
+   "price": 413.56,
+   "score": 20.1,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 24.993685,
+   "pe_vs_median": -0.2310869042886462,
+   "dd_52w": -0.032893782067872857,
+   "next_earnings": "2026-10-30",
+   "has_narrative": false
+  },
+  {
+   "ticker": "WHD",
+   "company": "Cactus, Inc.",
+   "sector": "Energy",
+   "industry": "Oil & Gas Equipment & Services",
+   "depth": "screen",
+   "price": 71.64,
+   "score": 53.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 19.771595,
+   "pe_vs_median": -0.011987103903712493,
+   "dd_52w": -0.026056441344019965,
+   "next_earnings": "2026-11-04",
+   "has_narrative": false
+  },
+  {
+   "ticker": "WING",
+   "company": "Wingstop Inc.",
+   "sector": "Consumer Cyclical",
+   "industry": "Restaurants",
+   "depth": "screen",
+   "price": 110.28,
+   "score": 45.0,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 20.564383,
+   "pe_vs_median": -0.7339015640823994,
+   "dd_52w": -0.6487778419203947,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  },
+  {
+   "ticker": "YOU",
+   "company": "Clear Secure, Inc.",
+   "sector": "Technology",
+   "industry": "Software - Application",
+   "depth": "screen",
+   "price": 44.59,
+   "score": 73.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 17.281137,
+   "pe_vs_median": -0.43841233889104103,
+   "dd_52w": -0.3625307835630972,
+   "next_earnings": "2026-11-05",
+   "has_narrative": false
+  },
+  {
+   "ticker": "ZTS",
+   "company": "Zoetis Inc.",
+   "sector": "Healthcare",
+   "industry": "Drug Manufacturers - Specialty & Generic",
+   "depth": "screen",
+   "price": 76.29,
+   "score": 8.7,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "forward_pe": 11.680427,
+   "pe_vs_median": -0.6257790886732204,
+   "dd_52w": -0.5090557642994179,
+   "next_earnings": "2026-11-03",
+   "has_narrative": false
+  }
+ ]
+}
