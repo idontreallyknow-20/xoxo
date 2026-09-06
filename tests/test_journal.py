@@ -111,3 +111,32 @@ def test_single_ticker_headings_still_parse_and_are_not_shared():
     b = journal.by_ticker()["BKNG"][0]
     assert b.shared_with == [] and b.is_shared is False
     assert b.price_at_call == 195.13
+
+
+def test_one_space_heading_still_parses():
+    """A heading typed with one space must not silently empty the whole file.
+
+    The repair for the multi-ticker bug required the template's two-space
+    separator, which turned a typo in an append-only hand-written file into
+    ``parse`` returning nothing at all. That is worse than the bug it replaced.
+    """
+    e = journal.parse(
+        "## 2026-09-05 NVDA AMD Recommendation: Watch\n"
+        "Price at call: 10 / 20\nConviction: 3\n"
+    )
+    assert [x.ticker for x in e] == ["NVDA", "AMD"]
+    assert [x.price_at_call for x in e] == [10.0, 20.0]
+    assert all(x.title == "Recommendation: Watch" for x in e)
+
+
+def test_two_space_separator_wins_over_the_heuristic():
+    """A title may open with an all-caps word, and only the separator can say so."""
+    e = journal.parse("## 2026-09-05 NVR  RECAP of the quarter\nConviction: 2\n")
+    assert [x.ticker for x in e] == ["NVR"]
+    assert e[0].title == "RECAP of the quarter"
+
+
+def test_multi_ticker_heading_keeps_every_name():
+    e = journal.by_ticker()
+    for t in ("META", "NOW", "ACN", "AMAT", "NVR"):
+        assert t in e, t

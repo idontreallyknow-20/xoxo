@@ -354,7 +354,7 @@ ${statusBlock()}
 
 <section class="reveal" style="--i:6">
   ${head("Where the score does not work", "and what would be needed to know")}
-  ${failsBlock()}
+  <div id="fails">${failsBlock()}</div>
 </section>
 
 <section class="reveal" style="--i:7">
@@ -383,6 +383,11 @@ ${statusBlock()}
     box.querySelectorAll("[data-variant]").forEach((b) => b.addEventListener("click", () => {
       S.variant = b.dataset.variant;
       box.innerHTML = scorecard();
+      /* Section 6 reads score_structure[S.variant] too. Redrawing only #card left
+       * it showing quality_value's component correlations under a heading that
+       * named whichever variant had just been picked. */
+      const f = document.getElementById("fails");
+      if (f) f.innerHTML = failsBlock();
       wireCard();
     }));
     const q = document.getElementById("q");

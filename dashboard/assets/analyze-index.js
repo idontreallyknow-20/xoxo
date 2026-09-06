@@ -115,24 +115,38 @@ ${D.chrome("Analyse", "../")}
     wire();
   }
 
-  function wire() {
+  /* Two scopes, deliberately separate. The depth buttons and the search box live
+   * outside #tbl and survive a redraw; the sort headers are inside it and are
+   * destroyed with it. Binding all three from one function after every sort left
+   * the survivors carrying a fresh duplicate listener each time, so five sorts
+   * put eighteen handlers on the search box and one keystroke redrew the table
+   * six times. */
+  function redraw() {
+    document.getElementById("tbl").innerHTML = table();
+    wireTable();
+  }
+
+  function wireChrome() {
     document.querySelectorAll("[data-depth]").forEach((b) => b.addEventListener("click", () => {
       S.depth = b.dataset.depth;
       render();
     }));
+    const q = document.getElementById("q");
+    if (q) q.addEventListener("input", () => { S.q = q.value; redraw(); });
+  }
+
+  function wireTable() {
     document.querySelectorAll("[data-sort]").forEach((b) => b.addEventListener("click", () => {
       const k = b.dataset.sort;
       if (S.sort === k) S.dir = -S.dir;
       else { S.sort = k; S.dir = (k === "ticker" || k === "company" || k === "sector") ? 1 : -1; }
-      document.getElementById("tbl").innerHTML = table();
-      wire();
+      redraw();
     }));
-    const q = document.getElementById("q");
-    if (q) q.addEventListener("input", () => {
-      S.q = q.value;
-      document.getElementById("tbl").innerHTML = table();
-      wire();
-    });
+  }
+
+  function wire() {
+    wireChrome();
+    wireTable();
   }
 
   fetch("../analysis/index.json", { cache: "no-store" })

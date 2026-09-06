@@ -111,7 +111,9 @@ class Candidate:
     drivers: List[Dict[str, Any]]
     drags: List[Dict[str, Any]]
     reasoning: List[str]
-    what_would_be_wrong: List[str]
+    what_would_be_wrong: List[Dict[str, Any]]
+    """Falsifiers, each ``{"text", "source", "date"}``. Not bare strings: the page
+    has to attribute a falsifier to the note and the date it was written on."""
     suggested_band_usd: Optional[Tuple[float, float]]
     constraint_notes: List[str]
     already_logged: Optional[Dict[str, Any]]
@@ -205,9 +207,10 @@ def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags,
     if v and v.forward_pe is not None:
         if v.has_own_history and v.pe_vs_median is not None:
             direction = "below" if v.pe_vs_median < 0 else "above"
+            n = v.n_hist_years
             out.append(
-                f"Trades at {v.forward_pe:.1f}x forward earnings against a four-point median of "
-                f"{v.median_pe_hist:.1f}x, {abs(v.pe_vs_median):.0%} {direction} it. A four-point "
+                f"Trades at {v.forward_pe:.1f}x forward earnings against a {n}-point median of "
+                f"{v.median_pe_hist:.1f}x, {abs(v.pe_vs_median):.0%} {direction} it. A {n}-point "
                 "median is a thin basis and says nothing about whether the old multiple was deserved."
             )
         else:

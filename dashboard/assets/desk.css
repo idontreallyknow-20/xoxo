@@ -170,6 +170,9 @@ footer { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule);
 .ledger .q { font-family: var(--mono); font-size: 11px; color: var(--ink-3); line-height: 1.55;
              margin-top: 6px; white-space: normal; max-width: 88ch; border-left: 1px solid var(--rule);
              padding-left: 10px; }
+/* The quarter caveat is prose, not a quotation. Same size and colour, no rule
+ * down the left, which would claim it was lifted from a filing. */
+.ledger .q.plain { border-left: none; padding-left: 0; }
 .ledger .row.gap { background: none; }
 .ledger .row.gap .v { color: var(--ink-3); font-size: 13px; }
 .ledger .row.gap .k { color: var(--ink-3); }
@@ -324,6 +327,11 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
 .cand .cf { display: grid; grid-template-columns: 1fr 300px; gap: 36px; margin-top: 20px;
             padding-top: 16px; border-top: 1px solid var(--rule-soft); align-items: start; }
 @media (max-width: 900px) { .cand .cf { grid-template-columns: 1fr; gap: 18px; } }
+/* The two halves of the candidate footer. Both are structural: they exist so the
+ * label and the list under it stay one grid item instead of two. Declared by name
+ * rather than left to the wildcard below, so a class in the markup always has a
+ * rule to point at. */
+.cand .cfx, .cand .cfz { min-width: 0; }
 .cand .lab { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-bottom: 8px; }
 .cand ul.kill { list-style: none; padding: 0; margin: 0; }
 .cand ul.kill li { font-size: 14px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; max-width: 78ch; }
@@ -387,3 +395,12 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
  * actually appears. 22ch clipped it to "Yahoo Finance via yf...". */
 .ledger .m { max-width: 27ch; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 780px) { .ledger .m { max-width: none; white-space: normal; } }
+
+/* Two equal columns, used for the sources-and-gaps footer. This lived as an
+ * inline style on the element, where no media query could reach it, so at 390px
+ * the two columns were 157px each either side of a 44px gutter. `min-width: 0`
+ * for the usual reason: a grid item defaults to min-content, and a long URL in
+ * the sources list would otherwise widen the whole page. */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.cols > * { min-width: 0; }
+@media (max-width: 780px) { .cols { grid-template-columns: 1fr; gap: 30px; } }

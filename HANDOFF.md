@@ -133,6 +133,15 @@ realised variance on an 11% weight. That is reported, not fixed, on purpose. The
 that *was* made (swapping `value_ev` above `value_pe`) corrected a documented basis mismatch, which
 is a different thing.
 
+**The front page's Journal tab is wrong, and fixing it is a scope decision, not a code one.**
+`scripts/build_dashboard.py` parses journal headings with `(\S+)` for the ticker, so a heading
+naming five names produces one entry under the first and folds the other four into the title. The
+front page shows thirteen names; `/positioning/` shows sixteen. The fix is one line, giving that
+file the grammar in `scripts/an/journal.py`. It was not made because the brief said not to modify
+existing routes, and both `build_dashboard.py` and the `dashboard/data.js` it writes are on the
+untouchable list. Two tests in `test_nothing_existing_was_touched.py` pin the divergence and will
+fail the day someone fixes it; delete them and the note in `NOTES.md` section 5d when that happens.
+
 **Do not touch `scripts/price_screen.py`** without deciding to. Two real defects live there and both
 are flagged rather than fixed, because that file drives the bucket assignments the whole system
 rests on: `dd_ath` is a maximum closing price while `high_52w` is an intraday high, and `price_ps` is
@@ -146,7 +155,9 @@ a second price produced by a merge-suffix collision on line 116. `NOTES.md` sect
 - `NOTES.md` section 4 — every free data source, adversarially re-checked. The short version:
   EDGAR is the only unconditionally free one, and there is no free legal automatable source of full
   earnings transcripts.
-- `NOTES.md` section 5c — the adversarial review, 38 confirmed findings, all fixed.
+- `NOTES.md` section 5c — the first adversarial review, 38 confirmed findings, all fixed.
+- `NOTES.md` section 5d — the second pass over the rendered pages and the fixes themselves,
+  eleven findings. Ten fixed; the eleventh is the front-page journal divergence above.
 - `scripts/an/power.py` — how long until a backtest here could say anything. Quarterly archiving:
   first verdict in 3 years. Monthly: 1 year. Archive monthly.
 - `scripts/an/backtest.py` — the engine's own false-positive rate, measured, including the

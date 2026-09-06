@@ -114,9 +114,11 @@
         <div class="m">not available</div></div>`;
     } else {
       if (read.headline) {
+        const qc = qCaveat(read.quarter_label);
         rows = `<div class="row"><div class="k">the headline</div>
-          <div class="v"><b>${esc(read.headline)}</b></div>
-          <div class="m">${esc(read.quarter_label || "")}</div></div>` + rows;
+          <div class="v"><b>${esc(read.headline)}</b>${
+            qc ? `<div class="q plain">${esc(qc)}</div>` : ""}</div>
+          <div class="m">${esc(qMark(read.quarter_label || ""))}</div></div>` + rows;
       }
       (read.guidance || []).forEach((g) => {
         const dir = g.change === "raised" ? "up" : g.change === "cut" ? "down" : "flat";
@@ -176,6 +178,24 @@
     const w = confWord(s);
     if (!w) return String(s || "");
     return String(s).slice(w.length).replace(/^[\s,;:.–—-]+/, "");
+  }
+
+  /* The quarter label runs from 28 to 148 characters: a short marker, then in
+   * about half the notes a parenthetical saying what the note actually wrote or
+   * failed to write. The `.m` column is one line capped at 27ch, so the long half
+   * was cut off with no way to read it. Split at the first parenthesis or dash:
+   * the marker keeps the column, the caveat goes under the headline where it has
+   * room. A title tooltip would not do, being invisible on a touch screen. */
+  function qMark(s) {
+    const t = String(s || "").trim();
+    const m = /\s+[(\u2014\u2013-]/.exec(t);
+    return m ? t.slice(0, m.index) : t;
+  }
+  function qCaveat(s) {
+    const t = String(s || "").trim();
+    const m = /\s+[(\u2014\u2013-]/.exec(t);
+    if (!m) return "";
+    return t.slice(m.index + 1).replace(/^[(\u2014\u2013-]\s*/, "").replace(/\)\s*$/, "").trim();
   }
 
   function paragraphs(text) {
@@ -250,7 +270,7 @@
       + v.multiples.filter((m) => m.basis_note && !m.like_for_like).map((m) =>
           `<tr><td colspan="5" class="muted" style="font-size:12px;padding-top:2px">${esc(m.basis_note)}</td></tr>`).join("");
 
-    // The multiple against its own four-year range. Never coloured: cheaper is not
+    // The multiple against its own historical range. Never coloured: cheaper is not
     // better, and a green number would settle that question before the reader has.
     const pe = v.multiples[0];
     let peRail = "";
@@ -260,7 +280,8 @@
       peRail = D.rail(lo, hi, [
         { value: pe.value, kind: "now", label: "now " + mult(pe.value) },
         { value: pe.own_median, kind: "median", label: "own median " + mult(pe.own_median) },
-      ], null, "Forward earnings multiple against its own median at four fiscal year ends. "
+      ], null, "Forward earnings multiple against its own median at "
+             + (v.own_history.n_year_ends || "a handful of") + " fiscal year ends. "
              + "Not coloured: a lower multiple is not automatically better.", (x) => mult(x, 0));
     }
 
@@ -427,7 +448,7 @@
       ? `<a href="${esc(s.url)}" rel="noopener noreferrer" target="_blank">${esc(s.title)}</a>`
       : esc(s.title)}${s.read_date ? `<span class="d">read ${esc(s.read_date)}</span>` : ""}</li>`).join("");
     const gaps = r.gaps.map((g) => `<li>${esc(g)}</li>`).join("");
-    return `<div class="cols" style="display:grid;grid-template-columns:1fr 1fr;gap:44px">
+    return `<div class="cols">
       <div><h2 style="font-size:13px">What is not known<span class="sub">${r.gaps.length}</span></h2>
         <div class="rule soft"></div><ul class="gaps">${gaps}</ul></div>
       <div><h2 style="font-size:13px">Sources<span class="sub">${r.sources.length}</span></h2>

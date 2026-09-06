@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T16:19:52",
+ "built_at": "2026-09-06T16:52:11",
  "depth": "screen",
  "identity": {
   "ticker": "ASML",
@@ -161,7 +161,7 @@
    "usable": false,
    "n_year_ends": 0,
    "caveat": "statements in EUR, price in USD, own-history multiples skipped",
-   "basis_warning": "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 51% and -0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 138 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
+   "basis_warning": "Read the P/E row with care. Across the 136 names that carry both comparisons, 85% print a negative 'vs median' on forward P/E with a median of -29%, against 50% and 0.0% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, not 136 companies being cheap. It is also correlated with growth: faster-growing names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.15 for EV/EBITDA), because their forward earnings are further above their trailing ones. The score weights the like-for-like EV/EBITDA comparison more heavily for exactly this reason."
   },
   "drawdown": {
    "from_52w_high": -0.15883315224898253,
@@ -423,7 +423,7 @@
   }
  ],
  "gaps": [
-  "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
+  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals.",
   "No research note. Nobody has read a filing for this name.",
   "No own-history multiples. statements in EUR, price in USD, own-history multiples skipped",
   "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",

@@ -349,6 +349,70 @@ tests, means the tests were testing what I believed rather than what was true. T
 with regression tests that assert the *wrong* behaviour is gone, not just that the right one is
 present, which is a different and better thing to check.
 
+## 5d. A second review pass, and the one thing that cannot be fixed here
+
+Two more hunting passes ran after the fixes above landed, one on the rendered pages in a real
+browser and one on the diffs themselves looking for regressions the first round had introduced.
+Eleven findings, ten fixed. In rough order of how badly each would have misled you:
+
+1. **Two pages printed a median they had just called unusable.** Raising the own-history floor to
+   three points changed `has_own_history`, but `_valuation_block` still emitted `own_median` and
+   `vs_median` unconditionally. Dollar Tree and Paylocity showed `own median 19.9x / vs median
+   -16%` two rows above the sentence "No usable own-history multiples for this name." The numbers
+   are withheld now, and the caveat says which of the two situations applies: no data at all
+   (currency mismatch, twelve names) or not enough of it (two year ends, two names).
+2. **Three hard-coded "four"s survived the first fix.** The gaps line on all 150 pages, the rail
+   caption under the P/E chart, and the sizing sentence in the positioning memo. 24 of 150 names
+   have a two-, three- or zero-point median. All three now count what is actually there.
+3. **Six of eight nav links 404'd from `/analyze/` and `/positioning/`.** `chrome(active, depth)`
+   built the brand and the two new tabs from `depth` and hard-coded `../../` for the front-page
+   anchors, which is right only from `/analyze/<TICKER>/`. `tests/test_site_links.py` now runs the
+   real function in node at each of the three depths and checks every href against the filesystem.
+4. **The quarter label was clipped on all sixteen deep pages.** It runs from 28 to 148 characters
+   (a short marker, then often a parenthetical about what the note did or did not say) and went
+   into a one-line column capped at 27ch. Lam Research had 82% of it hidden. Split now: the marker
+   keeps the column, the caveat goes under the headline. Not a tooltip, which is invisible on a
+   phone.
+5. **Section 6 of `/positioning` ignored the variant switch.** It reads `score_structure[variant]`
+   but only `#card` was redrawn, so the component correlations stayed on `quality_value` under a
+   heading naming whichever variant had just been picked.
+6. **The two-column footer could not be made responsive.** `grid-template-columns: 1fr 1fr` was an
+   inline style, which no media query can override, so at 390px it was two 157px columns either
+   side of a 44px gutter. It is a class in `desk.css` now, and a test rejects any inline
+   multi-column grid in the scripts.
+7. **A one-space journal heading parsed to nothing.** The multi-ticker repair required the
+   template's two-space separator, which turned a typo in an append-only hand-written file into
+   `parse()` returning `[]` for the whole file. Worse than the bug it replaced. The split is a
+   function now, and falls back to taking ticker-shaped tokens from the left.
+8. **Listeners accumulated on the analysis index.** Sorting replaced only `#tbl` and then rebound
+   every handler on the page, including the search box outside it. Five sorts, and one keystroke
+   redrew the table six times.
+9. **A class in the markup with no rule anywhere.** `.cfx` was styled only by a wildcard. Declared
+   by name now, with a test that every class the scripts emit resolves to a rule.
+10. **A stale type annotation.** `what_would_be_wrong: List[str]` had been `List[Dict]` since the
+    falsifiers gained a source and a date.
+
+Finding 1 also exposed a paragraph that had gone stale in the same move. The forward-vs-trailing
+warning on every valuation block was written by hand and said "across the 138 names that carry both
+comparisons"; raising the history floor left 136, and the EV/EBITDA figures beside it had drifted
+from 51% and -0.6% to 50% and 0.0%. It is computed from the panel at build time now
+(`analysis._basis_warning`), with a test that checks it against a fresh count rather than against a
+string. The same figures appear in `score.py`'s module docstring, which cannot recompute itself; a
+second test fails if the docstring and the measurement disagree.
+
+**The eleventh cannot be fixed under the brief.** The front page's Journal tab and the new pages
+disagree about the decision log. `scripts/build_dashboard.py` parses headings with `(\S+)` for the
+ticker, so `## 2026-09-04 META NOW ACN AMAT NVR  Recommendation: Watch or Pass` becomes one entry
+under META whose title is `NOW ACN AMAT NVR  Recommendation: Watch or Pass`. The front page shows
+thirteen names and fourteen entries; `/positioning/` shows sixteen. Both the generator and its
+output (`dashboard/data.js`) are on the untouchable list, and the brief said not to modify existing
+routes beyond adding links, so this is left alone deliberately.
+
+The repair, if that constraint is ever lifted, is one line: give `build_dashboard.py` the grammar
+in `scripts/an/journal.py`. Two tests in `test_nothing_existing_was_touched.py` pin the divergence
+so it reads as a known decision rather than a fresh bug, and both fail the day someone fixes it,
+which is how you will know to delete them and this note.
+
 ## 6. Tasks skipped, and why
 
 Nothing skipped. Every task in PLAN.md either passed its stated verification or is still open.

@@ -58,11 +58,17 @@ window.Desk = (function () {
     }
   }
 
+  /* `depth` is the relative path back to the dashboard root: "../" from
+   * /analyze/ and /positioning/, "../../" from /analyze/TICKER/. Every link has
+   * to be built from it. Six of these were hard-coded to "../../" while the
+   * brand and the two new tabs used `depth`, so on /analyze/ and /positioning/
+   * the front-page anchors pointed one directory above the site root and 404'd. */
   function chrome(active, depth) {
-    const nav = [["../../index.html#overview", "Overview"], ["../../index.html#picks", "Picks"],
-                 ["../../index.html#rankings", "Rankings"], ["../../index.html#holdings", "Holdings"],
-                 ["../../index.html#charts", "Charts"], [depth + "analyze/", "Analyse"],
-                 [depth + "positioning/", "Positioning"], ["../../index.html#settings", "Settings"]];
+    const home = depth + "index.html#";
+    const nav = [[home + "overview", "Overview"], [home + "picks", "Picks"],
+                 [home + "rankings", "Rankings"], [home + "holdings", "Holdings"],
+                 [home + "charts", "Charts"], [depth + "analyze/", "Analyse"],
+                 [depth + "positioning/", "Positioning"], [home + "settings", "Settings"]];
     return `<header class="reveal" style="--i:0">
       <a class="brand" href="${depth}index.html">Desk</a>
       <nav>${nav.map(([h, l]) => `<a href="${h}"${l === active ? ' class="on"' : ""}>${l}</a>`).join("")}</nav>

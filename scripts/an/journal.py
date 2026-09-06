@@ -26,10 +26,8 @@ from . import paths
 
 __all__ = ["JournalEntry", "parse", "load", "by_ticker"]
 
-_ENTRY = re.compile(
-    r"^## (\d{4}-\d{2}-\d{2}) ([A-Z0-9.\-]+(?:\s+[A-Z0-9.\-]+)*?)\s{2,}(.*?)$\n(.*?)(?=^## |\Z)",
-    re.M | re.S)
-"""Date, one or more tickers, then the title after two or more spaces.
+_ENTRY = re.compile(r"^## (\d{4}-\d{2}-\d{2}) +(\S.*?)$\n(.*?)(?=^## |\Z)", re.M | re.S)
+"""Date, then the rest of the heading line, then the body up to the next heading.
 
 The original pattern captured a single ``\S+`` as the ticker, which silently
 dropped four of the five names in::
@@ -37,9 +35,42 @@ dropped four of the five names in::
     ## 2026-09-04 META NOW ACN AMAT NVR  Recommendation: Watch or Pass
 
 NOW, ACN, AMAT and NVR were logged calls that no longer existed as far as anything
-downstream was concerned. The template separates the ticker field from the title
-with two spaces, which is what makes a multi-ticker heading parseable at all.
+downstream was concerned. The obvious repair, requiring the template's two-space
+separator between the ticker field and the title, traded that bug for a worse one:
+a heading typed with one space matched nothing, and ``parse`` returned ``[]`` for
+the whole file rather than one bad entry. ``journal.md`` is append-only and typed
+by hand, so the parser splits the heading in :func:`_split_heading` instead, where
+it can fall back rather than fail.
 """
+
+_TICKER = re.compile(r"^[A-Z][A-Z0-9]*(?:[.\-][A-Z0-9]+)*$")
+"""A ticker is all caps, starts with a letter, and may carry a suffix: ``DPM.TO``."""
+
+
+def _split_heading(rest: str) -> tuple[List[str], str]:
+    """Heading text after the date, split into tickers and title.
+
+    The template writes two or more spaces between the two fields, and when that
+    separator is present it decides the split outright: a title may legitimately
+    open with an all-caps word, and the separator is the only thing that can tell
+    ``NVR  RECAP of the quarter`` from ``NVR RECAP``.
+
+    Without it, take ticker-shaped tokens from the left and stop at the first that
+    is not one. ``Recommendation:`` stops it because of the colon and the lower
+    case. This recovers a heading typed with one space, which is the whole point;
+    it can still mis-split a one-space heading whose title starts in caps, and
+    that is the acceptable half of the trade.
+    """
+    if "  " in rest:
+        head, _, title = rest.partition("  ")
+        return [t for t in head.split() if t], title.strip()
+    tokens = rest.split()
+    n = 0
+    while n < len(tokens) and _TICKER.match(tokens[n]):
+        n += 1
+    if not n:
+        return [], rest.strip()
+    return tokens[:n], " ".join(tokens[n:]).strip()
 
 _ABSENT = {"n/a", "na", "none", "-", "--", "tbd", "?"}
 """Placeholders that mean a field was not filled in.
@@ -127,15 +158,15 @@ def parse(text: str) -> List[JournalEntry]:
     """One entry per ticker. A heading naming five names produces five entries."""
     out: List[JournalEntry] = []
     for m in _ENTRY.finditer(text):
-        body = m.group(4)
+        body = m.group(3)
         conv = _num(_field(body, "Conviction"))
-        tickers = [t for t in m.group(2).split() if t]
+        tickers, title = _split_heading(m.group(2))
         for ticker in tickers:
             out.append(
                 JournalEntry(
                     date=m.group(1),
                     ticker=ticker.upper(),
-                    title=m.group(3).strip(),
+                    title=title,
                     price_at_call=_split_for(_field(body, "Price at call"), tickers, ticker),
                     thesis=_field(body, "Thesis"),
                     wrong_if=_field(body, "Wrong if"),

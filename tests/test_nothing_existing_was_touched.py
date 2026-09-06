@@ -104,3 +104,41 @@ def test_portfolio_is_still_ignored_and_still_absent(base):
     assert code == 0
     out, _ = git("ls-files", "portfolio")
     assert not out, "a personal position file is tracked"
+
+
+def test_the_front_page_journal_still_disagrees_with_the_new_pages():
+    """A known divergence, pinned here so it is not mistaken for a fresh bug.
+
+    ``build_dashboard.py`` parses journal headings with ``(\\S+)`` for the ticker,
+    so a heading naming five names produces one entry under the first and folds
+    the other four into the title. The new pages parse the same file correctly
+    and show sixteen names where the front page shows thirteen.
+
+    Both the generator and its output are on the untouchable list, and the brief
+    says not to modify existing routes beyond adding links, so this is documented
+    rather than fixed. If someone lifts that constraint later, the repair is one
+    line: give ``build_dashboard.py`` the grammar in ``scripts/an/journal.py``.
+    This test fails the day that happens, which is the point.
+    """
+    import json
+    import re
+
+    from an import journal
+
+    src = (ROOT / "dashboard" / "data.js").read_text(encoding="utf-8")
+    front = json.loads(src[src.index("{"):].rstrip().rstrip(";"))["journal"]
+    front_tickers = {e["ticker"] for e in front if e["ticker"] != "SYSTEM"}
+    ours = set(journal.by_ticker())
+
+    assert front_tickers < ours, "the front page caught up; delete this test and the note in NOTES.md"
+    assert ours - front_tickers == {"NOW", "ACN", "AMAT", "NVR"}
+    assert any(re.match(r"^[A-Z]+ [A-Z]+", e["title"]) for e in front), \
+        "expected the folded multi-ticker title on the front page"
+
+
+def test_the_generator_of_that_divergence_is_the_untouchable_one():
+    """The reason it cannot be fixed here, asserted rather than asserted-in-a-comment."""
+    assert "scripts/build_dashboard.py" in UNTOUCHABLE
+    assert "dashboard/data.js" in UNTOUCHABLE
+    src = (ROOT / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
+    assert r"(\S+)\s*(.*?)$" in src, "build_dashboard.py's journal grammar changed; recheck this note"

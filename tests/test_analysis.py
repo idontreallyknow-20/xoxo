@@ -284,3 +284,78 @@ def test_provenance_carries_the_data_s_own_date_not_a_literal(records):
         assert r["identity"]["as_of"] in r["identity"]["source"], t
         assert r["sources"][0]["read_date"] == r["identity"]["as_of"], t
         assert r["identity"]["as_of"] in r["score"]["universe"], t
+
+
+def test_a_withheld_median_is_not_also_printed(records):
+    """DLTR and PCTY have two year ends. The page called that unusable in the caveat
+    and printed ``own median 19.9x / vs median -16%`` two rows above it, which is
+    the page contradicting itself in the reader's field of view."""
+    priced = local.load_price_screen()
+    thin = [t for t, v in priced.items() if not v.has_own_history]
+    assert thin, "expected some names below the history floor"
+    for t in thin:
+        v = records[t]["valuation"]
+        assert v["own_history"]["usable"] is False
+        for m in v["multiples"]:
+            assert m["own_median"] is None, f"{t}: {m['key']} printed a withheld median"
+            assert m["vs_median"] is None, f"{t}: {m['key']} printed a withheld comparison"
+
+
+def test_a_two_point_history_says_two_not_none_at_all(records):
+    """The generic "no usable own-history multiples" reads as no data. Two names do
+    have data, just not enough of it, and the difference is worth a sentence."""
+    priced = local.load_price_screen()
+    two = [t for t, v in priced.items()
+           if v.n_hist_years == 2 and not v.multiples_note]
+    assert two, "expected the two-year-end names to have no currency note"
+    for t in two:
+        c = records[t]["valuation"]["own_history"]["caveat"]
+        assert "2 fiscal year ends" in c, c
+        assert "Two numbers" in c, c
+
+
+def test_the_gaps_line_counts_the_statements_it_actually_has(records):
+    """"Four fiscal years ... a four-point median" was printed on all 150 pages, and
+    was wrong about the median on 24 of them."""
+    from an import local as _local
+
+    u = _local.load_universe()
+    for t, r in records.items():
+        line = r["gaps"][0]
+        n_fy = int(u[t].fundamentals.fcf_years or 0)
+        if n_fy:
+            assert f"{n_fy - 1} interval" in line, (t, line)
+        v = u[t].valuation
+        if v is not None and v.has_own_history:
+            assert f"{v.n_hist_years}-point median" in line, (t, line)
+        else:
+            assert "point median" not in line, (t, line)
+
+
+def test_the_basis_warning_quotes_the_panel_it_is_looking_at(records):
+    """This paragraph was hand-written and said 138 names after the history floor
+    moved and left 136. It is computed now, and this checks it against a fresh
+    count rather than against a string I typed."""
+    both = [v for v in local.load_price_screen().values()
+            if v.has_own_history and v.ev_vs_median is not None]
+    w = records["KLAC"]["valuation"]["own_history"]["basis_warning"]
+    assert f"{len(both)} names that carry both" in w, w
+    neg = 100.0 * sum(1 for v in both if v.pe_vs_median < 0) / len(both)
+    assert f"{neg:.0f}% print a negative" in w, w
+    assert all(records[t]["valuation"]["own_history"]["basis_warning"] == w
+               for t in records if records[t]["valuation"].get("available")), \
+        "the warning describes the panel, not the name; it should be identical everywhere"
+
+
+def test_the_score_docstring_still_matches_the_measurement():
+    """A docstring cannot recompute itself, so this is what keeps it honest."""
+    from an import analysis as _a
+    from an import score as _s
+
+    w = _a._basis_warning()
+    doc = _s.__doc__
+    n = len([v for v in local.load_price_screen().values()
+             if v.has_own_history and v.ev_vs_median is not None])
+    assert f"{n} names carrying both" in doc, "score.py's docstring quotes a stale count"
+    for frag in ("85%", "-29%"):
+        assert frag in w and frag in doc, frag

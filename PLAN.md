@@ -209,6 +209,16 @@ Consequences that shape everything below:
       a past date, count how many selected names no longer exist, and the hole is measured rather
       than guessed.
       Verify: `python scripts/listing_status.py --report` prints the count and the names.
+- [x] **X11** Second review pass over the rendered pages and over the fixes themselves. Eleven
+      findings: two pages printing a median they simultaneously called unusable, three surviving
+      hard-coded "four"s, six nav links 404ing from two of the three page depths, a quarter label
+      clipped on all sixteen deep pages, section 6 of `/positioning` ignoring the variant switch, an
+      inline grid no media query could reach, a one-space journal heading parsing to nothing,
+      listener accumulation on the index, a class with no rule, and a stale annotation. Ten fixed;
+      the eleventh (the front page's journal disagreeing with the new pages) is out of scope, is
+      documented in NOTES.md 5d, and is pinned by two tests.
+      Verify: `python -m pytest -q` and `python scratchpad/final_check.py`
+
 - [ ] **X8** SEC DERA Financial Statement Data Sets as the point-in-time fundamentals source for the
       backtest: quarterly bulk zips, genuinely as-reported, free. Lags quarter end by two weeks to
       two months, which is fine for a backtest and useless for a current screen.

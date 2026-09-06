@@ -52,10 +52,10 @@ correction rather than a preference. The upstream screen builds its historical P
 as the price at each fiscal year end over that year's reported diluted EPS, which
 is trailing, and compares it against a *forward* P/E from the Street. Where
 earnings are expected to grow, forward is mechanically below trailing, so the P/E
-column reads cheap by construction: across the 138 names carrying both, 85% print
-a negative "vs median" on P/E with a median of -29%, against 51% and -0.6% on
+column reads cheap by construction: across the 136 names carrying both, 85% print
+a negative "vs median" on P/E with a median of -29%, against 50% and 0.0% on
 EV/EBITDA where both sides are trailing. Worse, the bias tracks growth (rank
-correlation -0.28 against revenue CAGR, versus -0.16 for EV/EBITDA), so the P/E
+correlation -0.28 against revenue CAGR, versus -0.15 for EV/EBITDA), so the P/E
 component is partly a second helping of the growth component. Both stay in, because
 dropping a signal on a fixable labelling problem is its own error, but the
 like-for-like one leads.

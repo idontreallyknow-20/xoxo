@@ -85,3 +85,40 @@ def test_no_font_weight_outside_the_loaded_range():
     weights = {w.strip() for w in re.findall(r"font-weight:\s*([^;]+);", css)}
     allowed = {"300", "400", "500", "600", "inherit", "normal"}
     assert weights <= allowed, weights - allowed
+
+
+ASSETS = ROOT / "dashboard" / "assets"
+
+
+def test_no_multi_column_grid_is_declared_inline():
+    """An inline ``grid-template-columns`` cannot be overridden by a media query, so
+    the layout it sets is the layout on a phone too. The sources-and-gaps footer
+    was two 157px columns either side of a 44px gutter at 390px wide."""
+    for js in ASSETS.glob("*.js"):
+        for m in re.finditer(r'style="[^"]*grid-template-columns:([^";]+)', js.read_text()):
+            cols = m.group(1)
+            assert cols.count("fr") + cols.count("px") + cols.count("%") < 2, (
+                f"{js.name}: inline multi-column grid {cols!r}; put it in desk.css "
+                "where a breakpoint can reach it")
+
+
+def test_every_class_the_scripts_use_is_defined():
+    """A class name that no rule matches is a layout that only looks finished."""
+    css = CSS.read_text()
+    defined = set(re.findall(r"\.([a-zA-Z][\w-]*)", css))
+    used = set()
+    for js in ASSETS.glob("*.js"):
+        for m in re.finditer(r'class="([^"$]+)"', js.read_text()):
+            used.update(m.group(1).split())
+    missing = {c for c in used if c not in defined}
+    assert not missing, f"classes used by the scripts with no rule in desk.css: {sorted(missing)}"
+
+
+def test_the_two_column_footer_collapses_on_a_phone():
+    css = CSS.read_text()
+    assert re.search(r"^\.cols\s*\{[^}]*grid-template-columns:\s*1fr 1fr", css, re.M), \
+        ".cols should carry the two-column layout"
+    assert re.search(r"@media \(max-width: \d+px\) \{ \.cols \{ grid-template-columns: 1fr", css), \
+        ".cols should collapse to one column at a breakpoint"
+    assert re.search(r"\.cols > \*\s*\{[^}]*min-width:\s*0", css), \
+        "grid items default to min-content and will blow the page out"

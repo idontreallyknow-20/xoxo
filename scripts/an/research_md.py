@@ -21,11 +21,12 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from . import paths
 
-__all__ = ["Source", "FinancialRow", "ResearchNote", "parse", "parse_file", "load_all", "REQUIRED_SECTIONS"]
+__all__ = ["Source", "FinancialRow", "ResearchNote", "parse", "parse_file", "load_all",
+           "load_all_lenient", "ParseError", "REQUIRED_SECTIONS"]
 
 REQUIRED_SECTIONS = (
     "What the company does",
@@ -322,18 +323,20 @@ def parse_file(path: Path) -> ResearchNote:
     return parse(Path(path).read_text(encoding="utf-8"), Path(path))
 
 
-def load_all(directory: Optional[Path] = None, *, strict: bool = True
-             ) -> Dict[str, ResearchNote]:
-    """Every note, keyed by ticker, with two silent failures made loud.
+def load_all_lenient(directory: Optional[Path] = None
+                     ) -> Tuple[Dict[str, ResearchNote], Dict[str, str]]:
+    """Every note that parses, and the reason each failure failed.
 
-    Notes were keyed by whatever the first line said, and the filename was never
-    compared against it. A copy of ``KLAC.md`` saved as ``KLAC-old.md`` would parse,
-    key itself as KLAC, and overwrite the real one on a last-write-wins basis with
-    nothing said. Both the mismatch and the collision raise now.
+    Two silent failures are made loud here. Notes used to be keyed by whatever the
+    first line said, with the filename never compared against it, so a copy of
+    ``KLAC.md`` saved as ``KLAC-old.md`` would parse, key itself as KLAC and
+    overwrite the real one on a last-write-wins basis with nothing said. Both the
+    mismatch and the collision raise.
 
-    ``strict=False`` collects parse failures instead of raising, so one malformed
-    note cannot take all 150 pages down with it. The failures come back under the
-    ``_errors`` key and the caller is expected to report them.
+    Returns a pair rather than one dict. An earlier version put the failures under
+    an ``_errors`` key inside the notes dict, which meant every caller iterating it
+    would eventually hit a string where a ResearchNote was promised. Nothing
+    consumed it yet, which is exactly when to remove a trap.
     """
     d = Path(directory) if directory else paths.RESEARCH_DIR
     out: Dict[str, ResearchNote] = {}
@@ -344,8 +347,6 @@ def load_all(directory: Optional[Path] = None, *, strict: bool = True
         try:
             note = parse_file(p)
         except ParseError as e:
-            if strict:
-                raise
             errors[p.stem] = str(e)
             continue
         if note.ticker != p.stem.upper():
@@ -356,6 +357,18 @@ def load_all(directory: Optional[Path] = None, *, strict: bool = True
         if note.ticker in out:
             raise ParseError(f"two notes claim {note.ticker}: {out[note.ticker].path} and {p}")
         out[note.ticker] = note
-    if errors and not strict:
-        out["_errors"] = errors  # type: ignore[assignment]
-    return out
+    return out, errors
+
+
+def load_all(directory: Optional[Path] = None) -> Dict[str, ResearchNote]:
+    """Every note, keyed by ticker. Raises on the first one that does not parse.
+
+    Strict on purpose: a half-parsed research note rendered as a finished analysis
+    page is worse than no page. Use :func:`load_all_lenient` where one malformed
+    note should not take the other 149 pages down with it.
+    """
+    notes, errors = load_all_lenient(directory)
+    if errors:
+        first = sorted(errors)[0]
+        raise ParseError(errors[first])
+    return notes

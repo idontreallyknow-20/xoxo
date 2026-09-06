@@ -29,8 +29,10 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import statistics
 import sys
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -120,6 +122,61 @@ def _fundamentals_block(rec: local.TickerRecord) -> Dict[str, Any]:
     }
 
 
+_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
+
+
+@lru_cache(maxsize=1)
+def _basis_warning() -> str:
+    """The forward-vs-trailing warning, measured on the committed panel each build.
+
+    This paragraph was written by hand and went stale the moment the own-history
+    floor moved from two points to three: it still said 138 names when 136 carried
+    both comparisons. A sentence that quotes a number about the data should be
+    computed from the data.
+    """
+    from . import stats
+
+    priced = local.load_price_screen()
+    both = [v for v in priced.values() if v.has_own_history and v.ev_vs_median is not None]
+    if len(both) < 20:
+        return ("Read the P/E row with care: it compares a forward multiple against a trailing "
+                "median, which reads cheap wherever earnings are expected to grow. Too few names "
+                "carry both comparisons here to say by how much.")
+    pe = [v.pe_vs_median for v in both]
+    ev = [v.ev_vs_median for v in both]
+
+    def neg(xs):
+        return 100.0 * sum(1 for x in xs if x < 0) / len(xs)
+
+    def med(xs):
+        return 100.0 * statistics.median(xs)
+
+    universe = local.load_universe()
+    growth, pe_g, ev_g = [], [], []
+    for t, v in priced.items():
+        g = universe[t].fundamentals.rev_cagr if t in universe else None
+        if g is None or not v.has_own_history or v.ev_vs_median is None:
+            continue
+        growth.append(g); pe_g.append(v.pe_vs_median); ev_g.append(v.ev_vs_median)
+    rho_pe, _ = stats.spearman(pe_g, growth)
+    rho_ev, _ = stats.spearman(ev_g, growth)
+
+    out = (
+        f"Read the P/E row with care. Across the {len(both)} names that carry both comparisons, "
+        f"{neg(pe):.0f}% print a negative 'vs median' on forward P/E with a median of "
+        f"{med(pe):.0f}%, against {neg(ev):.0f}% and {med(ev):.1f}% on EV/EBITDA where both sides "
+        f"are trailing. That gap is the basis mismatch, not {len(both)} companies being cheap."
+    )
+    if rho_pe is not None and rho_ev is not None:
+        out += (
+            f" It is also correlated with growth: faster-growing names look cheaper here (rank "
+            f"correlation {rho_pe:.2f} against revenue CAGR, versus {rho_ev:.2f} for EV/EBITDA), "
+            "because their forward earnings are further above their trailing ones."
+        )
+    return out + (" The score weights the like-for-like EV/EBITDA comparison more heavily for "
+                  "exactly this reason.")
+
+
 def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
                      peer: Optional["peers.PeerValuation"] = None) -> Dict[str, Any]:
     v = rec.valuation
@@ -128,9 +185,18 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
                 "why": "This name did not reach the price screen, which only runs on the quality top 150."}
 
     n_hist = v.n_hist_years or 0
+    # Below MIN_HISTORY_POINTS the screen still hands us a median, because two
+    # numbers do have a midpoint. The page must not print it: it would assert a
+    # comparison the score has already refused, next to a caveat saying there is
+    # none. Withhold the number, keep the row, say why in the caveat.
+    usable = v.has_own_history
+    med_pe = v.median_pe_hist if usable else None
+    med_ev = v.median_ev_ebitda_hist if usable else None
+    vs_pe = v.pe_vs_median if usable else None
+    vs_ev = v.ev_vs_median if usable else None
     multiples = [
         {"key": "forward_pe", "label": "Forward P/E", "value": v.forward_pe,
-         "own_median": v.median_pe_hist, "vs_median": v.pe_vs_median,
+         "own_median": med_pe, "vs_median": vs_pe,
          "basis": "forward vs trailing", "like_for_like": False,
          "basis_note": (
              "The two sides are not the same multiple. The left is a forward P/E, the Street's "
@@ -140,7 +206,7 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
              "cheap by construction."
          )},
         {"key": "ev_ebitda", "label": "EV/EBITDA", "value": v.ev_ebitda,
-         "own_median": v.median_ev_ebitda_hist, "vs_median": v.ev_vs_median,
+         "own_median": med_ev, "vs_median": vs_ev,
          "basis": "trailing vs trailing", "like_for_like": True,
          "basis_note": "Both sides are trailing, so this comparison is like for like."},
     ]
@@ -154,19 +220,15 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
                 f"The median is taken at {n_hist} fiscal year end{'s' if n_hist != 1 else ''}, so it "
                 f"is a {n_hist}-point median. That is a thin basis for 'cheap against its own "
                 "history' and it says nothing about whether the old multiple was deserved."
-                if v.has_own_history else
-                (v.multiples_note or "No usable own-history multiples for this name.")
+                if usable else
+                (v.multiples_note
+                 or (f"Only {n_hist} fiscal year ends carry both a price and the earnings to divide "
+                     f"it by, short of the {v.MIN_HISTORY_POINTS} this page requires. "
+                     f"{_WORDS.get(n_hist, str(n_hist))} numbers have a midpoint but not a median, "
+                     "so the comparison is withheld rather than shown thin."
+                     if n_hist else "No usable own-history multiples for this name."))
             ),
-            "basis_warning": (
-                "Read the P/E row with care. Across the 138 names that carry both comparisons, 85% "
-                "print a negative 'vs median' on forward P/E with a median of -29%, against 51% and "
-                "-0.6% on EV/EBITDA where both sides are trailing. That gap is the basis mismatch, "
-                "not 138 companies being cheap. It is also correlated with growth: faster-growing "
-                "names look cheaper here (rank correlation -0.28 against revenue CAGR, versus -0.16 "
-                "for EV/EBITDA), because their forward earnings are further above their trailing "
-                "ones. The score weights the like-for-like EV/EBITDA comparison more heavily for "
-                "exactly this reason."
-            ),
+            "basis_warning": _basis_warning(),
         },
         "drawdown": {
             "from_52w_high": v.dd_52w,
@@ -349,10 +411,21 @@ def _gaps(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
           narrative: Optional[Dict[str, Any]]) -> List[str]:
     gaps: List[str] = []
     v = rec.valuation
-    gaps.append(
-        "Four fiscal years of annual statements, not five or ten. Every growth figure is over three "
-        "intervals and every own-history median is a four-point median."
-    )
+    # Do not hard-code "four". 1,496 of 1,505 names carry four annual statements,
+    # but nine carry three or none, and the own-history median runs from 0 to 4
+    # points independently of that. Both counts are read off the record.
+    n_fy = int(rec.fundamentals.fcf_years or 0)
+    if n_fy:
+        gaps.append(
+            f"{_WORDS.get(n_fy, str(n_fy))} fiscal year{'' if n_fy == 1 else 's'} of annual "
+            f"statements, not five or ten, so every growth figure is over "
+            f"{n_fy - 1} interval{'' if n_fy - 1 == 1 else 's'}."
+            + (f" The own-history median is a {v.n_hist_years}-point median."
+               if v is not None and v.has_own_history else "")
+        )
+    else:
+        gaps.append("No annual statement history at all for this name: no growth figure on this "
+                    "page has a denominator.")
     if not note:
         gaps.append("No research note. Nobody has read a filing for this name.")
     if v is None:

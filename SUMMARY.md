@@ -218,6 +218,32 @@ And one that changed a number I had already published: the engine's false-positi
 only in the configuration that flatters it. Under overlapping windows it is **15.3%, three times
 nominal**, and widening the bootstrap makes it worse. That is now on every overlapping result.
 
+## A second pass, and the one thing I could not fix
+
+After those 38 landed I ran two more hunting passes, one driving the real pages in a headless
+browser and one reading the diffs for regressions the fixes had introduced. **Eleven findings, ten
+fixed.** `NOTES.md` section 5d has them all. The three worth knowing about:
+
+- **Two pages printed a median they had just called unusable.** Raising the own-history floor to
+  three points changed the flag but not the rows, so Dollar Tree and Paylocity showed
+  `own median 19.9x / vs median -16%` directly above "No usable own-history multiples for this
+  name." Withheld now, with a caveat that says which situation applies.
+- **Six of eight nav links 404'd from `/analyze/` and `/positioning/`.** Introduced by me: the
+  chrome function took a depth argument and then ignored it for the front-page anchors. A test now
+  runs the real function at each page depth and checks every link against the filesystem.
+- **A one-space journal heading parsed to nothing.** My own fix for the five-ticker bug required
+  the template's two-space separator, which turns a typo in a hand-written append-only file into
+  the whole log vanishing. If you had typed one space tonight you would have woken up to an empty
+  journal on both new pages. It falls back now.
+
+**The eleventh I left alone on purpose, and you should decide it.** The front page's Journal tab
+still shows thirteen names where `/positioning/` shows sixteen, and one entry titled
+`NOW ACN AMAT NVR  Recommendation: Watch or Pass` under META. That is the original five-ticker bug,
+still live in `scripts/build_dashboard.py`, which is on the do-not-touch list along with the
+`dashboard/data.js` it writes. The fix is one line (give it the grammar in `scripts/an/journal.py`)
+and I did not make it, because you said not to modify existing routes. Say the word and it is a
+two-minute change. Two tests pin the divergence in the meantime so nobody mistakes it for new.
+
 ## Review this in the morning
 
 1. **Confirm the repo question.** Is this the site you meant, or is there a Next.js project
@@ -267,15 +293,15 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 675 |
-| review findings confirmed and fixed | 38 |
+| tests | 695 |
+| review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
 | quarter narratives, quote-verified | 16 (122 quotes, 0 unverified) |
 | peer valuations computed | 150 |
 | lines added to `dashboard/index.html` | 2 |
 | existing files otherwise modified | 0, enforced by `tests/test_nothing_existing_was_touched.py` |
-| clean-clone check | 622 tests pass, rebuild byte-identical to what is committed |
+| clean-clone check | full suite passes, rebuild byte-identical apart from `built_at` |
 | money spent | none |
 | API keys in any generated file | none, enforced by `tests/test_privacy.py` |
 

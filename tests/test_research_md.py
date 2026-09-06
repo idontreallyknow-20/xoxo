@@ -146,6 +146,17 @@ def test_one_malformed_note_does_not_take_the_others_down(tmp_path):
                                      encoding="utf-8")
     with pytest.raises(R.ParseError):
         R.load_all(tmp_path)
-    lenient = R.load_all(tmp_path, strict=False)
-    assert set(lenient) == {"KLAC", "BKNG", "_errors"}
-    assert "BAD" in lenient["_errors"]
+    notes, errors = R.load_all_lenient(tmp_path)
+    assert set(notes) == {"KLAC", "BKNG"}
+    assert set(errors) == {"BAD"}
+    assert all(isinstance(n, R.ResearchNote) for n in notes.values())
+
+
+def test_the_lenient_loader_returns_a_pair_not_a_magic_key():
+    """An earlier version put the failures under an "_errors" key inside the notes
+    dict, so any caller iterating it would eventually find a string where a
+    ResearchNote was promised."""
+    notes, errors = R.load_all_lenient()
+    assert "_errors" not in notes
+    assert errors == {}
+    assert all(isinstance(n, R.ResearchNote) for n in notes.values())
