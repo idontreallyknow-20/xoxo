@@ -72,7 +72,7 @@ Consequences that shape everything below:
 - [x] **B3** `scripts/an/journal.py` — parse `journal.md` into entries (date, ticker, thesis, wrong-if,
       size, conviction, bucket) without importing `build_dashboard.py`.
       Verify: `python -m pytest -q tests/test_journal.py`
-- [ ] **B4** `scripts/an/edgar.py` — CIK map, `submissions`, `companyfacts`, `companyconcept`, filing
+- [x] **B4** `scripts/an/edgar.py` — CIK map, `submissions`, `companyfacts`, `companyconcept`, filing
       index -> document URL, 8-K -> Exhibit 99.1/99.2 resolution. Correct `User-Agent`, 10 req/s cap.
       Verify: `python -m pytest -q tests/test_edgar.py` (fixture-driven) and
       `python scripts/fetch_edgar.py --dry-run AAPL` prints the exact URLs it would call
@@ -104,11 +104,11 @@ Consequences that shape everything below:
 
 ## D. Scoring model
 
-- [ ] **D1** `scripts/an/score.py` — documented cross-sectional score. Components, weights and the
+- [x] **D1** `scripts/an/score.py` — documented cross-sectional score. Components, weights and the
       reason for each written in the module docstring, not just in my head. Pure function, no I/O.
       Verify: `python -m pytest -q tests/test_score.py` (determinism, monotonicity per component,
       missing-data neutrality, no NaN escapes, weights sum to 1)
-- [ ] **D2** Component z-scoring / winsorisation done *within sector* where the metric is
+- [x] **D2** Component z-scoring / winsorisation done *within sector* where the metric is
       sector-dependent (margins, ROIC) and cross-sectionally where it is not (revisions, drawdown).
       Verify: test asserts a high-margin software name does not automatically outrank a good
       industrial on the margin component
