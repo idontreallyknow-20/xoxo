@@ -48,6 +48,8 @@
       `<span class="chip">score ${esc(num(c.percentile, 0))}</span>`,
       c.thinly_evidenced ? `<span class="chip warn">thin evidence</span>` : "",
       c.depth === "screen" ? `<span class="chip warn">no filing read</span>` : "",
+      c.peer_verdict && c.peer_verdict !== "in the middle"
+        ? `<span class="chip">${esc(c.peer_verdict)}</span>` : "",
     ].filter(Boolean).join("");
 
     const why = c.reasoning.map((r) => `<p>${esc(r)}</p>`).join("");
@@ -71,6 +73,8 @@
           <div class="kv"><span>next-year estimate, 90d</span><b>${esc(pct(c.revisions_90d, 1, true))}</b></div>
           <div class="kv"><span>next report</span><b>${esc(c.next_earnings || "n/a")}</b></div>
           <div class="kv"><span>evidence coverage</span><b>${esc(pct(c.coverage, 0))}</b></div>
+          ${has(c.peer_gap) ? `<div class="kv"><span>peer gap, quality less price</span><b>${
+            c.peer_gap >= 0 ? "+" : ""}${esc(num(c.peer_gap * 100, 0))} pts</b></div>` : ""}
         </div>
       </div>
       <div class="cf">
@@ -101,11 +105,13 @@
       <td class="n">${esc(mult(c.forward_pe))}</td>
       <td class="n">${esc(pct(c.revisions_90d, 1, true))}</td>
       <td class="n">${esc(pct(c.dd_52w, 0, true))}</td>
+      <td class="muted" style="font-size:11px">${esc(c.peer_verdict || "")}</td>
     </tr>`).join("");
     return `<div class="note warn">${esc(S.memo.research_queue_note)}</div>
       <div class="scroll"><table><thead><tr>
         <th class="n">#</th><th>ticker</th><th>company</th><th>sector</th>
         <th class="n">score</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th class="n">off high</th>
+        <th>against peers</th>
       </tr></thead><tbody>${rows}</tbody></table></div>`;
   }
 

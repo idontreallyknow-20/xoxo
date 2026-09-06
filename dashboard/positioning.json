@@ -254,6 +254,7 @@
     "The score is held back by balance sheet, analyst agreement.",
     "Trades at 15.8x forward earnings against a four-point median of 29.5x, 47% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +0.5% over 90 days, with 14 analysts raising and 12 cutting in the last 30.",
+    "Against 24 peers in Consumer Cyclical, it is priced at the 42th percentile and its measured quality sits at the 88th: priced below where its quality sits.",
     "Sits -12% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -275,7 +276,11 @@
     "price_at_call": 195.13,
     "thesis": "Record bookings, room nights up 5%, EPS up 15%, at 15.8x forward against a 29.5x median. Buybacks of $3.7 billion a quarter shrink the count 4 to 5% a year. The AI agent fear is priced as certainty."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "priced below where its quality sits",
+   "peer_gap": 0.4502,
+   "peer_set_label": "Consumer Cyclical",
+   "peer_set_n": 25
   },
   {
    "rank": 2,
@@ -333,6 +338,7 @@
     "The score is held back by analyst agreement, next-year EPS revision, 30 days.",
     "Trades at 10.4x forward earnings against a four-point median of 37.9x, 73% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +4.2% over 90 days, but no analyst changed their number in the last 30, so the move is older than a month.",
+    "Against 16 peers in Software - Application, it is priced at the 3th percentile and its measured quality sits at the 69th: cheap against peers of better quality.",
     "Sits -25% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -354,7 +360,11 @@
     "price_at_call": 285.75,
     "thesis": "Rank 4 on quality, about 12x guided fiscal 2026 EPS, 59% off the high, $25 billion buyback, MAUs up 17%. The AI bear case has not shown up in the numbers yet."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "cheap against peers of better quality",
+   "peer_gap": 0.6562,
+   "peer_set_label": "Software - Application",
+   "peer_set_n": 17
   },
   {
    "rank": 3,
@@ -412,6 +422,7 @@
     "The score is held back by revenue CAGR, balance sheet.",
     "Trades at 31.6x forward earnings against a four-point median of 51.3x, 38% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +1.3% over 90 days, with 9 analysts raising and 2 cutting in the last 30.",
+    "Against 25 peers in Healthcare, it is priced at the 90th percentile and its measured quality sits at the 40th: priced above where its quality sits.",
     "Sits -30% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -433,7 +444,11 @@
     "price_at_call": 529.29,
     "thesis": "Recurring diagnostics growing 10% organic, guidance raised, 31.6x against a 51x median, 30% off the high."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "priced above where its quality sits",
+   "peer_gap": -0.5,
+   "peer_set_label": "Healthcare",
+   "peer_set_n": 26
   },
   {
    "rank": 4,
@@ -496,6 +511,7 @@
     "The score is held back by EV/EBITDA vs own median, balance sheet.",
     "Trades at 25.9x forward earnings against a four-point median of 35.0x, 26% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +13.1% over 90 days, with 11 analysts raising and 1 cutting in the last 30.",
+    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 67th percentile and its measured quality sits at the 83th: expensive, and the quality supports it.",
     "Sits -44% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -519,7 +535,11 @@
     "price_at_call": 172.94,
     "thesis": "Near monopoly in process control, record September quarter guided, estimates up 13% in 90 days, 43% off the high. Sized as a cyclical."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_gap": 0.1667,
+   "peer_set_label": "Semiconductor Equipment & Materials",
+   "peer_set_n": 7
   },
   {
    "rank": 5,
@@ -577,6 +597,7 @@
     "The score is held back by share count change, ROIC direction.",
     "Trades at 21.6x forward earnings against a four-point median of 35.8x, 40% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +4.2% over 90 days, with 19 analysts raising and 4 cutting in the last 30.",
+    "Against 10 peers in Software - Infrastructure, it is priced at the 75th percentile and its measured quality sits at the 55th: in the middle.",
     "Sits -10% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -598,7 +619,11 @@
     "price_at_call": 510.12,
     "thesis": "Azure accelerating to 43%, fiscal Q4 beat on both lines, lowest multiple in three years at 21.6x forward. Quality at a fair price rather than a bargain."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "in the middle",
+   "peer_gap": -0.2,
+   "peer_set_label": "Software - Infrastructure",
+   "peer_set_n": 11
   },
   {
    "rank": 6,
@@ -660,6 +685,7 @@
     "The score is held back by EV/EBITDA vs own median, gross margin stability.",
     "Trades at 25.3x forward earnings against a four-point median of 30.1x, 16% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +20.1% over 90 days, with 17 analysts raising and 1 cutting in the last 30.",
+    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 58th percentile and its measured quality sits at the 67th: in the middle.",
     "Sits -34% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -682,7 +708,11 @@
     "price_at_call": 292.66,
     "thesis": "Record quarter, 20% sequential growth guided, estimates up 20% in 90 days. Second semi equipment name, kept small."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "in the middle",
+   "peer_gap": 0.0833,
+   "peer_set_label": "Semiconductor Equipment & Materials",
+   "peer_set_n": 7
   },
   {
    "rank": 7,
@@ -744,6 +774,7 @@
     "The score is held back by revenue CAGR, return on invested capital.",
     "Trades at 13.9x forward earnings against a four-point median of 18.7x, 26% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +4.7% over 90 days, with 2 analysts raising and 4 cutting in the last 30.",
+    "Against 5 peers in Biotechnology, it is priced at the 50th percentile and its measured quality sits at the 30th: in the middle.",
     "Sits -1% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -765,7 +796,11 @@
     "price_at_call": 843.47,
     "thesis": "Dupixent up 38% and Eylea HD up 52% offset legacy Eylea erosion; two straight double digit quarters at 13.9x forward. Net cash."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "in the middle",
+   "peer_gap": -0.2,
+   "peer_set_label": "Biotechnology",
+   "peer_set_n": 6
   },
   {
    "rank": 8,
@@ -827,6 +862,7 @@
     "The score is held back by EV/EBITDA vs own median, forward P/E vs own median.",
     "Trades at 23.6x forward earnings against a four-point median of 18.7x, 26% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +14.2% over 90 days, with 9 analysts raising and 0 cutting in the last 30.",
+    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 17th percentile and its measured quality sits at the 33th: cheap, and the quality suggests why.",
     "Sits -41% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -841,7 +877,11 @@
     "Reduced because the cyclical-turn bucket has a higher false positive rate and is capped at 30% of deployed capital."
    ],
    "already_logged": null,
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "cheap, and the quality suggests why",
+   "peer_gap": 0.1667,
+   "peer_set_label": "Semiconductor Equipment & Materials",
+   "peer_set_n": 7
   },
   {
    "rank": 9,
@@ -903,6 +943,7 @@
     "The score is held back by next-year EPS revision, 30 days, next-year EPS revision, 90 days.",
     "Trades at 16.7x forward earnings against a four-point median of 58.7x, 72% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved -0.5% over 90 days, with 2 analysts raising and 1 cutting in the last 30.",
+    "Against 16 peers in Software - Application, it is priced at the 38th percentile and its measured quality sits at the 53th: in the middle.",
     "Sits -27% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -925,7 +966,11 @@
     "price_at_call": 237.52,
     "thesis": "Revenue up 16% with guidance raised, 16.7x forward against a 58.7x median, free cash flow yield near 5.5%. Sector selloff, not company selloff."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "in the middle",
+   "peer_gap": 0.1562,
+   "peer_set_label": "Software - Application",
+   "peer_set_n": 17
   },
   {
    "rank": 10,
@@ -987,6 +1032,7 @@
     "The score is held back by return on invested capital, share count change.",
     "Trades at 29.1x forward earnings against a four-point median of 123.4x, 76% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved -0.4% over 90 days, with 17 analysts raising and 19 cutting in the last 30.",
+    "Against 16 peers in Software - Application, it is priced at the 88th percentile and its measured quality sits at the 66th: expensive, and the quality supports it.",
     "Sits -30% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -999,7 +1045,11 @@
    ],
    "constraint_notes": [],
    "already_logged": null,
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_gap": -0.2188,
+   "peer_set_label": "Software - Application",
+   "peer_set_n": 17
   },
   {
    "rank": 11,
@@ -1061,6 +1111,7 @@
     "The score is held back by return on invested capital, free cash flow margin.",
     "Trades at 30.6x forward earnings against a four-point median of 72.3x, 58% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +2.4% over 90 days, with 24 analysts raising and 1 cutting in the last 30.",
+    "Against 25 peers in Healthcare, it is priced at the 92th percentile and its measured quality sits at the 44th: priced above where its quality sits.",
     "Sits -38% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -1082,7 +1133,11 @@
     "price_at_call": 369.83,
     "thesis": "Procedures up 16%, placements up, multiple halved to 30.6x from a 72x median because Ottava and Hugo arrived. Razor and blade model with no debt."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "priced above where its quality sits",
+   "peer_gap": -0.48,
+   "peer_set_label": "Healthcare",
+   "peer_set_n": 26
   },
   {
    "rank": 12,
@@ -1144,6 +1199,7 @@
     "The score is held back by analyst agreement, next-year EPS revision, 90 days.",
     "Trades at 20.0x forward earnings against a four-point median of 31.5x, 37% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved -1.3% over 90 days, with 0 analysts raising and 1 cutting in the last 30.",
+    "Against 22 peers in Industrials, it is priced at the 25th percentile and its measured quality sits at the 77th: cheap against peers of better quality.",
     "Sits -35% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
    "what_would_be_wrong": [
@@ -1165,7 +1221,11 @@
     "price_at_call": 33.58,
     "thesis": "Salvage auction duopoly, net cash, 20x against a 31.5x median, 50% off the high. Volumes are cyclical to insurance claims, not structural."
    },
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample"
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "peer_verdict": "cheap against peers of better quality",
+   "peer_gap": 0.5195,
+   "peer_set_label": "Industrials",
+   "peer_set_n": 23
   }
  ],
  "research_queue": [
@@ -1219,9 +1279,12 @@
     "The score is held back by gross margin stability, share count change.",
     "Trades at 14.8x forward earnings against a four-point median of 46.3x, 68% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +22.2% over 90 days, with 4 analysts raising and 0 cutting in the last 30.",
+    "Against 5 peers in Semiconductors, it is priced at the 50th percentile and its measured quality sits at the 90th: priced below where its quality sits.",
     "Sits -5% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "priced below where its quality sits",
+   "peer_set_label": "Semiconductors"
   },
   {
    "rank": 2,
@@ -1281,9 +1344,12 @@
     "The score is held back by analyst agreement, short interest.",
     "Trades at 6.3x forward earnings against a four-point median of 14.5x, 57% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +16.8% over 90 days, with 1 analyst raising and 2 cutting in the last 30.",
+    "Against 5 peers in Biotechnology, it is priced at the 0th percentile and its measured quality sits at the 100th: cheap against peers of better quality.",
     "Sits -1% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "cheap against peers of better quality",
+   "peer_set_label": "Biotechnology"
   },
   {
    "rank": 3,
@@ -1343,9 +1409,12 @@
     "The score is held back by forward P/E vs own median, gross margin stability.",
     "Trades at 30.7x forward earnings against a four-point median of 31.8x, 4% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +4.0% over 90 days, with 9 analysts raising and 1 cutting in the last 30.",
+    "Against 25 peers in Healthcare, it is priced at the 90th percentile and its measured quality sits at the 76th: expensive, and the quality supports it.",
     "Sits -13% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_set_label": "Healthcare"
   },
   {
    "rank": 4,
@@ -1393,9 +1462,12 @@
     "The score is held back by gross margin stability.",
     "Trades at 36.2x forward earnings against a four-point median of 68.1x, 47% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +3.2% over 90 days, with 11 analysts raising and 1 cutting in the last 30.",
+    "Against 16 peers in Software - Application, it is priced at the 88th percentile and its measured quality sits at the 34th: expensive against peers of worse quality.",
     "Sits -5% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "expensive against peers of worse quality",
+   "peer_set_label": "Software - Application"
   },
   {
    "rank": 5,
@@ -1455,9 +1527,12 @@
     "The score is held back by EV/EBITDA vs own median, forward P/E vs own median.",
     "Trades at 37.1x forward earnings against a four-point median of 41.7x, 11% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +16.0% over 90 days, with 26 analysts raising and 0 cutting in the last 30.",
+    "Against 54 peers in Technology, it is priced at the 94th percentile and its measured quality sits at the 73th: expensive, and the quality supports it.",
     "Sits -13% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_set_label": "Technology"
   },
   {
    "rank": 6,
@@ -1507,9 +1582,12 @@
     "The score is held back by ROIC direction, share count change.",
     "Trades at 27.4x forward earnings. No usable own-history comparison for this name.",
     "Next-year consensus has moved +24.9% over 90 days, with 28 analysts raising and 0 cutting in the last 30.",
+    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 92th percentile and its measured quality sits at the 83th: expensive, and the quality supports it.",
     "Sits -16% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_set_label": "Semiconductor Equipment & Materials"
   },
   {
    "rank": 7,
@@ -1561,9 +1639,12 @@
     "The score is held back by free cash flow margin, short interest.",
     "Trades at 17.2x forward earnings against a four-point median of 29.1x, 41% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +13.4% over 90 days, with 16 analysts raising and 0 cutting in the last 30.",
+    "Against 16 peers in Software - Application, it is priced at the 25th percentile and its measured quality sits at the 53th: in the middle.",
     "Sits -4% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "in the middle",
+   "peer_set_label": "Software - Application"
   },
   {
    "rank": 8,
@@ -1621,9 +1702,12 @@
     "The score is held back by revenue CAGR, forward P/E vs own median.",
     "Trades at 23.6x forward earnings against a four-point median of 22.2x, 6% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +16.5% over 90 days, with 12 analysts raising and 0 cutting in the last 30.",
+    "Against 22 peers in Industrials, it is priced at the 48th percentile and its measured quality sits at the 52th: in the middle.",
     "Sits -3% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "in the middle",
+   "peer_set_label": "Industrials"
   },
   {
    "rank": 9,
@@ -1683,9 +1767,12 @@
     "The score is held back by return on invested capital, gross margin stability.",
     "Trades at 34.8x forward earnings against a four-point median of 54.8x, 36% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +15.4% over 90 days, with 11 analysts raising and 1 cutting in the last 30.",
+    "Against 5 peers in Semiconductors, it is priced at the 100th percentile and its measured quality sits at the 40th: priced above where its quality sits.",
     "Sits -29% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "priced above where its quality sits",
+   "peer_set_label": "Semiconductors"
   },
   {
    "rank": 10,
@@ -1745,9 +1832,12 @@
     "The score is held back by short interest, balance sheet.",
     "Trades at 11.9x forward earnings against a four-point median of 32.0x, 63% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +7.3% over 90 days, with 15 analysts raising and 0 cutting in the last 30.",
+    "Against 6 peers in Information Technology Services, it is priced at the 42th percentile and its measured quality sits at the 67th: in the middle.",
     "Sits -30% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "in the middle",
+   "peer_set_label": "Information Technology Services"
   },
   {
    "rank": 11,
@@ -1805,9 +1895,12 @@
     "The score is held back by forward P/E vs own median, gross margin stability.",
     "Trades at 41.5x forward earnings against a four-point median of 40.9x, 1% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +10.0% over 90 days, with 39 analysts raising and 0 cutting in the last 30.",
+    "Against 10 peers in Software - Infrastructure, it is priced at the 100th percentile and its measured quality sits at the 75th: expensive, and the quality supports it.",
     "Sits -11% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "expensive, and the quality supports it",
+   "peer_set_label": "Software - Infrastructure"
   },
   {
    "rank": 12,
@@ -1865,9 +1958,12 @@
     "The score is held back by free cash flow margin, forward P/E vs own median.",
     "Trades at 20.2x forward earnings against a four-point median of 19.7x, 2% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
     "Next-year consensus has moved +12.5% over 90 days, with 10 analysts raising and 0 cutting in the last 30.",
+    "Against 22 peers in Industrials, it is priced at the 34th percentile and its measured quality sits at the 48th: in the middle.",
     "Sits -23% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
    ],
-   "confidence": "low: ranked by screen output only, with no filing read"
+   "confidence": "low: ranked by screen output only, with no filing read",
+   "peer_verdict": "in the middle",
+   "peer_set_label": "Industrials"
   }
  ],
  "research_queue_note": "These are the names the score ranks highest that nobody has read a filing for. They are candidates for the next deep dive, not candidates for capital. The rule in criteria.md is that every recommendation carries the price or event that would prove it wrong, and a screen row cannot supply one. The score's single highest-ranked name, NVDA, is one of them, which is a gap in the process rather than a recommendation.",

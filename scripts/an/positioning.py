@@ -37,7 +37,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from . import journal as journal_mod
-from . import local, paths, research_md, score
+from . import local, paths, peers, research_md, score
 
 __all__ = ["Rules", "Holding", "PortfolioState", "Candidate", "build_memo", "RULES"]
 
@@ -116,6 +116,10 @@ class Candidate:
     constraint_notes: List[str]
     already_logged: Optional[Dict[str, Any]]
     confidence: str
+    peer_verdict: Optional[str] = None
+    peer_gap: Optional[float] = None
+    peer_set_label: Optional[str] = None
+    peer_set_n: Optional[int] = None
 
 
 def _read_holdings() -> Tuple[List[Holding], Optional[float], str]:
@@ -174,7 +178,8 @@ def _driver_labels() -> Dict[str, str]:
     return {c.key: c.label for c in score.components_for("quality_value")}
 
 
-def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags) -> List[str]:
+def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags,
+               peer: Optional["peers.PeerValuation"] = None) -> List[str]:
     """Sentences built from the record. Nothing here is a forecast."""
     out: List[str] = []
     v = rec.valuation
@@ -221,6 +226,13 @@ def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags) -> List
                 f"Next-year consensus has moved {v.eps_fy1_chg_90d:+.1%} over 90 days, with {up} "
                 f"analyst{'' if up == 1 else 's'} raising and {down} cutting in the last 30."
             )
+
+    if peer is not None and peer.price_rank is not None and peer.quality_rank is not None:
+        out.append(
+            f"Against {peer.peer_set.n - 1} peers in {peer.peer_set.label}, it is priced at the "
+            f"{peer.price_rank * 100:.0f}th percentile and its measured quality sits at the "
+            f"{peer.quality_rank * 100:.0f}th: {peer.verdict}."
+        )
 
     if v and v.dd_52w is not None:
         out.append(f"Sits {v.dd_52w:+.0%} from its 52-week high. Whether that is an opportunity or a "
@@ -379,6 +391,7 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
     notes = research_md.load_all()
     top150 = [r for r in universe.values() if r.in_top_150]
     scored = {v: score.score_universe(top150, variant=v) for v in score.VARIANTS}
+    peer_vals = peers.build_peer_valuations(top150)
     table = scored[variant]
     state = portfolio_state()
     held = {h.ticker for h in state.holdings}
@@ -414,7 +427,7 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
             next_earnings=v.next_earnings if v else None,
             drivers=drivers,
             drags=drags,
-            reasoning=_reasoning(rec, note, b, drivers, drags),
+            reasoning=_reasoning(rec, note, b, drivers, drags, peer_vals.get(b.ticker)),
             what_would_be_wrong=_falsifiers(rec, note, logged_by_ticker.get(b.ticker)),
             suggested_band_usd=band,
             constraint_notes=cnotes,
@@ -422,6 +435,10 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
             confidence=("moderate, and bounded by the fact that the score has never been tested "
                         "out of sample" if note else
                         "low: ranked by screen output only, with no filing read"),
+            peer_verdict=(peer_vals[b.ticker].verdict if b.ticker in peer_vals else None),
+            peer_gap=(peer_vals[b.ticker].gap if b.ticker in peer_vals else None),
+            peer_set_label=(peer_vals[b.ticker].peer_set.label if b.ticker in peer_vals else None),
+            peer_set_n=(peer_vals[b.ticker].peer_set.n if b.ticker in peer_vals else None),
         )
 
     # Two lists, because they answer two different questions and merging them would
@@ -528,7 +545,9 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
                 "what_would_be_wrong": c.what_would_be_wrong,
                 "suggested_band_usd": list(c.suggested_band_usd) if c.suggested_band_usd else None,
                 "constraint_notes": c.constraint_notes, "already_logged": c.already_logged,
-                "confidence": c.confidence,
+                "confidence": c.confidence, "peer_verdict": c.peer_verdict,
+                "peer_gap": (None if c.peer_gap is None else round(c.peer_gap, 4)),
+                "peer_set_label": c.peer_set_label, "peer_set_n": c.peer_set_n,
             }
             for c in candidates
         ],
@@ -540,6 +559,7 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
                 "dd_52w": c.dd_52w, "revisions_90d": c.revisions_90d,
                 "next_earnings": c.next_earnings, "drivers": c.drivers, "drags": c.drags,
                 "reasoning": c.reasoning, "confidence": c.confidence,
+                "peer_verdict": c.peer_verdict, "peer_set_label": c.peer_set_label,
             }
             for c in queue
         ],
