@@ -195,6 +195,29 @@ called a single quarter annual whenever it turned up in a 10-K. All four are fix
 
 ---
 
+## The adversarial review
+
+After building it I had 124 agents review the whole layer, each finding checked by three independent
+skeptics who had to reproduce it with a real command. **38 findings survived. All 38 are fixed.**
+`NOTES.md` section 5c has the full list; the seven worst made a page state something false:
+
+- Net debt percentages were sign-inverted on nine of sixteen pages. Alphabet's $100bn swing from net
+  cash to net debt printed as "-118.8%".
+- Forward P/E was compared against a trailing median, so 85% of names read cheap by construction
+  against 51% on the like-for-like EV/EBITDA comparison. That component's weight is now the smaller
+  of the two.
+- **The memo ranked and sized names your notes say to Pass on.** Applied Materials ranks in the top
+  third and its note says "Pass for now". There are three lists now: buy candidates, read-and-declined
+  with the verdict quoted and no size, and the research queue.
+- A journal heading naming five tickers produced one entry, so four logged calls had stopped existing.
+- "n/a" is truthy, so Meta's standing call showed its falsifier as the word "n/a".
+- Every page said it was built in 1970.
+- Eighty pages showed "0.0x" leverage for companies with no debt at all.
+
+And one that changed a number I had already published: the engine's false-positive rate was measured
+only in the configuration that flatters it. Under overlapping windows it is **15.3%, three times
+nominal**, and widening the bootstrap makes it worse. That is now on every overlapping result.
+
 ## Review this in the morning
 
 1. **Confirm the repo question.** Is this the site you meant, or is there a Next.js project
@@ -244,7 +267,8 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | see `python -m pytest -q` |
+| tests | 675 |
+| review findings confirmed and fixed | 38 |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
 | quarter narratives, quote-verified | 16 (122 quotes, 0 unverified) |

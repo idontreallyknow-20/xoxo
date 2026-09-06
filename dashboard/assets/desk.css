@@ -365,3 +365,23 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
  * meant guessing at semantic equivalence and dropping one. */
 .cand ul.kill .src { display: block; font-family: var(--mono); font-size: 10.5px;
                      color: var(--ink-3); margin-top: 3px; }
+
+/* Grid blowout.
+ *
+ * A grid item's default min-width is auto, which resolves to its min-content size,
+ * so a single long unbroken run of text expands its track past the container and
+ * takes the whole page with it. At 390px one narrative headline pushed a page to
+ * 586px. min-width: 0 lets the track shrink and the text wrap, which is what every
+ * one of these was already assuming.
+ */
+.ledger .row > *,
+.cand .cb > *, .cand .cf > *,
+.bar > *, .grid > *, .plate > *, .stat > * { min-width: 0; }
+
+.ledger .k, .ledger .v, .cand ul.kill li, .prose, .lede, .note, .gaps li, .howto li,
+.card .k, .card .d, .rail .cap, .rail .keys .key { overflow-wrap: anywhere; }
+
+/* .m is the narrow right-hand label column and stays on one line by design, but it
+ * must not be allowed to set the row's width when its content is long. */
+.ledger .m { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 780px) { .ledger .m { max-width: none; white-space: normal; } }

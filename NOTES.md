@@ -281,6 +281,74 @@ first live run rather than discovering later:
 - The split fixture is hand-built, so it proves the adjusted-close preference logic but not that
   Yahoo's own adjustment is right.
 
+## 5c. The adversarial review, and what it found
+
+After the layer was built, 124 agents reviewed it across four dimensions (numerical correctness,
+whether the output could mislead, what breaks, and whether it lived up to its own claims). Every
+finding then had to survive three independent skeptics who were told to default to rejecting it and
+had to reproduce the failure with a real command. 38 survived. All 38 are fixed.
+
+I spot-checked the two most serious myself before acting on either, and both reproduced exactly.
+
+**The seven that made a page state something false**, in the order they would have misled you:
+
+1. **Net debt percentages were sign-inverted on nine of sixteen pages.** Alphabet went from $84bn of
+   net cash to $16bn of net debt and the card printed "-118.8%". `cagr` already refused negative
+   bases, and the page fell back to `change_pct` precisely when it did, routing around the guard.
+2. **Forward P/E was compared against a trailing median.** The screen builds its historical P/E from
+   the fiscal-year-end price over that year's reported EPS. The current figure is a forward
+   estimate. Where earnings grow, forward is mechanically below trailing, so the column read cheap
+   by construction: 85% of names negative with a median of -29%, against 51% and -0.6% on EV/EBITDA
+   where both sides are trailing. The bias also tracks growth (-0.28 rank correlation with revenue
+   CAGR against -0.16), so the component was partly a second helping of the growth component.
+3. **The memo ranked and sized names the analyst wrote "Pass" for.** It decided the candidate list on
+   whether a research note file existed and never read the verdict at the bottom of it. Four of the
+   sixteen say Pass or Watch. Applied Materials ranks in the top third and its note says "Pass for
+   now", with a dollar band printed next to it.
+4. **A journal heading naming five tickers produced one entry.** `## 2026-09-04 META NOW ACN AMAT
+   NVR` matched a single `\S+`, so NOW, ACN, AMAT and NVR were logged calls that had stopped
+   existing downstream.
+5. **"n/a" is truthy.** That heading writes "n/a" for its falsifier and the fallback chain stopped
+   there, so Meta's standing call rendered its falsifier as the word "n/a" while three real thesis
+   killers sat unused in the same record.
+6. **Every page said it was built on 1 January 1970.** `--check` pinned the timestamp so files could
+   be diffed, and those were the files that got committed.
+7. **Eighty pages showed "0.0x" net debt to EBITDA.** The upstream screen writes 0.0 for every
+   net-cash name, so the best balance sheets in the universe read as the middle of the range under a
+   "lower is better" column.
+
+**The one that changed a number I had published.** `MEASURED_FALSE_POSITIVE_RATE` said 5.5 to 7.5
+percent and the engine printed it on every result. It had only ever been measured with the holding
+period equal to the rebalance spacing. Measuring the realistic case needed the synthetic generator to
+be able to produce it, so it gained score persistence and a multi-step horizon. With four-to-one
+overlap, at the sample size where the twelve-period floor stops protecting, the rate is **15.3%,
+three times nominal**. Widening the bootstrap block made it worse, not better (13.3%, 17.5%, 26.7% at
+1.5x, 2x and 3x). The fix is not in the engine: use a one-step forward return so the windows do not
+overlap, which is what the archiving advice already said for a different reason.
+
+**Two citations were doing work the papers do not do.** Novy-Marx (2013) is cited for profitability
+everywhere, but his result is that *gross* profits over assets beats bottom-line measures, which is
+an argument against ROIC and FCF margin rather than for them. And Boehmer, Jones and Zhang measure
+daily short-sale order flow; what is free here is the fortnightly short-interest level, whose own
+literature finds a weaker effect. Both docstrings now say what they are actually standing on.
+
+**A CSS grid blowout at 390px.** Grid items default to `min-width: auto`, which resolves to
+min-content, so one long headline pushed a page to 586px on a 390px screen. Found by the
+overflow check in `scripts/shoot.py`, which exists because a full-page screenshot cannot show you
+this: the image simply gets wider.
+
+The rest were smaller: a "four-point median" caveat hard-coded when twelve names have two or three
+points, the page and the score disagreeing on what counts as history, an inconsistency penalty that
+rewarded companies with negative free cash flow, "nobody revised" counted as evidence, a variance
+decomposition that ignored covariance, a falsifier de-duplicator that deleted distinct thresholds,
+notes keyed by their heading so a stray copy could silently overwrite one, and a short table row
+padded and then indexed positionally so every later column was read as the wrong metric.
+
+**What this says about the work.** A review this productive on code that was written carefully, with
+tests, means the tests were testing what I believed rather than what was true. The fixes all came
+with regression tests that assert the *wrong* behaviour is gone, not just that the right one is
+present, which is a different and better thing to check.
+
 ## 6. Tasks skipped, and why
 
 Nothing skipped. Every task in PLAN.md either passed its stated verification or is still open.
