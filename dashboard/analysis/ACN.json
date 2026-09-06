@@ -466,7 +466,15 @@
   "verdict": "Pass. Revisit if bookings growth turns positive for two quarters. Conviction 2 of 5.",
   "action": "Pass",
   "conviction": 2,
-  "logged": null,
+  "logged": {
+   "date": "2026-09-04",
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "price_at_call": 193.12,
+   "bucket": null
+  },
   "source": "hand-written research note in research/"
  },
  "risks": {
@@ -757,7 +765,18 @@
   "universe": "the quality top 150 as of 2026-09-04",
   "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
  },
- "journal": [],
+ "journal": [
+  {
+   "date": "2026-09-04",
+   "action": "Watch or Pass",
+   "price_at_call": 193.12,
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "bucket": null
+  }
+ ],
  "sources": [
   {
    "title": "Screen and statement data, Yahoo Finance via yfinance",

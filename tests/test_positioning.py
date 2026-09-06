@@ -145,8 +145,10 @@ def test_holdings_source_is_stated(memo):
 
 def test_logged_calls_are_carried_from_the_journal(memo):
     calls = memo["portfolio"]["logged_calls"]
-    assert len(calls) >= 11
-    assert all(c["wrong_if"] for c in calls)
+    assert len(calls) == 16, "one entry per ticker, including the five-name heading"
+    buys = [c for c in calls if (c["action"] or "").lower().startswith("buy")]
+    assert len(buys) == 11
+    assert all(c["wrong_if"] for c in buys), "a buy without a falsifier is not a call"
 
 
 def test_variant_agreement_is_reported(memo):
@@ -182,3 +184,55 @@ def test_scorecard_rows_carry_their_components():
         assert r["contributions"]
         assert 0 <= r["coverage"] <= 1
         assert r["percentile"] is not None
+
+
+def test_names_the_analyst_passed_on_are_not_ranked_as_buy_candidates(memo):
+    """The memo used to size every researched name in dollars without ever reading
+    the verdict at the bottom of its note. Four of the sixteen say Pass or Watch."""
+    from an import research_md
+
+    notes = research_md.load_all()
+    for c in memo["candidates"]:
+        verdict = (notes[c["ticker"]].verdict_action or "").lower()
+        assert verdict.startswith("buy"), f"{c['ticker']} is in the buy list but the note says {verdict!r}"
+        assert c["stance"] == "buy"
+
+
+def test_the_declined_names_are_shown_with_their_verdict_and_no_size(memo):
+    declined = memo["reviewed_and_declined"]
+    assert {c["ticker"] for c in declined} == {"ACN", "AMAT", "META", "NVR"}
+    for c in declined:
+        assert c["stance"] in ("passed", "watching")
+        assert c["verdict_text"]
+        assert "Not sized" in c["constraint_notes"][0]
+        assert c["note_verdict_full"]
+
+
+def test_a_high_scoring_declined_name_is_surfaced_not_buried(memo):
+    """Applied Materials ranks in the top third and the note says "Pass for now".
+    That disagreement is the most informative thing on the page."""
+    amat = next(c for c in memo["reviewed_and_declined"] if c["ticker"] == "AMAT")
+    assert amat["percentile"] > 60
+    assert amat["verdict_text"].lower().startswith("pass")
+    assert "disagreement is the point" in memo["reviewed_and_declined_note"]
+
+
+def test_no_name_appears_in_two_lists(memo):
+    lists = [{c["ticker"] for c in memo[k]}
+             for k in ("candidates", "reviewed_and_declined", "research_queue")]
+    for i, a in enumerate(lists):
+        for b in lists[i + 1:]:
+            assert not (a & b)
+
+
+def test_every_researched_name_lands_in_exactly_one_list(memo):
+    from an import research_md
+
+    placed = {c["ticker"] for c in memo["candidates"]} | {c["ticker"] for c in memo["reviewed_and_declined"]}
+    assert placed == set(research_md.load_all())
+
+
+def test_how_to_read_this_explains_the_split(memo):
+    joined = " ".join(memo["how_to_read_this"])
+    assert "concluded to buy" in joined
+    assert "read and declined" in joined

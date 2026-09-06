@@ -427,7 +427,15 @@
   "verdict": "Buy on pullback only. Buy zone $115 to $135. Not in the initial portfolio; ADBE and ADSK carry the software exposure at better prices. Conviction 3 of 5.",
   "action": "Buy on pullback only",
   "conviction": 3,
-  "logged": null,
+  "logged": {
+   "date": "2026-09-04",
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "price_at_call": 145.59,
+   "bucket": null
+  },
   "source": "hand-written research note in research/"
  },
  "risks": {
@@ -728,7 +736,18 @@
   "universe": "the quality top 150 as of 2026-09-04",
   "caveat": "A percentile against 150 names on one date. It has not been backtested; see the positioning page for why not."
  },
- "journal": [],
+ "journal": [
+  {
+   "date": "2026-09-04",
+   "action": "Watch or Pass",
+   "price_at_call": 145.59,
+   "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
+   "wrong_if": null,
+   "target_size": "$0",
+   "conviction": 2,
+   "bucket": null
+  }
+ ],
  "sources": [
   {
    "title": "Screen and statement data, Yahoo Finance via yfinance",

@@ -451,11 +451,11 @@
   "logged": {
    "date": "2026-09-04",
    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
-   "wrong_if": "n/a",
+   "wrong_if": null,
    "target_size": "$0",
    "conviction": 2,
    "price_at_call": 610.68,
-   "bucket": "n/a"
+   "bucket": null
   },
   "source": "hand-written research note in research/"
  },
@@ -467,12 +467,7 @@
   ],
   "price_trigger": 450.0,
   "price_trigger_note": null,
-  "wrong_if": [
-   {
-    "date": "2026-09-04",
-    "text": "n/a"
-   }
-  ],
+  "wrong_if": [],
   "source": "hand-written research note in research/"
  },
  "valuation": {
@@ -757,10 +752,10 @@
    "action": "Watch or Pass",
    "price_at_call": 610.68,
    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each.",
-   "wrong_if": "n/a",
+   "wrong_if": null,
    "target_size": "$0",
    "conviction": 2,
-   "bucket": "n/a"
+   "bucket": null
   }
  ],
  "sources": [

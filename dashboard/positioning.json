@@ -11,7 +11,8 @@
   "This is a memo, not a signal. It says what is true about each company today and what would have to happen for the idea to be wrong. Nothing here predicts a price.",
   "The ordering comes from a score that ranks names against each other on one date. A higher score means the name looks better than its peers on a set of measured characteristics, not that it will go up.",
   "Sizes come from the rules in criteria.md, not from confidence about outcomes. They are arithmetic: total capital, the eight-to-twelve-name target, the 12% position cap, and a reduction where the evidence is thin.",
-  "Every candidate carries what would prove it wrong. A candidate with no falsifier is flagged rather than ranked quietly, because the rule in criteria.md is that no recommendation exists without one."
+  "Every candidate carries what would prove it wrong. A candidate with no falsifier is flagged rather than ranked quietly, because the rule in criteria.md is that no recommendation exists without one.",
+  "The candidate list contains only names whose research note concluded to buy. Names that were read and declined appear separately, unsized, with the verdict quoted, however well the score ranks them."
  ],
  "portfolio": {
   "source": "no holdings file (portfolio/ is gitignored and absent here)",
@@ -21,6 +22,17 @@
   "total_usd": 100000.0,
   "holdings": [],
   "logged_calls": [
+   {
+    "date": "2026-09-04",
+    "ticker": "ACN",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 193.12,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   },
    {
     "date": "2026-09-04",
     "ticker": "ADBE",
@@ -42,6 +54,17 @@
     "wrong_if": "Billings growth under 5% twice, or a close under $185.",
     "price_at_call": 237.52,
     "thesis": "Revenue up 16% with guidance raised, 16.7x forward against a 58.7x median, free cash flow yield near 5.5%. Sector selloff, not company selloff."
+   },
+   {
+    "date": "2026-09-04",
+    "ticker": "AMAT",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 435.91,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
    },
    {
     "date": "2026-09-04",
@@ -126,8 +149,8 @@
     "action": "Watch or Pass",
     "target_usd": 0.0,
     "conviction": 2,
-    "bucket": "n/a",
-    "wrong_if": "n/a",
+    "bucket": null,
+    "wrong_if": null,
     "price_at_call": 610.68,
     "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
    },
@@ -141,6 +164,28 @@
     "wrong_if": "Azure growth under 30% with capex still rising, or a close under $400.",
     "price_at_call": 510.12,
     "thesis": "Azure accelerating to 43%, fiscal Q4 beat on both lines, lowest multiple in three years at 21.6x forward. Quality at a fair price rather than a bargain."
+   },
+   {
+    "date": "2026-09-04",
+    "ticker": "NOW",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 145.59,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   },
+   {
+    "date": "2026-09-04",
+    "ticker": "NVR",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 6373.95,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
    },
    {
     "date": "2026-09-04",
@@ -277,6 +322,7 @@
     "thesis": "Record bookings, room nights up 5%, EPS up 15%, at 15.8x forward against a 29.5x median. Buybacks of $3.7 billion a quarter shrink the count 4 to 5% a year. The AI agent fear is priced as certainty."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "priced below where its quality sits",
    "peer_gap": 0.4502,
    "peer_set_label": "Consumer Cyclical",
@@ -361,6 +407,7 @@
     "thesis": "Rank 4 on quality, about 12x guided fiscal 2026 EPS, 59% off the high, $25 billion buyback, MAUs up 17%. The AI bear case has not shown up in the numbers yet."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "cheap against peers of better quality",
    "peer_gap": 0.6562,
    "peer_set_label": "Software - Application",
@@ -445,6 +492,7 @@
     "thesis": "Recurring diagnostics growing 10% organic, guidance raised, 31.6x against a 51x median, 30% off the high."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "priced above where its quality sits",
    "peer_gap": -0.5,
    "peer_set_label": "Healthcare",
@@ -532,6 +580,7 @@
     "thesis": "Near monopoly in process control, record September quarter guided, estimates up 13% in 90 days, 43% off the high. Sized as a cyclical."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "expensive, and the quality supports it",
    "peer_gap": 0.1667,
    "peer_set_label": "Semiconductor Equipment & Materials",
@@ -616,6 +665,7 @@
     "thesis": "Azure accelerating to 43%, fiscal Q4 beat on both lines, lowest multiple in three years at 21.6x forward. Quality at a fair price rather than a bargain."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "in the middle",
    "peer_gap": -0.2,
    "peer_set_label": "Software - Infrastructure",
@@ -705,6 +755,7 @@
     "thesis": "Record quarter, 20% sequential growth guided, estimates up 20% in 90 days. Second semi equipment name, kept small."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "in the middle",
    "peer_gap": 0.0833,
    "peer_set_label": "Semiconductor Equipment & Materials",
@@ -793,6 +844,7 @@
     "thesis": "Dupixent up 38% and Eylea HD up 52% offset legacy Eylea erosion; two straight double digit quarters at 13.9x forward. Net cash."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "in the middle",
    "peer_gap": -0.2,
    "peer_set_label": "Biotechnology",
@@ -882,6 +934,7 @@
     "thesis": "Revenue up 16% with guidance raised, 16.7x forward against a 58.7x median, free cash flow yield near 5.5%. Sector selloff, not company selloff."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "in the middle",
    "peer_gap": 0.1562,
    "peer_set_label": "Software - Application",
@@ -889,87 +942,6 @@
   },
   {
    "rank": 9,
-   "ticker": "AMAT",
-   "company": "Applied Materials, Inc.",
-   "sector": "Technology",
-   "percentile": 71.8,
-   "coverage": 1.0,
-   "thinly_evidenced": false,
-   "depth": "deep",
-   "buckets": [
-    "cyclical turn"
-   ],
-   "price": 435.91,
-   "forward_pe": 23.620426,
-   "pe_vs_median": 0.26282756396364126,
-   "dd_52w": -0.40722215115513927,
-   "revisions_90d": 0.14244357489279968,
-   "next_earnings": "2026-11-12",
-   "drivers": [
-    {
-     "key": "revisions_90d",
-     "value": 0.4006
-    },
-    {
-     "key": "revisions_30d",
-     "value": 0.32
-    },
-    {
-     "key": "roic",
-     "value": 0.1024
-    },
-    {
-     "key": "balance",
-     "value": 0.0494
-    }
-   ],
-   "drags": [
-    {
-     "key": "value_ev",
-     "value": -0.4352
-    },
-    {
-     "key": "value_pe",
-     "value": -0.1565
-    },
-    {
-     "key": "growth",
-     "value": -0.0637
-    },
-    {
-     "key": "roic_trend",
-     "value": -0.05
-    }
-   ],
-   "reasoning": [
-    "Applied Materials is the largest semiconductor equipment company, selling deposition, etch, implant and inspection tools across logic, memory and display.",
-    "Ranks where it does mainly on next-year EPS revision, 90 days, next-year EPS revision, 30 days, return on invested capital.",
-    "The score is held back by EV/EBITDA vs own median, forward P/E vs own median.",
-    "Trades at 23.6x forward earnings against a four-point median of 18.7x, 26% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
-    "Next-year consensus has moved +14.2% over 90 days, with 9 analysts raising and 0 cutting in the last 30.",
-    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 17th percentile and its measured quality sits at the 33th: cheap, and the quality suggests why.",
-    "Sits -41% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
-   ],
-   "what_would_be_wrong": [
-    "Same as the group.",
-    "Price trigger not set because it is not a pick."
-   ],
-   "suggested_band_usd": [
-    4200.0,
-    7000.0
-   ],
-   "constraint_notes": [
-    "Reduced because the cyclical-turn bucket has a higher false positive rate and is capped at 30% of deployed capital."
-   ],
-   "already_logged": null,
-   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
-   "peer_verdict": "cheap, and the quality suggests why",
-   "peer_gap": 0.1667,
-   "peer_set_label": "Semiconductor Equipment & Materials",
-   "peer_set_n": 7
-  },
-  {
-   "rank": 10,
    "ticker": "NOW",
    "company": "ServiceNow, Inc.",
    "sector": "Technology",
@@ -1040,15 +1012,26 @@
     10000.0
    ],
    "constraint_notes": [],
-   "already_logged": null,
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "NOW",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 145.59,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "expensive, and the quality supports it",
    "peer_gap": -0.2188,
    "peer_set_label": "Software - Application",
    "peer_set_n": 17
   },
   {
-   "rank": 11,
+   "rank": 10,
    "ticker": "ISRG",
    "company": "Intuitive Surgical, Inc.",
    "sector": "Healthcare",
@@ -1130,13 +1113,14 @@
     "thesis": "Procedures up 16%, placements up, multiple halved to 30.6x from a 72x median because Ottava and Hugo arrived. Razor and blade model with no debt."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "priced above where its quality sits",
    "peer_gap": -0.48,
    "peer_set_label": "Healthcare",
    "peer_set_n": 26
   },
   {
-   "rank": 12,
+   "rank": 11,
    "ticker": "CPRT",
    "company": "Copart, Inc.",
    "sector": "Industrials",
@@ -1218,12 +1202,283 @@
     "thesis": "Salvage auction duopoly, net cash, 20x against a 31.5x median, 50% off the high. Volumes are cyclical to insurance claims, not structural."
    },
    "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
    "peer_verdict": "cheap against peers of better quality",
    "peer_gap": 0.5195,
    "peer_set_label": "Industrials",
    "peer_set_n": 23
+  },
+  {
+   "rank": 12,
+   "ticker": "GOOGL",
+   "company": "Alphabet Inc.",
+   "sector": "Communication Services",
+   "percentile": 34.9,
+   "coverage": 1.0,
+   "thinly_evidenced": false,
+   "depth": "deep",
+   "buckets": [
+    "compounder"
+   ],
+   "price": 342.48,
+   "forward_pe": 23.097359,
+   "pe_vs_median": -0.030118916149653785,
+   "dd_52w": -0.17495901931624902,
+   "revisions_90d": 0.0269710448130982,
+   "next_earnings": "2026-10-28",
+   "drivers": [
+    {
+     "key": "roic",
+     "value": 0.0751
+    },
+    {
+     "key": "revisions_90d",
+     "value": 0.0563
+    },
+    {
+     "key": "short_interest",
+     "value": 0.0285
+    },
+    {
+     "key": "share_count",
+     "value": 0.027
+    }
+   ],
+   "drags": [
+    {
+     "key": "value_ev",
+     "value": -0.1319
+    },
+    {
+     "key": "value_pe",
+     "value": -0.0739
+    },
+    {
+     "key": "fcf",
+     "value": -0.0363
+    },
+    {
+     "key": "growth",
+     "value": -0.0306
+    }
+   ],
+   "reasoning": [
+    "Alphabet is Google: search and search advertising, YouTube, Android, Chrome, Google Cloud, and the Gemini AI models, plus Waymo and other bets.",
+    "Ranks where it does mainly on return on invested capital, next-year EPS revision, 90 days, short interest.",
+    "The score is held back by EV/EBITDA vs own median, forward P/E vs own median.",
+    "Trades at 23.1x forward earnings against a four-point median of 23.8x, 3% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
+    "Next-year consensus has moved +2.7% over 90 days, with 33 analysts raising and 12 cutting in the last 30.",
+    "Against 5 peers in Communication Services, it is priced at the 90th percentile and its measured quality sits at the 40th: priced above where its quality sits.",
+    "Sits -17% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
+   ],
+   "what_would_be_wrong": [
+    "Search growth under 5% twice, adtech breakup, or a close under $260.",
+    "search revenue growth under 5% for two quarters, an adtech ruling that breaks up the ad stack, or Cloud operating margin reversing."
+   ],
+   "suggested_band_usd": [
+    6000.0,
+    10000.0
+   ],
+   "constraint_notes": [],
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "GOOGL",
+    "action": "Buy on pullback to $300 to $335",
+    "target_usd": 7000.0,
+    "conviction": 3,
+    "bucket": "compounder",
+    "wrong_if": "Search growth under 5% twice, adtech breakup, or a close under $260.",
+    "price_at_call": 342.48,
+    "thesis": "Revenue up 24%, Cloud up 82%, at its own median multiple. Good business, average price."
+   },
+   "confidence": "moderate, and bounded by the fact that the score has never been tested out of sample",
+   "stance": "buy",
+   "peer_verdict": "priced above where its quality sits",
+   "peer_gap": -0.5,
+   "peer_set_label": "Communication Services",
+   "peer_set_n": 6
   }
  ],
+ "reviewed_and_declined": [
+  {
+   "rank": 1,
+   "ticker": "AMAT",
+   "company": "Applied Materials, Inc.",
+   "sector": "Technology",
+   "stance": "passed",
+   "percentile": 71.8,
+   "coverage": 1.0,
+   "buckets": [
+    "cyclical turn"
+   ],
+   "price": 435.91,
+   "forward_pe": 23.620426,
+   "pe_vs_median": 0.26282756396364126,
+   "dd_52w": -0.40722215115513927,
+   "revisions_90d": 0.14244357489279968,
+   "next_earnings": "2026-11-12",
+   "reasoning": [
+    "Applied Materials is the largest semiconductor equipment company, selling deposition, etch, implant and inspection tools across logic, memory and display.",
+    "Ranks where it does mainly on next-year EPS revision, 90 days, next-year EPS revision, 30 days, return on invested capital.",
+    "The score is held back by EV/EBITDA vs own median, forward P/E vs own median.",
+    "Trades at 23.6x forward earnings against a four-point median of 18.7x, 26% above it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
+    "Next-year consensus has moved +14.2% over 90 days, with 9 analysts raising and 0 cutting in the last 30.",
+    "Against 6 peers in Semiconductor Equipment & Materials, it is priced at the 17th percentile and its measured quality sits at the 33th: cheap, and the quality suggests why.",
+    "Sits -41% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
+   ],
+   "verdict_text": "Pass for now",
+   "note_verdict_full": "Pass for now. KLA and Lam cover the theme at better relative prices, and three semi equipment names would breach the cyclical cap. Conviction 3 of 5 on the business, 2 on the entry.",
+   "constraint_notes": [
+    "Not sized. The research note concluded \"Pass for now\", so this name is not a candidate for capital until that verdict changes."
+   ],
+   "peer_verdict": "cheap, and the quality suggests why",
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "AMAT",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 435.91,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   }
+  },
+  {
+   "rank": 2,
+   "ticker": "ACN",
+   "company": "Accenture plc",
+   "sector": "Technology",
+   "stance": "passed",
+   "percentile": 48.3,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "price": 193.12,
+   "forward_pe": 13.17761,
+   "pe_vs_median": -0.5361992239007278,
+   "dd_52w": -0.35525097847476295,
+   "revisions_90d": -0.01529418562929774,
+   "next_earnings": "2026-10-01",
+   "reasoning": [
+    "Accenture is the largest IT consulting and outsourcing firm: it designs, builds and runs technology for big companies and governments.",
+    "Ranks where it does mainly on EV/EBITDA vs own median, forward P/E vs own median, gross margin stability.",
+    "The score is held back by free cash flow margin, next-year EPS revision, 90 days.",
+    "Trades at 13.2x forward earnings against a four-point median of 28.4x, 54% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
+    "Next-year consensus has moved -1.5% over 90 days, with 2 analysts raising and 7 cutting in the last 30.",
+    "Against 6 peers in Information Technology Services, it is priced at the 42th percentile and its measured quality sits at the 67th: in the middle.",
+    "Sits -36% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
+   ],
+   "verdict_text": "Pass",
+   "note_verdict_full": "Pass. Revisit if bookings growth turns positive for two quarters. Conviction 2 of 5.",
+   "constraint_notes": [
+    "Not sized. The research note concluded \"Pass\", so this name is not a candidate for capital until that verdict changes."
+   ],
+   "peer_verdict": "in the middle",
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "ACN",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 193.12,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   }
+  },
+  {
+   "rank": 3,
+   "ticker": "META",
+   "company": "Meta Platforms, Inc.",
+   "sector": "Communication Services",
+   "stance": "watching",
+   "percentile": 26.2,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder"
+   ],
+   "price": 610.68,
+   "forward_pe": 17.468134,
+   "pe_vs_median": -0.277325612412602,
+   "dd_52w": -0.25031616643154075,
+   "revisions_90d": -0.024303168336410552,
+   "next_earnings": "2026-10-28",
+   "reasoning": [
+    "Meta runs Facebook, Instagram, WhatsApp, Messenger and Threads, sells advertising against them, and is building AI models and infrastructure at enormous scale.",
+    "Ranks where it does mainly on free cash flow margin, EV/EBITDA vs own median, revenue CAGR.",
+    "The score is held back by next-year EPS revision, 30 days, next-year EPS revision, 90 days.",
+    "Trades at 17.5x forward earnings against a four-point median of 24.2x, 28% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
+    "Next-year consensus has moved -2.4% over 90 days, with 8 analysts raising and 39 cutting in the last 30.",
+    "Against 5 peers in Communication Services, it is priced at the 30th percentile and its measured quality sits at the 60th: in the middle.",
+    "Sits -25% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
+   ],
+   "verdict_text": "Watch",
+   "note_verdict_full": "Watch. Not a buy until capex guidance stops rising. Watch zone $520 to $580. Conviction 2 of 5.",
+   "constraint_notes": [
+    "Not sized. The research note concluded \"Watch\", so this name is not a candidate for capital until that verdict changes."
+   ],
+   "peer_verdict": "in the middle",
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "META",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 610.68,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   }
+  },
+  {
+   "rank": 4,
+   "ticker": "NVR",
+   "company": "NVR, Inc.",
+   "sector": "Consumer Cyclical",
+   "stance": "watching",
+   "percentile": 14.8,
+   "coverage": 1.0,
+   "buckets": [
+    "compounder",
+    "cyclical turn"
+   ],
+   "price": 6373.95,
+   "forward_pe": 15.48489,
+   "pe_vs_median": -0.009013606986514655,
+   "dd_52w": -0.26586857292725463,
+   "revisions_90d": -0.021101995447294297,
+   "next_earnings": "2026-10-21",
+   "reasoning": [
+    "NVR builds homes under the Ryan Homes, NVHomes and Heartland brands in the eastern US and runs a mortgage bank for its buyers.",
+    "Ranks where it does mainly on share count change, balance sheet, return on invested capital.",
+    "The score is held back by revenue CAGR, next-year EPS revision, 90 days.",
+    "Trades at 15.5x forward earnings against a four-point median of 15.6x, 1% below it. A four-point median is a thin basis and says nothing about whether the old multiple was deserved.",
+    "Next-year consensus has moved -2.1% over 90 days, with 1 analyst raising and 4 cutting in the last 30.",
+    "Against 24 peers in Consumer Cyclical, it is priced at the 30th percentile and its measured quality sits at the 25th: cheap, and the quality suggests why.",
+    "Sits -27% from its 52-week high. Whether that is an opportunity or a warning is exactly the question the score cannot answer; see the variants below."
+   ],
+   "verdict_text": "Watch",
+   "note_verdict_full": "Watch. A rate cut cycle or a price under $5,400 would make it interesting. Conviction 2 of 5.",
+   "constraint_notes": [
+    "Not sized. The research note concluded \"Watch\", so this name is not a candidate for capital until that verdict changes."
+   ],
+   "peer_verdict": "cheap, and the quality suggests why",
+   "already_logged": {
+    "date": "2026-09-04",
+    "ticker": "NVR",
+    "action": "Watch or Pass",
+    "target_usd": 0.0,
+    "conviction": 2,
+    "bucket": null,
+    "wrong_if": null,
+    "price_at_call": 6373.95,
+    "thesis": "META free cash flow collapsed to $784 million on capex; NOW at 29x with the same AI risk as ADBE at a worse price; ACN bookings negative; AMAT above its own median after a 98% run; NVR margins compressing into rising rates. Deep dives written for each."
+   }
+  }
+ ],
+ "reviewed_and_declined_note": "These names have a research note and the note concluded not to buy. The score still ranks them, sometimes highly, and that disagreement is the point of showing them: it is the clearest available test of whether the score is seeing something the reading missed, or the reading is seeing something the score cannot. They are not sized, and they are not candidates for capital until the verdict changes.",
  "research_queue": [
   {
    "rank": 1,

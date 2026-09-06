@@ -116,6 +116,8 @@ class Candidate:
     constraint_notes: List[str]
     already_logged: Optional[Dict[str, Any]]
     confidence: str
+    stance: Optional[str] = None
+    """buy, watching, passed or unstated, taken from the research note's verdict."""
     peer_verdict: Optional[str] = None
     peer_gap: Optional[float] = None
     peer_set_label: Optional[str] = None
@@ -441,8 +443,29 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
             peer_set_n=(peer_vals[b.ticker].peer_set.n if b.ticker in peer_vals else None),
         )
 
-    # Two lists, because they answer two different questions and merging them would
-    # put a name nobody has read at the top of a list about deploying capital.
+    def stance_of(note) -> str:
+        """What the person who read the filings actually concluded.
+
+        The memo used to put every name with a research note into the candidate
+        list, sized in dollars, without ever reading the verdict at the bottom of
+        that note. Four of the sixteen say Pass or Watch. Ranking a name the analyst
+        explicitly passed on, and printing a size band next to it, is the single
+        most misleading thing this memo could do.
+        """
+        action = (note.verdict_action or "").strip().lower() if note else ""
+        if not action:
+            return "unstated"
+        if action.startswith("pass"):
+            return "passed"
+        if action.startswith("watch"):
+            return "watching"
+        if action.startswith("buy"):
+            return "buy"
+        return "unstated"
+
+    # Three lists, because they answer three different questions. Merging any two
+    # would put a name nobody has read, or a name the analyst passed on, into a list
+    # about deploying capital.
     #
     # The first is what could actually be acted on: a research note exists, so there
     # is a thesis, a bear case and a written falsifier. criteria.md is explicit that
@@ -452,18 +475,31 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
     # The second is what the score surfaces that nobody has read. Those are
     # candidates for the next deep dive, not candidates for money.
     actionable: List[Candidate] = []
+    reviewed_and_declined: List[Candidate] = []
     queue: List[Candidate] = []
     for b in ordered:
         if b.ticker in held:
             continue
-        if b.ticker in notes:
-            if len(actionable) < top_n:
-                actionable.append(make(b, len(actionable) + 1))
+        note = notes.get(b.ticker)
+        if note is not None:
+            stance = stance_of(note)
+            if stance == "buy":
+                if len(actionable) < top_n:
+                    actionable.append(make(b, len(actionable) + 1))
+            else:
+                reviewed_and_declined.append(make(b, len(reviewed_and_declined) + 1))
         elif len(queue) < top_n:
             queue.append(make(b, len(queue) + 1))
-        if len(actionable) >= top_n and len(queue) >= top_n:
-            break
     candidates = actionable
+    for c in reviewed_and_declined:
+        object.__setattr__(c, "stance", stance_of(notes.get(c.ticker)))
+        object.__setattr__(c, "suggested_band_usd", None)
+        object.__setattr__(c, "constraint_notes",
+                           ["Not sized. The research note concluded "
+                            f"\"{(notes[c.ticker].verdict_action or '').strip()}\", so this name is "
+                            "not a candidate for capital until that verdict changes."])
+    for c in actionable:
+        object.__setattr__(c, "stance", "buy")
 
     # Agreement between the three variants on this exact list, which is a cheap
     # measure of how much the contested drawdown component is actually deciding.
@@ -503,6 +539,9 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
             "Every candidate carries what would prove it wrong. A candidate with no falsifier is "
             "flagged rather than ranked quietly, because the rule in criteria.md is that no "
             "recommendation exists without one.",
+            "The candidate list contains only names whose research note concluded to buy. Names "
+            "that were read and declined appear separately, unsized, with the verdict quoted, "
+            "however well the score ranks them.",
         ],
         "portfolio": {
             "source": state.source,
@@ -545,12 +584,35 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
                 "what_would_be_wrong": c.what_would_be_wrong,
                 "suggested_band_usd": list(c.suggested_band_usd) if c.suggested_band_usd else None,
                 "constraint_notes": c.constraint_notes, "already_logged": c.already_logged,
-                "confidence": c.confidence, "peer_verdict": c.peer_verdict,
+                "confidence": c.confidence, "stance": c.stance, "peer_verdict": c.peer_verdict,
                 "peer_gap": (None if c.peer_gap is None else round(c.peer_gap, 4)),
                 "peer_set_label": c.peer_set_label, "peer_set_n": c.peer_set_n,
             }
             for c in candidates
         ],
+        "reviewed_and_declined": [
+            {
+                "rank": c.rank, "ticker": c.ticker, "company": c.company, "sector": c.sector,
+                "stance": c.stance, "percentile": c.percentile, "coverage": c.coverage,
+                "buckets": c.buckets, "price": c.price, "forward_pe": c.forward_pe,
+                "pe_vs_median": c.pe_vs_median, "dd_52w": c.dd_52w,
+                "revisions_90d": c.revisions_90d, "next_earnings": c.next_earnings,
+                "reasoning": c.reasoning, "verdict_text": (
+                    (notes[c.ticker].verdict_action or "").strip() if c.ticker in notes else None),
+                "note_verdict_full": (
+                    notes[c.ticker].section("Verdict") if c.ticker in notes else None),
+                "constraint_notes": c.constraint_notes, "peer_verdict": c.peer_verdict,
+                "already_logged": c.already_logged,
+            }
+            for c in reviewed_and_declined
+        ],
+        "reviewed_and_declined_note": (
+            "These names have a research note and the note concluded not to buy. The score still "
+            "ranks them, sometimes highly, and that disagreement is the point of showing them: it "
+            "is the clearest available test of whether the score is seeing something the reading "
+            "missed, or the reading is seeing something the score cannot. They are not sized, and "
+            "they are not candidates for capital until the verdict changes."
+        ),
         "research_queue": [
             {
                 "rank": c.rank, "ticker": c.ticker, "company": c.company, "sector": c.sector,

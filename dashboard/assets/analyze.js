@@ -20,6 +20,20 @@
 
   const TICKER = (window.DESK_TICKER || "").toUpperCase();
 
+  /* journal.md writes a literal "n/a" for an entry with no falsifier, and "n/a" is
+   * truthy, so a plain || chain stops there and the standing call renders its
+   * falsifier as the word "n/a" while a real thesis killer sits unused in the same
+   * record. */
+  const PLACEHOLDER = new Set(["n/a", "na", "none", "-", "--", "tbd", "?", ""]);
+  function firstReal(candidates) {
+    for (const c of candidates || []) {
+      if (typeof c !== "string") continue;
+      const v = c.trim();
+      if (v && !PLACEHOLDER.has(v.toLowerCase().replace(/[.\s]+$/, ""))) return v;
+    }
+    return null;
+  }
+
   function sectionHead(title, sub) {
     return `<h2>${esc(title)}${sub ? `<span class="sub">${esc(sub)}</span>` : ""}</h2><div class="rule"></div>`;
   }
@@ -65,7 +79,9 @@
       <div class="kicker">standing call, logged ${esc(logged.date || r.identity.as_of)}</div>
       <p class="line"><span class="lab">the call</span>${esc(th.action || "no action stated")}</p>
       <p class="line"><span class="lab">wrong if</span>${esc(
-        (logged.wrong_if || (ri.killers && ri.killers[0]) || "no falsifier recorded"))}</p>
+        firstReal([logged.wrong_if, ri.killers && ri.killers[0], ri.price_trigger
+          ? `A close under ${money(ri.price_trigger, 0)}.` : null])
+        || "No falsifier is recorded for this name. Nothing here is a call until one is.")}</p>
       <div class="meta">
         ${logged.target_size ? `<span>size <b>${esc(logged.target_size)}</b></span>` : ""}
         ${conv ? `<span>conviction <b>${conv} of 5</b></span>

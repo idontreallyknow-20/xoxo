@@ -115,6 +115,34 @@
       </tr></thead><tbody>${rows}</tbody></table></div>`;
   }
 
+  /* -- 3b. read and declined ----------------------------------------------
+   * The disagreement between the score and the reading is the most informative
+   * thing on this page, so it gets its own section instead of being filtered out
+   * silently. Applied Materials ranks in the top quartile and the note says Pass. */
+  function declinedTable() {
+    const rows = (S.memo.reviewed_and_declined || []);
+    if (!rows.length) return `<div class="empty">Every researched name concluded to buy.</div>`;
+    const body = rows.map((c) => `<tr>
+      <td><a href="../analyze/${esc(c.ticker)}/"><span class="tk">${esc(c.ticker)}</span></a></td>
+      <td>${esc(c.company || "")}</td>
+      <td><span class="chip">${esc(c.stance)}</span></td>
+      <td>${esc(c.verdict_text || "")}</td>
+      <td class="n">${esc(num(c.percentile, 1))}</td>
+      <td class="n">${esc(mult(c.forward_pe))}</td>
+      <td class="n">${esc(pct(c.revisions_90d, 1, true))}</td>
+      <td class="muted" style="font-size:11px">${esc(c.peer_verdict || "")}</td>
+    </tr>`).join("");
+    const gaps = rows.filter((c) => c.percentile >= 60).map((c) =>
+      `${esc(c.ticker)} ranks at the ${esc(num(c.percentile, 0))}th percentile and the note says "${esc(c.verdict_text)}"`);
+    return `<div class="note warn">${esc(S.memo.reviewed_and_declined_note)}</div>
+      <div class="scroll"><table><thead><tr>
+        <th>ticker</th><th>company</th><th>stance</th><th>the note's verdict</th>
+        <th class="n">score</th><th class="n">fwd P/E</th><th class="n">est 90d</th><th>against peers</th>
+      </tr></thead><tbody>${body}</tbody></table></div>
+      ${gaps.length ? `<div class="note">Where the score and the reading disagree most: ${
+        esc(gaps.join("; "))}. Not sized either way; the disagreement is the finding.</div>` : ""}`;
+  }
+
   /* -- 4. where it does not work ------------------------------------------ */
   function failsBlock() {
     if (!S.back) return `<div class="empty">backtest.json not loaded.</div>`;
@@ -312,21 +340,26 @@ ${statusBlock()}
 </section>
 
 <section class="reveal" style="--i:4">
+  ${head("Read, and declined", `${(m.reviewed_and_declined || []).length} names the note says not to buy`)}
+  ${declinedTable()}
+</section>
+
+<section class="reveal" style="--i:5">
   ${head("The research queue", `${m.research_queue.length} names the score likes that nobody has read`)}
   ${queueTable()}
 </section>
 
-<section class="reveal" style="--i:5">
+<section class="reveal" style="--i:6">
   ${head("Where the score does not work", "and what would be needed to know")}
   ${failsBlock()}
 </section>
 
-<section class="reveal" style="--i:6">
+<section class="reveal" style="--i:7">
   ${head("The scorecard", `all ${S.card.n_names} names`)}
   <div id="card">${scorecard()}</div>
 </section>
 
-<section class="reveal" style="--i:7">
+<section class="reveal" style="--i:8">
   ${head("The rules, checked", esc(m.rules.source))}
   ${rulesBlock()}
   <div class="toolbar" style="margin-top:26px">${D.themeBar()}</div>
