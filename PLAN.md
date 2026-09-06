@@ -50,12 +50,12 @@ Consequences that shape everything below:
 
 ## A. Foundation
 
-- [ ] **A1** `pytest` available, `tests/` package, `scripts/an/__init__.py`, plan/notes/summary files.
+- [x] **A1** `pytest` available, `tests/` package, `scripts/an/__init__.py`, plan/notes/summary files.
       Verify: `python -m pytest -q tests/ && test -f NOTES.md -a -f SUMMARY.md`
-- [ ] **A2** `scripts/an/paths.py` — new paths only, imports nothing from `config.py` at module import
+- [x] **A2** `scripts/an/paths.py` — new paths only, imports nothing from `config.py` at module import
       time so tests run without side effects.
       Verify: `python -c "import sys;sys.path.insert(0,'scripts');import an.paths as p;print(p.ANALYSIS_DIR)"`
-- [ ] **A3** `scripts/an/store.py` — atomic JSON cache with TTL + `OFFLINE` mode that raises a typed
+- [x] **A3** `scripts/an/store.py` — atomic JSON cache with TTL + `OFFLINE` mode that raises a typed
       error instead of hanging when egress is blocked.
       Verify: `python -m pytest -q tests/test_store.py`
 
