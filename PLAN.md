@@ -126,7 +126,7 @@ Consequences that shape everything below:
       and roughly the right magnitude; (b) pure noise is reported as *no edge*, with the CI straddling
       zero; (c) a look-ahead-contaminated panel is flagged.
       Verify: `python -m pytest -q tests/test_backtest_synthetic.py`
-- [ ] **E3** `scripts/backtest_run.py` — real run on watchlist + portfolio tickers using yfinance
+- [x] **E3** `scripts/backtest_run.py` — real run on watchlist + portfolio tickers using yfinance
       prices and EDGAR-dated fundamentals, with `--synthetic` and `--dry-run` for offline. Writes
       `dashboard/backtest.json`. Survivorship bias, single-snapshot fundamentals and rebalance count
       are recorded as first-class fields, not footnotes.
