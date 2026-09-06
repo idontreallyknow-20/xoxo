@@ -287,6 +287,32 @@ two-minute change. Two tests pin the divergence in the meantime so nobody mistak
 
 ---
 
+## Second session: the backlog
+
+A second session picked up the backlog in HANDOFF.md on the same day. Same constraint: this
+container cannot reach Alpha Vantage, the SEC or Finnhub either, so everything below is fixture-tested
+and **has never made a real request**. `NOTES.md` section 7 has the detail.
+
+### X7, the survivorship hole, done as far as it can be without egress
+
+```bash
+python scripts/listing_status.py --dry-run                        # two URLs, key redacted, nothing sent
+export ALPHAVANTAGE_KEY=...                                        # free, 25 requests a day; this uses 2
+python scripts/listing_status.py --fetch                          # then the report
+python scripts/listing_status.py --report --fixture --today 2026-09-06   # the report's shape, on a fixture
+```
+
+It reconstructs the listed US market on a past date from the two Alpha Vantage files, applies the
+screen's three-years-listed rule, and counts how many of those NYSE and Nasdaq common stocks no
+longer exist, at one, three, five and ten years back. The number it prints is an **upper bound on
+the screen's attrition** (the file has no market cap, so it is the whole market, and it gives no
+reason, so acquisitions count too), and the report says both of those things above the table. It
+also prints the synthetic engine's assumption next to the measured rate so you can see whether the
+"more than two points" bias figure was computed on a pessimistic or an optimistic attrition rate.
+
+The first line of every report says where the data came from. Until you run `--fetch` once, it says
+"NOT a real request".
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -297,7 +323,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 699 |
+| tests | 728 (699 from the first session, 29 for X7) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |

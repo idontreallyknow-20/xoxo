@@ -1,0 +1,13 @@
+symbol,name,exchange,assetType,ipoDate,delistingDate,status
+AAPL,Apple Inc,NASDAQ,Stock,1980-12-12,null,Active
+KLAC,KLA Corp,NASDAQ,Stock,1980-10-08,null,Active
+BKNG,Booking Holdings Inc,NASDAQ,Stock,1999-03-30,null,Active
+EXEL,Exelixis Inc,NASDAQ,Stock,2000-04-11,null,Active
+MEDP,Medpace Holdings Inc,NASDAQ,Stock,2016-08-11,null,Active
+NVDA,NVIDIA Corp,NASDAQ,Stock,1999-01-22,null,Active
+CAT,Caterpillar Inc,NYSE,Stock,1962-01-02,null,Active
+ABNB,Airbnb Inc,NASDAQ,Stock,2020-12-10,null,Active
+SPY,SPDR S&P 500 ETF Trust,NYSE ARCA,ETF,1993-01-29,null,Active
+BRK-B,Berkshire Hathaway Inc Class B,NYSE,Stock,1996-05-09,null,Active
+RIVN,Rivian Automotive Inc,NASDAQ,Stock,2021-11-10,null,Active
+ZZZA,Fictional Reissued Symbol Corp,NASDAQ,Stock,2019-06-14,null,Active

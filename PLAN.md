@@ -202,13 +202,19 @@ Consequences that shape everything below:
       what size of edge stays invisible. Answered analytically and re-measured through the real
       engine. The finding changes the snapshot advice from quarterly to monthly.
       Verify: `python -m pytest -q tests/test_power.py`
-- [ ] **X7** Measure the survivorship hole. Alpha Vantage's `LISTING_STATUS` endpoint returns every
+- [x] **X7** Measure the survivorship hole. Alpha Vantage's `LISTING_STATUS` endpoint returns every
       delisted US ticker with its delisting date for **two requests total**, which is affordable even
       on a 25-per-day free key and is the only free source of that list found. It cannot repair a
-      backtest (no prices for those names) but it can *size the bias*: run the universe filter as of
-      a past date, count how many selected names no longer exist, and the hole is measured rather
-      than guessed.
-      Verify: `python scripts/listing_status.py --report` prints the count and the names.
+      backtest (no prices for those names) but it can *size the bias*: reconstruct the listed market
+      on a past date from the two files, apply the screen's listing-age rule, count how many of those
+      names no longer exist, and the hole is measured rather than guessed.
+      Built behind the same injectable transport as the other fetchers, with a hand-built fixture
+      whose answers were computed by hand. **Not yet run for real**: this container cannot reach
+      `www.alphavantage.co` either, and the report's first line says so until it has.
+      Verify: `python -m pytest -q tests/test_listing_status.py` (29 tests),
+      `python scripts/listing_status.py --dry-run` prints two redacted URLs, and
+      `python scripts/listing_status.py --report --fixture --today 2026-09-06` prints the report's
+      shape with the fixture banner. Live: `ALPHAVANTAGE_KEY=... python scripts/listing_status.py --fetch`.
 - [x] **X11** Second review pass over the rendered pages and over the fixes themselves. Eleven
       findings: two pages printing a median they simultaneously called unusable, three surviving
       hard-coded "four"s, six nav links 404ing from two of the three page depths, a quarter label

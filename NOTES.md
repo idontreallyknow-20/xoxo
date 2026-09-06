@@ -444,3 +444,70 @@ SUMMARY.md for Joseph to decide.
 Similarly, the score was **not retuned** in response to the redundancy findings in section 3.
 Adjusting weights until a diagnostic looks tidy is how overfitting starts, and the finding is more
 useful than a quietly fixed number.
+
+---
+
+## 7. Second session, 2026-09-06: the backlog
+
+Picked up from HANDOFF.md. Same egress situation as the first session: `www.alphavantage.co`,
+`www.sec.gov`, `data.sec.gov`, `finnhub.io` and `query1.finance.yahoo.com` all refuse the connection,
+so everything below is written to documented shapes and tested against fixtures, exactly as before.
+Nothing in this section has made a real request.
+
+### 7a. X7, the survivorship hole, measured rather than guessed
+
+`scripts/an/listing_status.py` and `scripts/listing_status.py`. Alpha Vantage's `LISTING_STATUS`
+endpoint, two requests (`state=active`, `state=delisted`), cached a week under
+`data/cache/alphavantage/`. The key is `ALPHAVANTAGE_KEY` from the environment only, and every URL
+that is printed, logged or cached goes through `redact()`, which already treats `apikey` as a secret.
+
+**What it computes.** From the two files the listed market on any past date can be reconstructed: a
+row existed on date D if it listed on or before D and had not been delisted by D. The report then
+applies the one step-1 rule the file can answer (three years listed, from `ipoDate`), restricts to
+NYSE and Nasdaq common stock, and counts how many of those names carry a delisting date today. That
+is done at one, three, five and ten years back by default, and at any `--as-of` date on request.
+
+**What it cannot compute, and says so on every run.**
+
+- The file has no market cap and no volume, so the count is over the whole listed market, not the
+  $2bn-plus slice the screen selects. Big names leave less often, so it is an upper bound on the
+  screen's own attrition.
+- The file gives no reason for a delisting. Acquisition is the largest one, and an acquired holder
+  was usually paid up, not wiped out. The synthetic engine's assumption (four of 150 leave every
+  quarter, each at a 50% loss, about 10% a year) is the pessimistic end, and the report prints that
+  number next to the measured one so the two can be read together.
+- No prices for the departed names. This sizes the hole; it cannot fill it.
+- Symbols get reassigned. Each row is its own listing and the report counts how many symbols carry
+  more than one, so the reader knows how much of that there is.
+
+**Failure modes handled.** Alpha Vantage answers every failure with a 200 and a small JSON body, so
+the parser's first job is to notice that the CSV is not a CSV. A daily-quota note becomes
+`RateLimited` and is never cached (a cached quota note would look like data for a week); anything
+else becomes `BadKey`, with the server's text redacted before it is quoted, because an error body
+tends to echo the URL and the URL carries the key. A changed column set raises rather than
+mis-parsing.
+
+**Provenance is a first-class output.** The cache meta records the transport class and a `live`
+flag that is true only for `HttpTransport`. `provenance()` reads it back, `--dry-run` prints
+"ever made a real request: no, never", and the report's first line names the source. A report on the
+committed fixture opens with a banner saying it measures nothing.
+
+**The fixture.** Twenty-two hand-built rows in `tests/fixtures/av_listing_*.csv`. Active rows are
+real tickers with the first-trade dates `universe_latest.csv` already carries. Delisted rows are
+fictional (`FAK*`, `ZZZA`) apart from Twitter, so no false corporate history is attached to a real
+company. The answers in `tests/test_listing_status.py` were computed by hand before the code ran:
+as of 2016-09-06, eleven eligible and four gone; edge cases for a delisting on the as-of date
+(gone), the day after (listed), a null listing date (skipped and counted), an ETF on an allowed
+venue (excluded), and a reassigned symbol (two listings, counted once as reused).
+
+**Most likely to be wrong on the first live run**, for whoever runs it:
+
+1. Exchange spellings. The parser matches `NYSE` and `NASDAQ` exactly after upper-casing. If the
+   live file says `NYSE MKT`, `NASDAQ GS` or similar for names that should count, `SCREEN_EXCHANGES`
+   needs widening and the by-exchange table in the report will show it immediately.
+2. The cross-check against the current universe should find nearly every US name. On the fixture it
+   finds nine of 1,505, which is the fixture's size, not a bug. On live data a large "not covered"
+   count means the symbol conventions differ (dots versus dashes are already tried both ways).
+3. The quota note's wording. `_LIMIT_MARKERS` is matched against the JSON body's text; if Alpha
+   Vantage rewords it, the note lands as `BadKey` instead of `RateLimited`. Either way it is not
+   cached and the run stops.
