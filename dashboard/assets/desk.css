@@ -321,3 +321,15 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
                            width: 8px; height: 1px; background: var(--down); }
 .cand .amt { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .cand .cfz .m { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 7px; max-width: 44ch; }
+
+/* Reading instructions are not caveats. The gaps list is deliberately dim because
+ * it lists what is missing; the same treatment on "how to read this" would bury
+ * the four sentences that make the page interpretable. */
+.howto { list-style: none; padding: 0; margin: 0; counter-reset: h; }
+.howto li { font-size: 14px; color: var(--ink-2); padding: 11px 0 11px 34px; position: relative;
+            border-bottom: 1px solid var(--rule-soft); max-width: 92ch; line-height: 1.55; }
+.howto li::before { counter-increment: h; content: counter(h); position: absolute; left: 0; top: 12px;
+                    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+                    border: 1px solid var(--rule); width: 20px; height: 20px;
+                    display: flex; align-items: center; justify-content: center; }
+.howto li b, .howto li strong { color: var(--ink); font-weight: 500; }

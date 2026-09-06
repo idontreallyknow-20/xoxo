@@ -254,7 +254,7 @@ ${statusBlock()}
 
 <section class="reveal" style="--i:2">
   ${head("How to read this", "before the list")}
-  <ul class="gaps">${how}</ul>
+  <ul class="howto">${how}</ul>
 </section>
 
 <section class="reveal" style="--i:3">
