@@ -397,6 +397,13 @@ Eleven findings, ten fixed. In rough order of how badly each would have misled y
 10. **A stale type annotation.** `what_would_be_wrong: List[str]` had been `List[Dict]` since the
     falsifiers gained a source and a date.
 
+All ten are verified in headless Chromium at 1440px and 390px: every nav link returns 200 from all
+three page depths, no `.ledger .m` clips on any of the sixteen deep pages, the two-column footer is
+two columns at 1440 and one at 390, the variant switch redraws section 6, and five sorts followed by
+one keystroke produce one table redraw rather than six. The only failing request anywhere on the
+site is `/favicon.ico`, which the existing `index.html` has always 404'd on and which no page here
+declares either; the new pages make no failing requests of their own.
+
 Two of these needed a second attempt, and both times the browser measurement caught what reading
 the source had not: the quarter-label split moved only the parenthetical and left thirteen of the
 sixteen pages still clipped, and the memo's rewritten sizing sentence started with a numeral. There

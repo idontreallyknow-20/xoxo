@@ -236,6 +236,10 @@ fixed.** `NOTES.md` section 5d has them all. The three worth knowing about:
   the whole log vanishing. If you had typed one space tonight you would have woken up to an empty
   journal on both new pages. It falls back now.
 
+All ten are verified in a real browser at 1440px and 390px: nav links resolve from every page depth,
+nothing clips on the sixteen deep pages, the footer collapses to one column on a phone, and the
+index redraws once per keystroke instead of six times.
+
 **The eleventh I left alone on purpose, and you should decide it.** The front page's Journal tab
 still shows thirteen names where `/positioning/` shows sixteen, and one entry titled
 `NOW ACN AMAT NVR  Recommendation: Watch or Pass` under META. That is the original five-ticker bug,
