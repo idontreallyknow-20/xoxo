@@ -1,0 +1,2 @@
+adsh	report	line	stmt	inpth	rfile	tag	version	plabel	negating
+0000320193-23-000077	2	1	IS	0	H	RevenueFromContractWithCustomerExcludingAssessedTax	us-gaap/2023	Net sales	0

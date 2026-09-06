@@ -1,0 +1,2 @@
+tag	version	custom	abstract	datatype	iord	crdr	tlabel	doc
+RevenueFromContractWithCustomerExcludingAssessedTax	us-gaap/2023	0	0	monetary	D	C	Revenue from Contract with Customer, Excluding Assessed Tax	Amount of revenue recognized from goods sold, services rendered, insurance premiums, or other activities that constitute an earning process.

@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""Download SEC DERA Financial Statement Data Sets and read as-reported figures out of them.
+
+    export SEC_USER_AGENT="Your Name your@email.com"
+    python scripts/fetch_dera.py --dry-run 2023q3 2023q4          # print the URLs, send nothing
+    python scripts/fetch_dera.py 2023q3 2023q4                    # download to data/cache/dera/
+    python scripts/fetch_dera.py --since 2021q1                   # every quarter from there to the last complete one
+    python scripts/fetch_dera.py --show 320193 --metric revenue   # the series from every cached quarter
+    python scripts/fetch_dera.py --show AAPL --metric revenue --as-of 2024-03-31
+    python scripts/fetch_dera.py --fixture --show 320193 --metric revenue    # on the committed miniature
+
+One request per quarter, 50 to 100 MB each, kept on disk and never re-fetched.
+The SEC asks for a real contact in the User-Agent and throttles without one.
+
+--show takes a CIK or a ticker. A ticker needs the EDGAR ticker map, which
+fetch_edgar.py caches on its first run; without it, give the CIK.
+
+This script has never run against sec.gov. The machine it was written on could
+not reach it. Run --dry-run, then one quarter, then --show, and read the numbers
+against the filing before trusting them.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import sys
+from pathlib import Path
+from typing import List, Optional, Tuple
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from an import dera, edgar, paths  # noqa: E402
+from an.http import DryRunTransport, HttpTransport  # noqa: E402
+from an.store import Cache, FetchError, Offline  # noqa: E402
+
+FIXTURE_DIR = paths.ROOT / "tests" / "fixtures" / "dera"
+
+
+def last_complete_quarter(today: Optional[dt.date] = None) -> Tuple[int, int]:
+    """The data set for a quarter is cut a few weeks after it ends; the safe target is the one before the current."""
+    today = today or dt.date.today()
+    q = (today.month - 1) // 3 + 1
+    return (today.year, q - 1) if q > 1 else (today.year - 1, 4)
+
+
+def quarters_since(label: str, today: Optional[dt.date] = None) -> List[Tuple[int, int]]:
+    y, q = dera.parse_quarter_label(label)
+    last = last_complete_quarter(today)
+    out = []
+    while (y, q) <= last:
+        out.append((y, q))
+        y, q = (y, q + 1) if q < 4 else (y + 1, 1)
+    return out
+
+
+def resolve_cik(ident: str) -> Optional[str]:
+    s = ident.strip().upper()
+    if s.isdigit():
+        return edgar.cik_to_str(s)
+    client = edgar.EdgarClient(transport=DryRunTransport(sink=lambda _: None),
+                               cache=Cache(paths.EDGAR_CACHE, default_ttl=float("inf")))
+    try:
+        return client.cik_for(s)
+    except (Offline, FetchError):
+        return None
+
+
+def show(sources, ident: str, metric: str, as_of: Optional[dt.date], *, fixture: bool) -> int:
+    cik = resolve_cik(ident)
+    if cik is None:
+        print(f"cannot resolve {ident!r} to a CIK: give the CIK, or run fetch_edgar.py once to cache the ticker map",
+              file=sys.stderr)
+        return 2
+    q = dera.load_quarters(sources, ciks=[cik])
+    if not q.submissions:
+        print(f"CIK {cik} has no submissions in {q.label}")
+        return 1
+    facts = dera.metric_facts(q.facts, cik, metric)
+    name = next(iter(q.submissions.values())).name
+    print(f"{name}  CIK {cik}  metric {metric}  from {q.label}"
+          + (f"  as known on {as_of}" if as_of else "  as first reported"))
+    print(f"  {q.rows_kept:,} of {q.rows_read:,} rows kept; {len(q.submissions)} submissions; "
+          f"{len(facts)} facts for this metric" + ("" if facts else " (tag not used by this filer)"))
+    if not facts:
+        return 1
+    unit = facts[0].unit
+    print(f"\n  annual ({unit}):")
+    for f in dera.annual_series(facts, on_date=as_of):
+        print(f"    FY ending {f.ddate}  {f.value:>22,.0f}   filed {f.filed}  {f.form}  {f.adsh}")
+    print(f"\n  quarterly ({unit}):")
+    for f in dera.quarterly_series(facts, on_date=as_of):
+        tag = "derived: FY minus nine months, dated by the 10-K" if f.derived else f.form
+        print(f"    Q ending  {f.ddate}  {f.value:>22,.0f}   filed {f.filed}  {tag}")
+    return 0
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("quarters", nargs="*", help="labels like 2023q4")
+    ap.add_argument("--since", help="every quarter from this label to the last complete one")
+    ap.add_argument("--dry-run", action="store_true", help="print the URLs and exit")
+    ap.add_argument("--show", metavar="CIK_OR_TICKER", help="print a metric's series from the cached quarters")
+    ap.add_argument("--metric", default="revenue", help=f"one of {', '.join(edgar.KEY_TAGS)}")
+    ap.add_argument("--as-of", default=None, help="point in time: the values known on this date (YYYY-MM-DD)")
+    ap.add_argument("--fixture", action="store_true", help="use the committed two-quarter miniature instead of the cache")
+    a = ap.parse_args(argv)
+
+    if a.metric not in edgar.KEY_TAGS:
+        print(f"unknown metric {a.metric!r}; choose from {', '.join(edgar.KEY_TAGS)}", file=sys.stderr)
+        return 2
+    as_of = dt.date.fromisoformat(a.as_of) if a.as_of else None
+
+    try:
+        wanted = [dera.parse_quarter_label(l) for l in a.quarters]
+        if a.since:
+            wanted += quarters_since(a.since)
+    except ValueError as e:
+        print(f"! {e}", file=sys.stderr)
+        return 2
+    wanted = sorted(set(wanted))
+
+    if a.fixture:
+        if not a.show:
+            print("--fixture needs --show", file=sys.stderr)
+            return 2
+        print("# FIXTURE. Two hand-built miniatures under tests/fixtures/dera/. Not a download.\n")
+        sources = [(d.name, d) for d in sorted(FIXTURE_DIR.iterdir()) if d.is_dir()]
+        return show(sources, a.show, a.metric, as_of, fixture=True)
+
+    ua = edgar.default_user_agent()
+    if a.dry_run:
+        client = dera.DeraClient(transport=DryRunTransport(), cache_dir=paths.DERA_CACHE, user_agent=ua)
+        print(f"# dry run. User-Agent: {ua}")
+        print("# one request per quarter, 50 to 100 MB each. This script has never made one.\n")
+        for call in client.plan(wanted):
+            state = "cached" if call.path.exists() else "would fetch"
+            print(f"  GET {call.url}\n      -> {call.path}  ({state})")
+        if not wanted:
+            print("  (no quarters given; try 2023q4 or --since 2021q1)")
+        return 0
+
+    paths.ensure_dirs()
+    client = dera.DeraClient(transport=HttpTransport(ua, rate_per_second=edgar.SEC_RATE_PER_SECOND),
+                             cache_dir=paths.DERA_CACHE, user_agent=ua)
+    failures = 0
+    for y, q in wanted:
+        label = dera.quarter_label(y, q)
+        try:
+            p = client.fetch(y, q)
+            print(f"  {label}  {p.stat().st_size / 1e6:6.1f} MB  {p}")
+        except (FetchError, Offline) as e:
+            print(f"  ! {label}: {e}", file=sys.stderr)
+            failures += 1
+
+    if a.show:
+        sources = [(p.stem, p) for p in client.cached()]
+        if not sources:
+            print("nothing cached under data/cache/dera/; fetch a quarter first or use --fixture", file=sys.stderr)
+            return 2
+        return show(sources, a.show, a.metric, as_of, fixture=False) or (1 if failures else 0)
+    if not wanted:
+        ap.print_usage()
+        return 2
+    return 1 if failures else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

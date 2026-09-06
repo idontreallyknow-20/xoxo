@@ -225,10 +225,20 @@ Consequences that shape everything below:
       documented in NOTES.md 5d, and is pinned by two tests.
       Verify: `python -m pytest -q` and `python scratchpad/final_check.py`
 
-- [ ] **X8** SEC DERA Financial Statement Data Sets as the point-in-time fundamentals source for the
+- [x] **X8** SEC DERA Financial Statement Data Sets as the point-in-time fundamentals source for the
       backtest: quarterly bulk zips, genuinely as-reported, free. Lags quarter end by two weeks to
       two months, which is fine for a backtest and useless for a current screen.
-      Verify: a test that loads one quarter's `num.txt` and reconstructs a known revenue figure.
+      `scripts/an/dera.py` streams `num.txt` with the filing joined on, drops co-registrant and
+      dimensioned rows, answers `first_reported` and `as_known_on`, and derives the fourth quarter
+      from the year minus the nine months with the 10-K's filing date. `scripts/fetch_dera.py` has
+      `--dry-run`, `--since`, `--show` and `--fixture`. **Not yet run for real**: no route to
+      `www.sec.gov` from this container.
+      Verify: `python -m pytest -q tests/test_dera.py` (24 tests) loads a hand-built two-quarter
+      miniature and reconstructs Apple's FY2023 net sales of 383,285,000,000 from `num.txt`, the
+      three-year annual series, and the two derived fourth quarters (89,498 and 90,146 million),
+      which match what Apple reported. Also
+      `python scripts/fetch_dera.py --fixture --show 320193 --metric revenue`.
+      Live: `SEC_USER_AGENT="Name email" python scripts/fetch_dera.py --since 2023q1`.
 - [x] **X9** (superseded: quotes verified mechanically) Re-audit the repaired narratives with a second model pass. The generation workflow
       audited each extraction, repaired what the audit caught, and then shipped the repair
       unaudited. `tests/test_narrative_quotes.py` closes the fabrication hole mechanically, but

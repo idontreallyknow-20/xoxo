@@ -511,3 +511,57 @@ venue (excluded), and a reassigned symbol (two listings, counted once as reused)
 3. The quota note's wording. `_LIMIT_MARKERS` is matched against the JSON body's text; if Alpha
    Vantage rewords it, the note lands as `BadKey` instead of `RateLimited`. Either way it is not
    cached and the run stops.
+
+### 7b. X8, the DERA data sets as the point-in-time fundamentals source
+
+`scripts/an/dera.py` and `scripts/fetch_dera.py`. One zip per calendar quarter from
+`www.sec.gov/files/dera/data/financial-statement-data-sets/`, 50 to 100 MB each, every numeric fact
+from every filing accepted that quarter, as filed. Kept on disk under `data/cache/dera/`, one
+request each, never re-fetched. User-Agent from `SEC_USER_AGENT`, same as `edgar.py`.
+
+**Why it is the right source for a backtest and the wrong one for a screen.** `companyfacts` is
+one file per company; a backtest over 1,500 names would need 1,500 pulls of 15 to 25 MB. The DERA
+sets are the same facts cut the other way, every company per quarter, so twelve files are three
+years of the whole market. The cost is the lag: a set is cut a few weeks after quarter end.
+
+**Four format facts the loader handles, each of which would have produced a quietly wrong number.**
+
+1. `qtrs` is the period length and `ddate` its end. There is no start date. The same tag at the
+   same `ddate` with `qtrs` 1 and `qtrs` 3 is a quarter and a year-to-date figure, both present in
+   every 10-Q. The loader keeps both and every lookup names its `qtrs`.
+2. `coreg` non-blank is a subsidiary or co-registrant, not the company. Dropped unless asked for.
+   In the Notes variant of the sets `dimh` marks dimensioned rows (a segment, not the total) and
+   only `0x00000000` is the consolidated number.
+3. A fact recurs across filings. `first_reported` is the earliest filing carrying a period;
+   `as_known_on` is the latest filing on or before a date. The fixture's fictional restater shows
+   1,000,000 on 2023-09-30 and 950,000 on 2023-12-31, and its 10-K/A counts from its own filing day.
+4. Q4 is never filed. `derive_fourth_quarters` subtracts the nine-month figure from the year and
+   stamps the result with the **10-K's** filing date, because that is when the quarter became
+   knowable. A derived fact says `derived=True` and a year without a nine-month figure gets a hole,
+   not a guess.
+
+**The verification the plan asked for.** `tests/test_dera.py` loads the hand-built miniature of
+`2023q4` and reconstructs Apple's FY2023 net sales, 383,285,000,000, from `num.txt` by tag priority
+(`RevenueFromContractWithCustomerExcludingAssessedTax`), with the 10-K's accession and filing date
+attached. Across `2023q3` and `2023q4` it also reconstructs the three-year annual series and derives
+the fourth quarters of FY2023 and FY2022 as 89,498 and 90,146 million, which are the figures Apple
+reported for those quarters. The second of those was not planned: the 10-Q's comparative nine months
+and the 10-K's comparative year are enough to derive the prior year's Q4 too, and the code did.
+
+**The fixture.** `tests/fixtures/dera/2023q3/` and `2023q4/`, four tab-separated tables each with the
+documented 36-column `sub.txt` header and 9-column `num.txt` header. Apple's rows carry the figures
+its filings report; `EXAMPLE RESTATER CORP` is fictional and exists for the restatement, the
+co-registrant row and the footnote-only row.
+
+**Most likely to be wrong on the first live file.**
+
+1. The zip's member names. The loader looks for `sub.txt` and `num.txt` case-insensitively and
+   raises naming the members it found if either is absent.
+2. Encoding. Read as UTF-8 with replacement; a company name with a stray byte will show a
+   replacement character, which is cosmetic. If the header itself mis-decodes the loader raises.
+3. The `accepted` timestamp format is kept as a string and not parsed, on purpose, so a format
+   change cannot break a load. `filed` is the point-in-time stamp and is a plain `YYYYMMDD`.
+4. Memory. A full quarter streams through `num.txt` once and keeps only the CIKs and tags asked
+   for. Loading a quarter with no filter keeps every row, which for a real set is millions of
+   dataclasses; filter by `ciks` for anything real.
+

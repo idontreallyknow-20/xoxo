@@ -313,6 +313,23 @@ also prints the synthetic engine's assumption next to the measured rate so you c
 The first line of every report says where the data came from. Until you run `--fetch` once, it says
 "NOT a real request".
 
+### X8, the SEC DERA data sets, loader written and verified on known figures
+
+```bash
+export SEC_USER_AGENT="Joseph your@email"
+python scripts/fetch_dera.py --dry-run --since 2023q1                 # the URLs, nothing sent
+python scripts/fetch_dera.py --since 2023q1                           # one 50-100 MB zip per quarter
+python scripts/fetch_dera.py --show 320193 --metric revenue           # Apple, as first reported
+python scripts/fetch_dera.py --show 320193 --metric revenue --as-of 2024-03-31   # as known then
+python scripts/fetch_dera.py --fixture --show 320193 --metric revenue # the committed miniature
+```
+
+This is the fundamentals source a real backtest should use: every company, every quarter, as filed,
+free, and dated by filing so `as_known_on` never sees a restatement early. The loader reconstructs
+Apple's FY2023 net sales of $383.285bn from a hand-built `num.txt`, and derives the two fourth
+quarters the filings never state ($89.498bn and $90.146bn, both what Apple reported). It has not
+downloaded a real quarter yet, for the same reason as everything else in this session.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -323,7 +340,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 728 (699 from the first session, 29 for X7) |
+| tests | 752 (699 from the first session, 29 for X7, 24 for X8) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
