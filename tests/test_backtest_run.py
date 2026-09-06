@@ -89,3 +89,32 @@ def test_calibrate_only_mode_skips_the_snapshot_work(tmp_path):
     d = json.loads(out.read_text())
     assert "engine_calibration" in d
     assert "score_structure" not in d
+
+
+def test_every_calibration_case_carries_its_limitations(payload):
+    """The engine refuses to construct a result without limitations, and then none of
+    them reached this file. The enforcement was invisible to anyone reading it."""
+    for c in payload["engine_calibration"]["cases"]:
+        assert c["limitations"], c["case"]
+        assert len(c["limitations"]) >= 3
+        joined = " ".join(c["limitations"])
+        assert "urvivorship" in joined and "ook-ahead" in joined
+
+
+def test_each_case_says_whether_it_behaved_not_just_its_verdict(payload):
+    """"supported" on the contaminated case is correct and misleading on its own: the
+    engine did measure a real relationship, and the point of the case is that the
+    relationship is a bug."""
+    cases = {c["case"]: c for c in payload["engine_calibration"]["cases"]}
+    assert all(c["behaved_as_expected"] for c in cases.values())
+    bad = cases["look-ahead contamination"]
+    assert bad["verdict"] == "supported"
+    assert bad["expected_to_find_something"] is False
+    assert bad["flags"], "it behaved because it raised a flag, not because of the verdict"
+    assert cases["no relationship at all"]["expected_to_find_something"] is False
+
+
+def test_the_verdict_sentence_carries_the_sample_size(payload):
+    for c in payload["engine_calibration"]["cases"]:
+        assert "rebalances" in c["verdict_sentence"]
+        assert "names per date" in c["verdict_sentence"]

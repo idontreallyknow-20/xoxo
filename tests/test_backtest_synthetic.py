@@ -60,6 +60,49 @@ def test_a_small_effect_at_a_small_sample_never_reaches_supported(seed):
     assert r.effective_independent_periods < 20
 
 
+def test_the_overlapping_false_positive_rate_is_recorded_and_worse():
+    """The engine's honesty machinery has a hole and it is written down rather than
+    left to be found. With four-to-one overlap and a persistent score, the rate at
+    the point the twelve-period floor stops protecting is three times nominal."""
+    assert B.MEASURED_FALSE_POSITIVE_RATE_OVERLAPPING > 2 * B.MEASURED_FALSE_POSITIVE_RATE
+    assert B.measured_false_positive_rate(63, 63) == B.MEASURED_FALSE_POSITIVE_RATE
+    assert B.measured_false_positive_rate(252, 63) == B.MEASURED_FALSE_POSITIVE_RATE_OVERLAPPING
+    src = " ".join(open(B.__file__).read().split())
+    assert "three times nominal" in src, "the measured table must stay in the module"
+    assert "worse each time" in src, "the failed block-widening attempt is part of the finding"
+
+
+def test_an_overlapping_run_says_so_in_its_own_limitations():
+    panel, _ = make_panel(PanelSpec(n_dates=30, n_names=120, alpha=0.02, seed=5,
+                                    score_persistence=0.85, horizon_periods=4))
+    r = B.run_backtest(panel, label="o", variant="v", horizon_days=252, rebalance_spacing_days=63)
+    joined = " ".join(r.limitations)
+    assert "windows overlap" in joined
+    assert "three times too" in joined
+    assert "do not overlap" in joined
+    assert r.effective_t is not None and abs(r.effective_t) < abs(r.ic_t)
+
+
+def test_score_persistence_actually_persists():
+    """Without it a panel with overlapping horizons still behaves independently, and
+    any test of the overlap machinery passes for the wrong reason."""
+    from an.stats import spearman
+
+    flat, _ = make_panel(PanelSpec(n_dates=6, n_names=100, seed=3, score_persistence=0.0))
+    sticky, _ = make_panel(PanelSpec(n_dates=6, n_names=100, seed=3, score_persistence=0.9))
+    names = sorted(set(flat[0].scores) & set(flat[1].scores))
+    a, _ = spearman([flat[0].scores[t] for t in names], [flat[1].scores[t] for t in names])
+    b, _ = spearman([sticky[0].scores[t] for t in names], [sticky[1].scores[t] for t in names])
+    assert abs(a) < 0.3
+    assert b > 0.8
+
+
+def test_an_overlapping_horizon_shares_return_periods():
+    panel, _ = make_panel(PanelSpec(n_dates=8, n_names=60, seed=7, horizon_periods=4))
+    assert len(panel) == 5  # 8 dates minus the 3 that have no full window ahead
+    assert all(len(rb.with_returns) > 20 for rb in panel)
+
+
 def test_measured_false_positive_rate_has_not_drifted():
     """Generate panels where the score cannot possibly predict the return, and count
     how often the engine says it does. This number is quoted in the module docstring

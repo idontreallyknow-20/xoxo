@@ -87,14 +87,25 @@ def calibrate() -> Dict[str, object]:
         panel, truth = make_panel(spec)
         r = B.run_backtest(panel, label=label, variant="synthetic", horizon_days=63,
                            rebalance_spacing_days=63)
+        expected_to_find = spec.alpha != 0 and not spec.contaminate
         out.append({
             "case": label,
             "expectation": expectation,
+            "expected_to_find_something": expected_to_find,
+            "behaved_as_expected": (
+                (r.verdict in ("suggestive", "supported")) == expected_to_find
+                if not spec.contaminate else bool(r.flags)
+            ),
+            # The engine refuses to construct a result without limitations, and then
+            # none of them reached this file. The whole enforcement was invisible to
+            # anyone reading the output.
+            "limitations": r.limitations,
             "planted_alpha": spec.alpha,
             "expected_rank_ic": round(truth["approx_rank_ic"], 4),
             "measured_rank_ic": None if r.mean_ic is None else round(r.mean_ic, 4),
             "ci": [round(x, 4) for x in r.ic_ci] if r.ic_ci else None,
             "verdict": r.verdict,
+            "verdict_sentence": r.verdict_sentence,
             "flags": r.flags,
             "names_first_date": r.names_per_date[0] if r.names_per_date else 0,
             "names_last_date": r.names_per_date[-1] if r.names_per_date else 0,

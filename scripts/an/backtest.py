@@ -72,23 +72,67 @@ MIN_NAMES_PER_DATE = 20
 """Below this many scored names with returns, a date's IC is not computed at all."""
 
 MEASURED_FALSE_POSITIVE_RATE = 0.075
-"""How often this engine claims an edge when there is provably none.
+"""How often this engine claims an edge when there is provably none, non-overlapping.
 
-Measured, not assumed. 200 synthetic panels per sample size were generated with the
-score and the forward return statistically independent (``synthetic.PanelSpec`` with
-``alpha=0``), and the fraction where the 95% interval excluded zero was counted:
+Measured, not assumed. 200 synthetic panels per sample size, score and forward
+return independent by construction (``synthetic.PanelSpec`` with ``alpha=0``),
+counting the fraction where the 95% interval excluded zero:
 
     12 rebalances   7.5%
     20 rebalances   7.0%
     30 rebalances   5.5%
     40 rebalances   7.5%
 
-Against a nominal 5%, so the intervals are mildly too narrow. That is the known
-undercoverage of a percentile bootstrap at small sample sizes, and it is stated on
-every result rather than left for someone to discover. In plain terms: roughly one
-in thirteen "suggestive" findings from this engine is nothing at all. The
-regression test is ``test_measured_false_positive_rate_has_not_drifted``.
+Against a nominal 5%, so the intervals are mildly too narrow: the known
+undercoverage of a percentile bootstrap at small samples. Roughly one "suggestive"
+finding in thirteen is nothing at all.
+
+**This number only holds where the holding period equals the rebalance spacing.**
+That is the one configuration it was ever measured in, and it is not the
+configuration a real backtest here would use.
 """
+
+MEASURED_FALSE_POSITIVE_RATE_OVERLAPPING = 0.153
+"""The same measurement with overlapping windows and a score that persists.
+
+150 panels per configuration, 120 names, score autocorrelation 0.85 between
+consecutive dates, forward return summed over four rebalance steps so consecutive
+windows share three of them. That is roughly what quarterly snapshots held for a
+year look like. A claim is a verdict of "suggestive" or better:
+
+    non-overlapping, 30 rebalances     6.7%
+    overlapping 4x, 30 rebalances      0.0%   (22 of 150 reached "weak")
+    overlapping 4x, 60 rebalances     15.3%
+    overlapping 4x, 120 rebalances     8.7%
+
+Read the third row. At 30 rebalances the overlap leaves 7.5 effective periods, the
+twelve-period floor refuses to promote anything above "weak", and the rate is zero
+because the engine declines rather than because it is right. At 60 the floor stops
+protecting and the true rate appears: **three times nominal.** More data pulls it
+back towards 9%, still nearly twice.
+
+Two things follow, and both were tested rather than assumed.
+
+The floor is doing most of the work, not the statistics. That is a policy holding
+up a result the arithmetic cannot, which is worth knowing about a tool built to be
+honest.
+
+Widening the bootstrap block does not fix it. Multiplying the block length by 1.5,
+2 and 3 moved the rate to 13.3%, 17.5% and 26.7%: worse each time, because a block
+approaching a third of a short series stops resampling anything.
+
+The fix is not in the engine. It is to stop using overlapping windows: pair each
+snapshot with a forward return of one rebalance step, which is what
+``an.power.archiving_cadence_advice`` already recommends for a different reason.
+Monthly snapshots with a one-month horizon are independent observations; monthly
+snapshots held for a year are one observation wearing twelve hats.
+"""
+
+
+def measured_false_positive_rate(horizon_days: int, rebalance_spacing_days: int) -> float:
+    """The rate that applies to a given configuration, rather than the flattering one."""
+    overlap = horizon_days / max(rebalance_spacing_days, 1)
+    return MEASURED_FALSE_POSITIVE_RATE if overlap <= 1.01 else MEASURED_FALSE_POSITIVE_RATE_OVERLAPPING
 
 
 @dataclass(frozen=True)
@@ -231,11 +275,24 @@ class BacktestResult:
         if n < 20:
             return "suggestive"
         # Bonferroni: with k hypotheses the interval has to be wider to mean the same.
-        if self.hypotheses_tested > 1 and self.ic_t is not None:
+        # The t has to be deflated to the effective sample first. ic_t is computed
+        # over every raw rebalance IC, and this module argues at length that those
+        # are not independent when the horizon exceeds the rebalance spacing. Testing
+        # a raw-sample t against a widened threshold defeats the widening: the
+        # inflation from dependence is larger than the correction.
+        if self.hypotheses_tested > 1 and self.effective_t is not None:
             needed = 1.96 + 0.5 * math.log(max(self.hypotheses_tested, 1))
-            if abs(self.ic_t) < needed:
+            if abs(self.effective_t) < needed:
                 return "suggestive"
         return "supported"
+
+    @property
+    def effective_t(self) -> Optional[float]:
+        """The t statistic deflated to the number of independent observations."""
+        if self.ic_t is None:
+            return None
+        overlap = max(1.0, self.horizon_days / max(self.rebalance_spacing_days, 1))
+        return self.ic_t / math.sqrt(overlap)
 
     @property
     def verdict_sentence(self) -> str:
@@ -266,6 +323,9 @@ class BacktestResult:
             "ic_stdev": self.ic_stdev,
             "ic_ci": list(self.ic_ci) if self.ic_ci else None,
             "ic_t": self.ic_t,
+            "effective_t": self.effective_t,
+            "measured_false_positive_rate": measured_false_positive_rate(
+                self.horizon_days, self.rebalance_spacing_days),
             "ic_hit_rate": self.ic_hit_rate,
             "quintiles": [
                 {
@@ -435,12 +495,22 @@ def run_backtest(
         "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the "
         "scores handed in were computable on each rebalance date."
     )
-    limitations.append(
-        f"This engine's own false-positive rate was measured at about "
-        f"{MEASURED_FALSE_POSITIVE_RATE:.1%} against a nominal 5%, on synthetic panels where the "
-        "score and the return were independent by construction. Roughly one finding in thirteen at "
-        "the 'suggestive' level is nothing at all."
-    )
+    fpr = measured_false_positive_rate(horizon_days, rebalance_spacing_days)
+    if overlap > 1.01:
+        limitations.append(
+            f"These windows overlap {overlap:.1f} to one. In that configuration this engine's own "
+            f"false-positive rate measures about {fpr:.0%} against a nominal 5%, three times too "
+            "high, on panels where the score carries no information at all. Widening the bootstrap "
+            "block makes it worse, not better. The fix is not in the engine: use a forward return "
+            "of one rebalance step so the windows do not overlap."
+        )
+    else:
+        limitations.append(
+            f"This engine's own false-positive rate was measured at about {fpr:.1%} against a "
+            "nominal 5%, on synthetic panels where the score and the return were independent by "
+            "construction and the holding period equalled the rebalance spacing. Roughly one "
+            "finding in thirteen at the 'suggestive' level is nothing at all."
+        )
     if hypotheses_tested > 1:
         limitations.append(
             f"{hypotheses_tested} variant and horizon combinations were tested. The best of "

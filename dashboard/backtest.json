@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-06T10:41:17",
+  "built_at": "2026-09-06T10:49:57",
   "snapshot_date": "2026-09-04",
   "status": "NOT RUN",
   "why_not_run": [
@@ -15,6 +15,14 @@
       {
         "case": "planted alpha, realistic size",
         "expectation": "The score genuinely predicts returns by a small, realistic amount. The engine should find it.",
+        "expected_to_find_something": true,
+        "behaved_as_expected": true,
+        "limitations": [
+          "Overlapping windows: a 63-day horizon rebalanced every 63 days gives 40 observations but only about 40.0 independent ones. The interval is a moving-block bootstrap, not an ordinary one.",
+          "Survivorship: the universe is the names listed today. Companies delisted, acquired or wiped out before today are absent, and those are the ones that lost money. Every number here is therefore flattering by an unknown amount.",
+          "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the scores handed in were computable on each rebalance date.",
+          "This engine's own false-positive rate was measured at about 7.5% against a nominal 5%, on synthetic panels where the score and the return were independent by construction and the holding period equalled the rebalance spacing. Roughly one finding in thirteen at the 'suggestive' level is nothing at all."
+        ],
         "planted_alpha": 0.03,
         "expected_rank_ic": 0.1375,
         "measured_rank_ic": 0.1253,
@@ -23,6 +31,7 @@
           0.1476
         ],
         "verdict": "supported",
+        "verdict_sentence": "supported: mean rank IC +0.125, 95% interval [+0.102, +0.148], over 40 rebalances (40.0 independent), 150 names per date.",
         "flags": [],
         "names_first_date": 150,
         "names_last_date": 150
@@ -30,6 +39,14 @@
       {
         "case": "no relationship at all",
         "expectation": "The score and the return are independent by construction. The engine must report no evidence.",
+        "expected_to_find_something": false,
+        "behaved_as_expected": true,
+        "limitations": [
+          "Overlapping windows: a 63-day horizon rebalanced every 63 days gives 40 observations but only about 40.0 independent ones. The interval is a moving-block bootstrap, not an ordinary one.",
+          "Survivorship: the universe is the names listed today. Companies delisted, acquired or wiped out before today are absent, and those are the ones that lost money. Every number here is therefore flattering by an unknown amount.",
+          "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the scores handed in were computable on each rebalance date.",
+          "This engine's own false-positive rate was measured at about 7.5% against a nominal 5%, on synthetic panels where the score and the return were independent by construction and the holding period equalled the rebalance spacing. Roughly one finding in thirteen at the 'suggestive' level is nothing at all."
+        ],
         "planted_alpha": 0.0,
         "expected_rank_ic": 0.0,
         "measured_rank_ic": -0.0053,
@@ -38,6 +55,7 @@
           0.0191
         ],
         "verdict": "no evidence",
+        "verdict_sentence": "no evidence: mean rank IC -0.005, 95% interval [-0.031, +0.019], over 40 rebalances (40.0 independent), 150 names per date.",
         "flags": [],
         "names_first_date": 150,
         "names_last_date": 150
@@ -45,6 +63,14 @@
       {
         "case": "negative signal",
         "expectation": "The score predicts returns backwards. The engine should report a negative IC, not a weak positive one.",
+        "expected_to_find_something": true,
+        "behaved_as_expected": true,
+        "limitations": [
+          "Overlapping windows: a 63-day horizon rebalanced every 63 days gives 40 observations but only about 40.0 independent ones. The interval is a moving-block bootstrap, not an ordinary one.",
+          "Survivorship: the universe is the names listed today. Companies delisted, acquired or wiped out before today are absent, and those are the ones that lost money. Every number here is therefore flattering by an unknown amount.",
+          "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the scores handed in were computable on each rebalance date.",
+          "This engine's own false-positive rate was measured at about 7.5% against a nominal 5%, on synthetic panels where the score and the return were independent by construction and the holding period equalled the rebalance spacing. Roughly one finding in thirteen at the 'suggestive' level is nothing at all."
+        ],
         "planted_alpha": -0.03,
         "expected_rank_ic": -0.1375,
         "measured_rank_ic": -0.1236,
@@ -53,6 +79,7 @@
           -0.0977
         ],
         "verdict": "supported",
+        "verdict_sentence": "supported: mean rank IC -0.124, 95% interval [-0.150, -0.098], over 40 rebalances (40.0 independent), 150 names per date.",
         "flags": [],
         "names_first_date": 150,
         "names_last_date": 150
@@ -60,6 +87,14 @@
       {
         "case": "look-ahead contamination",
         "expectation": "The score was computed from the answer. The engine must flag it rather than celebrate it.",
+        "expected_to_find_something": false,
+        "behaved_as_expected": true,
+        "limitations": [
+          "Overlapping windows: a 63-day horizon rebalanced every 63 days gives 24 observations but only about 24.0 independent ones. The interval is a moving-block bootstrap, not an ordinary one.",
+          "Survivorship: the universe is the names listed today. Companies delisted, acquired or wiped out before today are absent, and those are the ones that lost money. Every number here is therefore flattering by an unknown amount.",
+          "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the scores handed in were computable on each rebalance date.",
+          "This engine's own false-positive rate was measured at about 7.5% against a nominal 5%, on synthetic panels where the score and the return were independent by construction and the holding period equalled the rebalance spacing. Roughly one finding in thirteen at the 'suggestive' level is nothing at all."
+        ],
         "planted_alpha": 0.01,
         "expected_rank_ic": 0.0463,
         "measured_rank_ic": 1.0,
@@ -68,6 +103,7 @@
           1.0
         ],
         "verdict": "supported",
+        "verdict_sentence": "supported: mean rank IC +1.000, 95% interval [+1.000, +1.000], over 24 rebalances (24.0 independent), 120 names per date.",
         "flags": [
           "Mean rank IC of +1.000 is above 0.25. Published cross-sectional signals sit near 0.02 to 0.06. Treat this as evidence of look-ahead in the inputs until proven otherwise, not as an edge."
         ],
@@ -77,6 +113,14 @@
       {
         "case": "names that stop trading",
         "expectation": "Companies leave the panel at a loss. The engine must show the universe shrinking.",
+        "expected_to_find_something": true,
+        "behaved_as_expected": true,
+        "limitations": [
+          "Overlapping windows: a 63-day horizon rebalanced every 63 days gives 20 observations but only about 20.0 independent ones. The interval is a moving-block bootstrap, not an ordinary one.",
+          "Survivorship: the universe is the names listed today. Companies delisted, acquired or wiped out before today are absent, and those are the ones that lost money. Every number here is therefore flattering by an unknown amount.",
+          "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the scores handed in were computable on each rebalance date.",
+          "This engine's own false-positive rate was measured at about 7.5% against a nominal 5%, on synthetic panels where the score and the return were independent by construction and the holding period equalled the rebalance spacing. Roughly one finding in thirteen at the 'suggestive' level is nothing at all."
+        ],
         "planted_alpha": 0.02,
         "expected_rank_ic": 0.0922,
         "measured_rank_ic": 0.2024,
@@ -85,6 +129,7 @@
           0.2396
         ],
         "verdict": "supported",
+        "verdict_sentence": "supported: mean rank IC +0.202, 95% interval [+0.166, +0.240], over 20 rebalances (20.0 independent), 121 names per date.",
         "flags": [],
         "names_first_date": 150,
         "names_last_date": 93
