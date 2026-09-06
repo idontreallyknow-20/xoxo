@@ -176,9 +176,9 @@ Consequences that shape everything below:
 
 - [x] **Q1** Headless Chromium screenshot of every new page in `night` and `paper` themes.
       Verify: `python scripts/shoot.py` writes 6 PNGs, each > 20 KB
-- [ ] **Q2** Contrast check of new components against WCAG AA for body text.
+- [x] **Q2** Contrast check of new components against WCAG AA for body text.
       Verify: `python -m pytest -q tests/test_contrast.py`
-- [ ] **Q3** Secret scan: no API key, token or personal holding in anything git tracks.
+- [x] **Q3** Secret scan: no API key, token or personal holding in anything git tracks.
       Verify: `python -m pytest -q tests/test_no_secrets.py`
 - [ ] **Q4** Full suite + a clean rebuild from scratch reproduces byte-identical JSON.
       Verify: `python -m pytest -q && python scripts/build_all.py && git diff --exit-code dashboard/`
@@ -188,7 +188,7 @@ Consequences that shape everything below:
 
 ## Extension backlog (start here once A-Q are done, highest value first)
 
-- [ ] **X1** Point-in-time snapshot archiving so a *real* forward test becomes possible from the next
+- [x] **X1** Point-in-time snapshot archiving so a *real* forward test becomes possible from the next
       pipeline run onward (`universe/snapshots/<date>/`). This is the single highest-value item:
       it is the only thing that turns E into a genuine backtest over time.
 - [ ] **X2** EDGAR XBRL `companyfacts` -> 10+ years of as-reported fundamentals with filed dates,

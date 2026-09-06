@@ -1,0 +1,120 @@
+{
+ "metric": {
+  "10DayAverageTradingVolume": 52.34119,
+  "13WeekPriceReturnDaily": 8.4213,
+  "26WeekPriceReturnDaily": 14.0327,
+  "3MonthADReturnStd": 27.5148,
+  "52WeekHigh": 288.62,
+  "52WeekHighDate": "2026-08-14",
+  "52WeekLow": 191.4,
+  "52WeekLowDate": "2025-11-03",
+  "52WeekPriceReturnDaily": 21.7714,
+  "beta": 1.1092,
+  "bookValuePerShareAnnual": 4.4217,
+  "cashFlowPerShareTTM": 7.3118,
+  "currentRatioQuarterly": 0.8683,
+  "dividendYieldIndicatedAnnual": 0.4102,
+  "epsGrowth3Y": 12.6104,
+  "epsGrowth5Y": 15.9218,
+  "epsGrowthQuarterlyYoy": null,
+  "evEbitdaTTM": 24.1806,
+  "grossMarginTTM": 46.8312,
+  "longTermDebt/equityQuarterly": 1.4712,
+  "netProfitMarginTTM": 26.4419,
+  "operatingMarginTTM": 31.7702,
+  "payoutRatioTTM": 15.2033,
+  "pbAnnual": 61.3714,
+  "peBasicExclExtraTTM": 34.0219,
+  "peTTM": 33.9147,
+  "psTTM": 8.9411,
+  "revenueGrowth3Y": 6.2044,
+  "revenueGrowth5Y": 8.7311,
+  "revenueGrowthQuarterlyYoy": null,
+  "roaTTM": 28.3106,
+  "roeTTM": 151.3119,
+  "roiTTM": 61.2004,
+  "totalDebt/totalEquityQuarterly": 1.8871
+ },
+ "metricType": "all",
+ "series": {
+  "annual": {
+   "currentRatio": [
+    {
+     "period": "2023-09-30",
+     "v": 0.9884
+    },
+    {
+     "period": "2024-09-28",
+     "v": 0.8673
+    },
+    {
+     "period": "2025-09-27",
+     "v": 0.8673
+    },
+    {
+     "period": "2026-09-26",
+     "v": 0.8683
+    }
+   ],
+   "netMargin": [
+    {
+     "period": "2023-09-30",
+     "v": 0.2531
+    },
+    {
+     "period": "2024-09-28",
+     "v": null
+    },
+    {
+     "period": "2025-09-27",
+     "v": 0.2397
+    },
+    {
+     "period": "2026-09-26",
+     "v": 0.2644
+    }
+   ],
+   "salesPerShare": [
+    {
+     "period": "2024-09-28",
+     "v": 25.0091
+    },
+    {
+     "period": "2025-09-27",
+     "v": 26.0113
+    },
+    {
+     "period": "2026-09-26",
+     "v": 28.1104
+    }
+   ]
+  },
+  "quarterly": {
+   "currentRatio": [
+    {
+     "period": "2025-12-27",
+     "v": 0.9231
+    },
+    {
+     "period": "2026-03-28",
+     "v": 0.8209
+    },
+    {
+     "period": "2026-06-27",
+     "v": 0.8683
+    }
+   ],
+   "netMargin": [
+    {
+     "period": "2026-03-28",
+     "v": 0.2601
+    },
+    {
+     "period": "2026-06-27",
+     "v": 0.2712
+    }
+   ]
+  }
+ },
+ "symbol": "AAPL"
+}

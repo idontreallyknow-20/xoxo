@@ -77,8 +77,12 @@ nav a.on { background: var(--ink); color: var(--paper); border-color: var(--ink)
 header .status { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-left: auto; text-align: right; }
 
 a { color: inherit; }
+/* Focus ring uses --ink, not --mark. In the paper theme --mark is a pale yellow on
+ * a white page, 1.15:1, which is an invisible focus ring and therefore no focus
+ * ring at all. --ink against --paper is the one pairing guaranteed high contrast
+ * in every theme, since that is what the whole palette is built around. */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid var(--mark); outline-offset: 2px; }
+  outline: 2px solid var(--ink); outline-offset: 2px; }
 
 section { margin-top: 44px; }
 h2 { font-size: 15px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.005em;

@@ -1,0 +1,12 @@
+{
+  "_note": "Shape of yf.download('SPLT', auto_adjust=False, multi_level_index=False): one ticker, flat column labels, and both a raw Close and an Adj Close. Same two for one split on 2026-01-07 as yf_download_split.json, in the flat layout instead of the MultiIndex one, so the Adj Close preference is covered on both branches. Reading the raw Close here would score the split as a 49 percent loss.",
+  "index": ["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08"],
+  "columns": ["Open", "High", "Low", "Close", "Adj Close", "Volume"],
+  "data": [
+    [199.0, 201.0, 198.0, 200.0, 100.0, 1000],
+    [200.0, 203.0, 199.5, 202.0, 101.0, 1100],
+    [202.0, 205.0, 201.0, 204.0, 102.0, 1200],
+    [102.0, 104.0, 101.5, 103.0, 103.0, 2400],
+    [103.0, 105.0, 102.5, 104.0, 104.0, 1300]
+  ]
+}

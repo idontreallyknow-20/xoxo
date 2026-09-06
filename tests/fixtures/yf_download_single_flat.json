@@ -1,0 +1,10 @@
+{
+  "_note": "Shape of an older yfinance, or yf.download('ONE', multi_level_index=False): one ticker, flat column labels, no ticker level anywhere. The ticker name has to come from what was asked for.",
+  "index": ["2026-01-02", "2026-01-05", "2026-01-06"],
+  "columns": ["Open", "High", "Low", "Close", "Volume"],
+  "data": [
+    [9.5, 10.5, 9.4, 10.0, 1000],
+    [10.0, 11.2, 9.9, 11.0, 1200],
+    [11.0, 12.4, 10.8, 12.0, 900]
+  ]
+}

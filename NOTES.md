@@ -91,6 +91,31 @@ every CAGR here is a 3-year CAGR. The analyse pages label it that way rather tha
 
 ---
 
+## 3b. Contrast, measured
+
+The six themes were inherited verbatim from `dashboard/index.html` rather than chosen, so this is a
+measurement of the palette, not a criticism of it. `tests/test_contrast.py` computes every pairing
+the new components use, in all six themes, and records the shortfalls rather than loosening the bar.
+
+**One real bug, fixed.** I had used `--mark` for the keyboard focus ring. In the `paper` theme
+`--mark` is `#fff27a`, a pale yellow on a white page: **1.15:1**, which is an invisible focus ring
+and therefore no focus ring at all. Now `--ink`, which is the one pairing guaranteed high contrast in
+every theme because the whole palette is built around it.
+
+**Three inherited shortfalls, not fixed, because fixing them means changing values that must stay
+identical to `index.html`:**
+
+| pairing | theme | measured | bar |
+|---|---|---|---|
+| `--ink-3` on `--paper` | bone | 2.90:1 | 3.0:1 for large or secondary text |
+| `--ink-3` on `--paper` | amber | 2.81:1 | 3.0:1 |
+| `--up` on `--paper` | bone | 4.47:1 | 4.5:1 (a rounding-error miss) |
+
+`--ink-3` carries captions, units and as-of dates. The new pages never make it the only carrier of a
+fact: every caption restates something that also appears in the body text or in a value. So the
+shortfall degrades polish rather than access. If you want it gone, `--ink-3` in bone needs to go from
+`#928e82` to about `#7d7a70`, and in amber from `#6e5520` to about `#8a6b28`, in both files at once.
+
 ## 4. Free data sources
 
 Filled in from the research sweep. See section 4b for the verified table.

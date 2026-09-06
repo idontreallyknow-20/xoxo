@@ -1,0 +1,17 @@
+{
+  "_note": "Shape of yf.download([...], auto_adjust=True, group_by='column'): fields on the outer column level, tickers on the inner, no Adj Close because auto_adjust already folded it into Close. Ten weekdays, 2026-01-02 to 2026-01-15. LIVE trades throughout with a one day halt on 2026-01-07. DEAD collapses and stops printing after 2026-01-08, an acquisition or a delisting. LATE has its IPO on 2026-01-08 and has no prices at all before that.",
+  "index": ["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15"],
+  "columns": [["Close", "LIVE"], ["Close", "DEAD"], ["Close", "LATE"]],
+  "data": [
+    [100.0, 50.0, null],
+    [101.0, 51.0, null],
+    [102.0, 52.0, null],
+    [null, 53.0, null],
+    [104.0, 10.0, 20.0],
+    [105.0, null, 21.0],
+    [106.0, null, 22.0],
+    [107.0, null, 23.0],
+    [108.0, null, 24.0],
+    [109.0, null, 25.0]
+  ]
+}
