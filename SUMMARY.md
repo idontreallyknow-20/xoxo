@@ -250,7 +250,8 @@ See `NOTES.md` section 6 for the running list.
 | quarter narratives, quote-verified | 16 (122 quotes, 0 unverified) |
 | peer valuations computed | 150 |
 | lines added to `dashboard/index.html` | 2 |
-| existing files otherwise modified | 0 |
+| existing files otherwise modified | 0, enforced by `tests/test_nothing_existing_was_touched.py` |
+| clean-clone check | 622 tests pass, rebuild byte-identical to what is committed |
 | money spent | none |
 | API keys in any generated file | none, enforced by `tests/test_privacy.py` |
 
