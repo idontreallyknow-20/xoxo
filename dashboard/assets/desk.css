@@ -343,3 +343,19 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
                     border: 1px solid var(--rule); width: 20px; height: 20px;
                     display: flex; align-items: center; justify-content: center; }
 .howto li b, .howto li strong { color: var(--ink); font-weight: 500; }
+
+/* On a phone the heading and its provenance label fight for one line and both wrap
+ * badly. Stack them: the heading is what you are reading, the source is what you
+ * check afterwards, so the reading order is already the right one. */
+@media (max-width: 620px) {
+  h2 { flex-direction: column; align-items: flex-start; gap: 3px; }
+  h2 .sub { text-align: left; }
+  .plate .price { text-align: left; }
+  .plate .price .n { font-size: clamp(38px, 13vw, 56px); }
+  .cand .cb, .cand .cf { gap: 16px; }
+  .ledger .row { padding: 11px 0; }
+  .callout { padding: 16px 15px; }
+  .callout .line { font-size: 17px; }
+  table { font-size: 13px; }
+  th, td { padding-right: 10px; }
+}

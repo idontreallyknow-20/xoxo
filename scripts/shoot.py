@@ -47,6 +47,8 @@ def main() -> int:
     ap.add_argument("--pages", nargs="*", default=DEFAULT_PAGES)
     ap.add_argument("--width", type=int, default=1440)
     ap.add_argument("--height", type=int, default=1200)
+    ap.add_argument("--mobile", action="store_true",
+                    help="also render at 390px, an iPhone-width viewport")
     ap.add_argument("--full", action="store_true", default=True)
     a = ap.parse_args()
 
@@ -67,8 +69,14 @@ def main() -> int:
     try:
         with sync_playwright() as pw:
             browser = pw.chromium.launch(**launch_kwargs)
-            for theme in a.themes:
-                ctx = browser.new_context(viewport={"width": a.width, "height": a.height})
+            widths = [a.width] + ([390] if a.mobile else [])
+            for theme, width in [(t, w) for t in a.themes for w in widths]:
+                ctx = browser.new_context(
+                    viewport={"width": width, "height": a.height},
+                    device_scale_factor=1,
+                    is_mobile=width < 600,
+                    has_touch=width < 600,
+                )
                 # Motion off, or a full-page screenshot catches later sections mid-fade
                 # and every one of them reads as a blank gap.
                 ctx.add_init_script(
@@ -112,7 +120,8 @@ def main() -> int:
                             f"horizontal overflow: scrollWidth {overflow['sw']} > viewport "
                             f"{overflow['vw']}; widest: {'; '.join(overflow['worst'])}")
 
-                    name = (route.strip("/").replace("/", "_") or "home") + f"__{theme}.png"
+                    suffix = f"__{theme}" + (f"__{width}" if width != a.width else "")
+                    name = (route.strip("/").replace("/", "_") or "home") + suffix + ".png"
                     out = SHOTS / name
                     page.screenshot(path=str(out), full_page=a.full)
                     size = out.stat().st_size
@@ -127,7 +136,7 @@ def main() -> int:
                     status = "ok"
                     if errors:
                         status = "CONSOLE ERRORS"
-                        failures.append((route, theme, errors[:4]))
+                        failures.append((f"{route} @{width}px", theme, errors[:4]))
                     elif route == "/index.html":
                         # The original dashboard renders from data.js, which
                         # build_dashboard.py writes and which needs network access and a
@@ -138,8 +147,8 @@ def main() -> int:
                         status = "thin (data.js not built)" if text < 3000 else "ok"
                     elif size < 12_000 or text < 400:
                         status = "SUSPICIOUSLY EMPTY"
-                        failures.append((route, theme, [f"{size} bytes, {text} chars of text"]))
-                    print(f"{route:<24} {theme:<8} {size/1024:7.0f} KB  {text:6d} chars  {status}")
+                        failures.append((f"{route} @{width}px", theme, [f"{size} bytes, {text} chars of text"]))
+                    print(f"{route:<24} {theme:<7}{width:>5}px {size/1024:7.0f} KB  {text:6d} chars  {status}")
                 ctx.close()
             browser.close()
     finally:
