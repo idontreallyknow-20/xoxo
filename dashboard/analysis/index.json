@@ -87,7 +87,7 @@
    "pe_vs_median": -0.5361992239007278,
    "dd_52w": -0.35525097847476295,
    "next_earnings": "2026-10-01",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "ADBE",
@@ -105,7 +105,7 @@
    "pe_vs_median": -0.7261526053937154,
    "dd_52w": -0.24556434087008072,
    "next_earnings": "2026-09-10",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "ADP",
@@ -141,7 +141,7 @@
    "pe_vs_median": -0.7150348189148197,
    "dd_52w": -0.2654593098315382,
    "next_earnings": "2026-11-27",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "AGX",
@@ -191,7 +191,7 @@
    "pe_vs_median": 0.26282756396364126,
    "dd_52w": -0.40722215115513927,
    "next_earnings": "2026-11-12",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "AME",
@@ -316,7 +316,7 @@
    "pe_vs_median": -0.4654491169636006,
    "dd_52w": -0.11720631142839366,
    "next_earnings": "2026-10-27",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "BMI",
@@ -478,7 +478,7 @@
    "pe_vs_median": -0.36561980367674485,
    "dd_52w": -0.3458096044057748,
    "next_earnings": "2026-09-10",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "CRUS",
@@ -1114,7 +1114,7 @@
    "pe_vs_median": -0.030118916149653785,
    "dd_52w": -0.17495901931624902,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "GRMN",
@@ -1234,7 +1234,7 @@
    "pe_vs_median": -0.3832091664548932,
    "dd_52w": -0.299994817742831,
    "next_earnings": "2026-11-02",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "IHG",
@@ -1342,7 +1342,7 @@
    "pe_vs_median": -0.5764181300182032,
    "dd_52w": -0.3841822797860295,
    "next_earnings": "2026-10-20",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "IT",
@@ -1413,7 +1413,7 @@
    "pe_vs_median": -0.2622139831127581,
    "dd_52w": -0.4395679652964313,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "LAUR",
@@ -1503,7 +1503,7 @@
    "pe_vs_median": -0.15947546929975387,
    "dd_52w": -0.3424857301614168,
    "next_earnings": "2026-10-21",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "LUG.TO",
@@ -1661,7 +1661,7 @@
    "pe_vs_median": -0.277325612412602,
    "dd_52w": -0.25031616643154075,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "MLI",
@@ -1749,7 +1749,7 @@
    "pe_vs_median": -0.395932087050306,
    "dd_52w": -0.10275950421834368,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "MTD",
@@ -1839,7 +1839,7 @@
    "pe_vs_median": -0.7642178741332408,
    "dd_52w": -0.29788522734147915,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "NTAP",
@@ -1927,7 +1927,7 @@
    "pe_vs_median": -0.009013606986514655,
    "dd_52w": -0.26586857292725463,
    "next_earnings": "2026-10-21",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "NVS",
@@ -2175,7 +2175,7 @@
    "pe_vs_median": -0.2575347054274004,
    "dd_52w": -0.008506494173580958,
    "next_earnings": "2026-10-28",
-   "has_narrative": false
+   "has_narrative": true
   },
   {
    "ticker": "RELX",

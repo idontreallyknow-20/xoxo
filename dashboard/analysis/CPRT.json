@@ -336,8 +336,88 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "CPRT",
+   "quarter_label": "Q3 FY2026, reported 2026-05-21 (the note writes \"Q3 fiscal 2026 (May 21, 2026)\")",
+   "prior_quarter_label": "not stated",
+   "headline": "The only reported quarter the note describes, Q3 FY2026, shows revenue of $1.24 billion and EPS of $0.43 each up about 2% on a comparison basis the note never states, insurance units down (global 2.7%, US 4.2%), and a Q4 guide of about $1.136 billion revenue and $0.38 EPS that sits below both Q3 figures.",
+   "guidance": [
+    {
+     "what": "Q4 FY2026 revenue",
+     "change": "not stated",
+     "detail": "Guided to about $1.136 billion, given on the May 21, 2026 Q3 call. The note contains no earlier Q4 guide and no year-ago Q4 revenue base, so whether this was raised, cut, maintained or newly introduced cannot be determined from the file. The only comparison the file itself permits: $1.136 billion is below the $1.24 billion reported for Q3.",
+     "quote": "Q4 fiscal 2026 guidance from that call: revenue about $1.136 billion, EPS $0.38."
+    },
+    {
+     "what": "Q4 FY2026 EPS",
+     "change": "not stated",
+     "detail": "Guided to $0.38 on the same call. Again no prior guide and no year-ago Q4 EPS appear in the note, so the direction of the guide is not determinable; $0.38 is below the $0.43 reported for Q3.",
+     "quote": "Q4 fiscal 2026 guidance from that call: revenue about $1.136 billion, EPS $0.38."
+    }
+   ],
+   "tone": {
+    "assessment": "Not determinable from this note. It carries no management commentary, no quotation from the May 21, 2026 call, and no characterization of how the company framed the quarter. The entire 'Last two earnings reports' section is three sentences: Q3 figures, the Q4 guide, and the next report date. The bearish language elsewhere in the file ('Growth has stalled at 2% and the stock is still 20x') is the note author's own framing in a section headed 'The bear case', not management's tone, and must not be read as such.",
+    "evidence": "Q3 fiscal 2026 (May 21, 2026): revenue $1.24 billion up 2.1%, EPS $0.43 up 2.4%, global insurance units down 2.7% and US insurance units down 4.2%.",
+    "confidence": "high \u2014 grep finds zero occurrences of 'management', 'CEO', 'CFO', 'said', 'commentary' or 'transcript' anywhere in the file, so there is high confidence the note offers no basis for a tone read. It is not higher only in the sense that this is a determination about the note's silence, not evidence about what was actually said on the call."
+   },
+   "new_risks": [
+    {
+     "risk": "Insurance unit counts declined in the reported quarter \u2014 global units down 2.7% and US units down 4.2%. The note's own 'Key risks and thesis killers' section sets its alarm at declines 'accelerating past 8%', so the reported declines sit below that stated level.",
+     "quote": "global insurance units down 2.7% and US insurance units down 4.2%",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Guided Q4 FY2026 revenue of about $1.136 billion and EPS of $0.38 are lower figures than the $1.24 billion and $0.43 the note reports for Q3. The note gives no year-ago Q4 base, so no year-over-year implication can be drawn from this; only the arithmetic comparison to Q3 is supported.",
+     "quote": "Q4 fiscal 2026 guidance from that call: revenue about $1.136 billion, EPS $0.38.",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "AI-assisted damage assessment could let insurers repair rather than total vehicles, shrinking the pool of cars reaching auction.",
+     "quote": "AI damage assessment lets insurers repair more cars instead of totaling them",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Forward estimates have been revised down: the next fiscal year EPS estimate moved -1.3% over 90 days. This is a screen datapoint from line 3 of the note and is not named in either the bear case or the thesis-killers section.",
+     "quote": "Next fiscal year EPS estimate moved -1.3% in 90 days.",
+     "already_in_thesis": false
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Service revenue per unit",
+     "reasoning": "The note names 'service revenue per unit falling' among its thesis killers, yet no figure for it appears anywhere in the file \u2014 the earnings section reports only revenue, EPS and unit counts. This establishes that the metric is absent from the note. Whether management addressed it on the May 21 call cannot be inferred: the note contains no management commentary at all, so its silence is evidence about the summary, not about the call.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Unit volume outlook for Q4 FY2026",
+     "reasoning": "The Q4 guide the note records covers revenue and EPS only. Unit figures appear for Q3 (global -2.7%, US -4.2%) but not for the guided quarter, so the note gives no forward read on the volume line that drives its own thesis. Again this is a gap in the note; whether guidance on units was given and simply not summarized cannot be told from the file.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Explanation for the flat revenue and the unit declines",
+     "reasoning": "No cause is attributed to anyone in the earnings section. The note does offer an explanation \u2014 households dropping collision coverage or raising deductibles \u2014 but it appears under 'Business quality' as the note author's analysis, not as anything sourced to the company. So the file supports no claim about what explanation, if any, the company offered.",
+     "confidence": "low"
+    }
+   ],
+   "market_reaction": "The note records no price reaction to the May 21, 2026 Q3 report. Its only price and market data is a single screen row dated 2026-09-04, roughly three and a half months after that report and six days before the next one: \"Price 33.58 USD on 2026-09-04\", \"Forward P/E 20.0 vs own 4 year median 31.5 (-37%). EV/EBITDA 13.8.\", \"-35% from 52 week high, -50% from all time high.\", \"Next fiscal year EPS estimate moved -1.3% in 90 days.\", and \"Short interest 6.1% of float.\" Those figures are quoted at the precision the file states them; no more precise values, and no estimate-revision window other than the 90-day one, appear anywhere in the note. The 'Why it is on the list' section separately states the stock is \"down 38% over 52 weeks\", a trailing-return measure distinct from the header's -35% drawdown from the 52-week high; the note does not reconcile the two. Because the screen row postdates the reported quarter by months and no pre- or post-earnings price is given, none of it can be attributed to the Q3 print.",
+   "not_determinable": [
+    "The comparison basis for 'up 2.1%' and 'up 2.4%'. The note writes only those figures and never says whether they are year-over-year, sequential, or against guidance. The headline's 'up about 2%' inherits this ambiguity and should be read as unspecified.",
+    "The prior quarter's actuals. The section is headed 'Last two earnings reports' but reports only one set of results (Q3 FY2026) plus the Q4 guide and the next report date. No Q2 FY2026 figures appear anywhere in the file.",
+    "Whether the Q4 FY2026 guidance was raised, cut, maintained, or newly introduced. No earlier guide for the quarter is in the note.",
+    "The year-ago Q4 revenue and EPS base, so the guide's year-over-year implication cannot be computed from the file.",
+    "Whether Q3 FY2026 beat, met or missed consensus. No consensus or analyst estimate figures for the quarter appear; the only estimate datapoint is the -1.3% 90-day revision to next fiscal year EPS.",
+    "Whether that -1.3% 90-day estimate revision occurred before or after the May 21 report. The revision window is measured from the 2026-09-04 pull date, which the note does not tie to the earnings date.",
+    "Any estimate-revision window other than 90 days. The note contains no 30-day or other-period revision figure.",
+    "The stock's reaction to the Q3 report, or any price level other than the 33.58 close on 2026-09-04.",
+    "Management's tone, any direct quotation, or any statement attributed to the company. The note is a third-party summary with no call commentary.",
+    "Quarterly margin, free cash flow, share count or net debt figures. The financial table is annual only, FY2022 through FY2025, and the note states 'Four fiscal years is all the source provides.'",
+    "Service revenue per unit, despite the note naming it as one of its own thesis killers.",
+    "Non-insurance or dealer volume trends. The only unit figures given are global and US insurance units.",
+    "What the September 10, 2026 Q4 report showed. The note's data was pulled 2026-09-04 and it states 'Q4 reports September 10, 2026.'",
+    "Whether any risk in the note was newly disclosed at the Q3 report versus standing beforehand. The note presents its bear case and thesis killers as general positions and does not date them to the quarter, so the already_in_thesis flags above reflect only whether the item appears in those two sections of this file."
+   ],
+   "available": true,
+   "source": "research/CPRT.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -703,7 +783,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

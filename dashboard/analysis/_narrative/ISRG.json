@@ -1,0 +1,77 @@
+{
+ "ticker": "ISRG",
+ "quarter_label": "Q2 2026, reported 2026-07-16",
+ "prior_quarter_label": "Q1 2026",
+ "headline": "Intuitive's Q2 2026 beat on revenue, procedures and EPS, yet shares fell 3.3% after hours, and full-year gross margin is guided to 68 to 69% carrying a 1 point tariff hit.",
+ "guidance": [
+  {
+   "what": "Full year da Vinci procedure growth",
+   "change": "not stated",
+   "detail": "Guided to a range of 13.5% to 15.5%. The note gives no prior guidance range and does not say whether this was raised, cut, or maintained, so only the level is determinable. For context the note reports Q2 procedures up 16%, but it does not state that the guide represents a change to anything previously issued.",
+   "quote": "Full year da Vinci procedure growth guided to 13.5% to 15.5%, gross margin 68 to 69% including a 1 point tariff hit."
+  },
+  {
+   "what": "Full year gross margin",
+   "change": "not stated",
+   "detail": "Guided to 68 to 69%, explicitly stated as including a 1 point tariff hit. No prior gross margin guide appears in the note, so whether this range moved is not determinable. The note separately reports FY2025 gross margin of 66.0% in its financials table, but that is an actual, not a prior guide.",
+   "quote": "gross margin 68 to 69% including a 1 point tariff hit"
+  }
+ ],
+ "tone": {
+  "assessment": "Management tone is not assessable from this note. The note contains no call commentary, no management quotes, no Q&A, and no characterization of how the quarter was presented. The only tone-adjacent observation available is arithmetic: the top of the full-year da Vinci procedure growth guide (15.5%) sits below the 16% procedure growth the quarter itself delivered. That is a comparison between a full-year range and a single quarter drawn by me from two numbers in the note, not a statement management made and not evidence of caution on their part.",
+  "evidence": "Full year da Vinci procedure growth guided to 13.5% to 15.5%, gross margin 68 to 69% including a 1 point tariff hit.",
+  "confidence": "low"
+ },
+ "market_reaction": "The note gives exactly one reaction datapoint for this print: \\\"Shares fell 3.3% after hours despite the beat.\\\" No closing-day move, no subsequent move, and no explanation of the decline appear in the note. Separately, screen data pulled 2026-09-04 shows a price of 369.83 USD, -38% from the 52 week high and -39% from the all time high, with a forward P/E of 30.6 against a 4 year median of 72.3; the note attributes the de-rating broadly to competition (\\\"The first credible competitors in twenty years arrived, and the multiple halved\\\") and does not tie it to this quarter's report. Whether the two \\\"vs\\\" figures in the earnings line (468 systems placed vs 395; EPS $2.80 vs $2.19) are year-over-year or sequential is never stated in the note, so I make no directional claim about placements over any specific period and do not treat the placements thesis killer as tested either way.",
+ "new_risks": [
+  {
+   "risk": "A 1 point tariff hit is embedded in full-year gross margin guidance. Within this note, tariffs are named nowhere in the bear case section (which covers competition and instrument pricing pressure) and nowhere in the thesis killers list (procedure growth under 10%, placements down two quarters, instrument pricing cuts on a call, price trigger $290). Whether the hit is new this quarter, its source, and whether it persists beyond 2026 are not stated.",
+   "quote": "gross margin 68 to 69% including a 1 point tariff hit",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "Full-year procedure growth is guided to a range topping out at 15.5%, below the 16% the quarter delivered. Decelerating procedure growth under competitive pressure is already the core of the note's stated bear case and its first thesis killer, so this is a risk the framework already names rather than a new one.",
+   "quote": "Even after the drop the stock is 30x, which prices in continued mid teens growth that competition will erode.",
+   "already_in_thesis": true
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "Why the stock fell on a beat",
+   "reasoning": "The note states the beat and the 3.3% after-hours decline in the same sentence and offers no explanation from the company or the analyst for the gap. This is an omission in a short summary note, not evidence that management was asked and declined to answer; the note contains no call content at all, so I cannot distinguish a dodge from a summarization choice.",
+   "confidence": "low"
+  },
+  {
+   "topic": "Instrument pricing and any concessions to hospitals",
+   "reasoning": "The note makes instrument pricing central twice, in the bear case ($1,800 to $3,200 per procedure cost that hospitals will negotiate down) and as a named thesis killer (pricing cuts disclosed on a call), yet the Q2 paragraph carries no pricing commentary in either direction. Absence of pricing content in the note is not proof it was absent from the call.",
+   "confidence": "low"
+  },
+  {
+   "topic": "Competitive response to Hugo and Ottava",
+   "reasoning": "The note establishes both competitors as the central overhang and cites a third party, Oppenheimer, on their weaknesses, but the earnings section itself relays nothing from the company on competitive wins, losses, or displacement. The only prior-quarter remark, that Q1 also beat with the same competition overhang, likewise reports no company commentary.",
+   "confidence": "low"
+  },
+  {
+   "topic": "Duration and source of the tariff hit",
+   "reasoning": "The 1 point hit is quantified in the guidance line and then not developed anywhere else in the note, with no origin, no exposure detail, and no indication whether it recurs in 2027.",
+   "confidence": "low"
+  }
+ ],
+ "not_determinable": [
+  "The comparison basis of the two 'vs' figures: '468 da Vinci systems placed vs 395' and 'non-GAAP EPS $2.80 vs $2.19'. The note never states whether the second number is the prior-year quarter or the prior sequential quarter, so no direction over a defined period can be asserted, and the year-over-year placements thesis killer cannot be scored.",
+  "Whether full-year guidance for procedure growth or gross margin was raised, cut, or maintained. The note contains no previously issued guidance range for either metric.",
+  "Any sequential comparison to Q1 2026. The note's entire prior-quarter content is the clause 'Q1 2026 also beat with the same competition overhang', with no Q1 revenue, procedures, placements, EPS, margin, or guidance, so no metric can be compared quarter over quarter and no claim about what is new versus the prior quarter can be supported.",
+  "Management tone, prepared remarks, Q&A content, or any direct quotation from the company. The note carries none.",
+  "Whether the 1 point tariff hit is new to this quarter's guidance or was already embedded in an earlier one.",
+  "The magnitude of the beat versus consensus. The note asserts a beat but gives no analyst estimates for revenue, EPS, or procedures.",
+  "Segment detail: Ion versus da Vinci contribution, instrument and accessory revenue versus systems revenue versus service, and geographic mix. None appear in the note.",
+  "Lease versus purchase mix on the 468 placements, and its effect on revenue recognition, despite the note describing the buy-or-lease model in its business description.",
+  "Any market reaction beyond the 3.3% after-hours move: no closing-day move, no move over the weeks since, and no attribution of the 2026-09-04 price of 369.83 to this print rather than to the broader competition overhang.",
+  "Capital return: buybacks, share count guidance, or use of the $8.6 billion cash and investments balance. The note gives a historical diluted share count table only.",
+  "Backlog, system utilization per installed base, or procedures per system, which would separate placement growth from usage growth.",
+  "Whether any position, entry price, or prior thesis log exists for this name. The note contains no journal, trade record, or position data; its Verdict section states only 'Buy now, September tranche. Buy zone $335 to $390. Conviction 4 of 5.'"
+ ],
+ "available": true,
+ "source": "research/ISRG.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

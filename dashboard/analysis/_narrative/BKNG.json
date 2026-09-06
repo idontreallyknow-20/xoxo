@@ -1,0 +1,119 @@
+{
+ "ticker": "BKNG",
+ "quarter_label": "Q2 2026, reported late July 2026 (the note gives only \"late July 2026\", no exact date)",
+ "prior_quarter_label": "Q1 2026 (no reporting date and no figures stated; the note says only that it \"also beat\")",
+ "headline": "Q2 2026 beat on every metric the note lists \u2014 room nights came in above the top of the outlook and adjusted EPS rose 15% \u2014 while the Q3 room-night outlook of 3 to 5% sits below the 5% just delivered and the stock is down about 24% on the year.",
+ "guidance": [
+  {
+   "what": "Q3 2026 room nights and revenue",
+   "change": "not stated",
+   "detail": "Q3 room nights guided up 3 to 5% and revenue up 4 to 6%. The note does not label this as raised, cut or maintained and gives no prior Q3 outlook to compare against, so the direction of any revision cannot be determined from the file. Read against the quarter just reported (room nights up 5%, revenue up 8%), both ranges sit at or below the delivered growth rates.",
+   "quote": "Q3 outlook: room nights up 3 to 5%, revenue up 4 to 6%."
+  },
+  {
+   "what": "Full year 2026 revenue and adjusted EPS growth",
+   "change": "not stated",
+   "detail": "Full year framed as high single digit revenue growth and low to mid teens EPS growth. The note gives no earlier version of this full-year outlook, so whether it was raised, cut or maintained is not determinable from the file.",
+   "quote": "Full year: high single digit revenue growth, low to mid teens EPS growth."
+  },
+  {
+   "what": "Full year adjusted EPS growth, as carried into the valuation section",
+   "change": "not stated",
+   "detail": "The valuation section restates the same low-to-mid-teens EPS growth guide and pairs it with the current multiple. The note's own three-year scenarios assume 12% EPS growth, which is the author's assumption, not a company figure.",
+   "quote": "full year adjusted EPS growth guided to low to mid teens"
+  },
+  {
+   "what": "Capital returns: buyback pace, dividend, remaining authorization",
+   "change": "not stated",
+   "detail": "$3.7 billion of buybacks in a single quarter, a $0.42 dividend, and $14.5 billion of authorization remaining. The note presents these as reported facts, not as a forward commitment, and states no target buyback pace. The separate claim that buybacks shrink the share count 4 to 5% a year appears in the valuation section as the note author's own modelling, not as company guidance.",
+   "quote": "The company returned $3.7 billion through buybacks in a single quarter plus a $0.42 dividend, with $14.5 billion of authorization remaining."
+  }
+ ],
+ "tone": {
+  "assessment": "Management tone cannot be assessed from this note \u2014 it contains no quotes from the call or the release and no characterization of how management spoke. What the file conveys is the note author's tone: confident on the business, dismissive of the sentiment driving the stock. It frames the quarter as a beat (room nights above the top of the outlook, Q1 'also beat') and explicitly opposes results against sentiment, then closes with a buy and a 4 of 5 conviction score.",
+  "evidence": "The stock is down about 24% this year on AI agent fears while the business posted record results.",
+  "confidence": "low \u2014 and not higher because the note is a secondhand summary. It lists a Q2 2026 call transcript among its sources but reproduces no management language, no Q&A exchange, and no prepared-remarks detail. Any read of management tone would be inferred from an analyst's paraphrase rather than observed."
+ },
+ "new_risks": [
+  {
+   "risk": "AI agents disintermediating the booking layer and compressing the commission the business is built on",
+   "quote": "AI agents will talk directly to hotel systems and a 15% commission will not survive that.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Take-rate compression as an earnings risk: two points of compression is sized at a 15% earnings hit, and a 100 bps year-over-year fall is a stated thesis killer",
+   "quote": "If the take rate compresses by even two points, earnings fall 15%.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Room-night growth decelerating to mid single digits, consistent with the 3 to 5% Q3 guide",
+   "quote": "Growth is already slowing to mid single digits in room nights",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Middle East conflict weighing on travel demand",
+   "quote": "the Middle East conflict is hurting travel demand",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Google pushing its own hotel booking product against the company's channels",
+   "quote": "Google keeps pushing its own hotel booking",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Balance sheet is in a net debt position \u2014 debt exceeds cash \u2014 which the note states but never carries into the bear case or the thesis killers",
+   "quote": "Cash $17.2 billion against $20.2 billion of debt.",
+   "already_in_thesis": false
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "The actual take rate realized in the reported quarter",
+   "reasoning": "The Q2 paragraph lists gross bookings, revenue, room nights, adjusted EPS and adjusted EBITDA, but no take rate. The only two places 'take rate' appears in the file are the bear case (a hypothetical two-point compression) and the thesis killers (a 100 bps threshold). So the single metric the note treats as the thesis killer is the one it never reports a value for. Whether management disclosed it and the note omitted it, or management never gave it, cannot be told from this file.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "Any company response to the AI-disintermediation argument",
+   "reasoning": "The note names the overhang once, in the Q2/Q1 paragraph, and calls it 'AI agent fears' in the why-it-is-on-the-list section, then lays out the bear case in full. Nothing in the file records what the company said about it. The only counter-evidence offered is a third-party market event from March 2026, which the note itself downgrades to evidence rather than proof.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "Cost and margin drivers behind the quarter",
+   "reasoning": "Revenue is up 8% and adjusted EBITDA up 9% in the same quarter, so margin moved, but no expense line, marketing spend, or margin bridge appears anywhere in the file. The word 'marketing' does not occur in the note at all.",
+   "confidence": "low"
+  },
+  {
+   "topic": "Sizing of the Middle East demand impact and any regional split",
+   "reasoning": "The conflict is asserted to be hurting travel demand in the bear case but is never quantified, and no regional breakdown of bookings or room nights appears. The note names Europe and Asia only as supply strengths in the business-quality section. It is not determinable whether this was raised with management at all.",
+   "confidence": "low"
+  },
+  {
+   "topic": "How the Q3 guide reconciles with the full-year guide",
+   "reasoning": "Q3 revenue is guided up 4 to 6% while the full year is framed as high single digit revenue growth. The note presents both figures side by side without addressing the implied Q4 step-up. Whether management explained that bridge is not in the file.",
+   "confidence": "medium"
+  }
+ ],
+ "market_reaction": "Not stated for this print. The note gives no share-price move on or after the Q2 2026 report. The only price move it attaches to a date is a rise of 8% in March 2026 on the OpenAI checkout news, which is unrelated to this quarter. The surrounding context it does give is positional, not reactive: down about 24% this year, -12% from the 52 week high, -14% from the all time high, and a 2026-09-04 price of 195.13 recorded roughly six weeks after the report. One indirect hint sits outside the note's prose \u2014 the Investing.com source URL contains the slug \"shares-jump\" \u2014 but the note's body never states a post-earnings move, so I am not treating that as a reported fact.",
+ "not_determinable": [
+  "Whether any guidance was raised, cut, maintained or withdrawn. The note carries no prior-period guidance ranges. Its one comparative statement is that Q2 room nights came in 'above the top of the outlook' without ever saying what that outlook was.",
+  "The take rate or commission rate actually realized in Q2 2026. The 15% figure appears only inside the bear-case argument, and the 100 bps figure only as a thesis-killer threshold.",
+  "Guidance in absolute dollars. Every forward figure in the note is a growth rate or a range of growth rates; there is no dollar EPS, revenue or bookings guide for Q3 or the full year.",
+  "Any FY2027 or multi-year company guidance. The three-year outcomes (about $200 bear, about $310 base, about $380 bull) are the note author's scenario math built on an assumed 12% EPS growth rate, not company figures.",
+  "The share-price reaction to the Q2 print itself (see market_reaction).",
+  "Anything management actually said. The note lists a Q2 2026 call transcript among its sources but reproduces no quote, no Q&A, and no prepared remarks.",
+  "Any breakdown by brand or region. Booking.com, Priceline, Agoda, Kayak and OpenTable are named once in the business description and never again; no bookings, revenue or room nights are split by brand or geography.",
+  "Marketing spend and channel economics. The note asserts the company has 'the most direct traffic' but gives no direct-versus-paid mix, no performance-marketing spend, and no customer-acquisition figures. Nothing in the file describes a loyalty programme or its penetration.",
+  "Quarter-end share count and the forward buyback pace. The most recent share figure in the file is the FY2025 diluted count of 816 million; the $3.7 billion of buybacks is described as a single quarter with no statement that the pace continues.",
+  "Gross margin in any year. The financial table shows n/a for all four fiscal years.",
+  "Any history before FY2022. The note states plainly that four fiscal years is all the source provides, so multi-cycle comparisons are not possible from this file.",
+  "Estimate-revision detail beyond one line. The file contains only 'Next fiscal year EPS estimate moved +0.5% in 90 days' \u2014 no 30-day figure, no count of analysts revising up versus down, no dispersion, and no per-analyst data. Any more precise revision statistics would have to come from a source outside this note.",
+  "Valuation inputs beyond the rounded screen figures. The file gives forward P/E 15.8, a 29.5 four-year median and EV/EBITDA 14.4, and nothing more precise; there is also no Expedia comparable, which the note flags as not in the screen.",
+  "Year-ago quarterly bases. Growth rates are given, but no prior-year quarterly room nights, bookings or EPS appear, so the Q3 3 to 5% guide cannot be tested against comparison difficulty.",
+  "Position sizing, portfolio weight, or any trade record. The note ends at a buy zone of $178 to $205 and a conviction of 4 of 5. It contains no position size, no dollar or percentage target, no entry log and no cross-reference to any journal or trade record \u2014 the word 'journal' does not occur in the file. Any such figures would come from a different document.",
+  "The order and dates of the last two reports beyond what is stated. Q2 2026 is dated only as 'late July 2026' and Q1 2026 carries no date or figures at all.",
+  "Whether the Q2 beat was driven by volume, price or mix. Room nights up 5% against gross bookings up 9% implies a higher average booking value, but the note never states an ADR, a currency effect, or a mix explanation."
+ ],
+ "available": true,
+ "source": "research/BKNG.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

@@ -1,0 +1,111 @@
+{
+ "ticker": "LRCX",
+ "quarter_label": "Q4 fiscal 2026, reported late July 2026 (exact report date not stated). The note's screen data is dated 2026-09-04 and next earnings are 2026-10-21.",
+ "prior_quarter_label": "not stated",
+ "headline": "Lam guided the September quarter to $8.1 billion, roughly 20% above the record $6.72 billion it just reported, and management raised its 2026 wafer fab equipment outlook to the low $150 billion range.",
+ "guidance": [
+  {
+   "what": "September quarter revenue",
+   "change": "introduced",
+   "detail": "Guided to $8.1 billion plus or minus $400 million, against the $6.72 billion just reported (about a 20% sequential step up, computed from the note's own two figures). The note gives no prior September-quarter guide, so this is the first figure for the period in the file.",
+   "quote": "September quarter guided to $8.1 billion plus or minus $400 million with operating margin 39.5%."
+  },
+  {
+   "what": "September quarter EPS",
+   "change": "introduced",
+   "detail": "$2.15, which the note's valuation section annualizes to an $8.60 run rate, or about 34x on the $292.66 price. No consensus figure for September EPS appears in the note.",
+   "quote": "September quarter guidance of $8.1 billion revenue and $2.15 EPS"
+  },
+  {
+   "what": "September quarter operating margin",
+   "change": "introduced",
+   "detail": "39.5%, versus the 35.3% full-year FY2026 operating margin in the note's financials table. No prior-period guide for this metric appears in the file.",
+   "quote": "September quarter guided to $8.1 billion plus or minus $400 million with operating margin 39.5%."
+  },
+  {
+   "what": "December quarter gross margin",
+   "change": "not stated",
+   "detail": "Expected to dip to 48.5% on mix and tariffs, versus the 50.5% FY2026 figure in the table. The note uses the passive 'is expected to see' and does not attribute the expectation to management, nor give a prior December-quarter guide, so whether this is a raise, cut, or first statement cannot be determined.",
+   "quote": "The December quarter is expected to see gross margin dip to 48.5% on mix and tariffs."
+  },
+  {
+   "what": "Calendar 2026 wafer fab equipment (WFE) market outlook",
+   "change": "raised",
+   "detail": "Raised to the low $150 billion range. The note states the raise but gives neither the prior figure nor the date the raise occurred, so the size of the increase and whether it came at this earnings report are not determinable.",
+   "quote": "Management raised the 2026 wafer fab equipment outlook to the low $150 billion range."
+  },
+  {
+   "what": "Calendar 2026 export-control revenue headwind",
+   "change": "not stated",
+   "detail": "Quantified at about $600 million for calendar 2026. The note gives no earlier estimate to compare against and does not say whether this figure was newly disclosed this quarter.",
+   "quote": "Export controls are about a $600 million revenue headwind for calendar 2026."
+  }
+ ],
+ "tone": {
+  "assessment": "Not directly determinable. The note contains no management quotes, no call or transcript material, and no Q&A \u2014 searches for CEO, CFO, said, call, and transcript return nothing in the file. The only tone-adjacent signals are actions rather than language: management raised the 2026 WFE outlook, and the September guide of $8.1 billion sits about 20% above the $6.72 billion just reported. Read together those actions are forward-leaning, but that is an inference from figures, not an observation of how management spoke.",
+  "evidence": "Management raised the 2026 wafer fab equipment outlook to the low $150 billion range.",
+  "confidence": "low. It is not higher because the file records zero words attributable to management. Tone here is being reverse-engineered from a raised market outlook and an above-current-quarter guide, and the same numbers would be consistent with cautious delivery. The note also carries one countervailing forward statement it does not attribute to anyone \u2014 a December gross margin dip to 48.5% \u2014 which cuts against reading the quarter as uniformly confident."
+ },
+ "new_risks": [
+  {
+   "risk": "Gross margin is guided down for the December quarter on mix and tariffs. At 48.5% this is 1.5 points above the note's own under-47% thesis killer, so the guided direction moves toward a stated exit condition without reaching it. Tariffs appear in the file only here, as a named margin driver.",
+   "quote": "The December quarter is expected to see gross margin dip to 48.5% on mix and tariffs.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Export controls carry an approximately $600 million revenue headwind for calendar 2026. This is not named in the bear case or among the thesis killers, and the note gives no duration, mitigation, or calendar 2027 exposure.",
+   "quote": "Export controls are about a $600 million revenue headwind for calendar 2026.",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "The September guide itself instantiates the bear case's own peak signal: $6.72 billion to $8.1 billion is roughly a 20% sequential jump, which the note's bear case describes as what peaks look like. The guidance is therefore simultaneously the quarter's strongest datapoint and a trigger the note pre-committed to reading as a warning.",
+   "quote": "A 20% sequential revenue jump is what peaks look like.",
+   "already_in_thesis": true
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "Calendar 2027 WFE. The note names 'calendar 2027 WFE guided down' as a thesis killer but records no 2027 outlook of any kind.",
+   "reasoning": "The string 2027 appears exactly once in the entire file, in the thesis-killer line. The note carries a raised calendar 2026 WFE number and nothing for 2027, so the single condition the note treats as most disqualifying has no corresponding datapoint anywhere in it.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "December quarter revenue. A gross margin expectation for December is given, but no revenue or EPS figure for that quarter.",
+   "reasoning": "'December quarter guidance below the September quarter' is one of the three listed thesis killers, and the file supplies only a December gross margin figure, never a December revenue figure. The note is a compressed summary rather than a transcript, so this may reflect what the note omitted rather than what management withheld.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "The FY2026 free cash flow decline.",
+   "reasoning": "The financials table shows free cash flow falling from 5.41 to 4.89 billion between FY2025 and FY2026 while revenue rose from 18.44 to 23.23 billion and operating margin expanded from 32.0% to 35.3%. The note presents these rows without comment and offers no explanation anywhere for cash flow moving opposite to revenue and margin.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "Duration and forward scope of the export-control headwind.",
+   "reasoning": "The file quantifies the headwind for calendar 2026 in a single sentence and never returns to it. There is no mitigation plan, no statement of whether it recurs or lapses, and no calendar 2027 figure, even though the note treats calendar 2027 as its key thesis-killer year.",
+   "confidence": "low"
+  }
+ ],
+ "market_reaction": "The note records one price move around the report: \"Stock rose 8% after hours after falling 7% during the day.\" It gives no closing price for that day, no follow-through beyond the after-hours session, and no volume or analyst-reaction detail. Separately, the screen line dated 2026-09-04 \u2014 roughly six weeks after the late-July report \u2014 puts the stock at $292.66, \"-34% from 52 week high, -33% from all time high,\" with short interest 2.5% of float, forward P/E 25.3 against a 30.1 four-year median, and EV/EBITDA 42.2. The note does not connect that drawdown to the earnings report or date the high, so the path between the 8% after-hours move and the 2026-09-04 price cannot be reconstructed from the file. On positioning, the note places LRCX in the compounder bucket (\"Bucket: compounder.\") and treats cyclical as only \"a near miss for the cyclical bucket at 33% off its high\" \u2014 it does not classify this as a cyclical turn. The file contains no price target, no estimate-revision breakdown beyond the single line \"Next fiscal year EPS estimate moved +20.1% in 90 days.\", and no dated journal entry; its only forward price figures are the valuation scenarios \"bear (2028 downturn) 16x on $6 is about $96; base 22x on $10 is $220; bull 26x on $12 is $312.\" The stated action is \"Buy on pullback, November tranche, small. Buy zone $250 to $290. Conviction 3 of 5.\" with \"Price trigger: $215.\" given as a bare number, not as a closing-price condition.",
+ "not_determinable": [
+  "Consensus expectations for the September quarter. The note gives a consensus comparison only for the quarter just reported ($1.82 vs $1.68 expected) and none for the $8.1 billion / $2.15 guide, so whether the guidance beat or missed the street cannot be determined from the file.",
+  "The prior quarter's results. The section is headed '## Last two earnings reports' but only Q4 fiscal 2026 is described; no Q3 fiscal 2026 revenue, EPS, or margin figures appear anywhere. Searches for Q3, March quarter, and prior quarter return nothing.",
+  "Any management commentary. The file contains no quotes, no call or Q&A material, and no named executives, so nothing about how the results were framed or what management was pressed on is recoverable.",
+  "December quarter revenue and EPS guidance \u2014 only a December gross margin expectation is given.",
+  "Any calendar 2027 or fiscal 2027 outlook, despite calendar 2027 WFE being a listed thesis killer.",
+  "Revenue mix. No memory-versus-logic split, no geographic breakdown, and no China exposure figure appears, even though the note calls Lam 'the most memory exposed of the big three' and cites export controls.",
+  "Whether the raised 2026 WFE outlook was raised at this earnings report or on some other date, and what the prior WFE figure was.",
+  "Whether the ~$600 million export-control headwind was newly disclosed this quarter or previously known.",
+  "Which gross margin figure is current. The business-quality section states 'ROIC 37%, net cash, gross margin 52%.' while the FY2026 table row shows 50.5% and the December quarter is put at 48.5%. The note never reconciles the 52% against the 50.5%.",
+  "Capital returns. Diluted shares fall from 1,358m to 1,261m across FY2023-FY2026, implying repurchases, but no buyback authorization, pace, or dividend is described; searches for buyback, repurchase, and dividend return nothing.",
+  "Whether 'Price trigger: $215.' is a buy trigger or an exit trigger. The note states the number without defining it, and it sits below the stated buy zone of $250 to $290, so its direction is ambiguous.",
+  "Analyst ratings or price targets \u2014 none appear in the file in any form.",
+  "Backlog, bookings, orders, or deferred revenue \u2014 none reported.",
+  "The basis of the reported 'up 30%' revenue growth. The note does not specify whether it is year-over-year or sequential, and with no prior-quarter figure the sequential change for the reported quarter cannot be computed.",
+  "The specific date of the report and of the 8% after-hours move; the note says only 'late July 2026'.",
+  "Anything before FY2023. The note states plainly that 'Four fiscal years is all the source provides.', so no full-cycle history is available to test the bear case's claim about memory capex volatility.",
+  "How the guided figures map to the note's valuation scenarios. The bear/base/bull cases rest on $6/$10/$12 EPS for an unstated year (the bear case is tagged '2028 downturn'), and the file does not bridge the $8.60 run rate to any of them."
+ ],
+ "available": true,
+ "source": "research/LRCX.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

@@ -336,8 +336,119 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "IDXX",
+   "quarter_label": "Q2 2026, reported August 4, 2026 (the note gives \"Q2 2026 (August 4, 2026)\"; it does not label this as a fiscal quarter number)",
+   "prior_quarter_label": "Q1 2026 (report date not stated in the note)",
+   "headline": "Full-year EPS and organic growth guidance were raised after a Q2 beat, yet the stock has given back the post-print pop and sits about 13% below where it was at the August report.",
+   "guidance": [
+    {
+     "what": "Full year EPS",
+     "change": "raised",
+     "detail": "Full-year EPS guidance was raised to a $14.69 to $14.94 range. The valuation section restates this range as up 12 to 14%, quoted verbatim as \"EPS guided to $14.69 to $14.94 (up 12 to 14%)\". The note does not state the prior guidance range, so the size of the raise cannot be computed.",
+     "quote": "EPS raised to $14.69 to $14.94"
+    },
+    {
+     "what": "Full year organic revenue growth",
+     "change": "raised",
+     "detail": "Organic growth guidance was raised to a 8.5 to 9.7% range. The prior range is not given in the note, so the magnitude of the raise is not determinable.",
+     "quote": "organic growth raised to 8.5 to 9.7%"
+    },
+    {
+     "what": "Full year revenue",
+     "change": "not stated",
+     "detail": "The note says revenue guidance was narrowed to $4.70 to $4.745 billion. Narrowed is not the same as raised or cut, and the note does not give the prior range, so the direction of the change cannot be determined from the file. Note that line 9 separately says the stock dropped \"despite guidance going up\", but that general statement is not tied to the revenue line specifically.",
+     "quote": "Full year revenue narrowed to $4.70 to $4.745 billion"
+    },
+    {
+     "what": "Operating margin",
+     "change": "not stated",
+     "detail": "An operating margin guide of 32.3 to 32.5% appears in the business quality section. The note does not say whether this was raised, cut, maintained or newly introduced, and does not say which period it covers or whether it was set at this quarter's report. For reference, the financials table shows FY2025 operating margin of 31.6%, but the note does not itself draw that comparison.",
+     "quote": "Operating margin guided to 32.3 to 32.5%."
+    }
+   ],
+   "tone": {
+    "assessment": "Not assessable as management tone. The note contains no management commentary, no call or transcript content, and no quotes from any executive, so there is nothing in the source from which to read a posture. What the note does report is the shape of the results: a beat on both lines with guidance raised, and the prior quarter characterised the same way. That is a beat-and-raise cadence described by the note's author, not a tone conveyed by management.",
+    "evidence": "revenue $1.217 billion up 10% (9% organic), EPS $4.27 up 18%, beat by $0.31",
+    "confidence": "low, and it is not higher because the file is a screening and thesis note built from a Q2 earnings release, Q2 slides and Yahoo Finance data (per its Sources section), not from an earnings call. Searching the note finds no occurrence of management, CEO, CFO, call or transcript. Any characterisation of how management sounded would be invented."
+   },
+   "new_risks": [
+    {
+     "risk": "The stock has de-rated even as the numbers improved: it is down roughly 13% since the August report despite guidance going up, and the note prices it at 529.29 USD on 2026-09-04 versus the roughly $606 it reached on the print. Whether this is a risk or the setup for the note's buy case is not resolved in the file.",
+     "quote": "The stock has dropped about 13% since the August report despite guidance going up.",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "Growth quality: the bear case argues the growth is coming from price and mix rather than volume, with pet ownership growth normalised and clinic visits flat to down.",
+     "quote": "the growth is coming from price and mix rather than volume",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Multiple compression if organic growth slips, from about 31x toward the low 20s.",
+     "quote": "At 31x a slip to single digit organic growth would take the multiple to the low 20s.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Soft US clinic visits alongside the 10% organic recurring growth. This is reported as a live headwind in the business quality section and is also named in the thesis killers at a specific threshold, \"US clinic visits down more than 3% for a full year\".",
+     "quote": "CAG diagnostics recurring revenue grew 10% organic even while US clinic visits are soft.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Competitive displacement of the in-clinic installed base at corporate vet chains.",
+     "quote": "a competitor's in-clinic analyzer winning corporate vet chains",
+     "already_in_thesis": true
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Nothing can properly be scored as dodged by management. The note carries no call, Q&A or management commentary of any kind, so every gap below is a gap in the note, and the file gives no way to tell whether management addressed the topic and the note omitted it, or management never addressed it at all.",
+     "reasoning": "The Sources section lists only the Q2 8-K earnings release, a slides write-up and Yahoo Finance screen data; there is no transcript. The words management, CEO, CFO, call and transcript do not appear anywhere in the file.",
+     "confidence": "high"
+    },
+    {
+     "topic": "The price-versus-volume split behind the 10% CAG organic growth",
+     "reasoning": "The note asserts in the bear case that growth comes from price and mix rather than volume, but supplies no split, no pricing figure and no volume figure anywhere. The claim and the data that would test it are both attributed to the note's author, not to a company disclosure.",
+     "confidence": "low"
+    },
+    {
+     "topic": "The water testing and livestock diagnostics lines",
+     "reasoning": "These are named once, in the one-line business description, and never appear again. There is no revenue, growth or margin figure for them and no statement that they were discussed. Since the note also says recurring diagnostics revenue is the core, thin coverage of the other lines may simply be the note's editorial focus rather than anything management avoided.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Any outlook for the next quarter",
+     "reasoning": "Only full-year figures are given. There is no quarterly guide in the file, and Q3 does not appear anywhere in it.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Buyback intent beyond the half-year figure",
+     "reasoning": "The note states \"Bought back $704 million of stock in the first half.\" and stops there. No remaining authorization, no average price, no share count repurchased, and no statement about second-half plans. The word authorization does not appear in the file.",
+     "confidence": "low"
+    }
+   ],
+   "market_reaction": "The note reports a positive same-day reaction that has fully unwound: \"Stock rose 7% that day to about $606 and has since given it back.\" Line 9 puts a number on the drift: \"The stock has dropped about 13% since the August report despite guidance going up.\" As of the screen pull the note records \"Price 529.29 USD on 2026-09-04\" and \"-30% from 52 week high\", against a forward multiple the note frames as \"Forward P/E 31.6 vs own 4 year median 51.3 (-38%)\". The note's own stated conclusion is its Verdict section: \"Buy on pullback, November tranche. Buy zone $470 to $535. Conviction 3 of 5.\" \u2014 the current price sits inside that stated zone, though the note does not itself point that out. Its stated exit and invalidation markers are the thesis killers, including \"CAG recurring growth under 6%\" and \"US clinic visits down more than 3% for a full year\", plus a separate \"Price trigger: $410.\" The note contains no dated journal entry, no thesis one-liner and no \"wrong if\" line; any such framing would have to come from outside this file.",
+   "not_determinable": [
+    "What CAG stands for. The abbreviation appears exactly twice (\"CAG diagnostics recurring revenue\" and \"CAG recurring growth under 6%\") and is never expanded, so the segment it names cannot be established from this file.",
+    "Segment-level financials. The note gives one consolidated revenue figure and company-level margins. There is no breakdown for the veterinary instruments, consumables, reference lab, water testing or livestock diagnostics lines it mentions. The word segment does not appear in the file.",
+    "Consensus estimate levels. The note gives \"beat by $0.31\" but never states the consensus EPS or revenue figure that was beaten, so the absolute bar is unknown.",
+    "Analyst revision breadth. The note does contain one revision datapoint, \"Next fiscal year EPS estimate moved +1.3% in 90 days.\", but gives no count of analysts raising versus cutting, no estimate dispersion, no price targets and no ratings. The words analyst, consensus and revision appear nowhere in the file.",
+    "Prior guidance ranges. Because the note reports only the post-raise EPS, organic growth and revenue figures, the size of each raise and the extent of the revenue narrowing cannot be computed.",
+    "The report date of Q1 2026, and its actual figures. The note says only \"Q1 2026 was a similar beat and raise.\" with no revenue, EPS or guidance numbers attached.",
+    "Whether the operating margin guide of 32.3 to 32.5% is a full-year or quarterly figure, and whether it changed at this report.",
+    "Any management commentary, prepared remarks, Q&A exchange, or executive quote. The note is built from an 8-K, a slides write-up and Yahoo Finance data, so questions about what was asked on the call and how it was answered cannot be reached from here.",
+    "The price/volume decomposition of growth, in either direction. The bear case asserts price and mix over volume; no supporting figures are given.",
+    "Competitor identity. The thesis killer refers to \"a competitor's in-clinic analyzer winning corporate vet chains\" without naming any company, and no peer valuation comparison appears in the note.",
+    "Next-quarter or Q3 2026 guidance of any kind.",
+    "Buyback specifics beyond the $704 million first-half total: no remaining authorization, average repurchase price, or second-half intent.",
+    "Balance sheet detail beyond the net debt column in the table. There is no cash balance, no gross debt, no interest expense and no maturity schedule.",
+    "Macro and cost drivers. Tariffs, currency and FX are not mentioned anywhere in the file, so their effect on the quarter or the guide cannot be assessed.",
+    "FY2026 actuals. The financials table ends at FY2025 (2025-12-31), and the note states four fiscal years is all the source provides.",
+    "Which fiscal year the 31.6x forward P/E is calculated against, and the share count assumption behind it.",
+    "The reason for the roughly 13% decline since the August report. The note records the move and calls it out as happening despite guidance going up, but offers no explanation for it.",
+    "Any dated journal entry, prior thesis statement, or record of a previous position or trade in this name. The note has a Verdict section but no journal apparatus; the word journal does not appear in the file."
+   ],
+   "available": true,
+   "source": "research/IDXX.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -706,7 +817,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

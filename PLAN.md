@@ -191,9 +191,25 @@ Consequences that shape everything below:
 - [x] **X1** Point-in-time snapshot archiving so a *real* forward test becomes possible from the next
       pipeline run onward (`universe/snapshots/<date>/`). This is the single highest-value item:
       it is the only thing that turns E into a genuine backtest over time.
-- [ ] **X2** EDGAR XBRL `companyfacts` -> 10+ years of as-reported fundamentals with filed dates,
+- [x] **X2** (partial: EDGAR client corrected for point-in-time semantics; the 10-year pull still needs one live run)
+- [ ] **X2b** EDGAR XBRL `companyfacts` -> 10+ years of as-reported fundamentals with filed dates,
       replacing the 4-year yfinance limitation called out in README and criteria.md.
 - [ ] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
 - [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
 - [ ] **X5** Compare view across up to 4 analysed tickers.
 - [ ] **X6** Score-vs-outcome tracker wired to `journal.md` so every past call is graded automatically.
+- [ ] **X7** Measure the survivorship hole. Alpha Vantage's `LISTING_STATUS` endpoint returns every
+      delisted US ticker with its delisting date for **two requests total**, which is affordable even
+      on a 25-per-day free key and is the only free source of that list found. It cannot repair a
+      backtest (no prices for those names) but it can *size the bias*: run the universe filter as of
+      a past date, count how many selected names no longer exist, and the hole is measured rather
+      than guessed.
+      Verify: `python scripts/listing_status.py --report` prints the count and the names.
+- [ ] **X8** SEC DERA Financial Statement Data Sets as the point-in-time fundamentals source for the
+      backtest: quarterly bulk zips, genuinely as-reported, free. Lags quarter end by two weeks to
+      two months, which is fine for a backtest and useless for a current screen.
+      Verify: a test that loads one quarter's `num.txt` and reconstructs a known revenue figure.
+- [ ] **X9** Re-audit the repaired narratives with a second model pass. The generation workflow
+      audited each extraction, repaired what the audit caught, and then shipped the repair
+      unaudited. `tests/test_narrative_quotes.py` closes the fabrication hole mechanically, but
+      nothing has checked whether a repaired *claim* still follows from the note.

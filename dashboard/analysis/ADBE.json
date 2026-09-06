@@ -336,8 +336,117 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "ADBE",
+   "quarter_label": "Q2 FY2026, reported 2026-06-11 (the most recent reported quarter in the note; Q3 FY2026 had not reported as of the note's 2026-09-04 data pull)",
+   "prior_quarter_label": "not stated",
+   "headline": "Adobe beat and raised full-year fiscal 2026 EPS guidance to $24.35-$24.45 with a Q3 revenue guide above consensus, and the note records the stock being traded on AI-displacement headlines rather than on those numbers, into a September 10 print.",
+   "guidance": [
+    {
+     "what": "Fiscal 2026 EPS",
+     "change": "raised",
+     "detail": "Full-year FY2026 EPS guidance raised to $24.35 to $24.45 alongside the Q2 FY2026 report on June 11, 2026. The note elsewhere describes this range as above consensus and uses about $24.40 as the midpoint for its valuation work.",
+     "quote": "full year guidance raised to $24.35 to $24.45"
+    },
+    {
+     "what": "Q3 fiscal 2026 revenue",
+     "change": "introduced",
+     "detail": "Q3 FY2026 revenue guided to $6.7 billion against $6.5 billion consensus \u2014 the only consensus figure the note supplies in dollars.",
+     "quote": "Q3 guide of $6.7 billion revenue vs $6.5 billion consensus"
+    },
+    {
+     "what": "Q3 fiscal 2026 EPS",
+     "change": "introduced",
+     "detail": "Q3 EPS guided to $6.05 to $6.10. The note states both the FY2026 range and this Q3 range are above consensus, but gives no consensus EPS number to size the gap.",
+     "quote": "Management guided fiscal 2026 EPS to $24.35 to $24.45 and Q3 to $6.05 to $6.10, both above consensus"
+    }
+   ],
+   "tone": {
+    "assessment": "Confident on the numbers, inferred entirely from guidance behavior rather than from any recorded management language: the company beat, raised the full-year EPS range, and set both the annual and the quarterly guide above consensus \u2014 not the posture of a management team bracing the market. The note offers no counterweight from the company's side on the AI question, and pairs this guidance with its own observation that the market is not pricing off it.",
+    "evidence": "Management guided fiscal 2026 EPS to $24.35 to $24.45 and Q3 to $6.05 to $6.10, both above consensus",
+    "confidence": "low \u2014 the note contains no earnings call transcript, no prepared remarks, no management quotes and no Q&A. Tone is being read off guidance numbers alone, which shows what management committed to but not how they sounded, what they hedged, or what they were pressed on."
+   },
+   "new_risks": [
+    {
+     "risk": "Three sell-side firms carry Neutral or Sell ratings after the beat-and-raise \u2014 a rating posture the note's stated bear case and thesis killers do not cover.",
+     "quote": "Mizuho cut to Neutral ($270), Goldman has a Sell at $290, Piper Sandler downgraded to Neutral ($330).",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "AI-native design tools inside chat products, named as an ongoing quarterly drain on the prosumer base.",
+     "quote": "design tools inside AI chat products (Anthropic's Claude Design launched in April) push more of that base away every quarter",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Per-seat pricing may be structurally wrong for an agent era, so revenue compresses even in a scenario where Adobe wins on product.",
+     "quote": "Per seat pricing is the wrong model for an agent era, so even if Adobe wins on product the pricing shrinks.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Net new ARR deceleration \u2014 stated as fact in the bear case, with no figure attached.",
+     "quote": "Net new ARR has decelerated.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "CEO departure, with the note treating it as an open management question rather than a resolved succession.",
+     "quote": "The CEO is leaving, which is a real management question mark.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Value-trap risk: the low multiple is explicitly not treated as a floor, because terminal value itself is in doubt.",
+     "quote": "Cheap can stay cheap for years while the market waits for proof, and a 10x multiple on a business with real terminal value doubt is not obviously a floor.",
+     "already_in_thesis": true
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Digital Media ARR and net new ARR \u2014 the metric the note's own thesis killers are written in",
+     "reasoning": "The note defines its kill criteria in ARR terms ('Digital Media ARR growth falling under 8%, two consecutive quarters of net new ARR decline') and asserts in the bear case that 'Net new ARR has decelerated.', yet no ARR number appears anywhere in the file: no growth rate, no dollar figure, no quarter count. The 'Last two earnings reports' section carries only the beat statement, the FY guide raise, the Q3 revenue guide, the September 10 date and three analyst actions. The one disclosure that would settle the note's own tests is missing from the section where it belongs. Whether management dodged it on the call or the note simply did not record it cannot be told from this file.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "CEO succession \u2014 no successor, timeline, or reason",
+     "reasoning": "The note twice treats the CEO exit as material ('The CEO is leaving, which is a real management question mark.'; 'The CEO exit removes the person who built the subscription transition.') and makes 'a poorly received CEO appointment' a thesis killer, yet supplies no name, no departure date, no stated reason and no search status. A risk weighted that heavily with zero surrounding detail is either thinly addressed by the company or thinly captured here.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Fiscal 2027 outlook",
+     "reasoning": "'a cut to fiscal 2027 guidance below fiscal 2026' is listed as a thesis killer, but the file contains no FY2027 guidance, framework, or management comment of any kind \u2014 guidance in the note stops at the FY2026 range and the Q3 guide. The test cannot be run against anything in this file.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Any direct response to the AI-displacement case",
+     "reasoning": "The bear case is entirely about generative tools and pricing model ('Per seat pricing is the wrong model for an agent era, so even if Adobe wins on product the pricing shrinks.'), and the note says the market 'has ignored the numbers and traded on AI headlines'. Against that, the file records no management rebuttal, no AI-attributed revenue, no pricing change, and no Firefly monetization figure \u2014 Firefly appears only inside the 850 million MAU count. Since the note contains no call content at all, I can observe the absence but cannot attribute it to management.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Segment detail behind the headline beat",
+     "reasoning": "Digital Media and Experience Cloud are named as the business lines but the note reports no revenue, growth or margin for either; the only margin figures in the file are the four annual gross and operating margins in the Financials table. The consolidated beat is stated ('revenue and EPS above guidance') without the mix that would show where it came from or whether it came from the segment the bear case is about.",
+     "confidence": "medium"
+    }
+   ],
+   "not_determinable": [
+    "Actual Q2 FY2026 revenue and EPS. The note says only 'revenue and EPS above guidance' \u2014 no reported figures, no magnitude of the beat, no year-over-year growth for the quarter.",
+    "The share price reaction to the June 11, 2026 report, or to any earnings report. The note contains no day-of or post-print price move; the -25% and -59% drawdowns carry no time period.",
+    "Q3 FY2026 results. The quarter reports September 10, 2026, after the note's 2026-09-04 data pull, so the note is entirely pre-print.",
+    "Digital Media ARR growth rate \u2014 the exact figure the note's own 8% thesis-killer threshold is written against. No ARR number of any kind appears in the file.",
+    "Net new ARR: the dollar amount, the rate of deceleration, and how many consecutive quarters it has declined (the thesis killer requires two).",
+    "Segment detail. Digital Media and Experience Cloud are named as businesses but the note gives no revenue, growth, or margin for either.",
+    "Any earnings call content: no management quotes, no prepared remarks, no analyst Q&A, no indication of which questions were asked or how they were answered. Tone is inferable only from the guidance numbers.",
+    "CEO succession specifics \u2014 successor name, departure date, stated reason, or search status.",
+    "Fiscal 2027 guidance, or any FY2027 framework, despite a cut below FY2026 being a listed thesis killer.",
+    "AI monetization: Firefly revenue, AI-attributed ARR, adoption or conversion rates, and any pricing-model change away from per-seat. Firefly appears only inside the 850 million MAU figure.",
+    "The consensus EPS numbers. The note says the FY2026 and Q3 EPS guides are 'above consensus' without stating the consensus levels; only revenue consensus ($6.5 billion for Q3) is given in dollars.",
+    "Estimate-revision breadth \u2014 how many analysts revised, in which direction, and over what window. The only revision datum in the file is '+4.2% in 90 days' for the next fiscal year EPS estimate.",
+    "Any comparison for the EV/EBITDA of 11.8 \u2014 the note gives no peer median and no historical median for that multiple. Its peer comparison is on forward P/E only (Autodesk 16.7x, Microsoft 21.6x, ServiceNow 29x).",
+    "Whether the buyback continues at the pace of the six months to May 29, 2026, and how much of the $25 billion authorization remains.",
+    "Quarterly financial history. The Financials table is annual FY2022-FY2025 with a single six-month P&L cut to May 29, 2026; the note states 'Four fiscal years is all the source provides.'",
+    "Geographic mix, currency effects, billings, RPO, backlog, and net revenue retention \u2014 none appear in the file.",
+    "Institutional flows, options-implied move into the September 10 print, and the trend in short interest (only the 5.1%-of-float snapshot is given).",
+    "The portfolio-level position context \u2014 target weight, sizing, or entry plan beyond the note's own 'Buy zone $250 to $300. Conviction 4 of 5.' No position or target-value figure exists in this file."
+   ],
+   "available": true,
+   "source": "research/ADBE.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -725,7 +834,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

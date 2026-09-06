@@ -336,8 +336,100 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "ADSK",
+   "quarter_label": "Q2 fiscal 2027 (August 27, 2026)",
+   "prior_quarter_label": "Q1 fiscal 2027 (May)",
+   "headline": "Autodesk beat on both revenue and EPS and raised full-year fiscal 2027 revenue guidance while holding the 39% operating margin target, and the note says the stock got no credit for it.",
+   "guidance": [
+    {
+     "what": "Fiscal 2027 revenue",
+     "change": "raised",
+     "detail": "Full-year fiscal 2027 revenue guidance was raised to a $8.295 to $8.345 billion range. The note does not give the prior range, so the size of the raise cannot be computed from it.",
+     "quote": "Fiscal 2027 revenue guidance raised to $8.295 to $8.345 billion"
+    },
+    {
+     "what": "Operating margin",
+     "change": "maintained",
+     "detail": "The operating margin target was held at 39% rather than raised alongside revenue. The note does not say whether this is a GAAP or non-GAAP margin.",
+     "quote": "operating margin held at 39%"
+    },
+    {
+     "what": "Fiscal 2027 free cash flow",
+     "change": "not stated",
+     "detail": "The note cites a fiscal 2027 free cash flow guide of $2.725 to $2.75 billion in its valuation section, but never says whether that figure was raised, cut, or reiterated at this report, and gives no prior guide to compare against.",
+     "quote": "fiscal 2027 free cash flow guided to $2.725 to $2.75 billion"
+    }
+   ],
+   "tone": {
+    "assessment": "Confident on the print itself, and inferred only from results and numbers: a double beat above the top of guidance plus a revenue raise, on the back of a Q1 that was also a beat and raise. The margin target being held flat at 39% while revenue went up is the one note of restraint. The note contains no management language of any kind, so this reads the numbers, not the executives.",
+    "evidence": "revenue $2.046 billion up 16%, non-GAAP EPS $3.30 vs $3.12 consensus, both above the top of guidance",
+    "confidence": "low, because the note carries no transcript, no prepared remarks, no Q&A and not a single management quote. Every tonal read here is reverse-engineered from reported figures and a raised guide, which cannot distinguish confident management from mechanically good results."
+   },
+   "new_risks": [
+    {
+     "risk": "AI-native design tools generating drawings from prompts, shrinking per-seat CAD licenses as fewer drafters are needed per project. The note presents this as a standing bear-case argument, not as something that emerged from this quarter.",
+     "quote": "AI native design tools will generate drawings and models from prompts, and per seat CAD licenses shrink as fewer drafters are needed per project.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Cyclicality in construction and manufacturing end markets, with rates rising again. Again presented as an existing bear-case item, not a new disclosure from the quarter.",
+     "quote": "Construction and manufacturing are cyclical and rates are rising again.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "The possibility that the multiple compression is correct and the terminal growth rate really is lower, i.e. the de-rating from 59x to 17x is information rather than mispricing.",
+     "quote": "The multiple already compressed from 59x to 17x in this data, and the market may be right that the terminal growth rate is lower than it was.",
+     "already_in_thesis": true
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "The gap between 16% revenue growth and 12% constant-currency billings growth. Both figures sit in the same sentence of the note with no reconciliation, and billings is the slower of the two.",
+     "reasoning": "The note reports both numbers adjacently and offers no explanation for the 4-point spread, which matters because billings growth under 5% for two quarters is one of the note's own thesis killers. Whether management addressed it is unknowable from this source, which is a summary rather than a transcript, so this is a gap in the note as much as a possible gap in the disclosure.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Net revenue retention. It is named as a thesis killer with a 100% threshold, yet no NRR figure for the quarter appears anywhere in the note.",
+     "reasoning": "The note sets NRR falling below 100% as a kill condition but never reports the actual level, so the reader cannot check the condition it was told to watch. The note does not say whether the number was disclosed and omitted from the summary or never given.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Any quantified effect of AI-native design tools on seat counts or renewals.",
+     "reasoning": "The note's central bear argument is seat compression from AI, and its Q2 section reports only revenue, EPS, guidance and billings, with nothing connecting the results to seat dynamics. The note gives no indication management was asked.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Fiscal 2028 framing.",
+     "reasoning": "Fiscal 2028 guidance below fiscal 2027 is listed as a thesis killer, but the note records no forward commentary beyond the fiscal 2027 raise. This may simply reflect that fiscal 2028 guidance is not due yet rather than avoidance.",
+     "confidence": "low"
+    }
+   ],
+   "market_reaction": "The note reports no share-price reaction to the August 27, 2026 print. Its only characterization of the market is a general one covering both recent quarters: \"The market has treated both as non events because the sector is out of favor.\" It frames the setup as \"The price collapsed with the software group while the business just raised guidance.\" The single price in the note is a screen price a week after the report, \"Price 237.52 USD on 2026-09-04.\", with the stock \"-27% from 52 week high, -29% from all time high.\" \u2014 percentages only; the note gives no dollar level for either high. On estimates, \"Next fiscal year EPS estimate moved -0.5% in 90 days.\" is the only revision datapoint, and it is a 90-day window that spans more than this quarter, so it cannot be read as the post-print revision. No one-day move, no volume, no analyst actions, and no post-earnings price appear in the note.",
+   "not_determinable": [
+    "The stock's actual reaction to the print. The note gives no one-day or post-earnings move, no volume, and no price dated to August 27, 2026 or the days after. The only price is a 2026-09-04 screen price of 237.52 USD.",
+    "Dollar levels for the 52-week high or the all-time high. The note gives only the percentages -27% and -29%; no price for either high appears anywhere in it.",
+    "Any historical median for EV/EBITDA. The note's only EV/EBITDA reference is the bare current figure of 21.9. It supplies an own-median (58.7, four-year) for forward P/E and for nothing else.",
+    "The next-fiscal-year EPS estimate level. The note gives only a percentage move, never a dollar EPS figure for any forward period.",
+    "Any estimate-revision window other than 90 days. The note contains a single revision datapoint, -0.5% over 90 days; there is no 30-day or other window in it, and no post-print revision isolated from the rest of that 90-day span.",
+    "Whether the note's table margins are GAAP or non-GAAP. The column is labelled only 'Operating margin' (22.3% FY2025, 24.9% FY2026), and the guided 39% margin carries no basis label either, so the two cannot be compared or bridged from this source.",
+    "The prior fiscal 2027 revenue guidance range, so the magnitude of the raise cannot be computed.",
+    "Whether the fiscal 2027 free cash flow guide of $2.725 to $2.75 billion was raised, cut or reiterated at this report.",
+    "Revenue consensus. The note gives a consensus only for EPS ($3.12); the size of the revenue beat against expectations is not determinable.",
+    "Net revenue retention for the quarter, despite the sub-100% level being one of the note's stated thesis killers.",
+    "Billings in dollars. Only the 12% constant-currency growth rate is given, with no dollar figure and no reported-currency equivalent.",
+    "Q3 fiscal 2027 guidance, and any fiscal 2028 guidance or framing.",
+    "Any segment, product-line or geographic breakdown of the quarter. The note describes AutoCAD, Revit, Fusion, Maya and 3ds Max qualitatively but attaches no revenue to any of them.",
+    "Any management commentary. The note has no transcript, prepared remarks, Q&A or executive quotes, which is why the tone read is low confidence and why 'dodged' cannot be assessed as management behavior rather than gaps in the summary.",
+    "Whether anything in the quarter was new information versus already known. The note flags no risk as newly arising from this report; all risks it names sit in its standing bear case.",
+    "Whether the $185 price trigger is a closing price, an intraday level, or something else. The note says only 'Price trigger: $185.' with no basis specified.",
+    "Any record of an actual position, trade, or purchase. The note's Verdict is a recommendation ('Buy now, split between the September and October tranches. Buy zone $215 to $250. Conviction 4 of 5.'), not a log of anything executed; no trade date, size or fill price appears in it.",
+    "Balance-sheet and capital-return detail for the quarter: buybacks, dividends, share count, or net debt as of Q2 fiscal 2027. The table stops at the FY2026 fiscal year end.",
+    "Why free cash flow fell from 2.02bn in FY2023 to 1.25bn in FY2024 before recovering. The table shows the swing; the note never explains it.",
+    "History beyond four fiscal years, by the note's own admission: 'Four fiscal years is all the source provides.'"
+   ],
+   "available": true,
+   "source": "research/ADSK.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -704,7 +796,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

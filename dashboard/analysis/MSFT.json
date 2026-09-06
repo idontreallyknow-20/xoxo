@@ -336,8 +336,110 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "MSFT",
+   "quarter_label": "Fiscal Q4 2026, reported July 29, 2026",
+   "prior_quarter_label": "Fiscal Q3 2026 (April; exact report date not stated)",
+   "headline": "Microsoft beat on both revenue and EPS with Azure accelerating to 43% in constant currency, and management answered by raising capex plans rather than easing spend, which the stock rewarded with an 8% move.",
+   "guidance": [
+    {
+     "what": "Capex plans",
+     "change": "raised",
+     "detail": "The single management action the note records at the Q4 FY2026 print is a raise to capex plans, paired with a demand citation, and the stock rose 8% on it. The note attaches no dollar amount, no period, and no prior baseline to the raise, so its size cannot be read from the source. The word 'guidance' does not appear anywhere in the note.",
+     "quote": "Stock rose 8% because management raised capex plans and cited demand."
+    },
+    {
+     "what": "Scale of the capex program (~$190 billion, up 61%)",
+     "change": "not stated",
+     "detail": "Corrected from a prior version that labeled this a raise. The note states this figure inside the bear-case section as a spending level and growth rate. It is not described as guidance, not attributed to management, and not dated to the Q4 report, so no guidance action can be attached to it. It is also not reconciled against the separate 'capex rose 70% to $41 billion for the fiscal year' figure in the business-quality section.",
+     "quote": "Microsoft is spending roughly $190 billion on capex, up 61%, and depreciation will weigh on reported earnings for years."
+    }
+   ],
+   "tone": {
+    "assessment": "Leaning in rather than defensive. The note portrays management as answering a beat by committing more capital and pointing at demand, and the market taking that as confidence rather than as overreach. The note also frames the argument as settled on demand and open only on returns, which is consistent with a management posture that is confident on the top line.",
+    "evidence": "Stock rose 8% because management raised capex plans and cited demand.",
+    "confidence": "low. The note contains no direct management quotes, no prepared-remarks or Q&A content, and no call transcript. This read rests on one sentence of secondary summary plus the note author's framing of the debate. Tone in the sense of how management actually sounded is not observable from this source."
+   },
+   "new_risks": [
+    {
+     "risk": "Depreciation from the capex build weighing on reported earnings for years. The note does not mark this as new this quarter; it is a standing bear-case item.",
+     "quote": "Microsoft is spending roughly $190 billion on capex, up 61%, and depreciation will weigh on reported earnings for years.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "OpenAI concentration in the commercial backlog plus OpenAI investment losses flowing through the income statement. OpenAI restructuring that reduces committed Azure spend is separately named as a thesis killer.",
+     "quote": "Forty five percent of the $625 billion commercial backlog is tied to OpenAI, and OpenAI investment losses ($3.1 billion in one quarter) flow through Microsoft's income statement.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Free cash flow compression as capex scales. Stated in the business-quality section rather than the bear case, but the underlying risk (sub-20% full-year free cash flow margin) is a named thesis killer. The note does not identify which quarter the $15.8 billion figure covers.",
+     "quote": "Free cash flow fell to $15.8 billion in a recent quarter from $20.3 billion a year earlier as capex rose 70% to $41 billion for the fiscal year.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Copilot losing seat share to cheaper agents on branding and interoperability grounds.",
+     "quote": "Copilot has had branding and interoperability complaints and could lose seat share to cheaper agents.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Revenue deceleration against a fixed cost base if AI demand slows or hyperscaler pricing turns competitive.",
+     "quote": "If AI demand slows or hyperscaler pricing gets competitive, revenue decelerates while costs keep growing.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Negligible insider ownership. Stated in the business-quality section and not carried into the bear case or the thesis killers.",
+     "quote": "Insider ownership is negligible; management's track record on cloud is the best in large cap tech.",
+     "already_in_thesis": false
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "What the ~$190 billion capex program actually returns, and over what horizon",
+     "reasoning": "The note names this as the whole of the open argument ('The debate is entirely about whether $190 billion of capex earns a return, not about current demand') and records no management answer to it. The only management response the note captures is raising capex plans and citing demand, which addresses demand, the part the note says is not in dispute, and not returns, the part that is. Caveat on confidence: this is a secondary research note, not a transcript, so an unrecorded answer and a dodged question look identical here.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "OpenAI concentration and the earnings drag from OpenAI investment losses",
+     "reasoning": "The note carries hard numbers on the exposure (45% of a $625 billion backlog, $3.1 billion of investment losses in one quarter) and names OpenAI restructuring as a thesis killer, yet records no management framing, contract duration, or mitigation anywhere in the earnings section. A concentration that large drawing no recorded commentary at the print is conspicuous, though again the note may simply not have preserved it.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Free cash flow trajectory as capex scales",
+     "reasoning": "The note reports free cash flow falling to $15.8 billion from $20.3 billion with capex up 70%, and separately makes a sub-20% full-year free cash flow margin a thesis killer, but attaches no management explanation, no forward free cash flow frame, and no identification of which quarter the decline belongs to. The metric closest to a stated break condition is the one with the least recorded commentary.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Copilot monetization: seat counts, pricing, attach rates",
+     "reasoning": "The note raises branding and interoperability complaints and a seat-share threat, and the bear case contemplates Copilot seats consolidating, but no seat, pricing, or attach figures appear anywhere in the note despite Copilot being called the company's biggest AI distribution channel. Lower confidence: a research note of this length may omit segment detail for space rather than because it was withheld.",
+     "confidence": "low"
+    },
+    {
+     "topic": "The depreciation schedule implied by the capex build",
+     "reasoning": "The bear case asserts depreciation 'will weigh on reported earnings for years' with no quantification, no timing, and no management-provided schedule recorded. The note treats the drag as directional only. Lower confidence for the same transcript-absence reason.",
+     "confidence": "low"
+    }
+   ],
+   "not_determinable": [
+    "Forward guidance of any kind. The note contains no revenue, EPS, margin, or Azure growth guide for Q1 FY2027 or FY2027, and the words 'guidance', 'guided', and 'outlook' do not appear in the file at all.",
+    "The size of the capex raise. The note says capex plans were raised but gives no figure, period, or prior baseline. Whether the ~$190 billion bear-case number is the raised plan, a multi-year aggregate, or a different measure entirely cannot be determined from the note.",
+    "Reconciliation of the two capex figures. 'capex rose 70% to $41 billion for the fiscal year' (business quality) and 'roughly $190 billion on capex, up 61%' (bear case) are never reconciled; the note does not state whether they differ by period, scope, or definition.",
+    "What management actually said. The note is a secondary summary with no direct quotes, no prepared remarks, and no Q&A, so questions asked, answers given, and anything genuinely evaded on the call are all outside the source. Every 'dodged' item above is an inference from absence in this note, not an observed non-answer.",
+    "Segment detail. No Intelligent Cloud, Productivity and Business Processes, or More Personal Computing revenue or margin splits appear. Only Azure growth rates are given.",
+    "Which quarter the free cash flow figures cover. The note says '$15.8 billion in a recent quarter from $20.3 billion a year earlier' without naming the quarter, so it cannot be tied to Q4 FY2026.",
+    "Capital returns. The note contains no dividend, buyback, or repurchase disclosure. Diluted share count is given annually only, 7,472m in FY2023 to 7,453m in FY2026 (a prior version of this extraction stated 'about 0.2% a year of shrinkage'; that figure was wrong and is withdrawn. The table's total move is roughly a quarter of one percent across three years). With no repurchase dollars and no authorization, the buyback program cannot be characterized from this note.",
+    "Estimate revision detail. The note's only revision datum is 'Next fiscal year EPS estimate moved +4.2% in 90 days.' There is no analyst count, no up-versus-down revision breakdown, no 30-day window, and no FY1-versus-FY2 split anywhere in the note. A prior version of this extraction cited a '+4.18% on FY1, with 19 upward and 4 downward revisions in 30 days' as corroboration; those numbers are not in this file and that claim is withdrawn.",
+    "Whether any risk is new this quarter. The note presents the bear-case and thesis-killer items as standing positions and does not date any of them to the Q4 print, so 'new' cannot be established from the source.",
+    "Consensus beyond two Q4 lines. Only Q4 revenue ($87.6 billion expected) and EPS ($4.24 expected) consensus are given. There is no Azure consensus, no segment consensus, and no forward-quarter consensus.",
+    "Q3 FY2026 specifics. That quarter is characterized only as 'beat, higher capex, mixed reaction', with no revenue, EPS, or Azure figures.",
+    "The price path after the print. The note gives an 8% reaction on July 29, 2026 and a price of $510.12 on 2026-09-04, with nothing in between, so whether the 8% move held cannot be determined.",
+    "Any position, journal entry, or prior wrong-if conditions. A prior version of this extraction compared the note's thesis killers against a logged journal 'wrong-if'; the word 'journal' does not appear in this file, and no position sizing, entry price, or cost basis appears either. That comparison drew on a separate document, is out of scope for a single-note extraction, and is withdrawn. Within this note, all four break conditions sit together in one 'Key risks and thesis killers' section: Azure under 30% with capex rising, OpenAI restructuring cutting committed Azure spend, full-year free cash flow margin under 20%, and a close under $400.",
+    "Balance sheet and cost detail. No stock-based compensation, headcount, tax rate, interest expense, or quarterly balance-sheet data. Net debt is annual only.",
+    "History before FY2023. The note states 'Four fiscal years is all the source provides.'",
+    "Data vintage. All screen and statement data is pulled 2026-09-04, roughly five weeks after the July 29 print, so nothing in the note reflects developments after that date. Next earnings is stated as 2026-10-28."
+   ],
+   "market_reaction": "The stock rose 8% on the Q4 FY2026 print, which the note attributes to management raising capex plans and citing demand (\"Stock rose 8% because management raised capex plans and cited demand.\"). The prior quarter produced a different outcome on the same setup: \"Fiscal Q3 2026 (April) showed the same pattern: beat, higher capex, mixed reaction.\" As of the 2026-09-04 data pull the stock was $510.12, described as -10% from its 52 week high and -8% from its all time high, with forward P/E of 21.6 against a four year median of 35.8. The note gives no closing prices between July 29 and September 4, so whether the 8% move held, faded, or extended is not determinable from this source.",
+   "available": true,
+   "source": "research/MSFT.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -705,7 +807,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

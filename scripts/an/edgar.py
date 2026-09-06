@@ -26,6 +26,7 @@ recorded-shape fixtures and every entry point has a ``--dry-run``. Run
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 import os
 import re
@@ -45,6 +46,7 @@ __all__ = [
     "cik_to_str",
     "SEC_RATE_PER_SECOND",
     "KEY_TAGS",
+    "IFRS_TAGS",
 ]
 
 SEC_RATE_PER_SECOND = 8.0  # the published limit is 10/s; leave headroom
@@ -93,6 +95,25 @@ KEY_TAGS: Dict[str, List[str]] = {
     "buybacks": ["PaymentsForRepurchaseOfCommonStock"],
 }
 
+IFRS_TAGS: Dict[str, List[str]] = {
+    # A foreign private issuer filing a 20-F or 40-F tags under ifrs-full, where the
+    # element names are different words for the same lines. Without these, a lookup
+    # for such a filer returns nothing at all rather than a wrong number, which is
+    # the better failure but still a failure.
+    "revenue": ["Revenue", "RevenueFromContractsWithCustomers"],
+    "cost_of_revenue": ["CostOfSales"],
+    "gross_profit": ["GrossProfit"],
+    "operating_income": ["ProfitLossFromOperatingActivities"],
+    "net_income": ["ProfitLoss"],
+    "operating_cash_flow": ["CashFlowsFromUsedInOperatingActivities"],
+    "capex": ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"],
+    "assets": ["Assets"],
+    "liabilities": ["Liabilities"],
+    "equity": ["Equity"],
+    "cash": ["CashAndCashEquivalents"],
+    "diluted_shares": ["WeightedAverageNumberOfDilutedSharesOutstanding"],
+}
+
 
 def default_user_agent() -> str:
     """SEC fair access requires a real contact. Read it from the environment.
@@ -116,6 +137,14 @@ class Filing:
     accession: str
     form: str
     filing_date: str
+    acceptance_datetime: Optional[str]
+    """When EDGAR actually accepted the filing, to the second.
+
+    ``filing_date`` is only a date, and a filing accepted at 17:35 gets that day's
+    date while the market never saw it until the next session. For a backtest
+    rebalancing at a close, the acceptance timestamp is the one that decides whether
+    a number was public, and it is the only field that can tell you.
+    """
     report_date: Optional[str]
     primary_document: Optional[str]
     primary_doc_description: Optional[str]
@@ -162,12 +191,58 @@ class Fact:
     accession: Optional[str]
     form: Optional[str]
     fiscal_year: Optional[int]
+    """The fiscal year of the FILING this fact appeared in, not of the fact's own period.
+
+    This trips everyone. A revenue figure covering 2018-02-01 to 2019-01-31 carries
+    ``fy=2021`` when it appears as a comparative column in the FY2021 10-K. Derive
+    the period from :attr:`start` and :attr:`end`; never from ``fy`` and ``fp``.
+    """
     fiscal_period: Optional[str]
+    """``FY``, ``Q1``..``Q4``, again describing the filing rather than the fact."""
     frame: Optional[str]
+    """Set only on the fact the SEC picked as canonical for a calendar period.
+
+    The same figure recurs under many accession numbers as restatements and
+    comparative columns pile up. ``frame`` is the SEC's own answer to which one to
+    use, which makes it the cleanest deduplication available, and it is free.
+    """
 
     @property
-    def is_annual(self) -> bool:
-        return self.fiscal_period == "FY"
+    def period_days(self) -> Optional[int]:
+        """Length of the period the fact covers, or None for an instant."""
+        if not self.start or not self.end:
+            return None
+        try:
+            a = dt.date.fromisoformat(self.start)
+            b = dt.date.fromisoformat(self.end)
+        except ValueError:
+            return None
+        return (b - a).days
+
+    @property
+    def is_instant(self) -> bool:
+        """Balance-sheet facts have no start: they are a point in time, not a period."""
+        return self.start is None
+
+    @property
+    def covers_a_year(self) -> bool:
+        """Whether the fact's own period is roughly annual.
+
+        Deliberately not called ``is_annual``, and deliberately not reading ``fp``:
+        an earlier version of this module did exactly that and would have called a
+        single quarter annual whenever it appeared in a 10-K.
+        """
+        d = self.period_days
+        return d is not None and 330 <= d <= 400
+
+    @property
+    def covers_a_quarter(self) -> bool:
+        d = self.period_days
+        return d is not None and 60 <= d <= 120
+
+    @property
+    def is_canonical(self) -> bool:
+        return self.frame is not None
 
 
 class EdgarClient:
@@ -267,6 +342,7 @@ class EdgarClient:
                         accession=page["accessionNumber"][i],
                         form=form,
                         filing_date=page["filingDate"][i],
+                        acceptance_datetime=(page.get("acceptanceDateTime") or [None] * n)[i] or None,
                         report_date=(page.get("reportDate") or [None] * n)[i] or None,
                         primary_document=(page.get("primaryDocument") or [None] * n)[i] or None,
                         primary_doc_description=(page.get("primaryDocDescription") or [None] * n)[i] or None,
@@ -293,7 +369,16 @@ class EdgarClient:
         ]
 
     def earnings_exhibits(self, filing: Filing) -> Dict[str, Optional[str]]:
-        """Locate Exhibit 99.1 (press release) and 99.2 (slides) inside an 8-K.
+        """Locate the 99.x exhibits attached to an 8-K.
+
+        Exhibit 99.1 is the earnings press release by overwhelming convention, and
+        that convention is reliable enough to build on.
+
+        Exhibit 99.2 is not reliably anything. Exhibit numbering under Item 601 is
+        not standardised beyond the top-level 99 designation, so 99.2 is the deck at some
+        filers, a supplemental data pack at others, and a press release about
+        something unrelated at a few. It is returned because it is usually worth
+        looking at, not because its contents can be assumed.
 
         The exhibit type in ``index.json`` is the authority; filename patterns are a
         fallback because plenty of filers name the file ``ex991.htm`` and leave the
@@ -324,14 +409,36 @@ class EdgarClient:
         c = cik_to_str(cik)
         return self._json(f"{BASE_DATA}/api/xbrl/companyfacts/CIK{c}.json", key=f"companyfacts_{c}")
 
-    def companyconcept(self, cik: str, tag: str, taxonomy: str = "us-gaap") -> Dict[str, Any]:
+    def companyconcept(self, cik: str, tag: str, taxonomy: str = "us-gaap") -> Optional[Dict[str, Any]]:
+        """One tag's history, or None when the company never tagged that concept.
+
+        EDGAR answers a concept it has never seen with a 404, which is the normal
+        answer to a normal question rather than an outage: most companies do not use
+        most tags. Returning None means a tag-fallback chain reads as a loop instead
+        of a pile of exception handlers.
+
+        A fallback chain costs one request per attempt, so past two or three tags it
+        is cheaper to pull ``companyfacts`` once and slice it locally.
+        """
         c = cik_to_str(cik)
-        return self._json(
-            f"{BASE_DATA}/api/xbrl/companyconcept/CIK{c}/{taxonomy}/{tag}.json",
-            key=f"concept_{c}_{taxonomy}_{tag}",
-        )
+        try:
+            return self._json(
+                f"{BASE_DATA}/api/xbrl/companyconcept/CIK{c}/{taxonomy}/{tag}.json",
+                key=f"concept_{c}_{taxonomy}_{tag}",
+            )
+        except FetchError as e:
+            if e.status == 404:
+                return None
+            raise
 
     def facts_for(self, companyfacts: Dict[str, Any], tag: str, taxonomy: str = "us-gaap") -> List[Fact]:
+        """Every observation of one tag, oldest first, nulls skipped.
+
+        Cash-flow facts from a 10-Q are cumulative from the start of the fiscal year,
+        so the second quarter's operating cash flow covers six months, not three.
+        :attr:`Fact.period_days` is how you tell, and differencing consecutive
+        year-to-date facts is how you get a quarter.
+        """
         node = ((companyfacts.get("facts") or {}).get(taxonomy) or {}).get(tag)
         if not node:
             return []
@@ -361,12 +468,43 @@ class EdgarClient:
         return out
 
     def metric(self, companyfacts: Dict[str, Any], metric: str) -> List[Fact]:
-        """First tag in the preference list that actually has data. Companies differ."""
-        for tag in KEY_TAGS.get(metric, []):
-            facts = self.facts_for(companyfacts, tag)
-            if facts:
-                return facts
+        """First tag in the preference list that actually has data. Companies differ.
+
+        Tries ``us-gaap`` first and ``ifrs-full`` second: a foreign private issuer
+        filing a 20-F or 40-F tags under IFRS, and looking only in us-gaap returns
+        nothing at all for them rather than an obviously wrong number, which is the
+        better failure but still a failure.
+        """
+        for taxonomy, table in (("us-gaap", KEY_TAGS), ("ifrs-full", IFRS_TAGS)):
+            for tag in table.get(metric, []):
+                facts = self.facts_for(companyfacts, tag, taxonomy)
+                if facts:
+                    return facts
         return []
+
+    @staticmethod
+    def canonical(facts: List[Fact]) -> List[Fact]:
+        """Keep one fact per period: the one the SEC stamped with a frame.
+
+        The same figure recurs under many accession numbers, once as originally
+        filed and again in every later filing that shows it as a comparative. Taking
+        the latest silently uses restated numbers; taking the first ignores genuine
+        corrections. ``frame`` is the SEC's own choice, so it is the one to use when
+        you want a clean series and do not need point-in-time.
+        """
+        return [f for f in facts if f.is_canonical]
+
+    @staticmethod
+    def annual_series(facts: List[Fact]) -> List[Fact]:
+        """Facts whose own period is roughly a year, newest last.
+
+        Note what this cannot give you: a fourth quarter. Companies almost never tag
+        Q4 separately, because the 10-K reports the full year, so a quarterly series
+        built from XBRL has three quarters and a hole. Q4 is FY minus Q1 minus Q2
+        minus Q3, and that subtraction is the caller's job because it needs all four
+        to be on the same basis.
+        """
+        return sorted([f for f in facts if f.covers_a_year], key=lambda f: (f.end or "", f.filed))
 
     def as_known_on(self, facts: List[Fact], on_date: str, *, period_end: Optional[str] = None) -> Optional[Fact]:
         """The value that was public on ``on_date``, ignoring later restatements.

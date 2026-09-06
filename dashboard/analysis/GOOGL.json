@@ -336,8 +336,117 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "GOOGL",
+   "quarter_label": "Q2 2026 (July 22, 2026) \u2014 the note's \"Last two earnings reports\" section labels it that way; it does not state a separate filing/report date",
+   "prior_quarter_label": "Q1 2026 \u2014 named only as \"Q1 2026 showed a similar beat with Cloud acceleration and a muted reaction\", with no figures",
+   "headline": "Q2 2026 revenue of $119.8bn beat the $117.0bn consensus and grew 24% with Cloud up 82%, and the stock still fell 3.7% after hours on capex concerns.",
+   "guidance": [
+    {
+     "what": "AI capex \u2014 \"roughly $180 billion\" (not framed as guidance in the note)",
+     "change": "not stated",
+     "detail": "This figure appears once, parenthetically, inside a bear-case sentence. The note does not attribute it to management, does not name a period (annual, cumulative, actual or planned), does not give a prior-period figure to compare it against, and never calls it forward-looking. It cannot be scored as raised, cut or maintained.",
+     "quote": "Every dollar of AI capex (roughly $180 billion) is a dollar the market once counted as free cash flow"
+    },
+    {
+     "what": "Cloud backlog \u2014 $514 billion (a disclosed balance in the note, not framed as guidance)",
+     "change": "not stated",
+     "detail": "Given in the \"Why it is on the list\" section alongside \"revenue grew 24% last quarter\". The note gives no as-of date for the backlog, no prior-period backlog, and no conversion or duration commentary, so no direction of change can be established.",
+     "quote": "a $514 billion Cloud backlog"
+    }
+   ],
+   "tone": {
+    "assessment": "Constructive on the business, non-committal on the entry price. The note is bullish on quality and growth (rank 32 of 150, \"compounder\" bucket, Cloud as \"a second engine\") but explicitly withholds a buy at the current price, resolving to a conditional \"pullback buy\" with mid-range conviction (3 of 5) and a buy zone of $300 to $335 that sits below the quoted price of 342.48.",
+    "evidence": "The upside is real but the entry is average, so it is a pullback buy.",
+    "confidence": "medium \u2014 this reads the tone of the note's author, not of management. The file contains no management quotes, no earnings-call commentary, no CEO or CFO remarks, and no prepared-remarks language anywhere; the words \"guidance\", \"outlook\", \"management\", \"CEO\" and \"CFO\" do not appear in it. Management's tone is therefore not assessable from this source at all, which caps confidence at what can be said about the write-up itself."
+   },
+   "new_risks": [
+    {
+     "risk": "The balance sheet flipped from net cash to net debt between FY2024 and FY2025. Under the table's stated convention (\"Net debt (USD bn, negative = net cash)\"), FY2024's -73.08 is net cash of $73.08bn and FY2025's 15.84 is net debt of $15.84bn \u2014 a swing of roughly $89bn in one fiscal year. The note prints the table but never comments on this change.",
+     "quote": "| FY2025 (2025-12-31) | 402.84 | 59.7% | 32.0% | 73.27 | 12,230 | 15.84 |",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "Free cash flow was essentially flat in FY2025 (73.27) versus FY2024 (72.76) while revenue rose from 350.02 to 402.84. The bear case raises the capex-versus-free-cash-flow tradeoff in the abstract, but this specific stalling in the table is not cited there and is not named as a thesis killer.",
+     "quote": "| FY2024 (2024-12-31) | 350.02 | 58.2% | 32.1% | 72.76 | 12,447 | -73.08 |",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "The adtech remedies ruling could force an AdX divestiture.",
+     "quote": "The adtech remedies ruling could force an AdX divestiture.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Cloud growth of 82% is assumed to be unsustainable and to compress the multiple as it decelerates.",
+     "quote": "Cloud growth at 82% cannot last and will decelerate into a lower multiple.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Slow erosion of the search franchise from choice screens, Apple renegotiations, EU data sharing, and query migration to chat products. The note says \"Apple renegotiations\" without saying what is being renegotiated.",
+     "quote": "the search franchise faces a slow erosion from choice screens, Apple renegotiations, EU data sharing, and users starting queries in chat products instead of Google",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "The December 2025 antitrust judgment imposed data sharing and default restrictions, though it left Chrome and Android intact. The note states the outcome but gives no effective dates and no observed effect on results.",
+     "quote": "The December 2025 antitrust judgment left Chrome and Android intact but imposed data sharing and default restrictions.",
+     "already_in_thesis": true
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Nothing in this source can be attributed to management dodging anything",
+     "reasoning": "The file is a third-party research write-up assembled from a stock screen and press coverage, not a transcript or a company release. It contains no management quotes, no call commentary, and no prepared remarks; \"guidance\", \"outlook\", \"management\", \"CEO\" and \"CFO\" do not appear in it. The entries below are therefore gaps in the NOTE, not established evasions by management \u2014 the note cannot settle that distinction.",
+     "confidence": "high"
+    },
+    {
+     "topic": "The adtech remedies proceeding is raised twice but never dated, sized, or sourced",
+     "reasoning": "It appears in the bear case (\"The adtech remedies ruling could force an AdX divestiture\") and again as a thesis killer (\"an adtech ruling that breaks up the ad stack\"), yet the note gives no status, venue, timing, or probability, and no figure for what AdX contributes. The note's only antitrust source is titled \"Google search antitrust case: appeal and remedies in 2026\" \u2014 the search matter, not the adtech matter \u2014 so the note carries no adtech-specific source behind a live thesis killer.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Two of the note's own three thesis killers cannot be evaluated from the note",
+     "reasoning": "Scored against the note's own list: (1) \"search revenue growth under 5% for two quarters\" \u2014 only one quarter of Search growth is given (17%, quarter unnamed), so the two-quarter condition cannot be evaluated, though that single reading is far above the threshold; (2) \"an adtech ruling that breaks up the ad stack\" \u2014 no status given, not evaluable; (3) \"Cloud operating margin reversing\" \u2014 the note gives Cloud operating income of $8.8bn against $24.8bn of quarterly revenue and $2.8bn \"a year earlier\", but no prior-year Cloud revenue, so no margin trend can be computed and \"reversing\" cannot be tested. The separate price trigger IS evaluable: price 342.48 on 2026-09-04 against a $260 close trigger.",
+     "confidence": "high"
+    },
+    {
+     "topic": "Capex is named as the cause of the share-price fall but never quantified for the quarter",
+     "reasoning": "The note says shares fell 3.7% after hours on capex concerns, yet gives no capex figure for Q2 2026 and no period for the \"roughly $180 billion\" cited in the bear case. The reader is told what the market reacted to without being given the number it reacted to.",
+     "confidence": "medium"
+    },
+    {
+     "topic": "Every business named outside Search and Cloud is left with no economics",
+     "reasoning": "YouTube, Gemini, Waymo and \"other bets\" are each mentioned exactly once, in the one-line \"What the company does\" description; Android and Chrome appear a second time only as things the December 2025 judgment left intact. No revenue, growth, margin, or profit figure is attached to any of them anywhere in the file.",
+     "confidence": "high"
+    },
+    {
+     "topic": "The segment figures are never tied to a named quarter",
+     "reasoning": "Search \"$63.3 billion\" is labeled \"last quarter\" and Cloud \"$24.8 billion\" is labeled \"quarterly revenue\", with no quarter named for either. The $119.8bn total is labeled Q2 2026 in a different section. The note never states that these belong to the same quarter, so the segments cannot be reconciled against the total.",
+     "confidence": "high"
+    }
+   ],
+   "not_determinable": [
+    "Whether management addressed or avoided any topic. The file contains no management commentary, quotes, call transcript, or prepared remarks of any kind.",
+    "Any management guidance \u2014 for Q3 2026, FY2026, or any period \u2014 on revenue, margin, capex, or EPS. No guidance figure of any kind is stated in the note.",
+    "Which quarter the Search $63.3bn and Cloud $24.8bn figures belong to. Both are labeled only \"last quarter\" / \"quarterly revenue\". They therefore cannot be subtracted from or reconciled against the Q2 2026 total of $119.8bn, and the note states no residual or unattributed revenue figure.",
+    "Cloud operating margin as a level or a trend \u2014 one of the note's own thesis killers. Cloud operating income ($8.8bn) and Cloud revenue ($24.8bn) appear in the same sentence, but the prior-year comparison is income only ($2.8bn a year earlier) with no prior-year Cloud revenue, so no margin trend can be computed.",
+    "The as-of date for the $514 billion Cloud backlog, its prior-period value, and its expected conversion period.",
+    "The period covered by the \"roughly $180 billion\" capex figure, and whether it is annual or cumulative, actual or planned, and whose figure it is.",
+    "Q2 2026 capex, operating income, operating margin, or any segment breakdown. The note gives only total revenue, the consensus comparison, total growth, Cloud growth, and EPS for the quarter.",
+    "Q1 2026 specifics. It is described only as \"a similar beat with Cloud acceleration and a muted reaction\" \u2014 no revenue, EPS, consensus, or growth figures.",
+    "Revenue, profit, growth, or any economics for YouTube, Android, Chrome, Gemini, Waymo, or \"other bets\", including whether any of them is loss-making.",
+    "Whether the 3.7% after-hours decline persisted or reversed. The note gives price 342.48 on 2026-09-04 with a -17% drawdown from the 52 week high but never connects that to the July 22 reaction.",
+    "Status, timing, venue, or probability of the adtech remedies ruling, and what an AdX divestiture would cost in revenue or profit. The note lists no adtech-specific source.",
+    "Whether the December 2025 judgment's data sharing and default restrictions have taken effect, and any effect on results. The note also does not say what the Apple renegotiations concern.",
+    "Search monetization detail of any kind, and whether AI Overviews is monetizing. \"AI Overviews\" is named once, only as something Search grew \"despite\".",
+    "Buybacks, dividends, headcount, tax rate, or currency effects \u2014 none are mentioned. Diluted shares do decline across the table (13,159 in FY2022 to 12,230 in FY2025), but the note never comments on the cause.",
+    "Analyst estimate breadth or revision counts. The note gives only \"Next fiscal year EPS estimate moved +2.7% in 90 days\"; the words \"analysts\" and \"revisions\", and any up/down revision counts, do not appear in the file.",
+    "Consensus for anything other than Q2 2026 revenue ($117.0bn). No EPS consensus is given, so the $9.11 EPS cannot be scored as a beat or miss.",
+    "Any fiscal data before FY2022 \u2014 the note states \"Four fiscal years is all the source provides.\"",
+    "Whether anything has changed since 2026-09-04. All four sources are marked read or pulled 2026-09-04 and next earnings is 2026-10-28, so nothing in the file post-dates that pull."
+   ],
+   "market_reaction": "The only reaction datum for the quarter is that shares fell 3.7% after hours on capex concerns, despite the revenue beat ($119.8bn vs $117.0bn consensus) and 24% growth. For the prior quarter the note says only that Q1 2026 \"showed a similar beat with Cloud acceleration and a muted reaction\". Separately, the screen line records price 342.48 USD on 2026-09-04, -17% from the 52 week high and -16% from the all time high, but the note never links that drawdown to the July 22 earnings reaction. That price sits above the note's own buy zone of $300 to $335 and well above its $260 price trigger.",
+   "available": true,
+   "source": "research/GOOGL.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -693,7 +802,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

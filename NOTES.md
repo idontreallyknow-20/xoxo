@@ -129,9 +129,118 @@ fact: every caption restates something that also appears in the body text or in 
 shortfall degrades polish rather than access. If you want it gone, `--ink-3` in bone needs to go from
 `#928e82` to about `#7d7a70`, and in amber from `#6e5520` to about `#8a6b28`, in both files at once.
 
-## 4. Free data sources
+## 4. Free data sources: what is actually usable, verified
 
-Filled in from the research sweep. See section 4b for the verified table.
+A research sweep looked at every category and then a second pass tried to refute each "it's free"
+claim. Everything below was checked against 2026 sources; **none of it could be tested live, because
+this container reaches none of these hosts.** Confidence is stated per row.
+
+### The verdict in one line
+
+**SEC EDGAR is the only source here that is unconditionally free, complete, and not going to change
+its mind.** It is a statutory US government disclosure system, not a freemium product: no key, no
+account, no tier, no rate card, and no mechanism by which a paid tier could appear. Everything else
+is either a genuine free tier with a limit that bites, or a trial wearing a "free" label.
+
+### Sources worth using
+
+| source | what it gives | cost | the catch |
+|---|---|---|---|
+| **EDGAR submissions** | filing index: form, dates, accession, 8-K item codes | free, no key | `filings.recent` is columnar arrays, not objects. Holds 1 year or 1,000 filings, whichever is more; the rest is in shard files you fetch and concatenate |
+| **EDGAR companyfacts** | every XBRL fact ever tagged, with its filing date | free, no key | 15-25 MB per large filer. Always send `Accept-Encoding: gzip` |
+| **EDGAR companyconcept** | one tag's history, tens of KB | free, no key | 404 means the company never used that tag, which is data, not an error. Past 3 tags, pull companyfacts once instead |
+| **EDGAR frames** | one tag, all filers, one period: a peer cross-section in one call | free, no key | Period token rules are strict: `CY2024` is a duration, `CY2024Q1I` is an instant, and asking for the wrong one gives an empty frame |
+| **EDGAR 8-K Item 2.02** | the earnings press release, Exhibit 99.1 | free, no key | The closest free thing to a transcript. Prepared numbers and guidance language, no analyst Q&A |
+| **yfinance** | daily adjusted OHLCV, splits, dividends | free, no key | Unofficial, undocumented throttling, breaks when Yahoo changes something. Still the best free price source |
+| **Tiingo** | daily EOD, raw and adjusted | free key | **50 requests an hour.** 150 tickers is a 3-hour sweep. Fine as an overnight backfill, useless for anything interactive |
+| **Finnhub free** | quote, profile, ~100 pre-computed ratios, earnings, news | free key | 60 calls/min. Historical candles are premium |
+| **Alpha Vantage `LISTING_STATUS`** | **the list of delisted tickers** | free key, 2 calls total | The single most valuable thing on this table for a backtest. See below |
+| **SEC DERA Financial Statement Data Sets** | quarterly zips of as-reported fundamentals | free bulk download | Point-in-time by construction. Lags quarter end by two weeks to two months |
+
+### Sources not worth using
+
+- **Stooq** now serves a JavaScript proof-of-work challenge instead of CSV to plain HTTP clients.
+  Whatever guide told you `stooq.com/q/d/l/?s=aapl.us&i=d` works is out of date.
+- **Alpha Vantage for prices**: 25 requests a day. 150 tickers is a six-day refresh. The arithmetic
+  kills it before any other consideration.
+- **Nasdaq Data Link / Quandl WIKI**: last bar is 2018-03-27 and it will never advance.
+
+### Earnings transcripts: the honest answer is no
+
+This was the part of the brief with the least satisfying result, so it is worth being precise.
+
+**There is no free, legal, automatable source of full earnings call transcripts with Q&A.** Every
+candidate fails for a different reason:
+
+- **Financial Modeling Prep** puts transcripts on its Ultimate tier, roughly $139 a month. Not the
+  mid tier. There is no free allowance and no trial for that dataset.
+- **Alpha Vantage** `EARNINGS_CALL_TRANSCRIPT` costs one of your 25 daily requests per
+  ticker-quarter. A single quarter across 150 names is six days of your entire quota.
+- **API Ninjas** appears to gate the transcript endpoint outright, and its free tier forbids
+  commercial use.
+- **Motley Fool** publishes genuinely good full transcripts, free to read in a browser. Their terms
+  of use prohibit automated access, scripts and harvesting. Reading them yourself is fine; a
+  pipeline that fetches them is not.
+- **EDGAR full-text search** can find the rare company that files a verbatim transcript as an 8-K
+  exhibit. It is rare enough that it cannot be a source, only a lucky find.
+
+**What the analysis pages do instead:** they say so. Every page's gaps section names the absence
+explicitly and points at the 8-K Exhibit 99.1 press release as the free substitute, which carries
+the guidance language and the prepared numbers but not the questions. That is the honest position:
+the thing you asked for does not exist for free, and pretending a press release is a transcript
+would be worse than saying so.
+
+One correction to a common assumption: **Exhibit 99.2 is not reliably the slide deck.** Exhibit
+numbering under Item 601 is not standardised past the top-level 99, so 99.2 is a deck at some
+filers, a supplemental data pack at others, and something unrelated at a few. `edgar.py` returns it
+without claiming what it is.
+
+### Delisted tickers, and why that row matters most
+
+Every backtest in this project is survivorship biased and will stay that way until the universe
+includes companies that stopped existing. Of everything surveyed, exactly one free source lists
+them: **Alpha Vantage's `LISTING_STATUS` endpoint**, which returns active and delisted US listings
+with their delisting dates, and costs two requests in total rather than one per ticker. That makes
+it affordable even on a 25-per-day key.
+
+It does not give prices for those names, so it cannot fully repair a backtest. What it can do is
+tell you how badly biased one is: run the universe filter as of a past date, count how many of the
+names it selects no longer exist, and you have measured the hole rather than guessed at it. That is
+worth an hour and is now on the backlog as X7.
+
+### Corrections this research forced in code already written
+
+`scripts/an/edgar.py` was written from documented shapes before this sweep ran. Four things it had
+wrong, now fixed, all of which would have produced quietly wrong numbers rather than errors:
+
+1. **`fy` and `fp` describe the filing, not the fact.** A revenue figure covering Feb 2018 to Jan
+   2019 carries `fy=2021` when it appears as a comparative column in the FY2021 10-K. The old
+   `Fact.is_annual` read `fp == "FY"` and would have called a single quarter annual whenever it
+   appeared in a 10-K. Now `covers_a_year` derives the period from `start` and `end`.
+2. **`frame` is the SEC's canonical-fact marker.** The same figure recurs under many accession
+   numbers as restatements and comparatives pile up. Taking the latest silently uses restated
+   numbers; taking the first ignores genuine corrections. `frame` is the SEC's own answer, and
+   `EdgarClient.canonical()` now uses it.
+3. **`companyconcept` returns 404 when a company never used a tag.** That is the normal answer to a
+   normal question, not an outage. It returned an exception; now it returns `None`.
+4. **`acceptanceDateTime` is the real point-in-time stamp.** `filingDate` is only a date, and a
+   filing accepted at 17:35 carries that day's date while the market did not see it until the next
+   session. `Filing` now carries it.
+
+Two more that are documented rather than fixed, because they are the caller's job:
+**Q4 is almost never tagged** (the 10-K reports the full year, so Q4 is FY minus the three
+quarters), and **cash-flow facts in a 10-Q are cumulative year-to-date**, so Q2 operating cash flow
+covers six months and treating it as a quarter doubles it.
+
+### Two live warnings about Finnhub
+
+- **`/quote` has a current silent-staleness bug.** Finnhub issue #583, filed 2026-08-31, reports
+  `/quote` returning Friday's close for GOOG, TSLA, NVDA and others during Monday's session. It
+  returns a 200 with a plausible number, so nothing in the client can detect it. If you use Finnhub
+  for live quotes, compare the `t` timestamp against the clock rather than trusting the price.
+- **`/stock/financials-reported` may not be premium** even though `/stock/financials` is. Our
+  premium table lists it as blocked. `python scripts/fetch_finnhub.py --probe-premium AAPL` spends
+  one call per endpoint and tells you which entries the table has wrong.
 
 ---
 

@@ -1,0 +1,25 @@
+{
+ "cik": 111,
+ "entityName": "Foreign Filer PLC",
+ "facts": {
+  "ifrs-full": {
+   "Revenue": {
+    "units": {
+     "USD": [
+      {
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "val": 9000000000,
+       "accn": "a",
+       "fy": 2024,
+       "fp": "FY",
+       "form": "20-F",
+       "filed": "2025-03-01",
+       "frame": "CY2024"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

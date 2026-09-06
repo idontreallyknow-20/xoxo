@@ -91,6 +91,27 @@ def main() -> int:
                     url = f"http://127.0.0.1:{port}{route}"
                     page.goto(url, wait_until="networkidle")
                     page.wait_for_timeout(500)
+                    # Horizontal overflow is invisible in a full-page screenshot (the
+                    # image just gets wider) and breaks every layout below it. One long
+                    # nowrap string is all it takes, so it is checked rather than eyeballed.
+                    overflow = page.evaluate("""() => {
+                      const vw = document.documentElement.clientWidth;
+                      const sw = document.documentElement.scrollWidth;
+                      if (sw <= vw + 2) return null;
+                      const out = [];
+                      document.querySelectorAll('*').forEach(el => {
+                        const r = el.getBoundingClientRect();
+                        if (r.right > vw + 2) out.push(
+                          el.tagName + '.' + String(el.className || '').split(' ')[0] +
+                          ' w=' + Math.round(r.width) + ' "' + (el.innerText||'').slice(0,50) + '"');
+                      });
+                      return {vw, sw, worst: out.slice(0, 3)};
+                    }""")
+                    if overflow:
+                        errors.append(
+                            f"horizontal overflow: scrollWidth {overflow['sw']} > viewport "
+                            f"{overflow['vw']}; widest: {'; '.join(overflow['worst'])}")
+
                     name = (route.strip("/").replace("/", "_") or "home") + f"__{theme}.png"
                     out = SHOTS / name
                     page.screenshot(path=str(out), full_page=a.full)

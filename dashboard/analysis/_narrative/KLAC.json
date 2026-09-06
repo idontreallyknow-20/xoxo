@@ -1,0 +1,90 @@
+{
+ "ticker": "KLAC",
+ "quarter_label": "Q4 FY2026, reported 2026-07-28",
+ "prior_quarter_label": "Q3 FY2026, reported April 2026 (exact date not stated)",
+ "headline": "KLA guided the September quarter to a record $4.0 billion and $1.16 EPS after a Q4 that grew revenue 15% to $3.66 billion, and the stock fell anyway on margin mix.",
+ "guidance": [
+  {
+   "what": "September quarter (Q1 FY2027) revenue",
+   "change": "introduced",
+   "detail": "Guided to $4.0 billion plus or minus $200 million, a step up from the $3.66 billion just reported for Q4 FY2026. The note gives no prior September-quarter guide to compare against, so this is a new number rather than a raise or cut.",
+   "quote": "September quarter guided to $4.0 billion plus or minus $200 million and EPS $1.16"
+  },
+  {
+   "what": "September quarter (Q1 FY2027) non-GAAP EPS",
+   "change": "introduced",
+   "detail": "Guided to $1.16, above the $1.05 delivered in Q4 FY2026. The note annualizes this to an approximate $4.60 run rate, putting the stock near 37x that run rate, and adds that estimates are still climbing.",
+   "quote": "With September quarter EPS guided to $1.16, the run rate is about $4.60, so the stock is about 37x run rate but the estimates are climbing."
+  },
+  {
+   "what": "September quarter outlook framing",
+   "change": "introduced",
+   "detail": "The note characterizes the guide as pointing to a record September quarter. It is the note's own framing; no management wording is quoted anywhere in the file.",
+   "quote": "Guidance points to a record September quarter."
+  }
+ ],
+ "tone": {
+  "assessment": "Constructive on the numbers, unreadable on delivery. The guide steps revenue and EPS up from a quarter that already grew 15%, which implies confidence in near-term demand, but the note contains no management language, call quotes, or commentary of any kind, so nothing about how management sounded can be assessed. The only behavioral signal in the note runs the other way: the market sold the print on margin mix, and did the same after the prior quarter's beat.",
+  "evidence": "Shares fell on margin mix. Q3 fiscal 2026 (April) also beat with a pullback after.",
+  "confidence": "low, and it is not higher because the note is a secondhand summary containing zero direct management quotes, no call or Q&A content, and no commentary on demand, margins, or the 2027 outlook; the assessment is inferred from guidance figures and the share reaction alone"
+ },
+ "new_risks": [
+  {
+   "risk": "Margin mix is what the market punished, and it is not one of the strands named in the note's bear case (2026 WFE peak and memory capex timing, tightening China restrictions, and the sector's history of 50%+ drawdowns). The note also records the same beat-then-sell-off pattern in the prior quarter, so this is now two consecutive quarters where a beat did not hold.",
+   "quote": "Shares fell on margin mix. Q3 fiscal 2026 (April) also beat with a pullback after.",
+   "already_in_thesis": false
+  },
+  {
+   "risk": "China export controls are quantified as a $300 to $350 million headwind against a country that was roughly a third of fiscal 2025 revenue.",
+   "quote": "China was about a third of fiscal 2025 revenue and export controls are a $300 to $350 million headwind this year.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "The 2026 wafer fab equipment cycle is characterized as a peak, with the specific failure mode being memory capex slowing in 2027 rather than shifting, which would compress orders and the multiple at the same time.",
+   "quote": "Wafer fab equipment spending of $150 billion in 2026 is a peak fuelled by AI memory and logic capex; if memory capex slows in 2027 rather than shifts, orders and the multiple compress together.",
+   "already_in_thesis": true
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "What \"margin mix\" actually was, and where margins go from here",
+   "reasoning": "The note names margin mix as the reason shares fell but never says which mix shifted, by how much, or what gross and operating margin were in the quarter. The September-quarter guide it reports covers revenue and EPS only, with no margin line. Whether this silence is management's or the note author's compression cannot be told from the file.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "December quarter and calendar 2027 outlook",
+   "reasoning": "The note's own thesis killers are December quarter guidance under $3.6 billion and a calendar 2027 WFE outlook cut of 15% or more, yet the earnings section reports guidance for the September quarter only. Nothing in the file records any December-quarter number or any forward WFE view given at the Q4 report, so the two thresholds the thesis turns on went unaddressed in what the note captured.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "China exposure at the quarter level",
+   "reasoning": "China appears exactly twice in the file, on the Business quality line and in the bear case. Both references are annual and backward-looking: about a third of fiscal 2025 revenue, and a $300 to $350 million headwind for \"this year.\" The earnings section that covers Q4 FY2026 and Q3 FY2026 does not mention China at all, so a reader cannot tell whether the China drag is worsening, stabilizing, or already reflected in the 15% revenue growth.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "Prior quarter detail",
+   "reasoning": "Q3 FY2026 is compressed into a single clause with no revenue, EPS, guidance, or date beyond the month. There is no basis in the file for comparing the two quarters on anything except the shared pattern of a beat followed by a pullback.",
+   "confidence": "high"
+  }
+ ],
+ "market_reaction": "The note records direction but not magnitude. It states that shares fell on margin mix after the Q4 FY2026 print, and that the prior quarter also beat with a pullback after, but gives no percentage move, no reaction date, and no volume or flow detail for either. The standing price context in the note is $172.94 on 2026-09-04, roughly five weeks after the July 28 report, described as \"-44% from 52 week high, -43% from all time high,\" with short interest at 2.2% of float and the sector having \"already rotated down 40% from the high once this year.\" Against that, the note's only estimate-revision datapoint runs positive: \"Next fiscal year EPS estimate moved +13.1% in 90 days.\" No other revision figures, revision counts, or comparisons to consensus appear anywhere in the file.",
+ "not_determinable": [
+  "Q4 FY2026 gross and operating margin, and therefore what the \"margin mix\" that sank the stock actually consisted of. The file has margins only at the fiscal-year level in the financials table (FY2026: 61.3% gross, 41.7% operating) and a separate Business quality line citing 62.4% and 43.7% with no period attached.",
+  "Whether the $1.05 non-GAAP EPS beat, met, or missed consensus. The note says only that it was \"at the top of guidance,\" which is a comparison to the company's own prior range, not to the street.",
+  "The size and date of the share-price reaction to the July 28 report. The note says shares fell, with no figure.",
+  "The size and date of the Q3 FY2026 pullback, and every Q3 FY2026 figure: revenue, EPS, guidance given, and the exact report date (only \"April\" is stated).",
+  "Any estimate-revision detail beyond the single +13.1% next-fiscal-year, 90-day figure: no 30-day revision, no current-fiscal-year revision, no count of upward versus downward revisions, and no analyst count. The file contains no revision counts of any kind.",
+  "December quarter guidance, which is the note's own first-listed thesis killer at the $3.6 billion threshold. Not given in the file.",
+  "Any calendar 2027 WFE outlook stated at the Q4 report, against which the note's 15%-cut thesis killer would be measured.",
+  "Bookings, orders, or backlog for the quarter, and any book-to-bill.",
+  "Segment detail for the quarter: the roughly 90% process control versus services and specialty equipment split is described only as a company-level characterization, never broken out by quarter.",
+  "China revenue for Q4 FY2026 or Q3 FY2026, and whether the $300 to $350 million export-control headwind was reaffirmed, raised, or cut at the Q4 report. The file does not even tie \"this year\" to a specific fiscal year.",
+  "Any direct management commentary, call quote, prepared-remark language, or Q&A content. The file contains none, which is why tone confidence is low.",
+  "Capital returns detail: the valuation section refers to gains \"flat to modest gains with the dividend\" but the file gives no dividend per share, yield, payout, or buyback figure. The financials table gives diluted share count (1,320m in FY2026, down from 1,402m in FY2023) but no repurchase amount.",
+  "Whether the FY2026 share count already reflects the June 2026 ten-for-one split, and how the split interacts with the $172.94 price and $1.16 EPS guide.",
+  "Free cash flow or any balance-sheet figure for the quarter. The file has these annually only, and notes that \"Four fiscal years is all the source provides.\""
+ ],
+ "available": true,
+ "source": "research/KLAC.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

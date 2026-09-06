@@ -156,7 +156,109 @@ def test_as_known_on_returns_none_before_anything_was_filed(client):
 
 def test_missing_fixture_raises_rather_than_silently_returning_nothing(client):
     with pytest.raises(FetchError):
-        client.companyconcept("0000320193", "Revenues")
+        client.submissions("0000000001")
+
+
+def test_a_concept_the_company_never_tagged_is_none_not_an_error(client):
+    """EDGAR answers an untagged concept with a 404, which is the normal answer to a
+    normal question: most companies do not use most tags. Turning that into an
+    exception makes a tag-fallback chain a pile of try/excepts."""
+    assert client.companyconcept("0000320193", "Revenues") is None
+
+
+def test_fy_and_fp_describe_the_filing_not_the_period(client):
+    """The trap. A FY2024 revenue figure appears again as a comparative column in the
+    FY2026 10-K carrying fy=2026. Reading fy would date it 2026."""
+    cf = client.companyfacts("0000320193")
+    rev = client.metric(cf, "revenue")
+    comparative = [f for f in rev if f.fiscal_year == 2026 and f.end == "2024-09-28"]
+    assert comparative, "fixture no longer carries the comparative column"
+    f = comparative[0]
+    assert f.fiscal_period == "FY"
+    assert f.end.startswith("2024")
+    assert f.covers_a_year is True
+    assert 330 <= f.period_days <= 400
+
+
+def test_period_length_comes_from_start_and_end(client):
+    cf = client.companyfacts("0000320193")
+    rev = client.metric(cf, "revenue")
+    annual = [f for f in rev if f.covers_a_year]
+    quarterly = [f for f in rev if f.covers_a_quarter]
+    assert annual and quarterly
+    assert all(f.period_days >= 330 for f in annual)
+    assert all(60 <= f.period_days <= 120 for f in quarterly)
+
+
+def test_an_instant_fact_has_no_period(client):
+    cf = client.companyfacts("0000320193")
+    assets = client.metric(cf, "assets")
+    assert assets[0].is_instant is True
+    assert assets[0].period_days is None
+    assert assets[0].covers_a_year is False
+
+
+def test_canonical_keeps_one_fact_per_period(client):
+    """The same figure recurs under many accession numbers as comparatives pile up.
+    frame is the SEC's own pick, and it is free."""
+    cf = client.companyfacts("0000320193")
+    rev = client.metric(cf, "revenue")
+    canon = client.canonical(rev)
+    assert len(canon) < len(rev)
+    assert all(f.frame for f in canon)
+    assert len({f.frame for f in canon}) == len(canon)
+
+
+def test_annual_series_is_sorted_and_excludes_quarters(client):
+    cf = client.companyfacts("0000320193")
+    series = client.annual_series(client.metric(cf, "revenue"))
+    assert series
+    assert all(f.covers_a_year for f in series)
+    assert [f.end for f in series] == sorted(f.end for f in series)
+
+
+def test_a_ten_q_cash_flow_fact_is_cumulative_not_quarterly(client):
+    """Q2 operating cash flow covers six months. Treating it as a quarter doubles it."""
+    cf = client.companyfacts("0000320193")
+    ocf = client.metric(cf, "operating_cash_flow")
+    ytd = [f for f in ocf if f.form == "10-Q"]
+    assert ytd
+    assert ytd[0].period_days > 150, "a Q2 10-Q fact should span about half a year"
+    assert ytd[0].covers_a_quarter is False
+
+
+def test_the_taxonomy_falls_back_to_ifrs_for_a_foreign_filer(tmp_path, load_fixture):
+    """A 20-F filer tags under IFRS. Looking only in us-gaap finds nothing at all."""
+    from an.http import FixtureTransport
+
+    t = FixtureTransport()
+    t.add("https://data.sec.gov/api/xbrl/companyfacts/CIK0000000111.json",
+          load_fixture("companyfacts_ifrs.json"))
+    c = edgar.EdgarClient(transport=t, cache=Cache(tmp_path), user_agent="t t@e.com")
+    cf = c.companyfacts("111")
+    assert c.facts_for(cf, "Revenues") == []
+    got = c.metric(cf, "revenue")
+    assert got and got[0].value == 9_000_000_000
+
+
+def test_acceptance_datetime_is_captured(client):
+    """filingDate is only a date. A filing accepted at 17:35 gets that day's date and
+    the market never saw it until the next session."""
+    f = client.filings("0000320193")[0]
+    assert f.acceptance_datetime == "2026-08-01T17:35:12.000Z"
+    assert f.filing_date == "2026-08-01"
+    late = [x for x in client.filings("0000320193") if x.acceptance_datetime and
+            int(x.acceptance_datetime[11:13]) >= 17]
+    assert late, "at least one fixture filing lands after the close"
+
+
+def test_exhibit_99_2_is_returned_without_claiming_what_it_is(client):
+    """Exhibit numbering under Item 601 is not standardised past the 99, so 99.2 is
+    slides at some filers and a supplemental pack at others."""
+    import inspect
+
+    doc = inspect.getdoc(edgar.EdgarClient.earnings_exhibits)
+    assert "not reliably anything" in doc
 
 
 def test_cache_prevents_a_second_fetch(client):

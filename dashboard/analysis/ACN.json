@@ -336,8 +336,109 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "ACN",
+   "quarter_label": "Q3 fiscal 2026, reported June 18, 2026",
+   "prior_quarter_label": "not stated",
+   "headline": "Accenture grew Q3 FY2026 revenue 6% and EPS 9% but new bookings fell 2% against expectations of 7% growth and the full-year growth forecast was lowered, which the note treats as disqualifying despite a 13.2 forward P/E.",
+   "guidance": [
+    {
+     "what": "Full year growth forecast",
+     "change": "cut",
+     "detail": "The note states the full year growth forecast was lowered alongside the Q3 FY2026 report on June 18, 2026. It gives no old or new range, no metric definition (revenue growth vs. other), and no magnitude of the cut.",
+     "quote": "full year growth forecast lowered"
+    },
+    {
+     "what": "Next fiscal year EPS estimate (sell-side, not company guidance)",
+     "change": "not stated",
+     "detail": "The screen line reports a -1.5% move in the next-fiscal-year EPS estimate over 90 days. The note does not attribute this to company guidance, does not say who revised, and gives no dollar EPS level or revision counts.",
+     "quote": "Next fiscal year EPS estimate moved -1.5% in 90 days."
+    }
+   ],
+   "tone": {
+    "assessment": "Not determinable from management directly. The note contains no management quotes, call commentary, transcript excerpt, or named executive. The only tone signal is secondhand and adverse: a guidance cut delivered with a bookings miss, which the note's own author reads as a value trap rather than a stabilizing quarter.",
+    "evidence": "Q3 fiscal 2026 (June 18, 2026): revenue up 6% to $18.7 billion, EPS up 9% to $3.80, new bookings $19.3 billion down 2%, full year growth forecast lowered.",
+    "confidence": "low, and it is not higher because the note is a secondhand summary containing zero management language; the assessment infers posture from reported results and a guidance cut, not from anything management is quoted as saying"
+   },
+   "market_reaction": "The stock fell 18% to $128.46 on the June 18, 2026 report day, which the note calls a record decline, and had recovered to $193 by the time of writing (price 193.12 USD on 2026-09-04) \u2014 a recovery the note explicitly treats as an argument against buying: \"It has since recovered to $193, which itself argues against chasing.\" The note also records the drawdown only in percentage terms, \"-36% from 52 week high, -55% from all time high,\" and gives short interest at 4.3% of float. No dollar levels for the 52-week or all-time high appear in the note.",
+   "new_risks": [
+    {
+     "risk": "New bookings declined 2% against expectations of 7% growth \u2014 the demand indicator inverted versus consensus, not merely softened.",
+     "quote": "Bookings fell 2% in the May quarter when analysts expected 7% growth.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "AI substitutes for the billable-hours revenue model, making the core product structurally deflationary.",
+     "quote": "the product is billable hours and AI is deflationary to billable hours",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Clients are pausing large programs while deciding what to build in house. The note states the pause; it does not attach a lag or a quantified revenue impact to this specific sentence.",
+     "quote": "Clients are pausing large programs while they figure out what to build in house.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Bookings are a leading indicator of revenue and are currently negative, so the reported revenue growth is not yet reflecting the deterioration.",
+     "quote": "Bookings lead revenue by a year, and bookings are negative.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Continued negative bookings growth or a further guidance cut are the note's named thesis killers.",
+     "quote": "Bookings growth staying negative for another quarter, or another guidance cut.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Entry-price risk: the post-crash recovery to $193 has already removed the dislocation, so the cheapness that flagged the name has partly closed without the underlying issue resolving. This is raised in the earnings section rather than in the note's stated bear case or thesis killers.",
+     "quote": "It has since recovered to $193, which itself argues against chasing.",
+     "already_in_thesis": false
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Why bookings fell 2% when 7% growth was expected \u2014 no cause, no segment or geography attribution, no distinction between deferral and loss.",
+     "reasoning": "The note states the miss and its size and repeatedly builds its thesis on it, but supplies no explanation of the driver anywhere in the business quality, bear case, or earnings sections. Given how central the number is to the note's conclusion, the absence of any stated cause is conspicuous.",
+     "confidence": "low"
+    },
+    {
+     "topic": "The size and content of the lowered full-year forecast \u2014 old range, new range, and which metric.",
+     "reasoning": "The note records only the four words that the forecast was lowered. A guidance cut that drove an 18% single-day decline is described without a single number, so the reader cannot judge severity.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Any company response to the AI-substitution argument \u2014 whether AI work is offsetting the deflation in billable hours.",
+     "reasoning": "The note asserts AI is deflationary to billable hours and that AI does the work Accenture bills for, but presents no counterargument, no AI bookings figure, and no company position on the question.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Path or timeline to a bookings recovery.",
+     "reasoning": "The verdict conditions a revisit on two consecutive quarters of positive bookings growth, but nothing in the note indicates when or under what conditions that might occur, or what the company expects.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Reconciliation of the reported 6% revenue growth and 9% EPS growth with the cut forecast and negative bookings.",
+     "reasoning": "The note places strong current results and a lowered outlook in the same sentence without addressing the tension; it resolves it only by asserting the one-year bookings-to-revenue lead, not with any company explanation.",
+     "confidence": "low"
+    }
+   ],
+   "not_determinable": [
+    "Whether these 'dodged' items were actually dodged by management. The note is a secondhand summary with no transcript, no call quotes, and no Q&A. Its silence may reflect the summarizer's compression rather than anything management avoided; every dodged entry above should be read at low confidence for this reason.",
+    "The prior quarter entirely. The section is headed 'Last two earnings reports' but contains only Q3 FY2026 \u2014 no Q2 FY2026 revenue, EPS, bookings, date, or market reaction is given, so no quarter-over-quarter comparison is possible.",
+    "Dollar levels of the 52-week high and the all-time high. The note gives only percentage drawdowns (-36% and -55%) at that precision; no price levels and no additional decimal places appear in the file.",
+    "Any comparison figure for EV/EBITDA. The note states 'EV/EBITDA 9.1' with no peer, sector, or historical median alongside it.",
+    "Breadth of analyst estimate revisions. The note gives only the aggregate -1.5% 90-day move in the next-fiscal-year EPS estimate \u2014 no count of upward versus downward revisions, no 30-day figure, no number of covering analysts.",
+    "The dollar forward EPS estimate. Only the forward P/E of 13.2 and the 4-year median of 28.4 are given.",
+    "The old and new full-year guidance ranges and which metric was guided.",
+    "Management's own words, tone, named executives, prepared remarks, or Q&A \u2014 none appear in the note.",
+    "The FY2026 fiscal year end date and whether FY2026 has closed. The financials table ends at FY2025 (2025-08-31) and the note states next earnings are 2026-10-01, but it never states the FY2026 end date; inferring 2026-08-31 from the FY2022-FY2025 pattern would be extrapolation.",
+    "FY2026 full-year financials of any kind. The table stops at FY2025 and the note says 'Four fiscal years is all the source provides.'",
+    "Segment, geography, service-line, or client-industry detail; headcount, utilization, pricing, or attrition; bookings split by consulting versus managed services.",
+    "Capital return policy. Diluted shares decline from 643m to 632m across FY2022-FY2025 in the table, but no buyback or dividend policy, authorization, or per-share dividend is stated.",
+    "Whether short interest of 4.3% of float is elevated relative to Accenture's own history or to peers \u2014 no historical or comparative context is given.",
+    "Any portfolio positioning: position size, target size, cost basis, or trade history. The note's Verdict gives 'Conviction 2 of 5' and 'Pass' and nothing further; no position or sizing information exists anywhere in this file.",
+    "Whether the -18% day and the recovery to $193 involved any change in fundamentals between June 18 and 2026-09-04 \u2014 the note reports both prices with no bridge between them."
+   ],
+   "available": true,
+   "source": "research/ACN.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -663,7 +764,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

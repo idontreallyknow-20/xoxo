@@ -1,0 +1,66 @@
+{
+ "ticker": "NOW",
+ "quarter_label": "Q2 2026, reported 2026-07-22",
+ "prior_quarter_label": "Q1 2026, reported April 23 (the note writes \"Q1 2026 (April 23)\" without repeating the year)",
+ "headline": "Q2 2026 subscription revenue was $3.877 billion, up 24.5%, and full year subscription guidance was raised to $15.76 to $15.78 billion, yet the shares fell 6.5% intraday before recovering after hours.",
+ "guidance": [
+  {
+   "what": "Full year subscription revenue",
+   "change": "raised",
+   "detail": "The note reports the new range ($15.76 to $15.78 billion) but not the prior range, so the size of the raise cannot be computed from this file. No period split, currency assumption, or comparison to consensus is given.",
+   "quote": "full year subscription guidance raised to $15.76 to $15.78 billion"
+  },
+  {
+   "what": "Operating margin guidance",
+   "change": "not stated",
+   "detail": "Operating margin guidance appears in the note only as a named thesis-killer condition (a cut would break the thesis). No guided margin figure, range, or direction is reported for any period, so the condition cannot be tested against this file.",
+   "quote": "Thesis killers: subscription growth under 18%, operating margin guidance cut, or a large customer publicly replacing it with an agent platform."
+  }
+ ],
+ "tone": {
+  "assessment": "Not characterizable from this note. The file contains no management commentary, prepared remarks, or Q&A from either print \u2014 it reports only the Q2 numbers, the raised full-year subscription range, and the share-price move. What the disclosed shape shows is growth of 24.5% plus a guidance raise, followed by a 6.5% intraday decline that reversed after hours; the note does not explain that gap or attribute any view to management.",
+  "evidence": "Q2 2026 (July 22, 2026): subscription revenue $3.877 billion up 24.5%, full year subscription guidance raised to $15.76 to $15.78 billion. Shares fell 6.5% intraday then recovered after hours.",
+  "confidence": "low \u2014 the words CEO, CFO, management, call, and transcript appear nowhere in the file (grep-confirmed zero matches), so there is no primary-source language to read tone from; any characterization beyond 'the numbers rose and guidance was raised' would be imported from outside the note."
+ },
+ "new_risks": [
+  {
+   "risk": "Margin pressure from AI compute costs. The note states it twice but never names which margin line is affected, gives no magnitude, and does not date it to either earnings report.",
+   "quote": "Margins are under some pressure from AI compute costs.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Agents in the model layer commoditizing the workflow layer, with seat-based pricing shrinking as agents replace people.",
+   "quote": "Agents that live in the model layer make the workflow layer a commodity: why route a ticket through ServiceNow when the assistant resolves it?",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "No valuation cushion at 29x forward if growth decelerates to the teens.",
+   "quote": "Margins are already compressing from AI costs, and at 29x there is no valuation cushion if growth slips to the teens.",
+   "already_in_thesis": true
+  },
+  {
+   "risk": "Seat-based pricing contraction as agents displace human seats.",
+   "quote": "Seat based pricing shrinks as agents replace people.",
+   "already_in_thesis": true
+  }
+ ],
+ "dodged": [],
+ "market_reaction": "Q2 (July 22, 2026): \"Shares fell 6.5% intraday then recovered after hours.\" The note says nothing about peer or sector moves around that print, so whether the decline was company-specific is not stated. Q1 (April 23): \"Q1 2026 (April 23) triggered a sector wide plunge alongside IBM as investors read AI as a threat rather than a driver.\" As of the 2026-09-04 screen pull, \"Price 145.59 USD on 2026-09-04\", \"-30% from 52 week high, -42% from all time high\", forward P/E 29.1 against a four-year median of 123.4. The only estimate-revision figure in the file is \"Next fiscal year EPS estimate moved -0.4% in 90 days.\", measured to that same 2026-09-04 pull; the note gives no revision series and does not break the change out by print, so it cannot be attributed to Q2 or Q1 individually.",
+ "not_determinable": [
+  "Anything management actually said at either print. The file has no transcript, prepared remarks, Q&A, or executive quotation \u2014 CEO, CFO, management, call, and transcript all return zero matches \u2014 so nothing can be identified as addressed, deflected, or dodged. This is why the dodged list is empty rather than populated.",
+  "Q2 2026 EPS, total revenue, gross or operating margin, free cash flow, or share count. The earnings section reports only subscription revenue, its growth rate, and the full-year subscription guidance range. The financial table is annual and stops at FY2025.",
+  "Whether Q2 beat or missed. No consensus figure for the quarter appears; the word consensus does not occur in the file, and the only 'beats' reference is inside a source URL slug, not in the note's own text.",
+  "The prior full-year subscription guidance range, so the magnitude of the raise is unknown, along with any implied Q3 split, constant-currency assumption, or guidance for margin, EPS, or cash flow.",
+  "RPO, cRPO, or backlog. These words appear nowhere in the file. The note also says nothing about what this company customarily discloses, so their absence here cannot be read as an omission by management rather than by the note's author.",
+  "Federal or public-sector exposure, geographic mix, vertical mix, customer counts, net revenue retention, churn, and renewal rates. None of these terms appear, and the note gives no basis for judging whether any of them is material here.",
+  "Whether the $1 billion AI annual contract value and the ninefold rise in agentic deployments were Q2 disclosures. Both sit in the undated 'Business quality' section \u2014 'ServiceNow AI passed $1 billion of annual contract value with agentic deployments up ninefold in nine months.' \u2014 and the note never ties them to a reporting period, an as-of date, or the July 22 print.",
+  "Which margin line is under pressure from AI compute costs, and by how much. The note asserts pressure without naming a line or a figure. The annual table shows FY2025 gross margin of 77.5% against FY2024's 79.2%, while operating margin rose from 12.4% to 13.7%; the note does not connect either move to AI costs.",
+  "Two of the three thesis killers cannot be tested from this file. Subscription growth under 18% is checkable (reported growth is 24.5%). An operating margin guidance cut is not, because no margin guidance is given. A large customer publicly replacing ServiceNow with an agent platform is not, because the note reports nothing about customer wins, losses, or defections in either direction.",
+  "Any price path between the July 22 print and the 2026-09-04 screen pull, including where the stock settled after the intraday drop and after-hours recovery, and how far it sits from the $110 price trigger or the $115 to $135 buy zone at any date other than 2026-09-04.",
+  "Balance-sheet or capital-return actions around the quarter. Buyback, repurchase, and dividend appear nowhere in the file; net cash is given only as an annual series through FY2025 (-3.88 USD bn, negative = net cash).",
+  "Any pre-FY2022 history or quarterly series for the financials. The note states its own limit: 'Four fiscal years is all the source provides.'"
+ ],
+ "available": true,
+ "source": "research/NOW.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

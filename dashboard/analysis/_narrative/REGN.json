@@ -1,0 +1,70 @@
+{
+ "ticker": "REGN",
+ "quarter_label": "Q2 2026, reported 2026-07-30 (the note writes \"Q2 2026 (July 30, 2026)\")",
+ "prior_quarter_label": "Q1 2026 \u2014 named but not detailed; the note gives no date and no figures for it",
+ "headline": "Revenue grew 17% to $4.3 billion on a second straight double-digit quarter, and the only forward-looking statement in the note is a decline guide: management expects legacy Eylea demand to keep falling low to mid teens sequentially.",
+ "guidance": [
+  {
+   "what": "Legacy Eylea demand (forward)",
+   "change": "not stated",
+   "detail": "The note records exactly one forward-looking management statement for the quarter: legacy Eylea demand is expected to keep falling low to mid teens sequentially. It follows a reported legacy Eylea quarter of $412 million, down 45%. The note gives no time horizon, no absolute floor, no prior guide to compare against, and no indication of whether this expectation is new, reiterated or revised \u2014 so raised/cut/maintained cannot be scored.",
+   "quote": "Management expects legacy Eylea demand to keep falling low to mid teens sequentially."
+  }
+ ],
+ "tone": {
+  "assessment": "Not determinable. The note attributes no tone, adjective, or framing to management. It contains a single paraphrased management sentence and no direct quotes, no speaker names, and no call commentary. The one observation available is compositional rather than tonal: the sole statement credited to management concerns a declining product line, while every growth figure in the earnings section is reported without any management attribution.",
+  "evidence": "Management expects legacy Eylea demand to keep falling low to mid teens sequentially.",
+  "confidence": "low \u2014 and it cannot be higher, because the note carries no direct quotation of management at all. The IR release and the Motley Fool transcript are listed in Sources but never excerpted, so no tonal evidence reaches the audited file. Any read of posture would be imported, not extracted."
+ },
+ "market_reaction": "Not given for this quarter. The note contains no post-earnings price move, no volume, and no analyst response to the July 30 print. Its only market data is a screen line dated more than five weeks later: \"Price 843.47 USD on 2026-09-04\", with the stock \"-1% from 52 week high, -29% from all time high\" and \"Forward P/E 13.9 vs own 4 year median 18.7\". The note also records \"Next fiscal year EPS estimate moved +4.7% in 90 days\" and short interest of 2.5% of float. All of it is labelled screen data pulled 2026-09-04 and is never linked by the note to the earnings report, so it cannot be read as a reaction to it.",
+ "new_risks": [
+  {
+   "risk": "The legacy Eylea decline is guided to continue, not stabilize. The quarter already reported legacy Eylea at $412 million, down 45%, and management expects demand to keep falling at a low-to-mid-teens sequential rate from there.",
+   "quote": "Management expects legacy Eylea demand to keep falling low to mid teens sequentially.",
+   "already_in_thesis": true
+  }
+ ],
+ "dodged": [
+  {
+   "topic": "Eylea HD's sequential trajectory \u2014 the precise variable the note's own thesis killer keys on",
+   "reasoning": "The note's stated thesis killer is \"Eylea HD sales down sequentially for two quarters\". But every Eylea HD figure in the file is a growth rate against an unnamed base: \"Eylea HD US $596 million up 52%\" in the earnings section and \"up 52% to $596 million in the US\" in Business quality. Meanwhile the single forward statement credited to management covers legacy Eylea, not HD. The note thus provides no way to check its own tripwire, and gives no sign that HD's sequential path was addressed. Whether management discussed it and the note dropped it, or it was never addressed, cannot be told from this file.",
+   "confidence": "medium"
+  },
+  {
+   "topic": "The pipeline \u2014 absent from the earnings section entirely",
+   "reasoning": "The note's own description of the company includes \"a deep pipeline and a genetics research engine\", and the bear case flags that \"The pipeline has had failures\". Yet the Q2 paragraph carries only revenue, non-GAAP EPS, four product line items (Dupixent constant-currency growth, US Dupixent, Eylea HD US, legacy Eylea) and the one legacy Eylea expectation. No trial, readout, approval, or program is named anywhere in the file. Caveat: this is a one-paragraph summary of a quarter, so its silence is weak evidence about what was actually said on the call.",
+   "confidence": "low"
+  },
+  {
+   "topic": "What share of Dupixent economics accrues to Regeneron",
+   "reasoning": "The bear case states that \"Sanofi takes a large share of it\", but the note never quantifies that share anywhere. The earnings section reports \"Dupixent up 38% constant currency\" and \"US Dupixent $4.6 billion up 42%\" with no accompanying statement about the split, and the file offers no mechanism, no percentage, and no reconciliation. Same caveat: the note is a summary, so absence here is not proof management avoided it.",
+   "confidence": "low"
+  },
+  {
+   "topic": "Drug pricing and policy exposure",
+   "reasoning": "The note names pricing as a standing risk twice \u2014 \"drug pricing politics are a permanent overhang\" in the bear case, and the thesis killer \"a pricing law that hits Dupixent specifically\" \u2014 yet the earnings section contains no pricing, policy, reimbursement, or net-price item of any kind. Weak-evidence caveat applies.",
+   "confidence": "low"
+  }
+ ],
+ "not_determinable": [
+  "The comparison basis for every Q2 growth rate. The note writes bare \"up 17%\", \"up 11%\", \"up 42%\", \"up 52%\" and \"down 45%\" and never labels any of them year-over-year or sequential. The only basis the file ever names is \"sequentially\", and only for the legacy Eylea expectation. Reading the Q2 rates as year-over-year would be imported convention, not text.",
+  "Anything about Q1 2026 beyond a single clause. The note says only \"Q1 2026 was the first of the two double digit quarters\" \u2014 no revenue, no EPS, no product figures \u2014 so no sequential comparison and no quarter-on-quarter change can be computed for any line.",
+  "Whether guidance was raised, cut, maintained, introduced or withdrawn. The note records no prior guidance of any kind, so the legacy Eylea expectation cannot be scored against a previous one.",
+  "How US Dupixent sales of $4.6 billion relate to total company revenue of $4.3 billion. The note prints both figures in the same sentence and never reconciles them, never states who books what, and never labels either figure's basis.",
+  "Whether the \"$6 billion of quarterly global sales across nine indications\" figure in Business quality refers to Q2 2026 or to some other quarter. It carries no quarter label and no date, so it cannot be tied to the reported period or compared with the $4.6 billion US figure.",
+  "Whether the quarter beat or missed expectations. The note contains no consensus, no estimate-versus-actual comparison, and no beat/miss language. The only estimate reference in the file is a screen line: \"Next fiscal year EPS estimate moved +4.7% in 90 days\".",
+  "The stock's reaction to the July 30 print. The only price in the note is dated more than five weeks later \u2014 \"Price 843.47 USD on 2026-09-04\" \u2014 and is labelled screen data, not a response to earnings.",
+  "Ex-US performance. Both product revenue figures in the earnings section are explicitly US-only (\"US Dupixent\", \"Eylea HD US\"); no rest-of-world figure, no geographic split, and no global product total for the quarter is given.",
+  "Any quarterly margin, cash flow, share count, or balance sheet figure. The financial table stops at FY2025 and the Q2 paragraph carries only revenue and non-GAAP EPS. The note's balance sheet comment (\"Net cash balance sheet\") is undated.",
+  "Anything management said in its own words. The file carries no direct quote, no speaker name, and no Q&A content. The IR release and the Motley Fool transcript are listed as sources but never excerpted.",
+  "Any product beyond Dupixent and Eylea. Those two are the only products named anywhere in the file; there is no other franchise, segment, or launch to assess.",
+  "Capital allocation for the quarter. No buyback, dividend, M&A, or business development item appears anywhere in the note.",
+  "The combined Eylea franchise number for the quarter. The note gives Eylea HD US ($596 million) and legacy Eylea ($412 million) separately, but never a franchise total, and never states whether the legacy figure is US-only or global \u2014 so the two are not safely additive.",
+  "Whether Eylea HD is growing or shrinking sequentially, in dollars or percent. Only a growth rate against an unstated base is provided.",
+  "How many of the nine Dupixent indications contributed to the quarter, or when the ninth was added. The indication count appears only in the undated Business quality line.",
+  "Any operating detail behind the 17% revenue growth \u2014 pricing versus volume, inventory, one-time items, or currency (beyond the single \"constant currency\" tag on Dupixent growth)."
+ ],
+ "available": true,
+ "source": "research/REGN.md, read and structured; every quote verified verbatim against that file",
+ "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
+}

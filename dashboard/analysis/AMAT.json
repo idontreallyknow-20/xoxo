@@ -336,8 +336,79 @@
    "source": "hand-written research note in research/"
   },
   "read": {
-   "available": false,
-   "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. The research note for this name covers the last two reports, and its text is above."
+   "ticker": "AMAT",
+   "quarter_label": "Q3 fiscal 2026, reported 2026-08-13 (note gives \"Q3 fiscal 2026 (August 13, 2026)\")",
+   "prior_quarter_label": "not stated",
+   "headline": "Applied Materials guided Q4 revenue to $10.25 billion, up 51%, while guiding gross margin flat at 50.4%, and the stock fell 5% after hours on China mix and flat margins.",
+   "guidance": [
+    {
+     "what": "Q4 fiscal 2026 revenue",
+     "change": "not stated",
+     "detail": "The note gives a Q4 revenue guide of $10.25 billion, described as up 51%. The 51% is a growth figure, not a guide-versus-prior-guide comparison: the note states no prior Q4 guide, so whether this guide was raised, cut, maintained or newly introduced cannot be established from the file. The same $10.25 billion figure is repeated in the Valuation section as the basis for the run rate.",
+     "quote": "Q4 guided to $10.25 billion up 51%"
+    },
+    {
+     "what": "Gross margin",
+     "change": "not stated",
+     "detail": "The note says gross margin is guided flat at 50.4%. \"Flat\" is used against the contrast of revenue growing 51%, not against a stated prior guide. The file gives no prior gross-margin guide, no comparison period, and does not say which period the 50.4% applies to (Q4 fiscal 2026 versus full-year fiscal 2026). The financials table's last actual gross margin is FY2025 at 48.7%, but the note never links that figure to the 50.4% guide, so no direction of change is supportable.",
+     "quote": "Gross margin guided flat at 50.4% even as revenue grows 51%, which bothered the market."
+    }
+   ],
+   "tone": {
+    "assessment": "Not determinable from this note. The file contains no management quotes, no call commentary, no Q&A, and no characterization of how management sounded. Every affective word in it belongs to the note's own author (\"which bothered the market\") or describes the share price, not the speakers. The note cites a call transcript as a source but reproduces none of it.",
+    "evidence": "Stock fell 5% after hours on China mix and flat margins.",
+    "confidence": "high \u2014 high that the note carries no management-tone evidence, which is verifiable by reading the file end to end. Not absolute only because the file cites a transcript at line 40 (\"Applied Materials Q3 2026 call transcript, Investing.com\"), so tone exists in the underlying source material even though none of it was carried into this note."
+   },
+   "market_reaction": "The note reports the stock fell 5% after hours, attributing it to two causes: China mix and flat margins. It separately says the flat 50.4% margin guide \"bothered the market.\" The note does not rank the two causes or say which mattered more. Broader price context in the note: price 435.91 USD on 2026-09-04, -41% from the 52 week high and -39% from the all time high, after what the note calls \"39% off its high after a 98% run this year.\" Whether the stock recovered after the 5% after-hours fall is not stated.",
+   "new_risks": [
+    {
+     "risk": "China mix. The note reports China fell to 28% of sales from 35% and names China mix as one of the two reasons the stock fell 5% after hours. This is not named in the bear case or in the thesis-killers section, which point only to group-level cycle risk, the above-historical multiple, and non-expanding margins.",
+     "quote": "Stock fell 5% after hours on China mix and flat margins.",
+     "already_in_thesis": false
+    },
+    {
+     "risk": "Gross margin not expanding at a revenue peak \u2014 margin guided flat at 50.4% while revenue grows 51%.",
+     "quote": "Same cycle risk as KLA and Lam, with the added problem that it already trades above its own historical multiple and margins are not expanding at a revenue peak.",
+     "already_in_thesis": true
+    },
+    {
+     "risk": "Valuation above its own history \u2014 forward P/E 23.6 against a 4 year median of 18.7. The note gives this as the reason it did not make the compounder bucket. The bear case separately names the above-historical multiple, so the risk itself is already in the thesis.",
+     "quote": "Forward P/E 23.6, above its 18.7 median, which is why it did not make the compounder bucket.",
+     "already_in_thesis": true
+    }
+   ],
+   "dodged": [
+    {
+     "topic": "Why gross margin is guided flat at 50.4% while revenue grows 51%. The note states the fact and states that it bothered the market, but carries no explanation \u2014 no mix, pricing, cost, tariff or China-related reason.",
+     "reasoning": "The 50.4% figure appears exactly once in the file, at line 12, alongside the revenue-growth contrast and the market's reaction. The earnings line at line 28 refers only to \"flat margins\" with no figure and no cause. So the note names the issue and its market consequence but never carries a reason for it. Crucially, this note is a third-party research summary, not a transcript, so its silence cannot distinguish between management declining to explain the margin guide on the call and the note's author simply not recording an explanation that was given.",
+     "confidence": "low"
+    },
+    {
+     "topic": "Forward view on China. The note reports the drop from 35% to 28% of sales and names China mix as a driver of the stock's fall, but carries no outlook, no export-control or policy commentary, and no statement about where the China share goes next.",
+     "reasoning": "The only China content in the file is the single backward-looking sentence at line 12 and the mention of \"China mix\" as a cause of the after-hours drop at line 28. Nothing forward-looking about China appears anywhere, including in the bear case and the thesis-killers section, which says only \"Same as the group.\" As with the margin question, this note is a summary rather than a transcript, so the absence cannot be attributed to management rather than to the note's author.",
+     "confidence": "low"
+    }
+   ],
+   "not_determinable": [
+    "The prior quarter. The section is headed \"Last two earnings reports\" but only one quarter, Q3 fiscal 2026, is given. No Q2 fiscal 2026 revenue, EPS, margin, guide or stock reaction appears anywhere in the file.",
+    "Whether the Q4 revenue guide was raised, cut, maintained or newly introduced. No prior Q4 guide is stated; \"up 51%\" is year-over-year growth, not a guide-to-guide comparison.",
+    "Which period the 50.4% gross-margin guide covers \u2014 Q4 fiscal 2026 or the full year \u2014 and what the prior gross-margin guide was. The file states neither.",
+    "What management actually said. The note cites \"Applied Materials Q3 2026 call transcript, Investing.com\" as a source but reproduces no quotes, no prepared-remarks content and no Q&A, so tone, hedging, and evasion on the call are all outside this file.",
+    "Whether Q3 revenue of $9.12 billion and EPS of $3.50 beat or missed consensus. The note gives no analyst estimates or consensus figures and makes no beat/miss statement anywhere in its text.",
+    "Q4 EPS guidance, and any gross-margin guidance beyond the single 50.4% figure. Only revenue is guided to a specific dollar amount.",
+    "Operating margin, operating expense, or free-cash-flow guidance for Q4 or FY2026. The financials table stops at FY2025 actuals and carries no forward column.",
+    "FY2026 full-year results or guidance. The table's most recent fiscal year is FY2025 (2025-10-31), and the note states \"Four fiscal years is all the source provides.\"",
+    "Segment detail. No split by deposition, etch, implant or inspection, and no logic/memory/display breakdown of the quarter, despite the business description naming those product lines.",
+    "Orders, backlog, bookings, or any wafer-fab-equipment spending outlook for fiscal 2026 or any later year. The file contains no such figures and no statement about equipment spending beyond the current revenue guide.",
+    "Capital return policy. Diluted shares decline from 877m in FY2022 to 808m in FY2025 in the table, but no buyback authorization, pace, or dividend is stated anywhere.",
+    "Anything beyond the two named causes of the 5% after-hours fall, and whether the stock recovered afterward. The note gives the 2026-09-04 price but does not connect it back to the post-earnings move.",
+    "AMAT-specific thesis killers and a price trigger. The section says only \"Same as the group. Price trigger not set because it is not a pick.\" \u2014 the group's actual killers are not restated in this file, and no entry level is given.",
+    "Whether the pass decision was driven by valuation. Line 9 gives the above-median forward P/E as the reason it did not make the compounder bucket; line 37 gives the pass reasons as KLA and Lam covering the theme at better relative prices and three semi equipment names breaching the cyclical cap. The file never joins these into a single stated reason.",
+    "How AMAT's 90-day estimate momentum (\"Next fiscal year EPS estimate moved +14.2% in 90 days\") compares with KLA's or Lam's. The note asserts AMAT is \"behind KLA and Lam on estimate momentum\" but gives no figures for either peer."
+   ],
+   "available": true,
+   "source": "research/AMAT.md, read and structured; every quote verified verbatim against that file",
+   "standing_caveat": "A research note is already a summary, so its silence is usually the author compressing rather than management evading. Every entry under 'not addressed' below should be read at the confidence it states, and none of them is evidence about what was said on the call, because no transcript was available. See NOTES.md."
   }
  },
  "thesis": {
@@ -664,7 +735,6 @@
  ],
  "gaps": [
   "Four fiscal years of annual statements, not five or ten. Every growth figure is over three intervals and every own-history median is a four-point median.",
-  "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."
  ],
  "disclaimer": "Research and analysis from public data, not personalised financial advice."

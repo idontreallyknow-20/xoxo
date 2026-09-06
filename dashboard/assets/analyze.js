@@ -105,23 +105,29 @@
       (read.guidance || []).forEach((g) => {
         const dir = g.change === "raised" ? "up" : g.change === "cut" ? "down" : "flat";
         rows += `<div class="row"><div class="k">${markFor(dir)}guidance, ${esc(g.what)}</div>
-          <div class="v">${esc(g.detail)}${g.quote ? `<div class="m" style="margin-top:5px">&ldquo;${esc(g.quote)}&rdquo;</div>` : ""}</div>
+          <div class="v">${esc(g.detail)}${g.quote ? `<div class="q">&ldquo;${esc(g.quote)}&rdquo;</div>` : ""}</div>
           <div class="m">${esc(g.change)}</div></div>`;
       });
       if (read.tone) {
+        const why = confWhy(read.tone.confidence);
         rows += `<div class="row"><div class="k"><span class="mk flat"></span>tone</div>
-          <div class="v">${esc(read.tone.assessment)}${read.tone.evidence ? `<div class="m" style="margin-top:5px">&ldquo;${esc(read.tone.evidence)}&rdquo;</div>` : ""}</div>
-          <div class="m">confidence ${esc(read.tone.confidence || "")}</div></div>`;
+          <div class="v">${esc(read.tone.assessment)}${read.tone.evidence ? `<div class="q">&ldquo;${esc(read.tone.evidence)}&rdquo;</div>` : ""}${
+            why ? `<div class="q" style="border-left:none;padding-left:0">Confidence is ${esc(confWord(read.tone.confidence))} ${esc(why)}</div>` : ""}</div>
+          <div class="m">${esc(confWord(read.tone.confidence) || "confidence n/a")}</div></div>`;
       }
       (read.new_risks || []).forEach((x) => {
         rows += `<div class="row"><div class="k"><span class="mk down"></span>new risk</div>
-          <div class="v">${esc(x.risk)}${x.quote ? `<div class="m" style="margin-top:5px">&ldquo;${esc(x.quote)}&rdquo;</div>` : ""}</div>
+          <div class="v">${esc(x.risk)}${x.quote ? `<div class="q">&ldquo;${esc(x.quote)}&rdquo;</div>` : ""}</div>
           <div class="m">${x.already_in_thesis ? "already in the thesis" : "new"}</div></div>`;
       });
+      if (read.standing_caveat) {
+        rows += `<div class="row gap"><div class="k"><span class="mk open"></span>how to read the rest</div>
+          <div class="v">${esc(read.standing_caveat)}</div><div class="m">caveat</div></div>`;
+      }
       (read.dodged || []).forEach((x) => {
         rows += `<div class="row"><div class="k"><span class="mk open"></span>not addressed</div>
-          <div class="v">${esc(x.topic)}<div class="m" style="margin-top:5px">${esc(x.reasoning)}</div></div>
-          <div class="m">confidence ${esc(x.confidence || "")}</div></div>`;
+          <div class="v">${esc(x.topic)}<div class="q" style="border-left:none;padding-left:0">${esc(x.reasoning)}</div></div>
+          <div class="m">${esc(confWord(x.confidence) || "confidence n/a")}</div></div>`;
       });
       if (!(read.dodged || []).length) {
         rows += `<div class="row gap"><div class="k"><span class="mk open"></span>not addressed</div>
@@ -140,6 +146,20 @@
       ? `<div class="prose" style="margin-top:22px">${paragraphs(earn.text)}</div>
          <div class="note">Source: ${esc(earn.source)}.</div>` : "";
     return `<div class="ledger">${rows}</div>${text}`;
+  }
+
+  /* The confidence fields are written as "low, and it is not higher because ...".
+   * The word belongs in the narrow right-hand column, which is nowrap; the reason
+   * belongs in the body. Putting the whole string in the column pushed the page to
+   * 2,302px wide. */
+  function confWord(s) {
+    const m = /^\s*(very\s+)?(low|medium|high)\b/i.exec(String(s || ""));
+    return m ? m[0].trim().toLowerCase() : "";
+  }
+  function confWhy(s) {
+    const w = confWord(s);
+    if (!w) return String(s || "");
+    return String(s).slice(w.length).replace(/^[\s,;:.–—-]+/, "");
   }
 
   function paragraphs(text) {

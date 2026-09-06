@@ -164,6 +164,12 @@ footer { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule);
 .ledger .v { font-size: 14px; color: var(--ink); }
 .ledger .v b { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
 .ledger .m { font-family: var(--mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+/* A quoted line from a source. Wraps, unlike .m, which is nowrap because it holds
+ * short right-hand labels: reusing .m for a 200-character quote forced the whole
+ * page to 3,399px and broke every layout below it. */
+.ledger .q { font-family: var(--mono); font-size: 11px; color: var(--ink-3); line-height: 1.55;
+             margin-top: 6px; white-space: normal; max-width: 88ch; border-left: 1px solid var(--rule);
+             padding-left: 10px; }
 .ledger .row.gap { background: none; }
 .ledger .row.gap .v { color: var(--ink-3); font-size: 13px; }
 .ledger .row.gap .k { color: var(--ink-3); }
