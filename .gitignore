@@ -1,0 +1,19 @@
+# cached API pulls (regenerable, ~16MB)
+data/cache/
+*.log
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# scratch
+dashboard/_*
+
+# omc session state
+.omc/
+
+# personal positions - never commit
+portfolio/
+portfolio.md
