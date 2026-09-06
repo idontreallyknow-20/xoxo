@@ -369,10 +369,15 @@ Eleven findings, ten fixed. In rough order of how badly each would have misled y
    anchors, which is right only from `/analyze/<TICKER>/`. `tests/test_site_links.py` now runs the
    real function in node at each of the three depths and checks every href against the filesystem.
 4. **The quarter label was clipped on all sixteen deep pages.** It runs from 28 to 148 characters
-   (a short marker, then often a parenthetical about what the note did or did not say) and went
-   into a one-line column capped at 27ch. Lam Research had 82% of it hidden. Split now: the marker
-   keeps the column, the caveat goes under the headline. Not a tooltip, which is invisible on a
-   phone.
+   (a short marker, then the report date, then often a parenthetical about what the note did or did
+   not say) and went into a one-line column capped at 27ch. Lam Research had 82% of it hidden.
+   Split now: the marker keeps the column ("Q3 fiscal 2026", 14 characters), everything after the
+   first comma or bracket goes under the headline where there is room. Not a tooltip, which is
+   invisible on a phone. The first attempt at this split only moved the parenthetical and left
+   thirteen of the sixteen still clipped, at 252px in a 179px box; the browser measurement caught
+   it, reading the source did not. `tests/test_site_links.py` now runs the real split over every
+   label the build produces and checks that the marker fits and that no word is lost from either
+   half.
 5. **Section 6 of `/positioning` ignored the variant switch.** It reads `score_structure[variant]`
    but only `#card` was redrawn, so the component correlations stayed on `quality_value` under a
    heading naming whichever variant had just been picked.
@@ -391,6 +396,13 @@ Eleven findings, ten fixed. In rough order of how badly each would have misled y
    by name now, with a test that every class the scripts emit resolves to a rule.
 10. **A stale type annotation.** `what_would_be_wrong: List[str]` had been `List[Dict]` since the
     falsifiers gained a source and a date.
+
+Two of these needed a second attempt, and both times the browser measurement caught what reading
+the source had not: the quarter-label split moved only the parenthetical and left thirteen of the
+sixteen pages still clipped, and the memo's rewritten sizing sentence started with a numeral. There
+is a guard for the second now (`test_no_generated_prose_sentence_opens_with_a_numeral`), scoped to
+the fields this project writes as prose rather than to the value cells beside a label, which are
+legitimately numeric, or to quoted text, which belongs to whoever wrote it.
 
 Finding 1 also exposed a paragraph that had gone stale in the same move. The forward-vs-trailing
 warning on every valuation block was written by hand and said "across the 138 names that carry both

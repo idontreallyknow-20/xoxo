@@ -72,3 +72,42 @@ def test_chrome_builds_every_link_from_depth():
     src = COMMON.read_text()
     m = re.search(r"function chrome\(active, depth\) \{(.*?)\n  \}", src, re.S)
     assert "../" not in m.group(1), "chrome() still hard-codes a relative path"
+
+
+def test_the_quarter_marker_fits_the_column_it_goes_in():
+    """`.ledger .m` is one line capped at 27ch with `overflow: hidden`, so anything
+    longer is unreadable with no way to get it back. The quarter label runs to 148
+    characters and was clipped on thirteen of the sixteen deep pages. This runs the
+    real split from analyze.js over every label the build produces.
+    """
+    if shutil.which("node") is None:
+        pytest.skip("node not available to evaluate analyze.js")
+    src = (DASH / "assets" / "analyze.js").read_text()
+    parts = []
+    for name in ("Q_SPLIT", "qMark", "qCaveat"):
+        m = re.search(r"^  (?:const %s = .*?;|function %s\(.*?^  \})" % (name, name),
+                      src, re.S | re.M)
+        assert m, f"{name} not found in analyze.js"
+        parts.append(m.group(0))
+
+    labels = []
+    for f in sorted((DASH / "analysis").glob("*.json")):
+        rec = json.loads(f.read_text())
+        q = ((rec.get("what_changed") or {}).get("read") or {}).get("quarter_label")
+        if q:
+            labels.append(q)
+    assert len(labels) >= 16, f"expected the deep pages to carry a quarter label, got {len(labels)}"
+
+    script = ("\n".join(parts) + "\nconst L = " + json.dumps(labels) + ";\n"
+              "console.log(JSON.stringify(L.map(s => [qMark(s), qCaveat(s)])));")
+    out = subprocess.run(["node", "-e", script], capture_output=True, text=True, timeout=30)
+    assert out.returncode == 0, out.stderr
+    for original, (mark, caveat) in zip(labels, json.loads(out.stdout)):
+        assert mark, original
+        assert len(mark) <= 27, f"marker {mark!r} ({len(mark)} chars) will be clipped"
+        assert original.startswith(mark), (mark, original)
+        assert caveat.count("(") >= caveat.count(")"), f"orphaned bracket in {caveat!r}"
+        # Nothing may be lost: every word of the label survives in one half or the other.
+        words = set(re.findall(r"[A-Za-z0-9]+", original))
+        kept = set(re.findall(r"[A-Za-z0-9]+", mark + " " + caveat))
+        assert words == kept, f"dropped {sorted(words - kept)} from {original!r}"

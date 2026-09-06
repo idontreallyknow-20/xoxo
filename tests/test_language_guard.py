@@ -144,3 +144,61 @@ def test_backtest_never_claims_proof():
     # The one legitimate use of the word is the look-ahead flag, which says to treat
     # an implausible result as a bug until proven otherwise.
     assert "until proven otherwise" in blob
+
+
+_SENTENCE_START_NUMERAL = re.compile(r"(?:^|(?<=[.!?]) )(\d[\d,.]*[-\s])")
+
+# Only fields this project writes as prose. `detail` and `text` are value cells
+# that sit beside a label ("estimate revisions, 30 days" / "8 raised next-year
+# estimates, 19 cut them"), and quoted fields carry a source's own words, which
+# must not be rewritten to suit a house style.
+_PROSE_KEYS = ("caveat", "basis_warning", "reasoning", "gaps", "why", "note",
+               "limitations", "caveats", "basis_note", "price_trigger_note")
+
+
+def _prose_strings(obj):
+    for path, s in walk_strings(obj):
+        key = path.rsplit(".", 1)[-1].split("[")[0]
+        if key in _PROSE_KEYS or any(f".{k}[" in path or f".{k}." in path for k in _PROSE_KEYS):
+            yield path, s
+
+
+def test_no_generated_prose_sentence_opens_with_a_numeral():
+    """A style rule, but one this project broke twice in a day.
+
+    Both were the same shape: a count interpolated into a sentence that happened
+    to start with it, giving "2 numbers have a midpoint" and "A 4-point median is
+    a thin basis". A numeral set in the monospace face at the head of a sentence
+    reads as a list item rather than prose, and the fix is always to spell the
+    word or reorder the clause.
+
+    Scoped to the fields written as prose. The value cells beside a label are
+    legitimately numeric and quoted text belongs to whoever wrote it.
+    """
+    bad = []
+    for label, obj in (
+        ("positioning.json", json.loads((ROOT / "dashboard" / "positioning.json").read_text())),
+        ("analysis records", analysis.build_all(built_at="X")),
+    ):
+        for path, s in _prose_strings(obj):
+            if len(s) < 40 or "\n" in s:
+                continue
+            m = _SENTENCE_START_NUMERAL.search(s)
+            if m:
+                bad.append(f"{label} {path}: sentence opens {m.group(1)!r} in {s[:120]!r}")
+    assert not bad, "\n".join(bad[:20])
+
+
+def test_that_numeral_guard_catches_what_it_is_meant_to():
+    hit = _SENTENCE_START_NUMERAL.search(
+        "Only 2 fiscal year ends carry both. 2 numbers have a midpoint but not a median at all.")
+    assert hit and hit.group(1).startswith("2 ")
+    assert not _SENTENCE_START_NUMERAL.search(
+        "Only 2 fiscal year ends carry both. Two numbers have a midpoint but not a median at all.")
+
+
+def test_the_prose_scope_is_not_empty():
+    """A scoped guard that scopes to nothing passes everything."""
+    recs = analysis.build_all(built_at="X")
+    found = list(_prose_strings(recs))
+    assert len(found) > 500, f"only {len(found)} prose strings reached the guard"

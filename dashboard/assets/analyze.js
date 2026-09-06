@@ -180,22 +180,35 @@
     return String(s).slice(w.length).replace(/^[\s,;:.–—-]+/, "");
   }
 
-  /* The quarter label runs from 28 to 148 characters: a short marker, then in
-   * about half the notes a parenthetical saying what the note actually wrote or
-   * failed to write. The `.m` column is one line capped at 27ch, so the long half
-   * was cut off with no way to read it. Split at the first parenthesis or dash:
-   * the marker keeps the column, the caveat goes under the headline where it has
-   * room. A title tooltip would not do, being invisible on a touch screen. */
+  /* The quarter label runs from 28 to 148 characters. The `.m` column holds short
+   * right-hand labels and is one line capped at 27ch, so the label was cut off on
+   * thirteen of the sixteen deep pages with no way to read the rest. Split it at
+   * the first comma, parenthesis or dash: what is left is the quarter marker
+   * ("Q3 fiscal 2026", "Fiscal Q4 2026"), which fits; everything after it is the
+   * report date and whatever the note said or failed to say about it, which goes
+   * under the headline where there is room. A title tooltip would not do, being
+   * invisible on a touch screen. */
+  const Q_SPLIT = /,|\s+[(\u2014\u2013-]/;
+
   function qMark(s) {
     const t = String(s || "").trim();
-    const m = /\s+[(\u2014\u2013-]/.exec(t);
-    return m ? t.slice(0, m.index) : t;
+    const m = Q_SPLIT.exec(t);
+    return m ? t.slice(0, m.index).trim() : t;
   }
+
   function qCaveat(s) {
     const t = String(s || "").trim();
-    const m = /\s+[(\u2014\u2013-]/.exec(t);
+    const m = Q_SPLIT.exec(t);
     if (!m) return "";
-    return t.slice(m.index + 1).replace(/^[(\u2014\u2013-]\s*/, "").replace(/\)\s*$/, "").trim();
+    /* Drop the punctuation that joined the two halves, then close the bracket the
+     * split may have orphaned: strip a trailing ")" only when one is unmatched,
+     * so "(August 27, 2026)" becomes "August 27, 2026" while a caveat that opens
+     * a parenthesis and closes it mid-sentence is left alone. */
+    let rest = t.slice(m.index).replace(/^[\s,(\u2014\u2013-]+/, "").trim();
+    const opens = (rest.match(/\(/g) || []).length;
+    const closes = (rest.match(/\)/g) || []).length;
+    if (closes > opens) rest = rest.replace(/\)(?=[^)]*$)/, "").trim();
+    return rest;
   }
 
   function paragraphs(text) {

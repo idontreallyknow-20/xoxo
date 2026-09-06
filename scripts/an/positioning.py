@@ -210,8 +210,8 @@ def _reasoning(rec: local.TickerRecord, note, breakdown, drivers, drags,
             n = v.n_hist_years
             out.append(
                 f"Trades at {v.forward_pe:.1f}x forward earnings against a {n}-point median of "
-                f"{v.median_pe_hist:.1f}x, {abs(v.pe_vs_median):.0%} {direction} it. A {n}-point "
-                "median is a thin basis and says nothing about whether the old multiple was deserved."
+                f"{v.median_pe_hist:.1f}x, {abs(v.pe_vs_median):.0%} {direction} it. That is a thin "
+                "basis and says nothing about whether the old multiple was deserved."
             )
         else:
             out.append(f"Trades at {v.forward_pe:.1f}x forward earnings. No usable own-history "

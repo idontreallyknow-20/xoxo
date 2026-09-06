@@ -293,7 +293,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 695 |
+| tests | 699 |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
