@@ -40,7 +40,17 @@ __all__ = ["build_record", "build_all", "DEPTHS"]
 
 DEPTHS = ("deep", "screen", "universe")
 
-SOURCE_SCREEN = "Yahoo Finance via yfinance, pulled 2026-09-04"
+def source_screen(as_of: Optional[str]) -> str:
+    """Provenance carries the date the data actually claims, not a literal.
+
+    Every provenance string used to end in 2026-09-04. After the next pipeline run
+    the pages would have kept saying so while showing new numbers, which is the kind
+    of error nobody notices because it looks like it always did.
+    """
+    return f"Yahoo Finance via yfinance, pulled {as_of or 'an unrecorded date'}"
+
+
+SOURCE_SCREEN = source_screen("2026-09-04")  # default for callers with no record
 SOURCE_NOTE = "hand-written research note in research/"
 
 
@@ -60,7 +70,7 @@ def _identity(rec: local.TickerRecord, note: Optional[research_md.ResearchNote])
         "price": rec.price,
         "market_cap_usd": rec.market_cap_usd,
         "dollar_volume_usd": rec.dollar_volume_usd,
-        "source": SOURCE_SCREEN,
+        "source": source_screen(rec.pulled),
         "as_of": rec.pulled,
     }
 
@@ -85,16 +95,26 @@ def _fundamentals_block(rec: local.TickerRecord) -> Dict[str, Any]:
              "unit": "percent", "higher_is_better": True},
             {"key": "gm_std", "label": "Gross margin, standard deviation", "value": _pct(f.gm_std),
              "unit": "percent", "higher_is_better": False},
-            {"key": "nd_to_ebitda", "label": "Net debt to EBITDA", "value": f.nd_to_ebitda,
+            # The upstream screen writes 0.0 for every net-cash name and NaN only when
+            # net debt is positive and EBITDA is not usable. So a bare 0.0 under a
+            # "lower is better" column reads as "no leverage measured" when it in fact
+            # means "no debt at all", which is the best case, not a neutral one.
+            {"key": "nd_to_ebitda", "label": "Net debt to EBITDA",
+             "value": None if f.net_cash else f.nd_to_ebitda,
              "unit": "x", "higher_is_better": False,
-             "absent_means": "net cash, or EBITDA not meaningful" if f.nd_to_ebitda is None else None},
+             "absent_means": (
+                 "net cash: net debt is negative, so the ratio is not meaningful and the balance "
+                 "sheet is at the good end rather than the middle"
+                 if f.net_cash else
+                 "EBITDA is negative or not reported, so the ratio is undefined"
+                 if f.nd_to_ebitda is None else None)},
             {"key": "share_change", "label": "Diluted share count change", "value": _pct(f.share_change),
              "unit": "percent", "higher_is_better": False},
         ],
         "net_cash": f.net_cash,
         "fcf_positive_years": f.fcf_positive_years,
         "fcf_years": f.fcf_years,
-        "source": SOURCE_SCREEN,
+        "source": source_screen(rec.pulled),
         "as_of": rec.pulled,
     }
 
@@ -181,7 +201,7 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
         "insider_pct": v.insider_pct,
         "next_earnings": v.next_earnings,
         "buckets": v.buckets,
-        "source": SOURCE_SCREEN,
+        "source": source_screen(rec.pulled),
         "as_of": rec.pulled,
     }
     if peer is not None:
@@ -203,20 +223,30 @@ def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNo
     mechanical: List[Dict[str, Any]] = []
     if v:
         if v.eps_fy1_chg_30d is not None and v.eps_fy1_chg_90d is not None:
-            last_60 = v.eps_fy1_chg_90d - v.eps_fy1_chg_30d
+            # Compounding, not subtraction: a +11% 90-day move containing a +2% last
+            # 30 days leaves (1.11 / 1.02) - 1 for the 60 days before it, not 9%.
+            # Second order and negligible for small moves, the whole number for large.
+            last_60 = (
+                None if v.eps_fy1_chg_30d == -1.0
+                else (1 + v.eps_fy1_chg_90d) / (1 + v.eps_fy1_chg_30d) - 1
+            )
             mechanical.append({
                 "label": "Next-year EPS consensus",
                 "detail": (
                     f"moved {v.eps_fy1_chg_90d:+.1%} over 90 days, of which {v.eps_fy1_chg_30d:+.1%} "
-                    f"came in the last 30. The 60 days before that accounted for {last_60:+.1%}."
+                    + (f"came in the last 30. The 60 days before that accounted for {last_60:+.1%}."
+                       if last_60 is not None else "came in the last 30.")
                 ),
                 "direction": "up" if v.eps_fy1_chg_90d > 0 else ("down" if v.eps_fy1_chg_90d < 0 else "flat"),
+                # Compare a compounded 30-day rate against the realised 90-day one,
+                # rather than multiplying the 30-day change by three.
                 "accelerating": (
-                    None if v.eps_fy1_chg_90d == 0 else
-                    (v.eps_fy1_chg_30d * 3 > v.eps_fy1_chg_90d) if v.eps_fy1_chg_90d > 0 else
-                    (v.eps_fy1_chg_30d * 3 < v.eps_fy1_chg_90d)
+                    None if v.eps_fy1_chg_90d == 0 or v.eps_fy1_chg_30d <= -1.0 else
+                    ((1 + v.eps_fy1_chg_30d) ** 3 > 1 + v.eps_fy1_chg_90d)
+                    if v.eps_fy1_chg_90d > 0 else
+                    ((1 + v.eps_fy1_chg_30d) ** 3 < 1 + v.eps_fy1_chg_90d)
                 ),
-                "source": SOURCE_SCREEN,
+                "source": source_screen(rec.pulled),
             })
         if v.rev_up30_fy1 is not None or v.rev_down30_fy1 is not None:
             up, down = int(v.rev_up30_fy1 or 0), int(v.rev_down30_fy1 or 0)
@@ -225,7 +255,7 @@ def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNo
                 "detail": f"{up} raised next-year estimates, {down} cut them."
                           + ("" if up + down else " Nobody moved."),
                 "direction": "up" if up > down else ("down" if down > up else "flat"),
-                "source": SOURCE_SCREEN,
+                "source": source_screen(rec.pulled),
             })
         if v.dd_52w is not None:
             mechanical.append({
@@ -239,7 +269,7 @@ def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNo
                 # the reader had read anything, which is the same reason the valuation
                 # multiples on this page are never coloured either.
                 "direction": "flat",
-                "source": SOURCE_SCREEN,
+                "source": source_screen(rec.pulled),
             })
         if v.next_earnings:
             mechanical.append({
@@ -247,7 +277,7 @@ def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNo
                 "detail": f"{v.next_earnings}. Everything on this page is dated {rec.pulled}, so the "
                           "revisions above are stale the moment that lands.",
                 "direction": "flat",
-                "source": SOURCE_SCREEN,
+                "source": source_screen(rec.pulled),
             })
 
     out: Dict[str, Any] = {"mechanical": mechanical}
@@ -347,9 +377,9 @@ def _gaps(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
     return gaps
 
 
-def _sources(note: Optional[research_md.ResearchNote]) -> List[Dict[str, Any]]:
+def _sources(note: Optional[research_md.ResearchNote], as_of: Optional[str] = None) -> List[Dict[str, Any]]:
     out = [{"title": "Screen and statement data, Yahoo Finance via yfinance", "url": None,
-            "read_date": "2026-09-04", "kind": "data"}]
+            "read_date": as_of, "kind": "data"}]
     if note:
         for s in note.sources:
             out.append({"title": s.title, "url": s.url, "read_date": s.read_date,
@@ -408,7 +438,7 @@ def build_record(
             score_block = {
                 "available": True,
                 "variants": per_variant,
-                "universe": "the quality top 150 as of 2026-09-04",
+                "universe": f"the quality top 150 as of {rec.pulled or 'the last pipeline run'}",
                 "caveat": "A percentile against 150 names on one date. It has not been backtested; "
                           "see the positioning page for why not.",
             }
@@ -440,7 +470,7 @@ def build_record(
              "bucket": e.bucket}
             for e in entries
         ],
-        "sources": _sources(note),
+        "sources": _sources(note, rec.pulled),
         "gaps": _gaps(rec, note, narrative),
         "disclaimer": "Research and analysis from public data, not personalised financial advice.",
     }

@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "1970-01-01T00:00:00",
+ "built_at": "2026-09-06T10:36:27",
  "depth": "deep",
  "identity": {
   "ticker": "KLAC",
@@ -325,7 +325,7 @@
   "mechanical": [
    {
     "label": "Next-year EPS consensus",
-    "detail": "moved +13.1% over 90 days, of which +2.1% came in the last 30. The 60 days before that accounted for +11.0%.",
+    "detail": "moved +13.1% over 90 days, of which +2.1% came in the last 30. The 60 days before that accounted for +10.7%.",
     "direction": "up",
     "accelerating": false,
     "source": "Yahoo Finance via yfinance, pulled 2026-09-04"

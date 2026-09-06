@@ -23,18 +23,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from an import analysis, pages, paths  # noqa: E402
 
-FIXED_STAMP = "1970-01-01T00:00:00"
+FIXED_STAMP = "1970-01-01T00:00:00"  # deprecated; see --check below
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("tickers", nargs="*")
     ap.add_argument("--check", action="store_true",
-                    help="use a fixed timestamp so a rebuild is byte-comparable")
+                    help="deprecated no-op; the build is deterministic apart from built_at, "
+                         "which tests/test_build_determinism.py excludes when comparing")
     a = ap.parse_args()
 
     paths.ensure_dirs()
-    records = analysis.build_all(built_at=FIXED_STAMP if a.check else None)
+    records = analysis.build_all()
     wanted = {t.upper() for t in a.tickers} or set(records)
     missing = wanted - set(records)
     if missing:
@@ -47,7 +48,7 @@ def main() -> int:
         written += 1
 
     index = {
-        "built_at": FIXED_STAMP if a.check else records[next(iter(records))]["built_at"],
+        "built_at": records[next(iter(records))]["built_at"],
         "snapshot_date": "2026-09-04",
         "count": len(records),
         "tickers": [

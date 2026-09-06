@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "1970-01-01T00:00:00",
+ "built_at": "2026-09-06T10:36:27",
  "depth": "screen",
  "identity": {
   "ticker": "TSM",
@@ -72,10 +72,10 @@
    {
     "key": "nd_to_ebitda",
     "label": "Net debt to EBITDA",
-    "value": 0.0,
+    "value": null,
     "unit": "x",
     "higher_is_better": false,
-    "absent_means": null
+    "absent_means": "net cash: net debt is negative, so the ratio is not meaningful and the balance sheet is at the good end rather than the middle"
    },
    {
     "key": "share_change",
@@ -96,7 +96,7 @@
   "mechanical": [
    {
     "label": "Next-year EPS consensus",
-    "detail": "moved +12.0% over 90 days, of which +1.2% came in the last 30. The 60 days before that accounted for +10.8%.",
+    "detail": "moved +12.0% over 90 days, of which +1.2% came in the last 30. The 60 days before that accounted for +10.7%.",
     "direction": "up",
     "accelerating": false,
     "source": "Yahoo Finance via yfinance, pulled 2026-09-04"

@@ -215,7 +215,7 @@ def test_corrupt_narrative_is_ignored_not_fatal(tmp_path):
 
 
 def test_cli_writes_files_and_an_index(tmp_path, monkeypatch):
-    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py"), "--check"],
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
                        capture_output=True, text=True, cwd=str(ROOT))
     assert r.returncode == 0, r.stderr
     idx = json.loads((ROOT / "dashboard" / "analysis" / "index.json").read_text())
@@ -226,13 +226,61 @@ def test_cli_writes_files_and_an_index(tmp_path, monkeypatch):
     assert "cyclical turn" in klac["buckets"]
 
 
-def test_rebuild_is_byte_identical():
-    """--check pins the timestamp so a rebuild can be diffed. If this drifts, the
-    build has become nondeterministic and the git history stops being meaningful."""
+def test_rebuild_is_identical_apart_from_the_timestamp():
+    """Everything except when the build ran. If anything else drifts, the build has
+    become nondeterministic and the git history stops being meaningful."""
+    import re
+
     p = ROOT / "dashboard" / "analysis" / "KLAC.json"
-    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py"), "--check"],
+    strip = lambda t: re.sub(r'"built_at":\s*"[^"]*"', '"built_at": "<stamp>"', t)
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
                    capture_output=True, text=True, cwd=str(ROOT), check=True)
-    first = p.read_bytes()
-    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py"), "--check"],
+    first = strip(p.read_text())
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "build_analysis.py")],
                    capture_output=True, text=True, cwd=str(ROOT), check=True)
-    assert p.read_bytes() == first
+    assert strip(p.read_text()) == first
+
+
+def test_a_net_cash_company_does_not_read_as_zero_leverage(records):
+    """The upstream screen writes 0.0 for every net-cash name and NaN only when the
+    ratio is genuinely undefined. A bare "0.0x" under a "lower is better" column
+    reads as the middle of the range when it means the best end of it. 80 of the
+    150 are affected."""
+    net_cash = [t for t, r in records.items() if r["fundamentals"]["net_cash"]]
+    assert len(net_cash) == 80
+    for t in net_cash:
+        row = next(x for x in records[t]["fundamentals"]["rows"] if x["key"] == "nd_to_ebitda")
+        assert row["value"] is None, t
+        assert "net cash" in row["absent_means"]
+        assert "good end rather than the middle" in row["absent_means"]
+
+
+def test_an_undefined_ratio_says_why_rather_than_offering_two_reasons(records):
+    """"net cash, or EBITDA not meaningful" offered an explanation that could never
+    apply, because a net-cash name never reaches that branch."""
+    for t, r in records.items():
+        row = next(x for x in r["fundamentals"]["rows"] if x["key"] == "nd_to_ebitda")
+        if row["value"] is None and not r["fundamentals"]["net_cash"]:
+            assert "EBITDA is negative or not reported" in row["absent_means"], t
+
+
+def test_the_estimate_split_compounds_rather_than_subtracting(records):
+    """Two relative changes over different windows are not additive. A +13.1% over 90
+    days containing +2.1% in the last 30 leaves (1.131/1.021)-1 for the 60 before it,
+    which is +10.7%, not +11.0%."""
+    d = next(m for m in records["KLAC"]["what_changed"]["mechanical"]
+             if m["label"] == "Next-year EPS consensus")["detail"]
+    assert "+10.7%" in d
+
+
+def test_provenance_carries_the_data_s_own_date_not_a_literal(records):
+    """Every provenance string used to end in a hard-coded 2026-09-04. After the next
+    pipeline run the pages would have kept saying so while showing new numbers."""
+    from an import analysis
+
+    assert "2027-01-01" in analysis.source_screen("2027-01-01")
+    assert "unrecorded" in analysis.source_screen(None)
+    for t, r in records.items():
+        assert r["identity"]["as_of"] in r["identity"]["source"], t
+        assert r["sources"][0]["read_date"] == r["identity"]["as_of"], t
+        assert r["identity"]["as_of"] in r["score"]["universe"], t

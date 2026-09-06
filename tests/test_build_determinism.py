@@ -5,6 +5,7 @@ nondeterministic, and the second matters: a build whose output drifts on its own
 makes every diff in the git history meaningless, because you can no longer tell a
 real change from noise.
 """
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -27,21 +28,39 @@ def build():
     assert r.returncode == 0, r.stderr[-2000:]
 
 
+def strip_stamp(text: str) -> str:
+    """Everything except when the build ran.
+
+    An earlier version pinned built_at to a 1970 sentinel so the files could be
+    diffed byte for byte, and then shipped those files, so every page's provenance
+    line told the reader the data was built on 1 January 1970. The stamp is honest
+    now and excluded here instead.
+    """
+    return re.sub(r'"built_at":\s*"[^"]*"', '"built_at": "<stamp>"', text)
+
+
 @pytest.mark.parametrize("rel", GENERATED)
-def test_rebuild_is_byte_identical(rel):
+def test_rebuild_is_identical_apart_from_the_timestamp(rel):
     p = ROOT / rel
     build()
-    first = p.read_bytes()
+    first = strip_stamp(p.read_text())
     build()
-    assert p.read_bytes() == first, f"{rel} changed between two identical builds"
+    assert strip_stamp(p.read_text()) == first, f"{rel} changed between two identical builds"
 
 
-def test_no_generated_file_carries_a_wall_clock_timestamp_under_check():
-    build()
-    for rel in GENERATED:
-        text = (ROOT / rel).read_text()
-        if '"built_at"' in text:
-            assert '"built_at": "1970-01-01T00:00:00"' in text, rel
+@pytest.mark.parametrize("rel", GENERATED)
+def test_the_shipped_timestamp_is_a_real_date(rel):
+    """A page that says it was built in 1970 tells the reader the data is 56 years
+    old. Whatever else built_at is, it has to be plausible."""
+    import datetime as dt
+    import json
+
+    blob = json.loads((ROOT / rel).read_text())
+    stamp = blob.get("built_at")
+    if stamp is None:
+        return
+    when = dt.datetime.fromisoformat(stamp)
+    assert when.year >= 2025, f"{rel} claims it was built at {stamp}"
 
 
 def test_the_page_shells_are_regenerated_identically():

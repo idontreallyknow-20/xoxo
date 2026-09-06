@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from an import diagnostics, local, paths, positioning, score  # noqa: E402
 
-FIXED_STAMP = "1970-01-01T00:00:00"
+FIXED_STAMP = "1970-01-01T00:00:00"  # deprecated; see --check below
 
 
 def scorecard(built_at: str) -> dict:
@@ -73,12 +73,12 @@ def scorecard(built_at: str) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--check", action="store_true")
+    ap.add_argument("--check", action="store_true", help="deprecated no-op")
     ap.add_argument("--top", type=int, default=12)
     a = ap.parse_args()
 
     paths.ensure_dirs()
-    stamp = FIXED_STAMP if a.check else None
+    stamp = None
     import datetime as dt
 
     built = stamp or dt.datetime.now().replace(microsecond=0).isoformat()
