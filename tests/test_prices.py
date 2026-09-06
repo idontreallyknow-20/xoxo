@@ -405,8 +405,10 @@ def test_no_nan_ever_leaves_the_scalar_api(closes):
 
     out = prices.forward_returns(closes, ["LIVE", "DEAD", "LATE", "GHOST"], "2026-01-02", 3)
     assert out["LATE"] is None and out["GHOST"] is None
-    assert out["LIVE"] == pytest.approx(104.0 / 100.0 - 1.0)
-    assert out["DEAD"] == pytest.approx(10.0 / 50.0 - 1.0)
+    # Three rows on from 2026-01-02 is 2026-01-07, where LIVE is halted and carries
+    # Tuesday's 102.0 and DEAD prints 53.0.
+    assert out["LIVE"] == pytest.approx(102.0 / 100.0 - 1.0)
+    assert out["DEAD"] == pytest.approx(53.0 / 50.0 - 1.0)
 
 
 def test_the_conversion_itself_refuses_nan_and_infinity():
@@ -698,3 +700,419 @@ def test_the_module_level_function_delegates_to_the_given_client(client):
     assert out.loc["2026-01-15", "LIVE"] == 109.0
     assert pd.isna(out.loc["2026-01-15", "DEAD"])
     assert len(client._dl.calls) == 1
+
+
+# ---------------------------------------------------------------------------
+# provenance: which answer came from where
+# ---------------------------------------------------------------------------
+
+
+def test_offline_reports_an_old_cache_entry_as_stale_not_as_a_cache_hit(tmp_path, panel_raw, monkeypatch):
+    """Offline is the mode this runs in most often, so it is the one that must not lie.
+
+    A months old copy served offline used to report ``last_source == "cache"``, while
+    the identical file reached through a failed download reported ``"stale"``. A
+    dashboard branching on that sees pre-dividend prices labelled as fresh.
+    """
+    cache = Cache(tmp_path, default_ttl=0.0)
+    prices.PriceClient(prices.RawDownloader(panel_raw), cache=cache, ttl=0.0).daily_closes(
+        ["LIVE"], "2026-01-02", "2026-01-15"
+    )
+
+    monkeypatch.setenv("DESK_OFFLINE", "1")
+    offline = prices.PriceClient(prices.OfflineDownloader(), cache=cache, ttl=0.0)
+    out = offline.daily_closes(["LIVE"], "2026-01-02", "2026-01-15")
+    assert offline.last_source == {"LIVE": "stale"}
+    assert offline.downloader.calls == []
+    assert out.loc["2026-01-15", "LIVE"] == 109.0
+
+    # Same entry, same age, reached the other way. The two paths must agree.
+    monkeypatch.delenv("DESK_OFFLINE")
+    broken = prices.PriceClient(prices.OfflineDownloader(FetchError("429 from yahoo")), cache=cache, ttl=0.0)
+    broken.daily_closes(["LIVE"], "2026-01-02", "2026-01-15")
+    assert broken.last_source == {"LIVE": "stale"}
+
+
+def test_a_failed_download_never_carries_a_credential_into_the_error(tmp_path):
+    """yfinance re-raises urllib3 verbatim, and urllib3 quotes the whole request URL.
+
+    That URL carries Yahoo's session crumb, and would carry the API key of any keyed
+    vendor put behind the Downloader seam. ``last_error`` is printed by callers.
+    """
+    crumb, key = "Ab3.SESSIONCRUMB", "sk-t3st-DO-NOT-LOG"
+
+    class Leaky:
+        calls: list = []
+
+        def download(self, tickers, start, end):
+            raise RuntimeError(
+                "HTTPSConnectionPool(host='query2.finance.yahoo.com', port=443): Max retries "
+                f"exceeded with url: /v8/finance/chart/NVDA?crumb={crumb}&apiKey={key} (Caused by ProxyError)"
+            )
+
+    c = prices.PriceClient(Leaky(), cache=Cache(tmp_path))
+    with pytest.raises(Offline) as excinfo:
+        c.daily_closes(["NVDA", "ASML"], "2026-01-02", "2026-01-15")
+    for text in (str(excinfo.value), c.last_error or ""):
+        assert crumb not in text
+        assert key not in text
+        assert text.count("***REDACTED***") == 2
+        # Still diagnosable: the exception type and the host it failed against survive.
+        assert "RuntimeError" in text and "query2.finance.yahoo.com" in text
+
+
+def test_the_live_downloaders_call_log_stays_out_of_its_repr_and_is_bounded(monkeypatch):
+    """default_client() holds one of these forever, and the tickers in it are the portfolio."""
+    monkeypatch.setattr(prices, "_yf", lambda rec=_RecordedYF(): rec)
+    dl = prices.YFinanceDownloader()
+    for i in range(prices._MAX_RECORDED_CALLS + 5):
+        dl.download([f"T{i}"], pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-15"))
+    assert len(dl.calls) == prices._MAX_RECORDED_CALLS
+    assert dl.calls[-1] == (f"T{prices._MAX_RECORDED_CALLS + 4}",)
+    text = repr(dl)
+    assert "calls" not in text
+    assert "T0" not in text and "T54" not in text
+
+
+# ---------------------------------------------------------------------------
+# what the live downloader actually asks yfinance for
+# ---------------------------------------------------------------------------
+
+
+def test_the_yfinance_call_is_daily_adjusted_and_ends_on_the_day_asked_for(monkeypatch):
+    """The one translation no test double can check, since every double defines its own.
+
+    ``end`` inclusive, ``auto_adjust`` on, no back adjustment, no actions, and two
+    threads however many were asked for.
+    """
+    rec = _RecordedYF()
+    monkeypatch.setattr(prices, "_yf", lambda: rec)
+    dl = prices.YFinanceDownloader(threads=16, timeout=12.0)
+    dl.download([" nvda ", "ASML", "nvda"], pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-15"))
+
+    kw = rec.kwargs[-1]
+    assert kw["tickers"] == ["NVDA", "ASML"]
+    assert kw["start"] == "2026-01-02"
+    # yfinance's end is exclusive, this module's is inclusive: the last day asked
+    # for has to be inside the window it sends.
+    assert kw["end"] == "2026-01-16"
+    assert kw["interval"] == "1d"
+    assert kw["auto_adjust"] is True
+    assert kw["actions"] is False and kw["back_adjust"] is False
+    assert kw["threads"] == 2 == prices.MAX_CONCURRENCY
+    assert kw["progress"] is False
+    assert kw["timeout"] == 12.0
+
+
+# ---------------------------------------------------------------------------
+# download shapes the module promises to read
+# ---------------------------------------------------------------------------
+
+
+def test_a_bare_series_download_is_understood():
+    """The fourth documented shape. It used to raise on every call, whatever it held."""
+    idx = pd.to_datetime(["2026-01-02", "2026-01-05"])
+    out = prices.closes_from_download(pd.Series([1.0, 2.0], index=idx, name="Close"), ["AAA"])
+    assert list(out.columns) == ["AAA"]
+    assert out["AAA"].tolist() == [1.0, 2.0]
+    # Named after the field, after the ticker, or not at all: still that ticker's close.
+    for name in ("Adj Close", "AAA", None):
+        got = prices.closes_from_download(pd.Series([1.0, 2.0], index=idx, name=name), ["AAA"])
+        assert got["AAA"].tolist() == [1.0, 2.0]
+    assert prices.price_on(out, "AAA", "2026-01-06") == 2.0
+
+
+def test_a_single_close_series_for_several_tickers_is_refused_rather_than_misfiled():
+    """One column, two names asked for: the shape is wrong and there is no safe guess.
+
+    Naming it after the first ticker files one company's price history under
+    another's, silently, for as long as anybody keeps reading the panel.
+    """
+    idx = pd.to_datetime(["2026-01-02", "2026-01-05", "2026-01-06"])
+    flat = pd.DataFrame({"Close": [10.0, 11.0, 12.0]}, index=idx)
+    assert prices.closes_from_download(flat, ["AAA"])["AAA"].tolist() == [10.0, 11.0, 12.0]
+
+    with pytest.raises(FetchError) as excinfo:
+        prices.closes_from_download(flat, ["AAA", "BBB"])
+    assert "AAA" in str(excinfo.value) and "BBB" in str(excinfo.value)
+
+    with pytest.raises(FetchError):
+        prices.closes_from_download(pd.Series([1.0, 2.0, 3.0], index=idx, name="Close"), ["AAA", "BBB"])
+
+
+def test_adjusted_close_wins_on_the_flat_branch_too(load_fixture):
+    """The MultiIndex branch had this covered and the flat one did not.
+
+    Same SPLT two for one split, in the layout yf.download(multi_level_index=False)
+    returns: picking the raw Close here reads the split as a 49 percent loss.
+    """
+    raw = raw_frame(load_fixture("yf_download_flat_split.json"))
+    assert {"Close", "Adj Close"} <= set(raw.columns)
+    out = prices.closes_from_download(raw, ["SPLT"])
+    assert out["SPLT"].tolist() == [100.0, 101.0, 102.0, 103.0, 104.0]
+    assert prices.forward_return(out, "SPLT", "2026-01-06", 1) == pytest.approx(103.0 / 102.0 - 1.0)
+    assert prices.forward_return(out, "SPLT", "2026-01-06", 1) > 0
+
+
+def test_a_download_in_a_shape_we_cannot_read_degrades_to_the_cache(tmp_path, panel_raw):
+    """A parse failure is a failed fetch, not a crash. There is a whole panel on disk."""
+    cache = Cache(tmp_path, default_ttl=3600.0)
+    prices.PriceClient(prices.RawDownloader(panel_raw), cache=cache, ttl=3600.0).daily_closes(
+        ["LIVE"], "2026-01-02", "2026-01-15"
+    )
+    unreadable = pd.DataFrame({"Volume": [1.0, 2.0]}, index=pd.to_datetime(["2026-01-02", "2026-01-05"]))
+    c = prices.PriceClient(prices.RawDownloader(unreadable), cache=cache, ttl=0.0)
+    out = c.daily_closes(["LIVE"], "2026-01-02", "2026-01-15")
+    assert c.last_source == {"LIVE": "stale"}
+    assert "FetchError" in (c.last_error or "")
+    assert out.loc["2026-01-15", "LIVE"] == 109.0
+
+
+# ---------------------------------------------------------------------------
+# which cached window gets reused, and which must not be
+# ---------------------------------------------------------------------------
+
+
+def test_a_fresh_covering_cache_entry_beats_an_older_wider_one(tmp_path):
+    """Ranking covering entries by row count alone hands back the older prices.
+
+    Worse, on the online path the stale winner hides the fresh entry entirely, so
+    the ticker is re-downloaded even though a usable copy is sitting on disk, which
+    is the throttle-inducing refetch the cache exists to prevent.
+    """
+    cache = Cache(tmp_path, default_ttl=3600.0)
+    dl = prices.OfflineDownloader()
+    c = prices.PriceClient(dl, cache=cache, ttl=3600.0)
+    wide_idx = pd.to_datetime(["2026-01-02", "2026-01-05", "2026-01-06", "2026-01-09", "2026-01-15"])
+    _cache_series(  # five rows, an old adjustment epoch, ten hours old
+        c, "LIVE", "2020-01-01", "2026-01-15", pd.Series([1.0] * 5, index=wide_idx), age_seconds=10 * 3600
+    )
+    fresh_idx = pd.to_datetime(["2026-01-06", "2026-01-09", "2026-01-15"])
+    _cache_series(c, "LIVE", "2026-01-02", "2026-01-15", pd.Series([101.0, 105.0, 109.0], index=fresh_idx))
+
+    got, stale = c._read_cached("LIVE", pd.Timestamp("2026-01-06"), pd.Timestamp("2026-01-15"), allow_stale=True)
+    assert got.tolist() == [101.0, 105.0, 109.0]
+    assert stale is False
+
+    out = c.daily_closes(["LIVE"], "2026-01-06", "2026-01-15")
+    assert dl.calls == [], "a fresh covering entry must not be re-downloaded"
+    assert c.last_source == {"LIVE": "cache"}
+    assert out["LIVE"].tolist() == [101.0, 105.0, 109.0]
+
+
+def test_the_widest_covering_window_wins_between_two_equally_fresh_entries(tmp_path):
+    cache = Cache(tmp_path, default_ttl=3600.0)
+    c = prices.PriceClient(prices.OfflineDownloader(), cache=cache, ttl=3600.0)
+    narrow_idx = pd.to_datetime(["2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08"])
+    _cache_series(c, "AAA", "2026-01-05", "2026-01-08", pd.Series([1.0, 2.0, 3.0, 4.0], index=narrow_idx))
+    wide_idx = narrow_idx.append(pd.to_datetime(["2026-01-09"]))
+    _cache_series(c, "AAA", "2026-01-01", "2026-01-31", pd.Series([10.0, 20.0, 30.0, 40.0, 50.0], index=wide_idx))
+
+    got, stale = c._read_cached("AAA", pd.Timestamp("2026-01-06"), pd.Timestamp("2026-01-08"), allow_stale=False)
+    assert stale is False
+    assert got.tolist() == [20.0, 30.0, 40.0]
+
+
+def test_a_cached_window_that_does_not_cover_the_request_is_never_served(tmp_path, panel_raw, monkeypatch):
+    """The three guards on the superset scan, one request each.
+
+    Without them the client answers a wider question with a narrower file, and a
+    truncated slice is indistinguishable from a delisting to every reader
+    downstream: coverage_on says stopped_trading, forward_return_detail says
+    truncated, and none of it happened.
+    """
+    cache = Cache(tmp_path, default_ttl=3600.0)
+    prices.PriceClient(prices.RawDownloader(panel_raw), cache=cache, ttl=3600.0).daily_closes(
+        ["LIVE"], "2026-01-02", "2026-01-06"
+    )
+    monkeypatch.setenv("DESK_OFFLINE", "1")
+    offline = prices.PriceClient(prices.OfflineDownloader(), cache=cache, ttl=3600.0)
+
+    with pytest.raises(Offline):  # wider on the right than anything on disk
+        offline.daily_closes(["LIVE"], "2026-01-02", "2026-03-31")
+    with pytest.raises(Offline):  # wider on the left
+        offline.daily_closes(["LIVE"], "2025-12-01", "2026-01-06")
+    with pytest.raises(Offline):  # a different name, whose file happens to share the directory
+        offline.daily_closes(["OTHER"], "2026-01-02", "2026-01-06")
+
+    # And the window that is covered still is.
+    assert offline.daily_closes(["LIVE"], "2026-01-05", "2026-01-06").empty is False
+    assert offline.last_source == {"LIVE": "cache"}
+
+
+def test_a_remembered_empty_result_is_read_back_instead_of_refetched(client):
+    """The whole point of caching an empty: four hundred dead names, once a run."""
+    client.daily_closes(["GHOST"], "2026-01-02", "2026-01-15")
+    assert client._dl.calls == [("GHOST",)]
+    assert client.last_source == {"GHOST": "missing"}
+
+    out = client.daily_closes(["GHOST"], "2026-01-02", "2026-01-15")
+    assert client._dl.calls == [("GHOST",)], "a known empty must not be asked for again"
+    assert client.last_source == {"GHOST": "cache"}
+    assert list(out.columns) == ["GHOST"] and out["GHOST"].isna().all()
+
+
+def test_an_empty_result_expires_sooner_than_real_data_never_later(tmp_path, panel_raw):
+    """"Nothing" is also what a throttled response looks like, so it must not stick.
+
+    A client asked for ten minute freshness kept an empty for the full hour default,
+    which is the policy exactly backwards.
+    """
+    cache = Cache(tmp_path, default_ttl=600.0)
+    dl = prices.RawDownloader(panel_raw)
+    c = prices.PriceClient(dl, cache=cache, ttl=600.0)  # empty_ttl left at its hour
+    assert c.empty_ttl == 600.0
+
+    c.daily_closes(["GHOST"], "2026-01-02", "2026-01-15")
+    _age_entry(cache, c._key("GHOST", pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-15")), 1200.0)
+    c.daily_closes(["GHOST"], "2026-01-02", "2026-01-15")
+    assert dl.calls == [("GHOST",), ("GHOST",)]
+    assert c.last_source == {"GHOST": "missing"}
+
+
+def test_a_short_empty_ttl_refetches_the_empties_and_leaves_the_rest_alone(tmp_path, panel_raw):
+    dl = prices.RawDownloader(panel_raw)
+    c = prices.PriceClient(dl, cache=Cache(tmp_path, default_ttl=10_000.0), ttl=10_000.0, empty_ttl=0.0)
+    c.daily_closes(["LIVE", "GHOST"], "2026-01-02", "2026-01-15")
+    c.daily_closes(["LIVE", "GHOST"], "2026-01-02", "2026-01-15")
+    assert dl.calls == [("LIVE", "GHOST"), ("GHOST",)]
+    assert c.last_source == {"LIVE": "cache", "GHOST": "missing"}
+
+
+def test_the_payload_writer_turns_every_hole_into_null(client):
+    """The guard the cache file test cannot reach, because daily_closes drops NaN first.
+
+    json.dumps would happily emit a bare ``NaN`` token, which is not JSON and which
+    no other reader will accept.
+    """
+    idx = pd.to_datetime(["2026-01-02", "2026-01-05", "2026-01-06"])
+    series = pd.Series([1.0, float("nan"), float("inf")], index=idx)
+    payload = client._to_payload("AAA", pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-06"), series)
+    assert payload["close"] == [1.0, None, None]
+    text = json.dumps(payload)
+    assert "NaN" not in text and "Infinity" not in text
+    assert json.loads(text)["index"] == ["2026-01-02", "2026-01-05", "2026-01-06"]
+    assert prices.PriceClient._from_payload(payload).isna().sum() == 2
+
+
+# ---------------------------------------------------------------------------
+# delisting, at the edges of the three way test
+# ---------------------------------------------------------------------------
+
+
+def test_a_panel_that_simply_ends_is_not_a_delisting():
+    """A single ticker panel cannot tell a dead name from the end of the window.
+
+    It must not guess, or a still listed name is reported as delisted for no better
+    reason than the window running out.
+    """
+    idx = pd.to_datetime(["2026-01-02", "2026-01-05", "2026-01-06"])
+    panel = pd.DataFrame({"AAA": [10.0, 11.0, 12.0]}, index=idx)
+    fr = prices.forward_return_detail(panel, "AAA", "2026-01-20", 3)
+    assert fr.status == "short_panel"
+    assert fr.stopped_trading is False
+    assert fr.ret is None and fr.base_price == 12.0
+
+
+def test_a_dead_name_asked_about_from_a_date_before_it_died_is_truncated_not_erased(closes):
+    """2026-01-03 is a Saturday, and DEAD was still trading. The 80 percent loss is real."""
+    fr = prices.forward_return_detail(closes, "DEAD", "2026-01-03", 5)
+    assert fr.status == "truncated"
+    assert fr.stopped_trading is True
+    assert fr.base_date == dt.date(2026, 1, 2) and fr.base_price == 50.0
+    assert fr.end_date == dt.date(2026, 1, 8) and fr.end_price == 10.0
+    assert fr.ret == pytest.approx(10.0 / 50.0 - 1.0)
+
+
+# ---------------------------------------------------------------------------
+# coverage at the exact day each comparison turns over
+# ---------------------------------------------------------------------------
+
+
+def test_coverage_on_the_ipo_day_itself_counts_the_name_as_tradeable(closes):
+    """LATE prints 20.0 on 2026-01-08. A name you could have bought is not missing."""
+    day_before = prices.coverage_on(closes, "2026-01-07")
+    assert day_before.not_listed_yet == ("LATE",) and "LATE" not in day_before.available
+
+    ipo_day = prices.coverage_on(closes, "2026-01-08")
+    assert ipo_day.not_listed_yet == ()
+    assert set(ipo_day.available) == {"LIVE", "DEAD", "LATE"}
+    assert ipo_day.missing == ()
+    assert prices.price_on(closes, "LATE", "2026-01-08") == 20.0
+
+
+def test_coverage_on_the_first_day_after_the_last_print_counts_the_name_as_gone(closes):
+    """DEAD's last print is 2026-01-08. Counting it on the 9th is survivorship bias."""
+    last_print = prices.coverage_on(closes, "2026-01-08")
+    assert "DEAD" in last_print.available and last_print.stopped_trading == ()
+
+    after = prices.coverage_on(closes, "2026-01-09")
+    assert after.stopped_trading == ("DEAD",)
+    assert "DEAD" not in after.available
+    assert after.ratio == pytest.approx(2 / 3)
+
+
+def test_a_halt_on_the_windows_first_day_is_not_reported_as_never_listed(client, closes):
+    """LIVE has traded since 2026-01-02 and is halted on 2026-01-07.
+
+    Ask for a window that starts on the halt and the panel cannot see the earlier
+    prints, so it must not answer "could not have bought it" about a name that
+    closed at 102.0 two sessions before.
+    """
+    out = client.daily_closes(["LIVE", "DEAD"], "2026-01-07", "2026-01-15")
+    assert out.index[0] == pd.Timestamp("2026-01-07")
+    assert pd.isna(out.loc["2026-01-07", "LIVE"])
+
+    cov = prices.coverage_on(out, "2026-01-07")
+    assert cov.not_listed_yet == ()
+    assert cov.unknown_before_window == ("LIVE",)
+    assert "LIVE" not in cov.available and "LIVE" in cov.missing
+    assert prices.forward_return_detail(out, "LIVE", "2026-01-07", 3).status == "unknown_before_window"
+
+    # And a name that genuinely had not listed, in a panel that can see behind it,
+    # is still named as such.
+    early = prices.coverage_on(closes, "2026-01-06")
+    assert early.not_listed_yet == ("LATE",) and early.unknown_before_window == ()
+
+
+# ---------------------------------------------------------------------------
+# synthetic panel defaults
+# ---------------------------------------------------------------------------
+
+
+def test_a_ticker_left_out_of_the_vol_mapping_keeps_the_documented_default():
+    """Planting vol on one name must not hand the control group a noiseless path.
+
+    A flat price line makes every forward return exactly 0.0 and every dispersion
+    statistic 0, which is the artefact this module exists to refuse.
+    """
+    planted = prices.synthetic_panel(["AAA", "BBB"], start="2021-01-04", periods=6, seed=1, vol={"AAA": 0.3})
+    assert planted["BBB"].nunique() > 1
+    assert prices.forward_return(planted, "BBB", "2021-01-04", 5) != 0.0
+
+    default = prices.synthetic_panel(["AAA", "BBB"], start="2021-01-04", periods=6, seed=1)
+    assert np.array_equal(planted["BBB"].to_numpy(), default["BBB"].to_numpy())
+
+    # Noiseless is still available, when it is asked for.
+    quiet = prices.synthetic_panel(
+        ["AAA", "BBB"], start="2021-01-04", periods=6, seed=1, vol={"AAA": 0.3, "BBB": 0.0}
+    )
+    assert quiet["BBB"].nunique() == 1
+
+
+def test_a_cache_file_that_lands_in_another_tickers_glob_is_rejected_by_its_payload(tmp_path):
+    """cache_key keeps underscores, so LIVE_B's file sits inside LIVE's own file glob.
+
+    The scan therefore has to check the payload rather than trust the filename, or
+    one ticker is served another ticker's prices with nothing to show for it.
+    """
+    cache = Cache(tmp_path, default_ttl=3600.0)
+    c = prices.PriceClient(prices.OfflineDownloader(), cache=cache, ttl=3600.0)
+    idx = pd.to_datetime(["2026-01-02", "2026-01-15"])
+    _cache_series(c, "LIVE_B", "2026-01-01", "2026-12-31", pd.Series([1.0, 2.0], index=idx))
+    assert list(tmp_path.glob("closes_LIVE_*.json")), "the collision this guards against"
+
+    got, _ = c._read_cached("LIVE", pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-15"), allow_stale=True)
+    assert got is None
+    mine, _ = c._read_cached("LIVE_B", pd.Timestamp("2026-01-02"), pd.Timestamp("2026-01-15"), allow_stale=True)
+    assert mine.tolist() == [1.0, 2.0]

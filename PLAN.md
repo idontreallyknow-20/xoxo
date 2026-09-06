@@ -76,11 +76,11 @@ Consequences that shape everything below:
       index -> document URL, 8-K -> Exhibit 99.1/99.2 resolution. Correct `User-Agent`, 10 req/s cap.
       Verify: `python -m pytest -q tests/test_edgar.py` (fixture-driven) and
       `python scripts/fetch_edgar.py --dry-run AAPL` prints the exact URLs it would call
-- [ ] **B5** `scripts/an/finnhub.py` — free-tier endpoints only, key strictly from `FINNHUB_KEY` env,
+- [x] **B5** `scripts/an/finnhub.py` — free-tier endpoints only, key strictly from `FINNHUB_KEY` env,
       typed errors on 401/403/429, never logs the key.
       Verify: `python -m pytest -q tests/test_finnhub.py` and
       `python scripts/fetch_finnhub.py --dry-run KLAC` shows `token=***REDACTED***`
-- [ ] **B6** `scripts/an/prices.py` — daily adjusted closes via yfinance with an on-disk cache and a
+- [x] **B6** `scripts/an/prices.py` — daily adjusted closes via yfinance with an on-disk cache and a
       deterministic synthetic generator for offline tests.
       Verify: `python -m pytest -q tests/test_prices.py`
 
