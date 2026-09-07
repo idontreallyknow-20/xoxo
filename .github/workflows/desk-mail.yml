@@ -1,0 +1,45 @@
+# Send the desk's rendered email when a routine session commits it to the desk branch.
+#
+# The scheduled Claude session renders data/mail/latest.html (with the subject beside it)
+# and pushes to desk. If that session could send it itself (a Gmail tool, or SMTP with
+# credentials) it already did and this job is a duplicate guard away from doing nothing:
+# it only sends when the commit message does not say the email went out. Needs two
+# repository secrets, set once: DESK_MAIL_USER (the Gmail address) and DESK_MAIL_PASSWORD
+# (a sixteen-character Gmail app password). The recipient is fixed below.
+name: desk-mail
+
+on:
+  push:
+    branches: [desk]
+    paths: ["data/mail/latest.html"]
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[sent]')"
+    steps:
+      - uses: actions/checkout@v4
+      - name: read the subject
+        id: subj
+        run: echo "subject=$(head -1 data/mail/latest.html.subject.txt)" >> "$GITHUB_OUTPUT"
+      - name: send
+        if: ${{ env.USER != '' }}
+        env:
+          USER: ${{ secrets.DESK_MAIL_USER }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          secure: false
+          username: ${{ secrets.DESK_MAIL_USER }}
+          password: ${{ secrets.DESK_MAIL_PASSWORD }}
+          subject: ${{ steps.subj.outputs.subject }}
+          to: josephislockedin@gmail.com
+          from: Desk <${{ secrets.DESK_MAIL_USER }}>
+          html_body: file://data/mail/latest.html
+          body: file://data/mail/latest.html.txt
+      - name: no credential
+        if: ${{ env.USER == '' }}
+        env:
+          USER: ${{ secrets.DESK_MAIL_USER }}
+        run: echo "DESK_MAIL_USER secret is not set; the rendered email is in data/mail/latest.html on the desk branch"
