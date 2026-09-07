@@ -356,6 +356,52 @@ GRADED and shows the columns that need no prices. Note the file's own caveat: ev
 
 ---
 
+## The one command, on Windows
+
+Everything below that says "run this" is wired into `setup.ps1`.
+
+**You have to be in the project folder first.** PowerShell resolves `-File setup.ps1` before any of
+the script's own code runs, so from anywhere else it fails with "the argument to the -File parameter
+does not exist". If you have never cloned the repo, or you are not sure where it is, paste this
+whole block into PowerShell:
+
+```powershell
+cd $HOME\Documents
+if (-not (Test-Path xoxo)) { git clone https://github.com/idontreallyknow-20/xoxo.git }
+cd xoxo
+git pull
+powershell -ExecutionPolicy Bypass -File setup.ps1
+```
+
+After the first time, only the last two lines matter: `cd $HOME\Documents\xoxo`, then run it.
+
+It installs what it needs, asks before each pull (so you can skip the 2 GB one), rebuilds every
+page, and opens the dashboard. Keys are read into that window only and never written to disk. Run it
+again any time; every step is resumable and safe to repeat.
+
+No admin needed. If PowerShell opened in `C:\WINDOWS\system32` you started it as administrator,
+which is not required and puts you in the wrong folder by default.
+
+If `git` is not installed, either get it from https://git-scm.com/download/win, or download
+https://github.com/idontreallyknow-20/xoxo/archive/refs/heads/main.zip, extract it, and `cd` into
+the extracted folder instead.
+
+**The one that matters more than any pull:**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask
+```
+
+That registers a monthly job with Windows: rerun the screen, rebuild, archive a dated snapshot.
+Nothing in this project can say whether the score works until several snapshots exist, there is
+currently one, and monthly instead of quarterly is the difference between a first verdict in one
+year and in three. Set it once and stop thinking about it. `-RemoveTask` undoes it.
+
+Archiving monthly is not re-underwriting monthly. A snapshot is a recording, not a prompt to trade;
+`criteria.md` still says decide quarterly and that is still right.
+
+---
+
 ## Third session, 2026-09-07: the modules that nothing consumed
 
 Branch restarted from `main`. Same egress as before: nothing here has made a real request. The
