@@ -1,0 +1,14 @@
+# The site is dashboard/ and nothing else. Vercel detected requirements.txt as a
+# Python app and looked for an entrypoint; vercel.json makes it a static deploy
+# of dashboard/, and this keeps the rest of the repo out of the upload.
+data/
+universe/
+research/
+tests/
+scripts/
+.claude/
+*.md
+*.ps1
+*.ini
+requirements.txt
+dashboard/_*
