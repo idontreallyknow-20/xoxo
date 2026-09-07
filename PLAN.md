@@ -197,7 +197,21 @@ Consequences that shape everything below:
       **Blocked on a live run**, twice now: neither session's container could reach `data.sec.gov`.
       The code is written and tested. Command: `SEC_USER_AGENT="Name email" python
       scripts/fetch_edgar.py --facts --exhibits KLAC`.
-- [ ] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
+- [x] **X3** 8-K Exhibit 99.1 diffing: guidance language this quarter vs last, mechanically extracted.
+      `scripts/an/guidance.py` reads sentences with a forward-looking word and a figure, one clause per
+      metric it knows, the nearest period phrase as the period, and diffs two releases on (metric,
+      period): raised, lowered, narrowed, widened, reiterated, introduced, not repeated (never
+      "withdrawn"), lapsed (the quarter just reported), not comparable. Every row carries the verbatim
+      sentence and the label `mechanical`. `scripts/guidance_diff.py` resolves the two newest Item 2.02
+      8-Ks through `edgar.py`, writes `dashboard/analysis/_guidance/<T>.json`, and the analysis record
+      merges it into "What changed since the last report" under `guidance_diff`, or says NOT RUN with
+      the command. **Never run against a live exhibit**: no route to `www.sec.gov`. The fixture is a
+      fictional filer so no reading is attached to a real company.
+      Verify: `python -m pytest -q tests/test_guidance.py` (17 tests: every classification once on
+      hand-worked answers, a "prior outlook" comparison not read as the guide, a fiscal year not read
+      as a figure, boilerplate ignored, the language guard over a full diff) and
+      `python scripts/guidance_diff.py --fixture`. Live: `SEC_USER_AGENT="Name email" python
+      scripts/guidance_diff.py KLAC BKNG` then `python scripts/build_analysis.py`.
 - [x] **X4** Peer-relative valuation using the 1,505-name panel rather than the company's own history.
 - [x] **X5** Compare view across up to 4 analysed tickers. `/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA`:
       one shell, the selection in the address so a comparison is a link, every cell from the same
@@ -262,6 +276,43 @@ Consequences that shape everything below:
       which match what Apple reported. Also
       `python scripts/fetch_dera.py --fixture --show 320193 --metric revenue`.
       Live: `SEC_USER_AGENT="Name email" python scripts/fetch_dera.py --since 2023q1`.
+- [x] **X12** Wire the DERA loader into the analysis record and the score. `scripts/an/dera_fundamentals.py`
+      turns the cached quarters into the quality screen's own aggregates (same definitions, mirrored
+      line by line from `quality_screen.py`) over up to ten fiscal years, each line as it was known on
+      the screen date, reconciles them field by field against the Yahoo CSV over the fiscal years both
+      cover, and merges them into `TickerRecord.fundamentals` group by group with the basis recorded
+      per field. One function, `universe_with_basis()`, feeds the analysis pages, the scorecard, the
+      memo, the snapshot and the backtest structure, so they cannot disagree about which basis they
+      are on. No weight changed. **Not yet run on a downloaded quarter**: this container cannot reach
+      `www.sec.gov`, so every generated file says `NOT RUN` and every number is still Yahoo's.
+      Verify: `python -m pytest -q tests/test_dera_fundamentals.py` (27 tests, every aggregate
+      recomputed by hand from the Apple FY2023 and FY2024 10-K figures in
+      `tests/fixtures/dera_full/README.md`, point-in-time before and after the 10-K filing date, a
+      restated Yahoo figure surfacing as a disagreement and not an error, no verdict when the windows
+      differ) and `python scripts/fetch_dera.py --basis-report --fixture AAPL`.
+      Live: `SEC_USER_AGENT="Name email" python scripts/fetch_dera.py --since 2016q1`, then
+      `python scripts/fetch_dera.py --basis-report`, then `python scripts/build_all.py`.
+- [x] **X13** Wire the measured survivorship hole into the backtest's limitations.
+      `listing_status.measured_attrition()` reads the Alpha Vantage cache alone, never fetches, and
+      returns a number only when both cached files came through a real request; a fixture or a dry run
+      gives None. `backtest.survivorship_limitation()` quotes the measured rate when it has one and
+      says "unknown amount" plus the command when it does not, and `backtest.json` carries a
+      `survivorship` block saying which. **Not yet measured**: no key and no route to
+      `www.alphavantage.co` here.
+      Verify: `python -m pytest -q tests/test_survivorship.py` (the fixture's hand-computed eleven
+      eligible and four gone become "36.4%" in the limitation only when the cache is marked live).
+      Live: `export ALPHAVANTAGE_KEY=...; python scripts/listing_status.py --fetch; python scripts/build_all.py`.
+- [x] **X14** The tracker's read path. `scripts/an/outcomes.py` relates the score's percentile at each
+      call to the excess return against SPY since, and refuses to report any statistic below fixed
+      floors (20 graded calls carrying both, 4 distinct call dates, a 63-trading-day window, real
+      prices): below them it names every shortfall and `rank_ic` is None, not a small number with a
+      caveat. Above them it reports the Spearman with its n, the mean excess of the names the score
+      placed in its top half against its bottom half, and a verdict capped at "suggestive". Written
+      into `tracker.json` as `score_vs_outcome` and rendered on `/positioning/` under the grades. The
+      committed file says INSUFFICIENT with four shortfalls, which is the truth: zero grades.
+      Verify: `python -m pytest -q tests/test_outcomes.py` (11 tests: nineteen calls refuse and twenty
+      read, one date refuses thirty calls, synthetic prices can never read, a planted alignment reads
+      suggestive and never stronger, the wrong way is said plainly, the language guard over every verdict).
 - [x] **X9** (superseded: quotes verified mechanically) Re-audit the repaired narratives with a second model pass. The generation workflow
       audited each extraction, repaired what the audit caught, and then shipped the repair
       unaudited. `tests/test_narrative_quotes.py` closes the fabrication hole mechanically, but

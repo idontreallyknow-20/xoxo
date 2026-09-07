@@ -635,3 +635,190 @@ guard, which now scans `tracker.json` too.
 **Caught in review.** The block was written and wired to fetch `tracker.json` but never placed in
 the page's render; a screenshot locator timing out found it, and a test now pins the placement.
 
+---
+
+## 8. Third session, 2026-09-07: the modules that nothing consumed
+
+Branch restarted from `main` after PR #1 merged. Same egress situation as both earlier sessions:
+`www.sec.gov`, `data.sec.gov`, `www.alphavantage.co`, `finnhub.io` and Yahoo all refused, so nothing
+below has made a real request either. The brief for this session was explicit that "build the
+algorithm further" means better inputs and better testability, not different weights, and no weight
+was touched.
+
+### 8a. Two tests broke on the restart, for a reason worth recording
+
+`tests/test_nothing_existing_was_touched.py` diffed the branch against its merge base with `main`.
+Once the work merged, the merge base *was* `HEAD`: the diff went empty, the test that expects to see
+the two nav links failed, and the test that expects no pre-existing file to have moved started
+counting every regenerated page as a modified pre-existing file. "Pre-existing" now means before the
+earliest commit that added `PLAN.md` or `scripts/an/`, with the merge base as a fallback for a
+shallow clone. Against that base the only modified files are `.gitignore` and `dashboard/index.html`,
+which is what the tests were written to assert.
+
+### 8b. X12, the DERA loader wired into the score
+
+`scripts/an/dera_fundamentals.py`. Before this, `an.dera` was imported by `fetch_dera.py` and by
+nothing else. Now one function, `universe_with_basis()`, is what every builder that scores the
+universe calls (`analysis.build_all`, `build_positioning.scorecard`, `positioning.build_memo`,
+`snapshots.take`, `backtest_run.structure` and `variant_disagreement`), so the pages, the scorecard,
+the memo, the archive and the backtest structure are on the same basis by construction.
+
+**What it computes.** The quality screen's aggregates, definition by definition from
+`scripts/quality_screen.py`, over up to ten fiscal years of SEC facts, each line as it was known on
+the screen's `pulled` date. The substitutions the SEC tags force are in the module docstring:
+invested capital is equity plus interest-bearing debt (term debt both currents plus commercial paper,
+which Apple tags separately and which a debt total has to add on), the tax rate is income tax over
+pre-tax income with the screen's 21% fallback and 0-50% plausibility band, net debt subtracts cash
+and current marketable securities, gross profit is the tagged line or revenue minus cost of revenue.
+A fiscal year is labelled by the calendar year its period ends in, which is the screen's
+`fiscal_years` convention, so the two sources line up by label. Revenue CAGR is annualised over the
+*elapsed* fiscal years between the first and last label, the lesson `metrics.py` already learned.
+
+**The reconciliation policy, decided explicitly.** Two windows are computed: the long window (up to
+ten years) and the same window (the fiscal years the Yahoo CSV covers). The same window is compared
+to the CSV field by field with a tolerance per field (`TOLERANCE`: two points on rates and margins,
+one point on CAGR and share change, a quarter turn on leverage). A gap beyond tolerance is a
+**disagreement**, and a disagreement is information: it goes into the record with both numbers, onto
+the page as a row, into the build report as a count by field, and into the gaps list. It is never
+raised. The commonest honest reasons are a restatement (Yahoo shows FY2022 as the FY2024 10-K
+reports it; the SEC row is as the FY2022 10-K reported it, or as any filing up to the on-date
+restated it), a definitional gap named above, or a fiscal-year-end change. When the SEC window does
+not cover every Yahoo year, no verdict is given at all: three years against four is a different
+window, not a disagreement, and the numbers are shown side by side without one.
+
+The score then reads the SEC figure wherever the long window carries at least three fiscal years
+for that group of measures (three is the screen's own floor), group by group so an FCF margin
+cannot be paired with the other source's year counts, and Yahoo's figure otherwise. Which source
+supplied each field is in `Fundamentals.basis_by_field` and on the page. `scorecard.json` carries a
+`fundamentals_basis` block, and when the basis is in use it also carries the rank correlation
+between the score on the two bases and the names that moved more than ten percentile points, which
+is the first sensitivity number this input can produce. It measures sensitivity to the input, not
+whether either ordering predicts anything.
+
+**Point in time is the actual upgrade.** `fundamentals_for(facts, ticker, cik, on_date=...)` is the
+primitive a real backtest needs: called with each rebalance date it returns what a screen run that
+day could have computed from the filings then public, restatements after that date unseen. The
+fixture test proves the mechanism on Apple: nothing on 2023-10-31, three years on 2023-11-03, the
+10-K's filing day, four on 2024-11-01.
+
+**Verification.** `tests/fixtures/dera_full/` is a hand-built two-quarter miniature holding Apple's
+FY2023 and FY2024 10-Ks with enough lines for every aggregate: three years of flows and two balance
+sheets per 10-K, which is what a 10-K carries, so FY2021 has no balance sheet and its ROIC must be a
+hole rather than a guess (tested). `tests/test_dera_fundamentals.py` recomputes each aggregate from
+the README's table before comparing. On those figures Apple's ROIC comes out at 56 to 59 percent
+against Yahoo's 59 to 65 for the overlapping years, which is the definitional gap on invested
+capital showing up as expected rather than a bug on either side.
+
+**What the committed build says.** `NOT RUN`, in every analysis record's `fundamentals.basis`, in
+`scorecard.json`, in `positioning.json` and in every snapshot's `scores.json`. Every number on every
+page is still Yahoo's four restated years. `python scripts/fetch_dera.py --basis-report` prints the
+per-name report from the cache and starts with whether a real request has ever been made; with
+`--fixture AAPL` it prints the report's shape on the miniature and says so on its first line.
+
+**Two things added to make the first live run cheaper.** The kept facts are written once to
+`data/cache/dera/extract/` keyed on the zips, the CIKs and the tags, because streaming forty
+100 MB quarters on every build (five builders, and the determinism test builds twice) would be
+unworkable. And `DeraClient.fetch` now writes a `<quarter>.meta.json` sidecar recording the
+transport, so `dera.provenance()` can say whether a zip came from sec.gov; a zip without a sidecar
+is `None`, not assumed live.
+
+**Most likely to be wrong on the first live file**, beyond what 7b already lists:
+
+1. The ticker map. `ticker_cik_map` reads the EDGAR `company_tickers.json` that `fetch_edgar.py`
+   caches, and never fetches. Until that file exists the panel says so and every name stays on
+   Yahoo. `python scripts/fetch_edgar.py --dry-run AAPL` on a machine with network caches it.
+2. Tag coverage. `KEY_TAGS` gained `commercial_paper`, `depreciation_amortization` and `DebtCurrent`.
+   Filers that use a tag outside those lists will show holes in `fiscal_years[].roic` or `ebitda`
+   and fall back to Yahoo for that group, which the page will label. The `--basis-report` counts
+   make the gaps visible; widening the lists is the fix, not changing the policy.
+3. The same-window match is by calendar year of period end. A filer that changed its fiscal year
+   end can carry two SEC years with one label; the later one wins and the reconciliation will
+   show a disagreement for that name.
+
+### 8c. X13, the survivorship hole quoted rather than guessed at
+
+Every limitation the engine wrote said the numbers were "flattering by an unknown amount" while
+`listing_status.py` could measure the amount and nothing read it. `listing_status.measured_attrition`
+now reads the Alpha Vantage cache and only the cache, returns a `MeasuredAttrition` only when both
+cached files carry the `live` flag that `HttpTransport` alone sets, and `backtest.survivorship_limitation`
+quotes it: eligible names on the as-of date, how many are gone, the rate and its annualised form,
+the fetch date, that it is an upper bound (no market cap, no reason for leaving), and where the
+synthetic engine's assumption sits against it. Without a real pull the limitation keeps "unknown
+amount" and adds the command. `backtest.json` carries a `survivorship` block saying `MEASURED` or
+`NOT MEASURED`; this checkout says the latter. The calibration panels do not receive the measured
+number: they plant their own attrition and their limitations already say so.
+
+The test that matters: the committed fixture, cached with `FixtureTransport`, gives `None`, so the
+hand-built rows can never be quoted as a measurement. The same rows cached with a `live` flag give
+eleven eligible and four gone as of 2016-09-06, the answer 7a computed by hand, and "36.4%" appears
+in the limitation.
+
+### 8d. X3, the guidance diff from two press releases
+
+`scripts/an/guidance.py` and `scripts/guidance_diff.py`. Section 4 established that the 8-K Exhibit
+99.1 is the closest free substitute for a transcript, and `edgar.py` already resolved one. This reads
+it. A guidance sentence is one with a forward-looking word (`expect`, `anticipate`, `outlook`,
+`guidance`, `guide`, `forecast`, `target`, `project`) that is not safe-harbour boilerplate. Inside it,
+each metric keyword the module knows (revenue, EPS, gross margin, operating margin, operating
+expenses, operating income, tax rate, capex, free cash flow) starts a clause running to the next
+keyword, and the first range, plus-or-minus or "approximately" figure in the clause is the guide. The
+period is the nearest period phrase before the clause in the same sentence, else the first after it.
+
+**Three things the first draft got wrong, all caught by the fixture.** "Up from its prior outlook of
+$4.0 billion" inside the revenue clause became the guide; the clause is now cut at a comparison
+phrase before the figure is read, and the whole clause stays on the page. "In fiscal 2027" produced a
+revenue guide of 2,027; a bare four-digit number in the calendar's range with no unit is now a date.
+And "$4.1 billion" came out as 4,099,999,999.9999995; values are rounded after scaling.
+
+**The diff's vocabulary is deliberately narrow.** Same (metric, period) in both releases: raised,
+lowered, narrowed, widened or reiterated on the midpoint and the width, with a half-point tolerance
+on percentages and five basis points of the prior on money. Only in the newer release: introduced.
+A fiscal-year figure only in the older one: *not repeated*, and the detail says that is not the same
+as withdrawn, because a release that omits the tax rate has usually not withdrawn it. A quarter only
+in the older one: lapsed, because it is normally the quarter the new release reports. A guide given
+without a figure is kept as qualitative and listed under "no figure" rather than dropped.
+
+**What it cannot do, on the page.** It does not read tone. A filer that names the same period two
+ways across two releases ("September quarter" then "fourth quarter of fiscal 2026") shows one
+lapsed and one introduced where a reader would see one reiterated. Every row is labelled
+`mechanical`, every row carries its verbatim sentence, and the caveat is a row of its own.
+
+**Verification.** `tests/fixtures/ex991_prior.htm` and `ex991_current.htm` are two hand-built
+releases for a fictional filer, Exemplar Devices Inc., written so every classification appears at
+least once: FY2026 revenue raised from $4.0bn to $4.1bn, capex reiterated at $150m, the tax rate not
+repeated, three Q4 figures introduced, three Q3 figures lapsed. `tests/test_guidance.py` asserts
+each by hand, runs the language guard's forbidden list over a full diff, checks the CLI's fixture
+mode never writes under `dashboard/`, and checks every committed record says NOT RUN with the
+command. It has never seen a live exhibit.
+
+### 8e. X14, the tracker read back, and the refusal built in first
+
+`scripts/an/outcomes.py`. The tracker records, for every call, the score's percentile in the
+snapshot before the call and (once prices exist) the excess return against SPY since. Nothing read
+the pair. This does, and the design decision is the refusal: below the floors it reports the sample,
+names every shortfall, and reports **no statistic**. `rank_ic` is None, not 0.31 with a footnote,
+because a correlation over sixteen calls dated the same afternoon is not weak evidence, it is a
+number attached to nothing, and numbers attached to nothing get quoted. The floors were fixed while
+the sample was zero so that nobody, including a later session, picks them after seeing a result:
+twenty graded calls with both fields, four distinct call dates (one date is one market regime),
+a 63-trading-day window (the tracker's own noise floor), and prices that were really pulled, so a
+synthetic panel can never read.
+
+Above the floors it gives the Spearman with its n, the mean excess of the names the score placed in
+its top half against its bottom half, and a verdict that stops at "suggestive". "Supported" belongs
+to the backtest engine, which measured its own false-positive rate; this has not. The question is
+also stated on the page: it is about the score, using the analyst's calls as the sample, and a
+high-scoring name that was Passed and then rallied counts for the score and against the analyst.
+
+`tracker.json` carries it as `score_vs_outcome` and `/positioning/` renders it under the grades.
+The committed file reads INSUFFICIENT with four shortfalls, which is correct: there are no grades.
+
+### 8f. What this session did not do, on purpose
+
+- No weight changed, no component added. The three revision components still correlate 0.54 to
+  0.77 and that is still reported rather than fixed.
+- The front-page Journal tab still shows thirteen names, and `price_screen.py` still has its two
+  defects. Both are Joseph's decisions and both remain pinned by tests.
+- No live run of anything. Five fetchers now wait on a machine with egress; HANDOFF.md lists the
+  commands in order.
+

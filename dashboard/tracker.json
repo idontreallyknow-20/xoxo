@@ -1,8 +1,8 @@
 {
- "built_at": "2026-09-06T17:59:50",
+ "built_at": "2026-09-07T02:31:53",
  "status": "NOT GRADED",
  "is_real": false,
- "as_of": "2026-09-06",
+ "as_of": "2026-09-07",
  "price_source": "none pulled yet",
  "benchmarks": [
   "SPY",
@@ -432,6 +432,41 @@
    "verdict": "not graded: no price history has been pulled"
   }
  ],
+ "score_vs_outcome": {
+  "status": "INSUFFICIENT",
+  "question": "Did the score's percentile on the day of each call line up with the excess return against SPY since? This asks about the score, using the analyst's calls as the sample.",
+  "requirements": {
+   "min_graded_with_score": 20,
+   "min_distinct_call_dates": 4,
+   "min_trading_days": 63
+  },
+  "sample": {
+   "is_real": false,
+   "n_calls": 16,
+   "n_graded": 0,
+   "n_with_score_and_return": 0,
+   "distinct_call_dates": 0,
+   "longest_window_trading_days": null
+  },
+  "shortfalls": [
+   "the prices behind these grades were not really pulled (a synthetic or offline panel), so nothing here can be evidence",
+   "0 graded calls carry both a score at call and an excess return; 20 are required",
+   "the usable calls fall on 0 distinct dates; 4 are required, because calls made on one day are one draw from one market regime",
+   "the longest window is 0 trading days; 63 are required"
+  ],
+  "rank_ic": null,
+  "rank_ic_n": null,
+  "liked_by_the_score": {
+   "n": 0,
+   "mean_excess_vs_spy": null
+  },
+  "not_liked_by_the_score": {
+   "n": 0,
+   "mean_excess_vs_spy": null
+  },
+  "verdict": "no readout: the sample is too small to say anything, so nothing is said",
+  "note": "No statistic is reported below the floors on purpose. A rank correlation over a handful of same-day calls is not weak evidence; it is a number attached to nothing, and numbers attached to nothing get quoted."
+ },
  "disclaimer": "Research and analysis from public data, not personalised financial advice.",
  "why_not_graded": [
   "No price history has been pulled, so no call has a return, a benchmark or a falsifier check yet. The rows below carry what needs no prices: the call, the level that would falsify it, and the score's percentile in the snapshot that preceded it.",

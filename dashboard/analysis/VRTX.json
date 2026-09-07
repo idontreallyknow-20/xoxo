@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built_at": "2026-09-06T17:10:11",
+ "built_at": "2026-09-07T02:31:50",
  "depth": "screen",
  "identity": {
   "ticker": "VRTX",
@@ -26,6 +26,13 @@
   "window": "2022\u20132025",
   "n_years": 4,
   "note": "Four fiscal years is all the free source provides, so every growth figure here is computed over three intervals, not five years.",
+  "basis": {
+   "basis": "yfinance",
+   "basis_by_field": {},
+   "sec_status": "NOT RUN",
+   "why": "no DERA quarters under data/cache/dera. Nothing has been downloaded; run SEC_USER_AGENT=\"Your Name you@example.com\" python scripts/fetch_dera.py --since 2016q1. Everything in this table is Yahoo's four restated fiscal years. The SEC's as-reported history, ten or more years dated by filing, exists free and the loader for it is written; it has not been downloaded.",
+   "command": "SEC_USER_AGENT=\"Your Name you@example.com\" python scripts/fetch_dera.py --since 2016q1"
+  },
   "rows": [
    {
     "key": "roic_avg",
@@ -120,6 +127,13 @@
     "source": "Yahoo Finance via yfinance, pulled 2026-09-04"
    }
   ],
+  "guidance_diff": {
+   "available": false,
+   "status": "NOT RUN",
+   "why": "The last two 8-K Exhibit 99.1 press releases for this name have not been pulled from EDGAR, so there is no mechanical guidance diff. This is the free substitute for a transcript: it carries the guidance figures and none of the questions.",
+   "command": "SEC_USER_AGENT=\"Name email\" python scripts/guidance_diff.py VRTX",
+   "caveat": "Mechanical. Two press releases, sentences with a forward-looking word and a figure, matched on metric and period. It does not read tone, it cannot see a guide given without a number, and a filer that changes how it names a period between releases shows one lapsed and one introduced where a reader would see one reiterated. The verbatim sentence sits under every row so the machine's reading can be checked."
+  },
   "read": {
    "available": false,
    "why": "Guidance changes, tone, and what management stepped around cannot be parsed out of a screen. They need someone to read the 8-K exhibit and the call. No research note has been written for this name."
@@ -415,7 +429,7 @@
   }
  ],
  "gaps": [
-  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals. The own-history median is a 3-point median.",
+  "Four fiscal years of annual statements, not five or ten, so every growth figure is over 3 intervals. The own-history median is a 3-point median. The SEC's as-reported history has not been downloaded; the screen measures say how.",
   "No research note. Nobody has read a filing for this name.",
   "No earnings-call transcript. Free full transcripts are not reliably available; see NOTES.md. The closest free substitute is the 8-K Exhibit 99.1 press release on EDGAR, which has the guidance language but not the analyst questions.",
   "Everything here is dated 2026-09-04. Prices, estimates and drawdowns move daily; nothing on this page does."

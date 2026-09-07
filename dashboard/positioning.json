@@ -1,11 +1,12 @@
 {
- "built_at": "2026-09-06T17:10:16",
+ "built_at": "2026-09-07T02:31:59",
  "snapshot_date": "2026-09-04",
  "variant": "quality_value",
  "status_of_the_score": {
   "validated": false,
   "statement": "This ranking uses a score that has never been tested on out-of-sample data. This repository holds one dated cross section and no price history, so there is no 'next' against which any ordering could be checked. The engine that would run that test is built and calibrated; it has nothing to run on yet.",
-  "where_to_read_more": "backtest.json, and PLAN.md item X1."
+  "where_to_read_more": "backtest.json, and PLAN.md item X1.",
+  "fundamentals_basis": "SEC as-reported statements NOT RUN: no DERA quarters under data/cache/dera. Nothing has been downloaded; run SEC_USER_AGENT=\"Your Name you@example.com\" python scripts/fetch_dera.py --since 2016q1. Every fundamental in the score is Yahoo's four restated fiscal years; scorecard.json carries the command that changes that."
  },
  "how_to_read_this": [
   "This is a memo, not a signal. It says what is true about each company today and what would have to happen for the idea to be wrong. Nothing here predicts a price.",

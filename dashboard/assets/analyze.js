@@ -159,11 +159,45 @@
       });
     }
 
+    rows += guidanceDiffRows(wc.guidance_diff);
+
     const earn = wc.earnings_text;
     const text = earn && earn.text
       ? `<div class="prose" style="margin-top:22px">${paragraphs(earn.text)}</div>
          <div class="note">Source: ${esc(earn.source)}.</div>` : "";
     return `<div class="ledger">${rows}</div>${text}`;
+  }
+
+  /* X3: the guidance figures of the last two 8-K press releases, diffed by a
+     machine. Labelled mechanical on every row so it is never confused with the
+     read narrative above it, and NOT RUN with the command until the releases
+     have been pulled. The verbatim sentence sits under each row. */
+  function guidanceDiffRows(gd) {
+    if (!gd) return "";
+    if (gd.available === false) {
+      return `<div class="row gap">
+        <div class="k"><span class="mk open"></span>guidance, from the 8-K press releases</div>
+        <div class="v">${esc(gd.why || "")} <code>${esc(gd.command || "")}</code></div>
+        <div class="m">${esc(gd.status || "NOT RUN")}</div></div>`;
+    }
+    const dirOf = (c) => c === "raised" ? "up" : c === "lowered" ? "down" : "flat";
+    let out = `<div class="row gap"><div class="k"><span class="mk open"></span>guidance, from the 8-K press releases</div>
+      <div class="v">Two releases read by machine: ${esc(gd.current && gd.current.filed || "?")} against ${esc(gd.prior && gd.prior.filed || "?")}.
+        ${esc(Object.entries(gd.summary || {}).map(([k, v]) => `${v} ${k}`).join(", "))}.</div>
+      <div class="m">mechanical</div></div>`;
+    (gd.items || []).forEach((it) => {
+      const quote = it.quote || it.prior_quote;
+      out += `<div class="row"><div class="k">${markFor(dirOf(it.change))}${esc(it.what)}</div>
+        <div class="v">${esc(it.detail)}${quote ? `<div class="q">&ldquo;${esc(quote)}&rdquo;</div>` : ""}</div>
+        <div class="m">${esc(it.change)}</div></div>`;
+    });
+    (gd.not_determinable || []).forEach((x) => {
+      out += `<div class="row gap"><div class="k"><span class="mk open"></span>no figure</div>
+        <div class="v">${esc(x)}</div><div class="m">gap</div></div>`;
+    });
+    out += `<div class="row gap"><div class="k"><span class="mk open"></span>how to read the guidance rows</div>
+      <div class="v">${esc(gd.caveat || "")}</div><div class="m">caveat</div></div>`;
+    return out;
   }
 
   /* The confidence fields are written as "low, and it is not higher because ...".

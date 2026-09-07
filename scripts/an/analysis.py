@@ -36,6 +36,8 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from . import dera_fundamentals as basis_mod
+from . import guidance
 from . import journal as journal_mod
 from . import local, metrics, paths, peers, research_md, score
 
@@ -78,13 +80,86 @@ def _identity(rec: local.TickerRecord, note: Optional[research_md.ResearchNote])
     }
 
 
-def _fundamentals_block(rec: local.TickerRecord) -> Dict[str, Any]:
+SOURCE_SEC = "SEC filings via the DERA Financial Statement Data Sets, as reported, dated by filing"
+
+
+def source_fundamentals(rec: local.TickerRecord) -> str:
     f = rec.fundamentals
+    if f.basis == "sec_dera":
+        return SOURCE_SEC
+    if f.basis == "mixed":
+        return f"{SOURCE_SEC}; {source_screen(rec.pulled)} where the filings gave too few years"
+    return source_screen(rec.pulled)
+
+
+def _basis_block(rec: local.TickerRecord, report: Optional["basis_mod.BasisReport"]) -> Dict[str, Any]:
+    """Which statements the screen measures rest on, and how the two sources compare.
+
+    Three states, and the page says which: the SEC data sets have not been
+    downloaded (NOT RUN, every number is Yahoo's), they have and this name was
+    re-based (with the field-by-field reconciliation), or they have and this
+    name could not be (no CIK, or too few years filed).
+    """
+    f = rec.fundamentals
+    block: Dict[str, Any] = {
+        "basis": f.basis,
+        "basis_by_field": dict(f.basis_by_field),
+        "sec_status": report.status if report else "NOT RUN",
+    }
+    if report is None or not report.in_use:
+        why = report.panel.why if report else "the DERA loader was not consulted"
+        block["why"] = (
+            f"{why}. Everything in this table is Yahoo's four restated fiscal years. The SEC's "
+            "as-reported history, ten or more years dated by filing, exists free and the loader for "
+            "it is written; it has not been downloaded."
+        )
+        block["command"] = basis_mod.FETCH_COMMAND
+        return block
+    lf = report.applied.get(rec.ticker)
+    recon = report.reconciliations.get(rec.ticker)
+    if lf is None:
+        cik, facts = report.panel.facts_for(rec.ticker)
+        if rec.ticker in report.skipped_short:
+            n = report.skipped_short[rec.ticker]
+            block["why"] = (f"The filings loaded give {n} fiscal year{'s' if n != 1 else ''} for this name, "
+                            f"under the {basis_mod.MIN_YEARS} the screen requires, so the Yahoo figures stand.")
+        elif not cik:
+            block["why"] = "This ticker could not be placed against an SEC CIK, so the Yahoo figures stand."
+        else:
+            block["why"] = ("No annual revenue fact for this name in the quarters loaded (a foreign filer "
+                            "outside the data sets, or quarters not yet downloaded), so the Yahoo figures stand.")
+        return block
+    block.update({
+        "sec_years": [y.label for y in lf.years],
+        "as_reported_through": lf.as_reported_through,
+        "known_on": lf.on_date.isoformat(),
+        "fiscal_years": [y.to_dict() for y in lf.years],
+        "reconciliation": recon.to_dict() if recon else None,
+        "why": (
+            f"{len(lf.years)} fiscal years as reported to the SEC, each line as it stood on "
+            f"{lf.on_date.isoformat()}. Over the {len(recon.sec_same_window_years) if recon else 0} years "
+            "Yahoo also covers the two are compared field by field below; a gap beyond tolerance is shown "
+            "with both numbers and is not treated as an error."
+        ),
+    })
+    return block
+
+
+def _fundamentals_block(rec: local.TickerRecord, basis: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    f = rec.fundamentals
+    n = f.n_years or 0
+    if f.basis == "yfinance":
+        note = ("Four fiscal years is all the free source provides, so every growth figure here "
+                "is computed over three intervals, not five years.")
+    else:
+        note = (f"{n} fiscal years as reported to the SEC, dated by filing, so every growth figure "
+                f"here is computed over {max(n - 1, 0)} intervals. Where a measure fell back to Yahoo's "
+                "four restated years the row says so.")
     return {
         "window": f.years_label,
         "n_years": f.n_years,
-        "note": "Four fiscal years is all the free source provides, so every growth figure here "
-                "is computed over three intervals, not five years.",
+        "note": note,
+        "basis": basis or {"basis": f.basis, "basis_by_field": dict(f.basis_by_field), "sec_status": "NOT RUN"},
         "rows": [
             {"key": "roic_avg", "label": "Return on invested capital, average", "value": _pct(f.roic_avg),
              "unit": "percent", "higher_is_better": True},
@@ -117,7 +192,7 @@ def _fundamentals_block(rec: local.TickerRecord) -> Dict[str, Any]:
         "net_cash": f.net_cash,
         "fcf_positive_years": f.fcf_positive_years,
         "fcf_years": f.fcf_years,
-        "source": source_screen(rec.pulled),
+        "source": source_fundamentals(rec),
         "as_of": rec.pulled,
     }
 
@@ -280,7 +355,7 @@ def _valuation_block(rec: local.TickerRecord, note: Optional[research_md.Researc
 
 
 def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
-                  narrative: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+                  narrative: Optional[Dict[str, Any]], guidance_dir: Optional[Path] = None) -> Dict[str, Any]:
     """What moved since last quarter. Mechanical parts first, read parts merged in."""
     v = rec.valuation
     mechanical: List[Dict[str, Any]] = []
@@ -345,6 +420,17 @@ def _what_changed(rec: local.TickerRecord, note: Optional[research_md.ResearchNo
 
     out: Dict[str, Any] = {"mechanical": mechanical}
 
+    # X3: the guidance language of the last two 8-K press releases, diffed by
+    # machine. Written by scripts/guidance_diff.py into analysis/_guidance/; when
+    # that has not run for a name the block says so and gives the command.
+    gd = guidance.load_diff(rec.ticker, guidance_dir)
+    out["guidance_diff"] = gd if gd else guidance.not_run_block(
+        rec.ticker,
+        "The last two 8-K Exhibit 99.1 press releases for this name have not been pulled from EDGAR, so "
+        "there is no mechanical guidance diff. This is the free substitute for a transcript: it carries "
+        "the guidance figures and none of the questions.",
+    )
+
     if note:
         out["earnings_text"] = {"text": note.earnings, "source": SOURCE_NOTE}
 
@@ -408,21 +494,45 @@ def _risks(note: Optional[research_md.ResearchNote], entries) -> Dict[str, Any]:
 
 
 def _gaps(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
-          narrative: Optional[Dict[str, Any]]) -> List[str]:
+          narrative: Optional[Dict[str, Any]], basis: Optional[Dict[str, Any]] = None) -> List[str]:
     gaps: List[str] = []
     v = rec.valuation
+    f = rec.fundamentals
     # Do not hard-code "four". 1,496 of 1,505 names carry four annual statements,
     # but nine carry three or none, and the own-history median runs from 0 to 4
     # points independently of that. Both counts are read off the record.
-    n_fy = int(rec.fundamentals.fcf_years or 0)
-    if n_fy:
+    n_fy = int(f.fcf_years or 0)
+    if n_fy and f.basis == "yfinance":
         gaps.append(
             f"{_WORDS.get(n_fy, str(n_fy))} fiscal year{'' if n_fy == 1 else 's'} of annual "
             f"statements, not five or ten, so every growth figure is over "
             f"{n_fy - 1} interval{'' if n_fy - 1 == 1 else 's'}."
             + (f" The own-history median is a {v.n_hist_years}-point median."
                if v is not None and v.has_own_history else "")
+            + (" The SEC's as-reported history has not been downloaded; the screen measures say how."
+               if not basis or basis.get("sec_status") != "IN USE" else "")
         )
+    elif n_fy:
+        n_all = int(f.n_years or n_fy)
+        gaps.append(
+            f"{_WORDS.get(n_all, str(n_all))} fiscal year{'' if n_all == 1 else 's'} of as-reported "
+            f"statements, each as it stood on the screen date, so every growth figure is over "
+            f"{n_all - 1} interval{'' if n_all - 1 == 1 else 's'}. Restatements filed later are not in them."
+            + (f" The own-history median is a {v.n_hist_years}-point median."
+               if v is not None and v.has_own_history else "")
+        )
+        recon = (basis or {}).get("reconciliation") or {}
+        if recon.get("n_disagree"):
+            gaps.append(
+                f"{recon['n_disagree']} of {recon['n_compared']} screen measures differ between Yahoo's "
+                f"restated statements and the SEC filings over the same fiscal years by more than the "
+                f"tolerance ({', '.join(recon['disagree_on'])}). Both are shown; the score reads the SEC figure."
+            )
+        elif recon and not recon.get("same_window_complete"):
+            gaps.append(
+                "The SEC filings loaded do not cover every fiscal year Yahoo's statements do, so the two "
+                "sources are shown side by side without a verdict on whether they agree."
+            )
     else:
         gaps.append("No annual statement history at all for this name: no growth figure on this "
                     "page has a denominator.")
@@ -451,9 +561,14 @@ def _gaps(rec: local.TickerRecord, note: Optional[research_md.ResearchNote],
     return gaps
 
 
-def _sources(note: Optional[research_md.ResearchNote], as_of: Optional[str] = None) -> List[Dict[str, Any]]:
+def _sources(note: Optional[research_md.ResearchNote], as_of: Optional[str] = None,
+             rec: Optional[local.TickerRecord] = None) -> List[Dict[str, Any]]:
     out = [{"title": "Screen and statement data, Yahoo Finance via yfinance", "url": None,
             "read_date": as_of, "kind": "data"}]
+    if rec is not None and rec.fundamentals.basis != "yfinance":
+        out.append({"title": "Annual statement aggregates, " + SOURCE_SEC,
+                    "url": "https://www.sec.gov/data-research/financial-statement-data-sets",
+                    "read_date": as_of, "kind": "data"})
     if note:
         for s in note.sources:
             out.append({"title": s.title, "url": s.url, "read_date": s.read_date,
@@ -482,10 +597,13 @@ def build_record(
     entries=None,
     narrative_dir: Optional[Path] = None,
     built_at: Optional[str] = None,
+    basis_report: Optional["basis_mod.BasisReport"] = None,
+    guidance_dir: Optional[Path] = None,
 ) -> Dict[str, Any]:
     entries = entries or []
     narrative = _narrative_for(rec.ticker, narrative_dir)
     depth = "deep" if note else ("screen" if rec.in_top_150 else "universe")
+    basis = _basis_block(rec, basis_report)
 
     trends = (
         [t.to_dict() for t in metrics.series_from_rows(note.financials, SOURCE_NOTE, as_of=rec.pulled)]
@@ -531,9 +649,9 @@ def build_record(
              "industry": rec.industry}
         ),
         "headline": (note.stats_line if note else None),
-        "fundamentals": _fundamentals_block(rec),
+        "fundamentals": _fundamentals_block(rec, basis),
         "trends": trends,
-        "what_changed": _what_changed(rec, note, narrative),
+        "what_changed": _what_changed(rec, note, narrative, guidance_dir),
         "thesis": _thesis(note, entries),
         "risks": _risks(note, entries),
         "valuation": _valuation_block(rec, note, peer),
@@ -544,8 +662,8 @@ def build_record(
              "bucket": e.bucket}
             for e in entries
         ],
-        "sources": _sources(note, rec.pulled),
-        "gaps": _gaps(rec, note, narrative),
+        "sources": _sources(note, rec.pulled, rec),
+        "gaps": _gaps(rec, note, narrative, basis),
         "disclaimer": "Research and analysis from public data, not personalised financial advice.",
     }
 
@@ -553,7 +671,7 @@ def build_record(
 def build_all(*, narrative_dir: Optional[Path] = None, built_at: Optional[str] = None
               ) -> Dict[str, Dict[str, Any]]:
     """Every name worth a page: the 16 with notes plus the whole quality top 150."""
-    universe = local.load_universe()
+    universe, basis_report = basis_mod.universe_with_basis()
     notes = research_md.load_all()
     entries = journal_mod.by_ticker()
     top150 = [r for r in universe.values() if r.in_top_150]
@@ -575,6 +693,7 @@ def build_all(*, narrative_dir: Optional[Path] = None, built_at: Optional[str] =
         out[t] = build_record(
             rec, note=notes.get(t), scores=scores, peer=peer_vals.get(t),
             entries=entries.get(t, []), narrative_dir=narrative_dir, built_at=built_at,
+            basis_report=basis_report,
         )
     if orphaned:
         print(f"research notes with no row in the universe, so no page was built: "
