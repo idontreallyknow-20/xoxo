@@ -1,7 +1,9 @@
-"""The new stylesheet must stay in step with the original page.
+"""One stylesheet, one set of theme tokens.
 
-If a theme value drifts, the new pages stop looking like the site they belong to,
-and the drift is invisible until someone opens both in the same theme.
+Until the redesign the front page carried its own copy of the six theme blocks
+and this file checked the copy against desk.css. The front page now loads
+desk.css like every other page, so the check is that there is exactly one
+definition of each token and that every page loads it.
 """
 import re
 from pathlib import Path
@@ -23,43 +25,27 @@ def tokens(src: str, theme: str):
     return dict(re.findall(r"(--[a-z0-9-]+):\s*([^;]+);", m.group(1)))
 
 
-@pytest.mark.parametrize("theme", THEMES)
-def test_theme_values_match_the_original_page(theme):
-    a = tokens(INDEX.read_text(), theme)
-    b = tokens(CSS.read_text(), theme)
-    assert a == b, {k: (a.get(k), b.get(k)) for k in set(a) | set(b) if a.get(k) != b.get(k)}
+def test_the_front_page_no_longer_carries_its_own_copy_of_the_tokens():
+    src = INDEX.read_text()
+    assert "assets/desk.css" in src
+    assert '[data-theme="paper"]' not in src, "index.html defines theme tokens again; desk.css is the one place"
 
 
 def test_every_variable_used_is_defined_in_every_theme():
     css = CSS.read_text()
     used = set(re.findall(r"var\((--[a-z0-9-]+)", css))
     # --i is a per-element reveal index set inline, not a theme token.
-    non_theme = {"--ease-out", "--display", "--mono", "--i"}
+    non_theme = {"--ease-out", "--display", "--mono", "--i", "--rx", "--ry", "--px", "--py", "--d"}
     for theme in THEMES:
         defined = set(tokens(css, theme)) | non_theme
         missing = used - defined
         assert not missing, f"{theme} is missing {sorted(missing)}"
 
 
-def test_index_html_was_changed_only_by_adding_nav_links():
-    """The brief said not to modify existing pages beyond adding links to the new
-    tabs. This is that promise, enforced."""
-    import subprocess
-
-    diff = subprocess.run(["git", "diff", "HEAD", "--unified=0", "--", "dashboard/index.html"],
-                          capture_output=True, text=True, cwd=str(ROOT)).stdout
-    changed = [ln for ln in diff.splitlines()
-               if (ln.startswith("+") or ln.startswith("-")) and not ln.startswith(("+++", "---"))]
-    assert all(ln.startswith("+") for ln in changed), f"index.html has removals: {changed}"
-    for ln in changed:
-        assert "<a href=" in ln and ("analyze/" in ln or "positioning/" in ln), ln
-
-
-def test_the_new_pages_do_not_load_the_old_stylesheet_or_vice_versa():
-    assert "desk.css" not in INDEX.read_text()
-    for shell in (ROOT / "dashboard" / "analyze").glob("*/index.html"):
-        assert "assets/desk.css" in shell.read_text()
-        break
+def test_every_page_shell_loads_the_shared_stylesheet():
+    for shell in list((ROOT / "dashboard" / "analyze").glob("*/index.html"))[:3] + [
+            ROOT / "dashboard" / "positioning" / "index.html", INDEX]:
+        assert "assets/desk.css" in shell.read_text(), shell
 
 
 def test_border_radius_is_zero_everywhere():

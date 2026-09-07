@@ -317,3 +317,41 @@ Consequences that shape everything below:
       audited each extraction, repaired what the audit caught, and then shipped the repair
       unaudited. `tests/test_narrative_quotes.py` closes the fabrication hole mechanically, but
       nothing has checked whether a repaired *claim* still follows from the note.
+
+## Fourth session, 2026-09-07: the daily email, the scan, the redesign
+
+Branch `claude/equity-research-setup-dtxlbl`. Decisions taken by default and recorded in NOTES.md 9a.
+
+- [x] **X15** The sending half of the email. `scripts/an/mail.py`: SMTP over STARTTLS with the credential
+      from `DESK_MAIL_USER` / `DESK_MAIL_PASSWORD` / `DESK_MAIL_TO` only, never logged, never in a repr,
+      redacted out of any server reply; a dry-run mailer, a recording mailer, and a send log whose
+      `live` flag only the real mailer sets. **Never sent a real message**: port 587 is closed here.
+      Verify: `python -m pytest -q tests/test_mail.py` (15 tests) and
+      `python scripts/daily_email.py --dry-run`.
+- [x] **X16** The daily scan. `scripts/an/watch.py`, `scripts/scan.py`, `dashboard/watch.json`. Prices
+      against the journal's own falsifier levels, new EDGAR filings with item codes, one RSS feed; alerts
+      only where a rule Joseph wrote is crossed; a state file so each day lists what is new. Sources
+      that are paid or against their terms (X/Twitter above all) are ruled out in NOTES.md 9b; hourly
+      prices are answered in 9c. **Never run live.** The committed file says NOT RUN.
+      Verify: `python -m pytest -q tests/test_watch.py` (19 tests), `python scripts/scan.py --dry-run`,
+      `python scripts/scan.py --fixture --as-of 2026-09-04 --out /tmp/w.json`.
+      Live: `python scripts/scan.py --live`.
+- [x] **X17** The digest and the schedule. `scripts/an/digest.py` builds the email as data from
+      `watch.json`, `tracker.json` and `positioning.json` and renders it in the `email_picks.py` idiom;
+      `scripts/daily_email.py` previews, dry-runs, records or sends, with `--only-if-alerts` for the
+      alert-only mode. `setup.ps1 -InstallTask` registers the daily and monthly Windows tasks and stores
+      the credential as a user-scope environment variable; `-Daily` and `-Monthly` are what they call.
+      **setup.ps1 has still never been executed** (no PowerShell here).
+      Verify: `python -m pytest -q tests/test_digest.py` (10 tests) and
+      `python scripts/daily_email.py --preview` then open `dashboard/_daily_preview.html`.
+- [x] **X18** The redesign. `dashboard/index.html` rewritten as a shell on the shared stylesheet, the new
+      `assets/motion.js` (canvas depth field, 3D tilt, scroll lifts, view transitions; no library, no
+      CDN; off under reduced motion) and `assets/home.js`; the client-side Finnhub key removed; a
+      Journal tab reading the tracker's sixteen names. The other pages pick up the layer through the
+      shell and the stylesheet. Freeze lifted for `dashboard/` only, `data.js` excepted.
+      Verify: `python -m pytest -q tests/test_home.py tests/test_css_tokens.py tests/test_contrast.py
+      tests/test_site_links.py` and `python scripts/shoot.py --mobile --themes night paper`.
+- [ ] **X19** Reddit mentions through OAuth (NOTES.md 9b). Needs a `post` on the transport. Deferred on
+      value, not terms.
+- [ ] **X20** EDGAR full-text search for mentions of a watched name in other filers' documents. Free.
+- [ ] **X21** The first live run of everything above, on Joseph's machine: NOTES.md 9e, in order.

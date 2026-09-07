@@ -20,6 +20,7 @@ GENERATED = [
     "dashboard/positioning.json",
     "dashboard/backtest.json",
     "dashboard/tracker.json",
+    "dashboard/watch.json",
 ]
 
 

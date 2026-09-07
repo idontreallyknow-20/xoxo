@@ -3,9 +3,17 @@
 For whoever picks this up next, human or model. `SUMMARY.md` is written for Joseph; this one is
 written for the next person to touch the code.
 
-Branch `claude/stock-analysis-scoring-xhuyl9`, PR
-[#1](https://github.com/idontreallyknow-20/xoxo/pull/1). No CI is configured on this repo, so the
+Fourth session on branch `claude/equity-research-setup-dtxlbl` (the first three were
+`claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI is configured on this repo, so the
 gate is local: see **Before you commit** below.
+
+**What changed in the fourth session, in one paragraph.** The freeze on `dashboard/` is lifted
+(`data.js` excepted; everything outside `dashboard/` is still frozen), the front page is rewritten on
+the shared stylesheet with a hand-written motion layer and no client-side API key, and three new
+modules exist: `an/mail.py` sends email, `an/watch.py` scans prices, filings and headlines against the
+journal's own rules, `an/digest.py` turns the scan into the daily email. `setup.ps1 -InstallTask`
+schedules the scan and the email on Windows. `NOTES.md` section 9 has the decisions, the source
+evaluation and what has still never run (everything that touches a network, still).
 
 ---
 
@@ -58,6 +66,9 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
                      merged into the record; universe_with_basis() is what every builder calls (X12)
   guidance.py        8-K Exhibit 99.1 guidance figures, diffed against last quarter's (X3)
   tracker.py         every journal call graded against prices, "so far" (X6)
+  watch.py           the daily scan: prices vs the journal's falsifiers, new filings, headlines (X16)
+  digest.py          the daily email as data, then as HTML (X17)
+  mail.py            SMTP, credential from the environment only, dry-run and provenance (X15)
   outcomes.py        the grades read back: score at call vs outcome, refusing thin samples (X14)
   positioning.py     the memo: three lists, sized from criteria.md
   analysis.py        assembles the record each page renders
@@ -68,9 +79,13 @@ scripts/fetch_*.py   the live pulls, plus listing_status.py, guidance_diff.py an
                      All have --dry-run; fetch_dera.py --basis-report and guidance_diff.py
                      --fixture print their shape on committed miniatures
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
+scripts/scan.py      the daily scan -> dashboard/watch.json (--live, --dry-run, --fixture)
+scripts/daily_email.py  the daily email (--preview, --dry-run, --send, --only-if-alerts)
+setup.ps1            -InstallTask registers both Windows tasks; -Daily and -Monthly are what they run
 scripts/shoot.py     headless Chromium: console errors, overflow, screenshots
 
-dashboard/assets/    desk.css (theme tokens copied verbatim from index.html),
+dashboard/assets/    desk.css (the one definition of the theme tokens; index.html loads it too),
+                     motion.js (depth field, tilt, lifts; no library), home.js (the front page),
                      desk-common.js, analyze.js, analyze-index.js, compare.js, positioning.js
 dashboard/analyze/compare/   /analyze/compare/?t=A,B,C,D, one shell, selection in the address
 dashboard/analysis/  generated per-ticker JSON + _narrative/ (quote-verified)
@@ -98,8 +113,13 @@ list. Do not remove that.
 valuation multiples and drawdowns are never coloured, because a 44% fall is the reason the
 cyclical-turn bucket exists.
 
-**Do not modify anything that existed before this branch.** `tests/test_nothing_existing_was_touched.py`
-enforces it. `dashboard/index.html` may only gain lines, and only lines that are links.
+**Do not modify anything that existed before this work outside `dashboard/`.**
+`tests/test_nothing_existing_was_touched.py` enforces it. Since the fourth session `dashboard/` may
+change freely except `dashboard/data.js`, which is written by the frozen `build_dashboard.py`.
+
+**No secret anywhere but the environment.** The mail password, the Finnhub key, the Alpha Vantage key.
+`tests/test_privacy.py` scans every tracked file. The mailer redacts the password out of server replies
+before raising, because SMTP servers echo the AUTH string.
 
 ---
 
@@ -107,7 +127,7 @@ enforces it. `dashboard/index.html` may only gain lines, and only lines that are
 
 ```bash
 pip install pytest playwright                        # neither is in requirements.txt
-python -m pytest -q                                  # 862 tests, ~80 s
+python -m pytest -q                                  # 911 tests, ~3 min
 python scripts/build_all.py                          # regenerate everything
 python scripts/shoot.py --mobile --themes night paper  # 32 page/theme/width combinations
 ```
@@ -121,6 +141,9 @@ intentional. `tests/test_build_determinism.py` compares everything else.
 ---
 
 ## What is genuinely unfinished
+
+The fourth session's additions, in the order to run them: `NOTES.md` 9e. Then the list below, which
+is unchanged because none of it could run here either.
 
 The second session (2026-09-06, `NOTES.md` section 7) built X7, X8, X5 and X6 from the backlog.
 The third (2026-09-07, section 8) wired the modules nothing consumed: DERA into the score (X12),

@@ -450,6 +450,118 @@ started, which is what they meant. Against that base the only pre-existing files
 Unchanged from the last session: the front page's Journal tab (13 names against 16) and the two
 defects in `price_screen.py`. Neither was touched.
 
+## Fourth session, 2026-09-07: the email, the scan, the redesign
+
+Branch `claude/equity-research-setup-dtxlbl`. Fourth container, same wall: every market-data host,
+the SEC, Reddit, StockTwits, Google News and port 587 to Gmail all fail at the proxy (checked with
+curl before building). So the pattern holds: everything below is fixture-tested, prints its own
+provenance, and **has never made a real request or sent a real message**. Your machine is still
+where it runs for the first time. `NOTES.md` 9e has the order.
+
+### The four boxes you left blank, and what I did with them
+
+You were not watching, so I took the most reversible default for each and wrote it down in
+`NOTES.md` 9a. Overturn any of them in a sentence.
+
+- **Untouchable list: lifted for `dashboard/` only.** A redesign and a frozen front page cannot both
+  be true. `data.js` stays frozen because the frozen `build_dashboard.py` writes it. Everything
+  outside `dashboard/` is as frozen as it was, and the tests say so.
+- **Money: still zero.** That rules out X/Twitter outright: the free API tier cannot read tweets,
+  reading costs about US$100 a month at the entry tier, and scraping breaches their terms, which is
+  the standard this repo already applied to Motley Fool. The scan does not touch X.
+- **The two defects: left alone.** Both files are still frozen. The new front page's Journal tab
+  reads the tracker (sixteen names) rather than `data.js` (thirteen), so you see the right journal
+  without the frozen generator being fixed.
+- **Cadence: a daily readout, alerts only when one of your written rules fires, never a trade
+  recommendation.** Your README already lists "a holding drops 15%+ in a week or hits its 'wrong if'
+  trigger" as the event-driven case; the email is that line automated, and it stops there. README and
+  `criteria.md` are unchanged because on that reading nothing contradicts them. One flag
+  (`--only-if-alerts`) makes it alert-only.
+
+One correction to your brief: `setup.ps1` had no `-InstallTask` or `-Monthly` to copy. It has them now.
+
+### a) The email sends
+
+```bash
+python scripts/daily_email.py --preview        # writes dashboard/_daily_preview.html (gitignored), open it
+python scripts/daily_email.py --dry-run        # who would get what; needs no credential
+export DESK_MAIL_USER=you@gmail.com DESK_MAIL_PASSWORD='the app password' DESK_MAIL_TO=you@gmail.com
+python scripts/daily_email.py --send
+```
+
+The password lives in `DESK_MAIL_PASSWORD` and nowhere else: not in a flag, not in a file, not in a
+log line, not in an error (the mailer strips it out of the server's reply before raising, because
+SMTP servers echo the AUTH string back). `tests/test_privacy.py` still scans every tracked file.
+`data/cache/mail/sent.json` records every send and whether it was real; right now it says never.
+
+On Windows, `setup.ps1 -InstallTask` asks for the address and app password once, stores them as
+user-scope environment variables (the registry, not a file in this folder), and registers "Desk
+daily scan and email" at 17:45 and "Desk monthly snapshot" on the first of the month. `-Daily` is
+what the daily task runs; try it by hand first. **The script has still never been executed**, there
+is no PowerShell here, so expect the first run to need a look.
+
+### b) The scan
+
+```bash
+python scripts/scan.py --dry-run       # every URL it would fetch, nothing sent
+python scripts/scan.py --live          # closes, filings, headlines -> dashboard/watch.json
+python scripts/scan.py --fixture --as-of 2026-09-04 --out /tmp/w.json   # the file's shape, labelled SYNTHETIC
+```
+
+It watches every name with a journal call plus anything in `portfolio/holdings.csv`. Three sources,
+all free and all inside their terms: yfinance closes, EDGAR filings with their item codes, and the
+per-ticker RSS feed Yahoo publishes for syndication. An alert is a crossing of a rule *you* wrote:
+the journal's "close under $X" (parsed by the tracker's own parser, so the two cannot disagree),
+the README's 15% week, a new earnings 8-K. A 5% session, a 13D, a Form 4 pile get a line, not an
+alert. Headlines are listed, not scored, because nothing here can read sentiment honestly. A state
+file means tomorrow lists only what is new. The committed `watch.json` says `NOT RUN`.
+
+**"Scan tweets, scan everything."** The table in `NOTES.md` 9b prices each source against its terms.
+X is out (above). Reddit's OAuth tier is legitimately free and usable and I did not build it, on
+value rather than terms: a mention count on KLAC is small and noisy, and a sentiment score over it
+would be a number attached to nothing. StockTwits' terms and API status could not be verified from
+here and read as a no for a scheduled collector. EDGAR full-text search is free and worth an evening
+for mentions of your names inside other companies' filings. Both are on the backlog as X19 and X20.
+
+**Hourly prices.** Not built, and `NOTES.md` 9c says what it would take: yfinance is a scraper that
+already throttles at two workers, 150 names hourly is a thousand name-hours a day against it, and
+every rule you have written is a closing-price rule or a filing rule, so an 11am alert is one your
+own cadence says to ignore. Daily after the close is what runs. If you ever write an intraday rule,
+that is when to revisit it.
+
+### c) The redesign
+
+Open `python scripts/serve.py` and look at the front page, then Picks, then `/positioning/`.
+
+The layout is one column of air: the number first, thin rules, more white space, fewer boxes. The
+motion is all hand-written, no library, no CDN, nothing vendored, so the pages are still plain files
+off a plain server: a depth field of 150 points behind every page, projected with a real
+perspective divide and joined by faint lines, drifting past you and parallaxing with the pointer and
+the scroll; picks, metric cards, candidates and the standing call tilt in three dimensions under
+the pointer with a light that follows it (underneath the text, so a tilted card is exactly as
+readable as a flat one); sections lift into place as you scroll; tabs cross-fade with depth. All of
+it is off under your system's reduced-motion setting and under Settings, Motion: off, and the page
+reads the same either way. The six themes and their tokens are unchanged, so every contrast
+measurement in `NOTES.md` 3b still holds.
+
+Two things the redesign removed on purpose: the Finnhub key field in Settings and the browser's
+call to Finnhub with it. The old page violated the one rule you put first; the new one has no key
+anywhere and says where prices come from instead. A Journal tab was added.
+
+`python scripts/shoot.py --mobile --themes night paper` renders every page at 1440px and 390px in
+two themes with zero console errors and no horizontal overflow.
+
+### d) Beating the market
+
+Nothing changed here, because nothing could: one dated snapshot, no price history, `backtest.json`
+still `NOT RUN`, the tracker still `NOT GRADED`. The scan and the email are about watching, not
+measuring. The measuring starts when the monthly task takes its first snapshot on your machine.
+
+### What has never run, still
+
+Everything that touches a network, now including the scan and the email. `NOTES.md` 9e lists the
+first-run commands in order and what is most likely to break on each.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -460,14 +572,15 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 862 (799 after the second session, plus 27 for X12, 8 for X13, 17 for X3 and 11 for X14; `python -m pytest` on 2026-09-07: 862 passed) |
+| tests | 911 (862 after the third session, plus 15 for the mailer, 19 for the scan, 10 for the digest, 8 for the front page, minus 3 that pinned the old freeze; `python -m pytest` on 2026-09-07: 911 passed) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |
 | quarter narratives, quote-verified | 16 (122 quotes, 0 unverified) |
 | peer valuations computed | 150 |
-| lines added to `dashboard/index.html` | 2 |
-| existing files otherwise modified | 0, enforced by `tests/test_nothing_existing_was_touched.py` |
+| `dashboard/index.html` | rewritten (freeze lifted for `dashboard/` only, NOTES.md 9a) |
+| existing files modified outside `dashboard/` | `setup.ps1` only; everything else enforced by `tests/test_nothing_existing_was_touched.py` |
+| real requests made, real emails sent | none, in four sessions |
 | clean-clone check | full suite passes, rebuild byte-identical apart from `built_at` |
 | money spent | none |
 | API keys in any generated file | none, enforced by `tests/test_privacy.py` |

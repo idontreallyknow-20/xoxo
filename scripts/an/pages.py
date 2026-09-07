@@ -44,6 +44,7 @@ SHELL = """<!doctype html>
 This page renders from {data}. Without JavaScript, read that file directly.
 </div></noscript>
 <script>{setup}</script>
+<script src="{root}assets/motion.js"></script>
 <script src="{root}assets/desk-common.js"></script>
 <script src="{root}assets/{script}"></script>
 </body>
