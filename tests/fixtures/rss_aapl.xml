@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Yahoo! Finance: AAPL News</title>
+<link>http://finance.yahoo.com/q/h?s=AAPL</link>
+<description>Latest Financial News for AAPL</description>
+<language>en-US</language>
+<item>
+<title>Example Corp reports fiscal third quarter results</title>
+<link>https://example.com/news/q3-results</link>
+<pubDate>Fri, 31 Jul 2026 20:31:00 +0000</pubDate>
+<guid isPermaLink="false">q3-results-2026</guid>
+<description>Quarterly results, as filed.</description>
+</item>
+<item>
+<title>Analyst day set for September &amp; a new product line is expected</title>
+<link>https://example.com/news/analyst-day</link>
+<pubDate>Thu, 30 Jul 2026 13:05:00 GMT</pubDate>
+<guid isPermaLink="false">analyst-day-2026</guid>
+</item>
+<item>
+<title>   Whitespace   in   the   title   </title>
+<link>https://example.com/news/ws</link>
+<pubDate>not a date</pubDate>
+</item>
+<item>
+<title></title>
+<link>https://example.com/news/empty</link>
+</item>
+</channel>
+</rss>

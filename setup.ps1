@@ -18,13 +18,37 @@
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1 -SkipPulls
     Set up and open the dashboard without fetching any data.
+
+.EXAMPLE
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask
+    Register two Windows scheduled tasks: the daily scan and email at 17:45, and
+    the monthly snapshot on the first of the month. Asks for the Gmail app
+    password once and stores it as a user-scope environment variable (the
+    registry under HKCU\Environment, not a file in this folder).
+
+.EXAMPLE
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily
+    What the daily task runs: scan prices, filings and headlines, then send the email.
+
+.EXAMPLE
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -Monthly
+    What the monthly task runs: archive a dated snapshot and rebuild every page.
 #>
 
 [CmdletBinding()]
 param(
-    [switch]$SkipPulls,   # set up only, no network pulls
-    [switch]$NoServe      # do everything except start the server
+    [switch]$SkipPulls,     # set up only, no network pulls
+    [switch]$NoServe,       # do everything except start the server
+    [switch]$InstallTask,   # register the daily and monthly scheduled tasks, then exit
+    [switch]$UninstallTask, # remove them
+    [switch]$Daily,         # run the daily scan and email (what the daily task calls), then exit
+    [switch]$Monthly,       # run the monthly snapshot and rebuild (what the monthly task calls), then exit
+    [switch]$OnlyIfAlerts,  # with -Daily: send the email only when a written rule fired
+    [string]$DailyAt = "17:45"   # local time for the daily task; the close is 16:00 ET
 )
+
+$TASK_DAILY = "Desk daily scan and email"
+$TASK_MONTHLY = "Desk monthly snapshot"
 
 $REPO_URL = "https://github.com/idontreallyknow-20/xoxo.git"
 $PORT = 8765
@@ -125,6 +149,97 @@ if (-not $root) {
 Set-Location -LiteralPath $root -ErrorAction SilentlyContinue
 if ((Get-Location).Path -ne $root) { Die "could not open $root. Is it on a drive that is disconnected?" }
 Ok "using $root"
+
+# ---------------------------------------------------------------- scheduled runs
+# These branches are what the scheduled tasks call. They run with no prompts and
+# no pulls beyond their own, log to data\cache\desk-<name>.log, and exit.
+
+if ($Daily) {
+    $log = Join-Path $root "data\cache\desk-daily.log"
+    New-Item -ItemType Directory -Force -Path (Split-Path $log) | Out-Null
+    "==== $(Get-Date -Format s) daily" | Out-File -Append -FilePath $log
+    Say "Daily scan"
+    & $PY scripts/scan.py --live 2>&1 | Tee-Object -FilePath $log -Append
+    if ($LASTEXITCODE -ne 0) { Warn "the scan did not finish cleanly; the email says what it has" }
+    Say "Daily email"
+    $emailArgs = @("scripts/daily_email.py", "--send", "--preview")
+    if ($OnlyIfAlerts) { $emailArgs += "--only-if-alerts" }
+    & $PY @emailArgs 2>&1 | Tee-Object -FilePath $log -Append
+    if ($LASTEXITCODE -eq 2) { Warn "no credential in the environment. Run setup.ps1 -InstallTask once to store it." }
+    elseif ($LASTEXITCODE -ne 0) { Warn "the send failed. The log is $log" }
+    else { Ok "done" }
+    exit $LASTEXITCODE
+}
+
+if ($Monthly) {
+    $log = Join-Path $root "data\cache\desk-monthly.log"
+    New-Item -ItemType Directory -Force -Path (Split-Path $log) | Out-Null
+    "==== $(Get-Date -Format s) monthly" | Out-File -Append -FilePath $log
+    Say "Monthly snapshot (see scripts/an/power.py for why monthly)"
+    & $PY scripts/snapshot.py 2>&1 | Tee-Object -FilePath $log -Append
+    Say "Grading the journal against prices"
+    & $PY scripts/track_calls.py --live 2>&1 | Tee-Object -FilePath $log -Append
+    Say "Rebuilding every page"
+    & $PY scripts/build_all.py 2>&1 | Tee-Object -FilePath $log -Append
+    exit $LASTEXITCODE
+}
+
+if ($UninstallTask) {
+    foreach ($n in @($TASK_DAILY, $TASK_MONTHLY)) {
+        if (Get-ScheduledTask -TaskName $n -ErrorAction SilentlyContinue) {
+            Unregister-ScheduledTask -TaskName $n -Confirm:$false
+            Ok "removed '$n'"
+        } else { Info "'$n' was not registered" }
+    }
+    exit 0
+}
+
+if ($InstallTask) {
+    Say "Email credential"
+    Info "The daily email sends through Gmail with an app password (Google account > Security >"
+    Info "2-Step Verification > App passwords). It is stored as a user-scope environment variable,"
+    Info "which lives in the registry under HKCU\Environment, not in any file in this folder."
+    Info "Press Enter on any question to keep what is already stored."
+    $cur = [Environment]::GetEnvironmentVariable("DESK_MAIL_USER", "User")
+    $user = Read-Host "    Gmail address that sends$(if ($cur) { " [$cur]" })"
+    if ([string]::IsNullOrWhiteSpace($user)) { $user = $cur }
+    $curTo = [Environment]::GetEnvironmentVariable("DESK_MAIL_TO", "User")
+    $to = Read-Host "    Send to (blank = same address)$(if ($curTo) { " [$curTo]" })"
+    if ([string]::IsNullOrWhiteSpace($to)) { $to = if ($curTo) { $curTo } else { $user } }
+    $hasPw = -not [string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable("DESK_MAIL_PASSWORD", "User"))
+    $pwSecure = Read-Host "    App password$(if ($hasPw) { ' [stored, Enter keeps it]' })" -AsSecureString
+    $pw = [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwSecure))
+    if ([string]::IsNullOrWhiteSpace($user)) { Die "an address is needed to send from" }
+    if ([string]::IsNullOrWhiteSpace($pw) -and -not $hasPw) { Die "an app password is needed. Nothing was stored." }
+    [Environment]::SetEnvironmentVariable("DESK_MAIL_USER", $user, "User")
+    [Environment]::SetEnvironmentVariable("DESK_MAIL_TO", $to, "User")
+    if (-not [string]::IsNullOrWhiteSpace($pw)) { [Environment]::SetEnvironmentVariable("DESK_MAIL_PASSWORD", $pw, "User") }
+    $pw = $null
+    Ok "stored for this Windows user. Remove with: [Environment]::SetEnvironmentVariable('DESK_MAIL_PASSWORD', `$null, 'User')"
+
+    $sec = [Environment]::GetEnvironmentVariable("SEC_USER_AGENT", "User")
+    $secIn = Read-Host "    Name and email for SEC requests (they ask for it)$(if ($sec) { " [$sec]" })"
+    if (-not [string]::IsNullOrWhiteSpace($secIn)) { [Environment]::SetEnvironmentVariable("SEC_USER_AGENT", $secIn.Trim(), "User") }
+
+    Say "Registering the scheduled tasks"
+    $ps = (Get-Command powershell).Source
+    $script = Join-Path $root "setup.ps1"
+    $daily = New-ScheduledTaskAction -Execute $ps -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$script`" -Daily" -WorkingDirectory $root
+    $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 2) -MultipleInstances IgnoreNew
+    $tDaily = New-ScheduledTaskTrigger -Daily -At $DailyAt
+    Register-ScheduledTask -TaskName $TASK_DAILY -Action $daily -Trigger $tDaily -Settings $settings -Force `
+        -Description "Scans prices, SEC filings and headlines for the journal's names and emails the digest. setup.ps1 -Daily" | Out-Null
+    Ok "'$TASK_DAILY' every day at $DailyAt"
+    # New-ScheduledTaskTrigger has no monthly form, so the monthly task goes through
+    # schtasks, which does: the first of every month at 18:30.
+    $monthlyCmd = "`"$ps`" -NoProfile -ExecutionPolicy Bypass -File `"$script`" -Monthly"
+    schtasks /Create /F /SC MONTHLY /D 1 /ST 18:30 /TN "$TASK_MONTHLY" /TR $monthlyCmd | Out-Null
+    if ($LASTEXITCODE -ne 0) { Warn "schtasks could not register the monthly task; run setup.ps1 -Monthly by hand on the first of the month" }
+    else { Ok "'$TASK_MONTHLY' on the first of every month at 18:30" }
+    Info "see them in Task Scheduler, or: Get-ScheduledTask -TaskName 'Desk*'"
+    Info "try one now:  powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily"
+    exit 0
+}
 
 # ---------------------------------------------------------------- update
 
