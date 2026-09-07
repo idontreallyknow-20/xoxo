@@ -813,7 +813,35 @@ high-scoring name that was Passed and then rallied counts for the score and agai
 `tracker.json` carries it as `score_vs_outcome` and `/positioning/` renders it under the grades.
 The committed file reads INSUFFICIENT with four shortfalls, which is correct: there are no grades.
 
-### 8f. What this session did not do, on purpose
+### 8f. setup.ps1 brought up to date, and a scheduled job for the thing that matters
+
+The Windows script from the second session ran three pulls and stopped. It now runs the whole
+sequence in dependency order, which matters in one place: the EDGAR ticker map has to be cached
+before the DERA step, because `dera_fundamentals.ticker_cik_map` reads that file and never fetches,
+so without it every name silently stays on the Yahoo basis. It also rebuilds afterwards, which the
+old one did not: a pull that nothing rebuilds changes no page.
+
+Two things worth recording about the design.
+
+**The monthly job cannot be `snapshot.py` alone.** `snapshots.take()` keys the archive on the CSV's
+`pulled` column and no-ops when that date is already archived, so a scheduled job that ran only the
+snapshot would re-archive 2026-09-04 every month forever and look like it was working. The `-Monthly`
+path therefore reruns the four pipeline steps first (`universe`, `fundamentals`, `quality_screen`,
+`price_screen`), then rebuilds, then archives. About twenty minutes, most of it in the fundamentals
+pull, which is cached for thirty days and so lines up with a monthly cadence exactly.
+
+**Monthly archiving against `criteria.md`'s quarterly cadence is not a conflict, and the script says
+so where it would be misread.** The README says do not run research more often than quarterly, which
+is about decisions. A snapshot is a recording with no decision attached. Archive monthly, decide
+quarterly; `power.py` is the reason for the first half and `criteria.md` is the reason for the second.
+
+**Not executed.** There is no PowerShell runtime in this container. Every Python command the script
+invokes was run here and its behaviour confirmed (including that `snapshot.py --report` says "A panel
+needs at least two dates. There is one."), and the file was checked for the syntax faults that kill a
+PS script silently: no whitespace after a line-continuation backtick, balanced braces and parens,
+here-string terminator at column 0. The PowerShell itself has never been parsed by PowerShell.
+
+### 8g. What this session did not do, on purpose
 
 - No weight changed, no component added. The three revision components still correlate 0.54 to
   0.77 and that is still reported rather than fixed.

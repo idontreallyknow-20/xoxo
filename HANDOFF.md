@@ -127,7 +127,13 @@ The third (2026-09-07, section 8) wired the modules nothing consumed: DERA into 
 the measured attrition into the backtest limitations (X13), the 8-K guidance diff (X3) and the
 tracker's read path (X14). Everything that touches a remote source is fixture-tested and has never
 made a real request, so the list is now **live runs that need a machine with egress**, each a
-single command that prints its own provenance. In order of value:
+single command that prints its own provenance.
+
+On Windows all of it is in `setup.ps1`: `-File setup.ps1` for the interactive run,
+`-InstallTask` to register the monthly snapshot job, `-Monthly` to run that job by hand,
+`-Verify` to install pytest and run the suite. The script is written but **has never been executed**:
+no PowerShell runtime existed in the container it was written in. Every Python command it calls is
+verified; the PowerShell itself is not. In order of value:
 
 1. **X12 live, the one that changes the score's inputs.** `export SEC_USER_AGENT="Name email"`,
    `python scripts/fetch_edgar.py --dry-run AAPL` (caches the ticker map), `python

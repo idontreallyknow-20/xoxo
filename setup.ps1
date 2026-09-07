@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Finds the project (or clones it), installs the Python libraries, optionally
-    runs the live data pulls, and opens the dashboard in a browser.
+    runs the live data pulls, rebuilds every page, and opens the dashboard.
 
     Nothing here deletes or overwrites your work. If a step fails it says so and
     carries on to the next one, because most of them are independent.
@@ -14,20 +14,54 @@
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1
+    The normal run. Sets up, asks before each pull, rebuilds, opens the dashboard.
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1 -SkipPulls
     Set up and open the dashboard without fetching any data.
+
+.EXAMPLE
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask
+    Register the monthly job with Windows so you never have to remember it.
+    This is the single most valuable thing in this file. See "Why monthly" below.
+
+.EXAMPLE
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -Monthly
+    The monthly job itself, run by hand. No questions, no browser, no keys needed.
+    Reruns the screening pipeline and archives a dated snapshot of what it saw.
+
+.NOTES
+    Why monthly, and why it is not the same as trading monthly.
+
+    A snapshot is a recording of what the screen said on a day. It is not a
+    prompt to do anything. The scorecard cannot be tested until several of them
+    exist, and the cadence decides how long that takes: quarterly archiving
+    means three years before any verdict is possible, monthly means one year.
+    That is measured, in scripts/an/power.py, not guessed.
+
+    criteria.md still says re-underwrite quarterly and that is still right.
+    Archive monthly, decide quarterly. They are different activities.
 #>
 
 [CmdletBinding()]
 param(
-    [switch]$SkipPulls,   # set up only, no network pulls
-    [switch]$NoServe      # do everything except start the server
+    [switch]$SkipPulls,           # set up only, no network pulls
+    [switch]$NoServe,             # do everything except start the server
+    [switch]$Monthly,             # unattended: rerun the pipeline, rebuild, archive a snapshot
+    [switch]$InstallTask,         # register the monthly job with Windows Task Scheduler
+    [switch]$RemoveTask,          # unregister it
+    [switch]$Verify,              # install pytest and run the test suite
+    [string]$DeraSince = "2016q1" # first SEC quarter to download. 2016q1 is ten years.
 )
 
 $REPO_URL = "https://github.com/idontreallyknow-20/xoxo.git"
 $PORT = 8765
+$TASK_NAME = "Stock desk monthly snapshot"
+
+# The sixteen names with a hand-written research note. The guidance diff only
+# makes sense for names somebody has actually read.
+$RESEARCHED = @("ACN","ADBE","ADSK","AMAT","BKNG","CPRT","GOOGL","IDXX",
+                "ISRG","KLAC","LRCX","META","MSFT","NOW","NVR","REGN")
 
 function Say  ($m) { Write-Host ""; Write-Host "==> $m" -ForegroundColor Cyan }
 function Ok   ($m) { Write-Host "    $m" -ForegroundColor Green }
@@ -36,10 +70,22 @@ function Warn ($m) { Write-Host "    $m" -ForegroundColor Yellow }
 function Die  ($m) { Write-Host ""; Write-Host "STOPPED: $m" -ForegroundColor Red; Write-Host ""; exit 1 }
 
 function Ask-YesNo ($question, $default = $true) {
+    if ($Monthly) { return $default }   # the unattended job never asks
     $hint = if ($default) { "[Y/n]" } else { "[y/N]" }
     $answer = Read-Host "    $question $hint"
     if ([string]::IsNullOrWhiteSpace($answer)) { return $default }
     return $answer.Trim().ToLower().StartsWith("y")
+}
+
+# Run a python script, report how it went, and never stop the whole run over it.
+function Step ($py, $label, [string[]]$argv) {
+    if (-not [string]::IsNullOrWhiteSpace($label)) { Info "$label" }
+    & $py @argv
+    if ($LASTEXITCODE -ne 0) {
+        Warn "'$($argv -join ' ')' exited $LASTEXITCODE. Carrying on."
+        return $false
+    }
+    return $true
 }
 
 # ---------------------------------------------------------------- python
@@ -126,6 +172,38 @@ Set-Location -LiteralPath $root -ErrorAction SilentlyContinue
 if ((Get-Location).Path -ne $root) { Die "could not open $root. Is it on a drive that is disconnected?" }
 Ok "using $root"
 
+# ---------------------------------------------------------------- the monthly task
+
+if ($RemoveTask) {
+    Say "Removing the monthly job"
+    schtasks /delete /tn "$TASK_NAME" /f
+    if ($LASTEXITCODE -ne 0) { Warn "could not remove it. It may not have been registered." }
+    else { Ok "gone. Nothing will run on its own any more." }
+    exit 0
+}
+
+if ($InstallTask) {
+    Say "Registering the monthly job with Windows"
+    $me = Join-Path $root "setup.ps1"
+    if (-not (Test-Path $me)) { Die "cannot find setup.ps1 in $root, so there is nothing to schedule." }
+
+    $cmd = "powershell -ExecutionPolicy Bypass -NoProfile -File `"$me`" -Monthly"
+    schtasks /create /tn "$TASK_NAME" /tr "$cmd" /sc MONTHLY /d 1 /st 09:00 /f
+    if ($LASTEXITCODE -ne 0) {
+        Warn "could not register it automatically."
+        Info "Open Task Scheduler yourself, create a monthly task, and point it at:"
+        Info "  $cmd"
+        exit 1
+    }
+    Ok "done. It runs on the 1st of every month at 9am."
+    Info "your laptop has to be awake at the time. If it is usually shut, run"
+    Info "  powershell -ExecutionPolicy Bypass -File setup.ps1 -Monthly"
+    Info "by hand whenever you remember. It is safe to run twice in a month."
+    Write-Host ""
+    Info "remove it later with:  powershell -ExecutionPolicy Bypass -File setup.ps1 -RemoveTask"
+    exit 0
+}
+
 # ---------------------------------------------------------------- update
 
 Say "Getting the latest version"
@@ -156,47 +234,132 @@ if ($LASTEXITCODE -ne 0) {
 }
 Ok "done"
 
+# ---------------------------------------------------------------- the monthly job
+
+if ($Monthly) {
+    Say "Monthly job: rerun the screen and archive what it saw"
+    Info "this is a recording, not a signal to trade. Re-underwrite quarterly, per criteria.md."
+    Info "expect 15 to 25 minutes, most of it in the fundamentals pull."
+    Write-Host ""
+
+    Step $PY "step 1 of 6: the universe"          @("scripts/universe.py")       | Out-Null
+    Step $PY "step 2 of 6: four years of statements (cached 30 days, so this is the slow one)" `
+                                                  @("scripts/fundamentals.py")   | Out-Null
+    Step $PY "step 3 of 6: quality score, top 150" @("scripts/quality_screen.py") | Out-Null
+    Step $PY "step 4 of 6: price screen and buckets" @("scripts/price_screen.py") | Out-Null
+    Step $PY "step 5 of 6: rebuild every page"     @("scripts/build_dashboard.py") | Out-Null
+    Step $PY ""                                    @("scripts/build_all.py")      | Out-Null
+
+    Say "step 6 of 6: archiving the snapshot"
+    & $PY scripts/snapshot.py
+    if ($LASTEXITCODE -ne 0) { Warn "the snapshot did not finish cleanly." }
+
+    Say "Where the archive stands"
+    & $PY scripts/snapshot.py --report
+
+    Say "Monthly job done"
+    Info "nothing here decided anything. Look at /positioning/ when you next re-underwrite."
+    exit 0
+}
+
 # ---------------------------------------------------------------- the pulls
 
 if (-not $SkipPulls) {
 
     Say "Grading your journal calls against real prices"
-    Info "this needs no key. It pulls daily closes for your 16 names plus SPY and QQQ."
+    Info "no key needed. Pulls daily closes for your 16 names plus SPY and QQQ."
     if (Ask-YesNo "Run it now?") {
-        & $PY scripts/track_calls.py --live
-        if ($LASTEXITCODE -ne 0) { Warn "that did not finish cleanly. The dashboard still works." }
-        else { Ok "done, look for 'Every call, graded' at the bottom of /positioning/" }
+        Step $PY "" @("scripts/track_calls.py", "--live") | Out-Null
+        Ok "look for 'Every call, graded' near the bottom of /positioning/"
+        Info "the read path under it stays INSUFFICIENT until there are 20 graded calls"
+        Info "on 4 separate dates. Right now every call is dated 2026-09-04, so it will"
+        Info "refuse to report a correlation, which is correct."
     }
 
-    Say "SEC filings and fundamentals"
-    Info "the SEC asks for a real name and email in the request, no signup, no key."
-    $sec = Read-Host "    Your name and email (e.g. Joseph Chen joseph@example.com), or press Enter to skip"
+    Say "SEC filings"
+    Info "the SEC asks for a real name and email in the request. No signup, no key, no cost."
+    $sec = if ($Monthly) { "" } else { Read-Host "    Your name and email (e.g. Joseph Chen joseph@example.com), or press Enter to skip" }
     if (-not [string]::IsNullOrWhiteSpace($sec)) {
         $env:SEC_USER_AGENT = $sec.Trim()
 
-        Info "pulling KLAC's filings..."
-        & $PY scripts/fetch_edgar.py --facts --exhibits KLAC
-        if ($LASTEXITCODE -ne 0) { Warn "the EDGAR pull did not finish cleanly." }
+        # This caches the ticker-to-CIK map, which everything else needs to turn
+        # "AAPL" into "0000320193". Cheap, and the DERA step is useless without it.
+        Step $PY "caching the ticker map, and pulling KLAC as a sanity check..." `
+                 @("scripts/fetch_edgar.py", "--facts", "--exhibits", "KLAC") | Out-Null
 
-        if (Ask-YesNo "Also download the SEC bulk data sets? They are 50-100 MB per quarter." $false) {
-            & $PY scripts/fetch_dera.py --since 2023q1
-            if ($LASTEXITCODE -ne 0) { Warn "the download did not finish cleanly." }
-            else {
-                Info "checking it against Apple's 10-K, this should print 383,285,000,000 for FY2023:"
-                & $PY scripts/fetch_dera.py --show 320193 --metric revenue
-            }
+        Say "SEC as-reported fundamentals (the big one)"
+        Info "this replaces the four restated years of Yahoo data the whole score sits on"
+        Info "with ten years of filings, dated by when they were filed. It is the reason"
+        Info "criteria.md's 'a paid source fixes this for 20 to 80 dollars a month' is now moot."
+        Warn "cost: about 40 files, 50 to 100 MB each. Call it 2 to 4 GB and up to an hour."
+        Info "it is resumable. Stop it any time and run this script again to carry on."
+        if (Ask-YesNo "Download them?" $false) {
+            Step $PY "downloading from $DeraSince..." @("scripts/fetch_dera.py", "--since", $DeraSince) | Out-Null
+
+            Info ""
+            Info "checking it against Apple's 10-K. FY2023 net sales should read 383,285,000,000:"
+            & $PY scripts/fetch_dera.py --show 320193 --metric revenue
+
+            Info ""
+            Info "and here is what the score will actually read, name by name,"
+            Info "with every place the SEC filings disagree with Yahoo:"
+            & $PY scripts/fetch_dera.py --basis-report
+        }
+
+        Say "Guidance changes from the 8-K press releases"
+        Info "the last two earnings releases per name, diffed for what management guided."
+        Info "This is the free stand-in for a transcript. About 5 requests per name."
+        if (Ask-YesNo "Run it for your 16 researched names?") {
+            Step $PY "" (@("scripts/guidance_diff.py") + $RESEARCHED) | Out-Null
+            Ok "look under 'What changed since the last report' on those pages"
         }
     }
 
     Say "Survivorship check"
     Info "free key from https://www.alphavantage.co/support/#api-key, takes 30 seconds."
+    Info "it costs 2 of your 25 daily requests and turns 'flattering by an unknown"
+    Info "amount' in every backtest limitation into an actual measured number."
     Info "your key is used in this window only and is never saved anywhere."
-    $av = Read-Host "    Paste your Alpha Vantage key, or press Enter to skip"
+    $av = if ($Monthly) { "" } else { Read-Host "    Paste your Alpha Vantage key, or press Enter to skip" }
     if (-not [string]::IsNullOrWhiteSpace($av)) {
         $env:ALPHAVANTAGE_KEY = $av.Trim()
-        & $PY scripts/listing_status.py --fetch
-        if ($LASTEXITCODE -ne 0) { Warn "that did not finish cleanly. It costs 2 of your 25 daily requests." }
+        Step $PY "" @("scripts/listing_status.py", "--fetch") | Out-Null
     }
+
+    # Whatever came back above, the pages only show it after a rebuild.
+    Say "Rebuilding the pages from whatever was fetched"
+    Step $PY "" @("scripts/build_all.py") | Out-Null
+    Ok "done"
+}
+
+# ---------------------------------------------------------------- verify
+
+if ($Verify) {
+    Say "Running the test suite"
+    Info "pytest is not in requirements.txt, so installing it now."
+    & $PY -m pip install --quiet --disable-pip-version-check pytest
+    & $PY -m pytest -q
+    if ($LASTEXITCODE -ne 0) { Warn "something failed. Copy the output above and show it to Claude." }
+    else { Ok "all green" }
+}
+
+# ---------------------------------------------------------------- the nag
+
+Say "One thing worth doing before you close this"
+$taskExists = $false
+schtasks /query /tn "$TASK_NAME" *> $null
+if ($LASTEXITCODE -eq 0) { $taskExists = $true }
+
+if ($taskExists) {
+    Ok "the monthly snapshot job is registered. Nothing to do."
+} else {
+    Info "Nothing in this project can tell you whether the score works until several"
+    Info "dated snapshots exist. There is one. Archiving monthly instead of quarterly"
+    Info "is the difference between a first verdict in one year and in three."
+    Write-Host ""
+    Info "  powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask"
+    Write-Host ""
+    Info "sets that up once and you never think about it again."
 }
 
 # ---------------------------------------------------------------- serve
@@ -210,7 +373,7 @@ if ($NoServe) {
 Say "Starting the dashboard"
 Info "opening http://localhost:$PORT in your browser"
 Info "the front page refreshes its own data on startup, which takes a minute and prints messages."
-Info "the new Analyse and Positioning tabs work immediately and do not wait for it."
+Info "the Analyse and Positioning tabs work immediately and do not wait for it."
 Write-Host ""
 Write-Host "    Press Ctrl+C in this window when you want to stop the server." -ForegroundColor Yellow
 Write-Host ""
