@@ -66,6 +66,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import re
 import zipfile
 from dataclasses import dataclass, field, replace
@@ -95,6 +96,8 @@ __all__ = [
     "annual_series",
     "quarterly_series",
     "derive_fourth_quarters",
+    "provenance",
+    "meta_path",
     "BASE_URL",
     "SUB_COLUMNS",
     "NUM_COLUMNS",
@@ -568,7 +571,59 @@ class DeraClient:
         tmp = p.with_suffix(".zip.part")
         tmp.write_bytes(raw)
         tmp.replace(p)
+        # Provenance beside the zip, so a report can say whether the numbers on it
+        # came from sec.gov or from a file somebody placed by hand. The same
+        # convention listing_status.py uses: live is true only for HttpTransport.
+        meta_path(p).write_text(json.dumps({
+            "url": url,
+            "transport": type(self.transport).__name__,
+            "live": isinstance(self.transport, HttpTransport),
+            "fetched_at": datetime.now().replace(microsecond=0).isoformat(),
+            "bytes": len(raw),
+        }, indent=1), encoding="utf-8")
         return p
 
     def cached(self) -> List[Path]:
         return sorted(self.cache_dir.glob("*.zip")) if self.cache_dir.exists() else []
+
+
+def meta_path(zip_path: Path) -> Path:
+    return zip_path.with_name(zip_path.stem + ".meta.json")
+
+
+def provenance(cache_dir: Optional[Path] = None) -> Dict[str, Any]:
+    """Where each cached quarter came from, and whether any of it was a real request.
+
+    ``ever_made_a_real_request`` is True when at least one quarter's sidecar says
+    it came through ``HttpTransport``, False when every quarter has a sidecar and
+    none did, and None when a zip has no sidecar at all (placed by hand, or
+    fetched before provenance was recorded), because a missing record is not a
+    record of anything.
+    """
+    d = Path(cache_dir) if cache_dir is not None else paths.DERA_CACHE
+    zips = sorted(d.glob("*.zip")) if d.exists() else []
+    quarters: Dict[str, Dict[str, Any]] = {}
+    live_flags: List[Optional[bool]] = []
+    for z in zips:
+        m = meta_path(z)
+        if m.exists():
+            try:
+                meta = json.loads(m.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                meta = {}
+        else:
+            meta = {}
+        live = meta.get("live") if isinstance(meta.get("live"), bool) else None
+        live_flags.append(live)
+        quarters[z.stem] = {"bytes": z.stat().st_size, "transport": meta.get("transport"), "live": live,
+                            "fetched_at": meta.get("fetched_at")}
+    ever: Optional[bool]
+    if not zips:
+        ever = False
+    elif any(f is True for f in live_flags):
+        ever = True
+    elif all(f is False for f in live_flags):
+        ever = False
+    else:
+        ever = None
+    return {"cache_dir": str(d), "quarters": quarters, "ever_made_a_real_request": ever}

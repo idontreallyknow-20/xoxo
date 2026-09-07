@@ -93,6 +93,12 @@ class Fundamentals:
     share_change: Optional[float] = None
     gm_avg: Optional[float] = None
     gm_std: Optional[float] = None
+    basis: str = "yfinance"
+    """Where these aggregates came from: ``yfinance`` (the committed CSV, four
+    restated fiscal years) or ``sec_dera`` (as-reported SEC filings, dated by
+    filing, see ``an.dera_fundamentals``). ``mixed`` when a field fell back."""
+    basis_by_field: Dict[str, str] = field(default_factory=dict)
+    """Per score input, which source supplied it. Empty means all from ``basis``."""
 
     @property
     def years_label(self) -> str:

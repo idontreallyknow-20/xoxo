@@ -8,6 +8,8 @@
     python scripts/fetch_dera.py --show 320193 --metric revenue   # the series from every cached quarter
     python scripts/fetch_dera.py --show AAPL --metric revenue --as-of 2024-03-31
     python scripts/fetch_dera.py --fixture --show 320193 --metric revenue    # on the committed miniature
+    python scripts/fetch_dera.py --basis-report                    # what the score would read from the cache
+    python scripts/fetch_dera.py --basis-report --fixture AAPL     # the report's shape, on the Apple miniature
 
 One request per quarter, 50 to 100 MB each, kept on disk and never re-fetched.
 The SEC asks for a real contact in the User-Agent and throttles without one.
@@ -94,9 +96,55 @@ def show(sources, ident: str, metric: str, as_of: Optional[dt.date], *, fixture:
     return 0
 
 
+def basis_report(tickers: List[str], *, fixture: bool) -> int:
+    """What the score's fundamentals would rest on, name by name, from the cache or the miniature."""
+    from an import dera_fundamentals as df
+    from an import local
+
+    universe = local.load_universe()
+    if fixture:
+        print("# FIXTURE. Apple's FY2023 and FY2024 10-Ks, hand-built under tests/fixtures/dera_full/. Not a download.\n")
+        srcs = [(d.name, d) for d in sorted((paths.ROOT / "tests" / "fixtures" / "dera_full").iterdir()) if d.is_dir()]
+        panel = df.load_panel(tickers or ["AAPL"], sources=srcs, cik_map={"AAPL": "320193"},
+                              on_date=dt.date(2024, 11, 1))
+    else:
+        prov = dera.provenance()
+        ever = prov["ever_made_a_real_request"]
+        print("# ever made a real request: " + ("yes" if ever else "no, never" if ever is False else
+                                                "unknown (zips present without provenance sidecars)"))
+        pulled = sorted({r.pulled for r in universe.values() if r.pulled})
+        on_date = dt.date.fromisoformat(pulled[-1]) if pulled else dt.date.today()
+        panel = df.load_panel(tickers or list(universe), on_date=on_date)
+    print(f"# {panel.why}\n")
+    subset = {t: universe[t] for t in (tickers or universe) if t in universe}
+    if fixture and "AAPL" not in subset and "AAPL" in universe:
+        subset["AAPL"] = universe["AAPL"]
+    rebased, report = df.apply(subset, panel)
+    print(f"status: {report.status}. {len(report.applied)} of {len(subset)} names re-based; "
+          f"{len(report.skipped_short)} had too few filed years; {len(panel.unmapped)} could not be mapped to a CIK.")
+    if not report.in_use:
+        print(f"nothing for the score to read. {df.FETCH_COMMAND}")
+        return 1
+    counts = report.disagreement_counts()
+    print("disagreements beyond tolerance, by field: " + (", ".join(f"{k} {v}" for k, v in counts.items()) or "none"))
+    for t in sorted(report.applied):
+        lf, rc = report.applied[t], report.reconciliations[t]
+        print(f"\n{t}  CIK {lf.cik}  {len(lf.years)} fiscal years {lf.years[0].label}..{lf.years[-1].label}"
+              f"  as reported through {lf.as_reported_through}  basis {rebased[t].fundamentals.basis}")
+        print(f"  {'field':<16}{'yahoo':>12}{'sec same yrs':>14}{'sec long':>12}  verdict")
+        for d in rc.differences:
+            fmt = lambda x: "n/a" if x is None else f"{x:.4f}"  # noqa: E731
+            verdict = ("agree" if d.agrees else "DISAGREE" if d.agrees is False else
+                       "no verdict" + ("" if rc.same_window_complete else " (windows differ)"))
+            print(f"  {d.field:<16}{fmt(d.yahoo):>12}{fmt(d.sec_same_window):>14}{fmt(d.sec_long_window):>12}  {verdict}")
+    return 0
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("quarters", nargs="*", help="labels like 2023q4")
+    ap.add_argument("--basis-report", action="store_true",
+                    help="print, per name, what the score's fundamentals would rest on and where the two sources disagree")
     ap.add_argument("--since", help="every quarter from this label to the last complete one")
     ap.add_argument("--dry-run", action="store_true", help="print the URLs and exit")
     ap.add_argument("--show", metavar="CIK_OR_TICKER", help="print a metric's series from the cached quarters")
@@ -109,6 +157,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(f"unknown metric {a.metric!r}; choose from {', '.join(edgar.KEY_TAGS)}", file=sys.stderr)
         return 2
     as_of = dt.date.fromisoformat(a.as_of) if a.as_of else None
+
+    if a.basis_report:
+        # Positional arguments are tickers here, not quarter labels.
+        return basis_report([t.upper() for t in a.quarters], fixture=a.fixture)
 
     try:
         wanted = [dera.parse_quarter_label(l) for l in a.quarters]

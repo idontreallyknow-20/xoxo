@@ -22,18 +22,28 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from an import diagnostics, local, paths, positioning, score  # noqa: E402
+from an import dera_fundamentals, diagnostics, local, paths, positioning, score  # noqa: E402
 
 FIXED_STAMP = "1970-01-01T00:00:00"  # deprecated; see --check below
 
 
 def scorecard(built_at: str) -> dict:
-    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    universe, basis_report = dera_fundamentals.universe_with_basis()
+    recs = [r for r in universe.values() if r.in_top_150]
+    basis = dera_fundamentals.status_block(basis_report)
+    if basis_report.in_use:
+        # The same weights on the other basis, so the effect of the input swap is
+        # a number on the page rather than an assumption.
+        yahoo = [r for r in local.load_universe().values() if r.in_top_150]
+        basis["effect_on_the_score"] = {
+            v: dera_fundamentals.basis_comparison(recs, yahoo, variant=v) for v in score.VARIANTS
+        }
     out = {
         "built_at": built_at,
         "snapshot_date": "2026-09-04",
         "universe": "the quality top 150 from universe/quality_top150.csv",
         "n_names": len(recs),
+        "fundamentals_basis": basis,
         "variants": {},
         "weights": {v: score.weights_table(v) for v in score.VARIANTS},
         "min_coverage": score.MIN_COVERAGE,
@@ -90,6 +100,8 @@ def main() -> int:
     paths.POSITIONING_JSON.write_text(json.dumps(memo, indent=1), encoding="utf-8")
 
     print(f"wrote {paths.SCORECARD_JSON.name}: {sc['n_names']} names, {len(sc['variants'])} variants")
+    fb = sc["fundamentals_basis"]
+    print(f"  fundamentals basis: SEC as-reported {fb['status']}; {fb['why']}")
     print(f"wrote {paths.POSITIONING_JSON.name}: {len(memo['candidates'])} actionable, "
           f"{len(memo['research_queue'])} in the research queue")
     print(f"  holdings source: {memo['portfolio']['source']}")

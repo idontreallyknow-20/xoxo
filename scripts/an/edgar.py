@@ -85,7 +85,15 @@ KEY_TAGS: Dict[str, List[str]] = {
     "cash": ["CashAndCashEquivalentsAtCarryingValue"],
     "short_term_investments": ["ShortTermInvestments", "MarketableSecuritiesCurrent"],
     "long_term_debt": ["LongTermDebtNoncurrent", "LongTermDebt"],
-    "short_term_debt": ["LongTermDebtCurrent", "ShortTermBorrowings"],
+    "short_term_debt": ["LongTermDebtCurrent", "ShortTermBorrowings", "DebtCurrent"],
+    # Commercial paper is its own line at the filers that use it (Apple among them)
+    # and is not inside LongTermDebtCurrent, so a debt total has to add it on.
+    "commercial_paper": ["CommercialPaper"],
+    "depreciation_amortization": [
+        "DepreciationDepletionAndAmortization",
+        "DepreciationAndAmortization",
+        "DepreciationAmortizationAndAccretionNet",
+    ],
     "interest_expense": ["InterestExpense", "InterestExpenseDebt"],
     "income_tax": ["IncomeTaxExpenseBenefit"],
     "pretax_income": ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest"],
