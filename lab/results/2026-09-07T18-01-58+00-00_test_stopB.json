@@ -1,0 +1,905 @@
+{
+ "arms": [
+  {
+   "arm": {
+    "horizon": 20,
+    "id": "pead_proxy_g5_h20_mkt200+rs63",
+    "kind": "pead_proxy",
+    "label": "release-like session proxy (gap on volume), not post-earnings drift: no earnings dates exist in this history",
+    "params": {
+     "filters": [
+      "mkt200",
+      "rs63"
+     ],
+     "gap": 0.05,
+     "vol_mult": 2.0
+    },
+    "preregistered": true
+   },
+   "block": 2,
+   "by_year": {
+    "2016": {
+     "hit_rate": 0.403,
+     "mean_excess_vs_spy": -0.0043,
+     "n": 134
+    },
+    "2017": {
+     "hit_rate": 0.451,
+     "mean_excess_vs_spy": -0.0068,
+     "n": 153
+    },
+    "2018": {
+     "hit_rate": 0.5,
+     "mean_excess_vs_spy": 0.0075,
+     "n": 2
+    }
+   },
+   "decision_rule": {
+    "survives": false,
+    "why": "verdict wrong way; interval touches or crosses zero; mean excess not above the random control's p95"
+   },
+   "excess_ci": [
+    -0.0122,
+    -0.0015
+   ],
+   "excess_t": -2.3452,
+   "exit_reasons": {
+    "horizon": 83,
+    "stop": 206
+   },
+   "hit_rate": 0.4291,
+   "hypotheses_tested": 36,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2016-07-29",
+      19468.8
+     ],
+     [
+      "2016-08-31",
+      19498.16
+     ],
+     [
+      "2016-09-30",
+      18587.57
+     ],
+     [
+      "2016-10-31",
+      18179.89
+     ],
+     [
+      "2016-11-30",
+      18503.54
+     ],
+     [
+      "2016-12-30",
+      17933.94
+     ],
+     [
+      "2017-01-31",
+      17422.82
+     ],
+     [
+      "2017-02-28",
+      18215.56
+     ],
+     [
+      "2017-03-31",
+      18394.6
+     ],
+     [
+      "2017-04-28",
+      18296.87
+     ],
+     [
+      "2017-05-31",
+      18618.88
+     ],
+     [
+      "2017-06-30",
+      17094.31
+     ],
+     [
+      "2017-07-31",
+      16914.57
+     ],
+     [
+      "2017-08-31",
+      16569.34
+     ],
+     [
+      "2017-09-29",
+      16922.24
+     ],
+     [
+      "2017-10-31",
+      16935.11
+     ],
+     [
+      "2017-11-30",
+      17246.1
+     ],
+     [
+      "2017-12-29",
+      17087.22
+     ],
+     [
+      "2018-01-31",
+      17803.5
+     ],
+     [
+      "2018-02-07",
+      17199.35
+     ]
+    ],
+    "exposure": 1.1245,
+    "final_equity": 17199.35,
+    "max_drawdown": -0.1853,
+    "n_trades": 117,
+    "skipped": {
+     "already_open": 0,
+     "capacity": 97,
+     "cash": 21,
+     "sector": 23
+    },
+    "turnover": 30.191
+   },
+   "mean_excess_vs_spy": -0.0055,
+   "mean_ret_from_signal_close": 0.0161,
+   "mean_ret_net": 0.0042,
+   "median_ret_net": -0.0061,
+   "n_buckets": 19,
+   "n_effective": 9.5,
+   "n_events": 289,
+   "n_signals": 966,
+   "n_trades": 289,
+   "null": {
+    "arm_id": "pead_proxy_g5_h20_mkt200+rs63",
+    "means": [
+     -0.0009,
+     -0.0016,
+     -0.0056,
+     -0.0039,
+     -0.0012,
+     -0.0031,
+     -0.0054,
+     0.0005,
+     -0.0005,
+     0.0026,
+     -0.0018,
+     -0.0055,
+     -0.005,
+     -0.0027,
+     -0.0031,
+     -0.0024,
+     -0.0017,
+     -0.0043,
+     -0.0044,
+     -0.0085
+    ],
+    "n_per_replicate": 289,
+    "n_replicates": 20,
+    "p05": -0.0057,
+    "p50": -0.0029,
+    "p95": 0.0006,
+    "percentile_of_arm": 0.1
+   },
+   "profit_factor": 1.2804,
+   "signal_skips": {
+    "bad_stop": 0,
+    "no_next_session": 5,
+    "outside_window": 453,
+    "truncated_at_panel_end": 18,
+    "within_previous_horizon": 201
+   },
+   "verdict": "wrong way",
+   "window": [
+    "2016-07-01",
+    "2018-02-07"
+   ],
+   "worst_five": [
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-05-22",
+     "ret_net": -0.0923,
+     "ticker": "INCY"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-09-19",
+     "ret_net": -0.0891,
+     "ticker": "NVDA"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-11-15",
+     "ret_net": -0.0821,
+     "ticker": "MAT"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-06-22",
+     "ret_net": -0.0755,
+     "ticker": "REGN"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-11-06",
+     "ret_net": -0.0741,
+     "ticker": "DVN"
+    }
+   ]
+  },
+  {
+   "arm": {
+    "horizon": 10,
+    "id": "pullback_b3_h10",
+    "kind": "pullback",
+    "label": "pullback in trend (as swing.md)",
+    "params": {
+     "band": 0.03,
+     "max_dd": -0.15
+    },
+    "preregistered": true
+   },
+   "block": 2,
+   "by_year": {
+    "2016": {
+     "hit_rate": 0.4505,
+     "mean_excess_vs_spy": -0.0046,
+     "n": 3090
+    },
+    "2017": {
+     "hit_rate": 0.5315,
+     "mean_excess_vs_spy": -0.0018,
+     "n": 6871
+    },
+    "2018": {
+     "hit_rate": 0.5749,
+     "mean_excess_vs_spy": -0.0038,
+     "n": 414
+    }
+   },
+   "decision_rule": {
+    "survives": false,
+    "why": "verdict wrong way; interval touches or crosses zero; mean excess not above the random control's p95"
+   },
+   "excess_ci": [
+    -0.0039,
+    -0.0012
+   ],
+   "excess_t": -3.7341,
+   "exit_reasons": {
+    "horizon": 7373,
+    "stop": 3002
+   },
+   "hit_rate": 0.5091,
+   "hypotheses_tested": 36,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2016-07-29",
+      21065.08
+     ],
+     [
+      "2016-08-31",
+      20914.01
+     ],
+     [
+      "2016-09-30",
+      20793.72
+     ],
+     [
+      "2016-10-31",
+      19753.24
+     ],
+     [
+      "2016-11-30",
+      20353.32
+     ],
+     [
+      "2016-12-30",
+      20058.6
+     ],
+     [
+      "2017-01-31",
+      19909.21
+     ],
+     [
+      "2017-02-28",
+      20338.17
+     ],
+     [
+      "2017-03-31",
+      19879.87
+     ],
+     [
+      "2017-04-28",
+      19904.3
+     ],
+     [
+      "2017-05-31",
+      21071.27
+     ],
+     [
+      "2017-06-30",
+      21415.09
+     ],
+     [
+      "2017-07-31",
+      21367.77
+     ],
+     [
+      "2017-08-31",
+      21774.05
+     ],
+     [
+      "2017-09-29",
+      22159.46
+     ],
+     [
+      "2017-10-31",
+      22569.04
+     ],
+     [
+      "2017-11-30",
+      23612.45
+     ],
+     [
+      "2017-12-29",
+      22813.45
+     ],
+     [
+      "2018-01-31",
+      23766.68
+     ],
+     [
+      "2018-02-07",
+      23455.76
+     ]
+    ],
+    "exposure": 1.6891,
+    "final_equity": 23455.76,
+    "max_drawdown": -0.0874,
+    "n_trades": 212,
+    "skipped": {
+     "already_open": 0,
+     "capacity": 10108,
+     "cash": 4,
+     "sector": 35
+    },
+    "turnover": 56.408
+   },
+   "mean_excess_vs_spy": -0.0027,
+   "mean_ret_from_signal_close": 0.0057,
+   "mean_ret_net": 0.0027,
+   "median_ret_net": 0.0006,
+   "n_buckets": 19,
+   "n_effective": 9.5,
+   "n_events": 10375,
+   "n_signals": 184255,
+   "n_trades": 10375,
+   "null": {
+    "arm_id": "pullback_b3_h10",
+    "means": [
+     -0.0029,
+     -0.0024,
+     -0.0021,
+     -0.0028,
+     -0.0026,
+     -0.0018,
+     -0.0023,
+     -0.0031,
+     -0.0035,
+     -0.0027,
+     -0.0025,
+     -0.0021,
+     -0.0035,
+     -0.003,
+     -0.0033,
+     -0.0023,
+     -0.0023,
+     -0.003,
+     -0.0032,
+     -0.0032
+    ],
+    "n_per_replicate": 10375,
+    "n_replicates": 20,
+    "p05": -0.0035,
+    "p50": -0.0027,
+    "p95": -0.0021,
+    "percentile_of_arm": 0.5
+   },
+   "profit_factor": 1.2274,
+   "signal_skips": {
+    "bad_stop": 0,
+    "no_next_session": 118,
+    "outside_window": 103897,
+    "truncated_at_panel_end": 942,
+    "within_previous_horizon": 68923
+   },
+   "verdict": "wrong way",
+   "window": [
+    "2016-07-01",
+    "2018-02-07"
+   ],
+   "worst_five": [
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-01-19",
+     "ret_net": -0.2325,
+     "ticker": "CTXS"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-04-21",
+     "ret_net": -0.2024,
+     "ticker": "AMD"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-08-30",
+     "ret_net": -0.2017,
+     "ticker": "EFX"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2016-10-19",
+     "ret_net": -0.2006,
+     "ticker": "EW"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2016-08-03",
+     "ret_net": -0.1955,
+     "ticker": "BMY"
+    }
+   ]
+  },
+  {
+   "arm": {
+    "horizon": 20,
+    "id": "pullback_b3_h20_mkt200+rs63",
+    "kind": "pullback",
+    "label": "pullback in trend (as swing.md)",
+    "params": {
+     "band": 0.03,
+     "filters": [
+      "mkt200",
+      "rs63"
+     ],
+     "max_dd": -0.15
+    },
+    "preregistered": true
+   },
+   "block": 2,
+   "by_year": {
+    "2016": {
+     "hit_rate": 0.4565,
+     "mean_excess_vs_spy": -0.0049,
+     "n": 1299
+    },
+    "2017": {
+     "hit_rate": 0.5661,
+     "mean_excess_vs_spy": -0.0013,
+     "n": 2853
+    },
+    "2018": {
+     "hit_rate": 0.4815,
+     "mean_excess_vs_spy": -0.0182,
+     "n": 54
+    }
+   },
+   "decision_rule": {
+    "survives": false,
+    "why": "verdict no evidence; interval touches or crosses zero; mean excess not above the random control's p95"
+   },
+   "excess_ci": [
+    -0.0051,
+    0.0008
+   ],
+   "excess_t": -1.7198,
+   "exit_reasons": {
+    "horizon": 2816,
+    "stop": 1390
+   },
+   "hit_rate": 0.5311,
+   "hypotheses_tested": 36,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2016-07-29",
+      21149.76
+     ],
+     [
+      "2016-08-31",
+      20626.77
+     ],
+     [
+      "2016-09-30",
+      20622.26
+     ],
+     [
+      "2016-10-31",
+      19415.14
+     ],
+     [
+      "2016-11-30",
+      20726.55
+     ],
+     [
+      "2016-12-30",
+      21800.19
+     ],
+     [
+      "2017-01-31",
+      21739.55
+     ],
+     [
+      "2017-02-28",
+      22736.54
+     ],
+     [
+      "2017-03-31",
+      22544.43
+     ],
+     [
+      "2017-04-28",
+      22820.36
+     ],
+     [
+      "2017-05-31",
+      23863.57
+     ],
+     [
+      "2017-06-30",
+      23541.26
+     ],
+     [
+      "2017-07-31",
+      24280.94
+     ],
+     [
+      "2017-08-31",
+      24250.99
+     ],
+     [
+      "2017-09-29",
+      23974.39
+     ],
+     [
+      "2017-10-31",
+      24665.18
+     ],
+     [
+      "2017-11-30",
+      25656.98
+     ],
+     [
+      "2017-12-29",
+      25641.47
+     ],
+     [
+      "2018-01-31",
+      26874.1
+     ],
+     [
+      "2018-02-07",
+      26874.1
+     ]
+    ],
+    "exposure": 1.823,
+    "final_equity": 26874.1,
+    "max_drawdown": -0.0948,
+    "n_trades": 117,
+    "skipped": {
+     "already_open": 0,
+     "capacity": 4064,
+     "cash": 0,
+     "sector": 22
+    },
+    "turnover": 32.643
+   },
+   "mean_excess_vs_spy": -0.0026,
+   "mean_ret_from_signal_close": 0.0135,
+   "mean_ret_net": 0.0088,
+   "median_ret_net": 0.0034,
+   "n_buckets": 19,
+   "n_effective": 9.5,
+   "n_events": 4206,
+   "n_signals": 113912,
+   "n_trades": 4206,
+   "null": {
+    "arm_id": "pullback_b3_h20_mkt200+rs63",
+    "means": [
+     -0.0035,
+     -0.0042,
+     -0.0038,
+     -0.0033,
+     -0.0027,
+     -0.0022,
+     -0.0052,
+     -0.0028,
+     -0.0025,
+     -0.0045,
+     -0.0031,
+     -0.0041,
+     -0.0035,
+     -0.0035,
+     -0.0034,
+     -0.0038,
+     -0.0039,
+     -0.0037,
+     -0.0026,
+     -0.0028
+    ],
+    "n_per_replicate": 4206,
+    "n_replicates": 20,
+    "p05": -0.0046,
+    "p50": -0.0035,
+    "p95": -0.0025,
+    "percentile_of_arm": 0.9
+   },
+   "profit_factor": 1.5819,
+   "signal_skips": {
+    "bad_stop": 0,
+    "no_next_session": 91,
+    "outside_window": 62200,
+    "truncated_at_panel_end": 1077,
+    "within_previous_horizon": 46338
+   },
+   "verdict": "no evidence",
+   "window": [
+    "2016-07-01",
+    "2018-02-07"
+   ],
+   "worst_five": [
+    {
+     "exit_reason": "stop",
+     "fill_date": "2016-10-21",
+     "ret_net": -0.2739,
+     "ticker": "CAG"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2016-09-20",
+     "ret_net": -0.2269,
+     "ticker": "ILMN"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2016-10-10",
+     "ret_net": -0.2249,
+     "ticker": "EW"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-04-21",
+     "ret_net": -0.2024,
+     "ticker": "AMD"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2017-04-06",
+     "ret_net": -0.2017,
+     "ticker": "VIAB"
+    }
+   ]
+  },
+  {
+   "arm": {
+    "horizon": 0,
+    "id": "spy_hold",
+    "kind": "spy_hold",
+    "label": "SPY held for the window: the baseline",
+    "params": {},
+    "preregistered": false
+   },
+   "block": 1,
+   "by_year": {},
+   "decision_rule": {
+    "survives": false,
+    "why": "not a rule arm"
+   },
+   "excess_ci": null,
+   "excess_t": null,
+   "exit_reasons": {},
+   "hit_rate": null,
+   "hypotheses_tested": 36,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2016-07-29",
+      20701.65
+     ],
+     [
+      "2016-08-31",
+      20729.3
+     ],
+     [
+      "2016-09-30",
+      20620.62
+     ],
+     [
+      "2016-10-31",
+      20263.12
+     ],
+     [
+      "2016-11-30",
+      21009.58
+     ],
+     [
+      "2016-12-30",
+      21309.88
+     ],
+     [
+      "2017-01-31",
+      21691.22
+     ],
+     [
+      "2017-02-28",
+      22543.5
+     ],
+     [
+      "2017-03-31",
+      22473.9
+     ],
+     [
+      "2017-04-28",
+      22696.98
+     ],
+     [
+      "2017-05-31",
+      23017.3
+     ],
+     [
+      "2017-06-30",
+      23051.62
+     ],
+     [
+      "2017-07-31",
+      23525.43
+     ],
+     [
+      "2017-08-31",
+      23594.07
+     ],
+     [
+      "2017-09-29",
+      23950.62
+     ],
+     [
+      "2017-10-31",
+      24514.99
+     ],
+     [
+      "2017-11-30",
+      25264.31
+     ],
+     [
+      "2017-12-29",
+      25440.68
+     ],
+     [
+      "2018-01-31",
+      26874.49
+     ],
+     [
+      "2018-02-07",
+      25517.9
+     ]
+    ],
+    "exposure": 1.0,
+    "final_equity": 25517.9,
+    "max_drawdown": -0.079,
+    "n_trades": 0,
+    "skipped": {},
+    "turnover": 0.0
+   },
+   "mean_excess_vs_spy": null,
+   "mean_ret_from_signal_close": null,
+   "mean_ret_net": null,
+   "median_ret_net": null,
+   "n_buckets": 0,
+   "n_effective": 0.0,
+   "n_events": 0,
+   "n_signals": 0,
+   "n_trades": 0,
+   "null": null,
+   "profit_factor": null,
+   "signal_skips": {},
+   "verdict": "no evidence",
+   "window": [
+    "2016-07-01",
+    "2018-02-07"
+   ],
+   "worst_five": []
+  }
+ ],
+ "costs": {
+  "commission_bps": 5.0,
+  "round_trip_bps": 20.0,
+  "slippage_bps": 5.0
+ },
+ "data": {
+  "basis": "price returns; no dividends on either side",
+  "dataset_verdict": "adjusted",
+  "eligible_cells": 463640,
+  "excluded_as_suspect": [
+   "LNT",
+   "NWL"
+  ],
+  "fetched_at": "2026-09-07T17:40:19+00:00",
+  "first": "2013-02-08",
+  "last": "2018-02-07",
+  "membership": {
+   "members_on_first_session": 387,
+   "members_on_last_session": 497,
+   "n_tickers": 505
+  },
+  "quality_gate": "PASS",
+  "scope": "full",
+  "sessions": 1259,
+  "sha256": {
+   "factor_aapl": "86f7f2508a11259dfbb53b2f81fc8e711c8a4b97a9ee599b661079a9566801c9",
+   "factor_aig": "1bd3b9e896fee271e9a7af9b4826da3fc6a8ff21661e211047a173ffcd6801e3",
+   "factor_bac": "2c6be614492df18bcaf40cb1b63feeaab55bed1e43cf1f090d492e2c4420b465",
+   "factor_ibm": "8a310e86aca164304e93596ca919ec413fc3a11d3aefa0c0c2edf1e6feffbc5a",
+   "factor_qqq": "780ee5c6a9a4c3b3dbecd13f6a2faf4aa67c4802f08665b66e5e87960a77840b",
+   "factor_spy": "ad53e292de2e7076ff36721e1dcffd1db0d04fe6813b59aeece8620fb0d4cec1",
+   "lean_aapl": "a6f609711a1f550252f95a4edfaa5ac2c6dd75ca9a1fbbb417e853d1516831fe",
+   "lean_aig": "9e194e786d9104af09799559972a883113c36e2a550093d20ac1df0a30df884b",
+   "lean_bac": "29224f2b8e9b03bd0c4a1c9c937b33c78e5baf82eb3b5f8e86e05bf28f196cdb",
+   "lean_ibm": "dbc2eb8db4793506612cdc2426047e35fb170f97271d05760b7faf418c63127e",
+   "lean_qqq": "09de2fda712d1d54f74b4bd2215c7df8787b7e2643b79c0c2ab531d188a5c056",
+   "lean_spy": "aaa1febad0cb8f91011212c92ff7caac6d4d6415a3b7f73c4b98c438db4274ad",
+   "membership": "b2f4fe2f2e4dce8eaf0eb4fbd3946a32a20c1ddfe69687dfca3b6b59a0b71f9f",
+   "plotly": "6aea253cd19de60b568143991aaf1fa482456565c389205658d236e595e716cf",
+   "stocknet_AAPL": "4c91141cc818b836fa7a1fabb683622c63048db450565d607418bfec3ed5bc4e",
+   "stocknet_MSFT": "1b8e97121e3a5c945c9994d49e923d528acd6db41239b87f723ba635412cc275"
+  },
+  "source": "plotly all_stocks_5yr + QuantConnect Lean SPY/QQQ (split-only adjusted)",
+  "tickers": 505,
+  "worst_cross_check": {
+   "a": "plotly",
+   "b": "lean split-adjusted",
+   "level_ratio": 4.0,
+   "max_abs_rel_diff": 0.057419,
+   "median_abs_rel_diff": 0.0,
+   "n_overlap": 1259,
+   "passed": true,
+   "ticker": "AAPL"
+  }
+ },
+ "flags": [],
+ "forced": false,
+ "hypotheses_tested": 36,
+ "limitations": [
+  "Survivorship: the panel holds the 505 names in the S&P 500 as of February 2018; names that left the index before then have no prices here. The membership filter keeps a name out until it was actually added (387 of 505 were members on the first session, 497 on the last), but it cannot add the departed back.",
+  "One regime: February 2013 to February 2018 was one bull market with two shallow corrections. A rule that worked here has been tested in one weather.",
+  "pead_proxy is a gap-on-volume proxy, not post-earnings drift: no earnings dates exist in this history. breakout is price-only: no estimate revisions exist in this history. The guidance setup cannot be tested at all.",
+  "Every return is a price return with no dividends, on the stocks and on SPY alike; excess figures are unbiased by that, absolute figures are understated by roughly the yield.",
+  "Costs are assumed: 5 bps commission and 5 bps slippage each way. Fills are the next session's close after a signal; stops are closing levels exited at the following close.",
+  "Dataset adjustment status from the audit: adjusted. Suspected data artefacts excluded from the eligible universe: LNT, NWL.",
+  "Sector labels come from the 2026 quality screen, not from 2013; names not in that screen count as one 'unknown' sector and the two-per-sector cap applies to it.",
+  "The held-out window is about eighteen months of one bull market; a survivor here is a candidate for logging live under swing.md's thirty-call floor, not a finding."
+ ],
+ "pairs": [],
+ "rules": {
+  "max_open": 5,
+  "max_per_sector": 2,
+  "max_position_usd": 5000.0,
+  "raise_stop_to_entry_after_1r": true,
+  "risk_usd": 1000.0,
+  "sleeve_usd": 20000.0
+ },
+ "run_at": "2026-09-07T18:01:58+00:00",
+ "split": "test",
+ "survivors": [],
+ "verdict": "no edge found at these horizons on this data",
+ "verdict_sentence": "no edge found at these horizons on this data. pullback_b3_h20_mkt200+rs63: mean excess vs SPY -0.0026 per trade, 95% interval [-0.0051, +0.0008], n=4206, random control p95 -0.0025; does not survive (verdict no evidence; interval touches or crosses zero; mean excess not above the random control's p95) pead_proxy_g5_h20_mkt200+rs63: mean excess vs SPY -0.0055 per trade, 95% interval [-0.0122, -0.0015], n=289, random control p95 +0.0006; does not survive (verdict wrong way; interval touches or crosses zero; mean excess not above the random control's p95) pullback_b3_h10: mean excess vs SPY -0.0027 per trade, 95% interval [-0.0039, -0.0012], n=10375, random control p95 -0.0021; does not survive (verdict wrong way; interval touches or crosses zero; mean excess not above the random control's p95) Hypotheses counted: 36.",
+ "window": [
+  "2016-07-01",
+  "2018-02-07"
+ ]
+}

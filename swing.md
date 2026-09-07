@@ -70,6 +70,19 @@ so on every row.
   nothing changes until sixty.
 - **Never**: a size change because the last three worked.
 
+## Measured
+
+The rules above were replayed on real closes for the first time in the sixth session: 505 S&P 500
+names, February 2013 to February 2018, fake money, the sizing and the mechanics exactly as written
+here, against twenty matched random-entry controls and SPY. `dashboard/paper.json` (the `/paper/`
+page) holds the result and `lab/LAB.md` the record of every arm tried. The short version:
+No edge found at these horizons on this data. The pullback rule as written lost 27 bp a trade to SPY on the held-out window (2016-07 to 2018-02, n=10,375, interval [-39, -12] bp); the in-sample favourite, the filtered pullback at 20 sessions, lost 26 bp with an interval straddling zero and sat inside its random control; the gap-on-volume proxy lost 55 bp. 36 hypotheses were counted. No arm beat a matched random entry.
+
+None of that moves the thirty-graded-call floor. A backtest on one bull market with the earnings
+setups reduced to proxies is a reason to log calls and grade them, not a reason to size up or down.
+No constant above was changed on the strength of the train window; anything the grid preferred is
+recorded there as in-sample.
+
 ## Tax and account
 
 A taxable Canadian account that trades frequently can have its gains treated by the CRA as

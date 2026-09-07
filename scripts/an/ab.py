@@ -226,7 +226,13 @@ class AbResult:
         ci_ok = r.excess_ci is not None and r.excess_ci[0] > 0
         null_ok = p95 is not None and r.mean_excess_vs_spy is not None and r.mean_excess_vs_spy > p95
         ok = v in ("suggestive", "supported") and ci_ok and null_ok
-        why = (f"verdict {v}; interval {'above' if ci_ok else 'touches or crosses'} zero; "
+        if ci_ok:
+            where = "above zero"
+        elif r.excess_ci is not None and r.excess_ci[1] < 0:
+            where = "entirely below zero"
+        else:
+            where = "straddles zero"
+        why = (f"verdict {v}; interval {where}; "
                f"mean excess {'above' if null_ok else 'not above'} the random control's p95")
         return ok, why
 
@@ -263,7 +269,7 @@ class AbResult:
             p95 = "n/a" if null is None or null.p95 is None else f"{null.p95:+.4f}"
             parts.append(f"{r.arm.id}: mean excess vs SPY {m} per trade, 95% interval {ci}, n={r.n_trades}, "
                          f"random control p95 {p95}; {'survives' if ok else 'does not survive'} ({why})")
-        return f"{self.verdict}. " + " ".join(parts) + f" Hypotheses counted: {self.hypotheses_tested}."
+        return f"{self.verdict}. " + " ".join(p + "." for p in parts) + f" Hypotheses counted: {self.hypotheses_tested}."
 
     def to_json(self) -> Dict[str, Any]:
         arms = []
