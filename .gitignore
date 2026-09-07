@@ -20,3 +20,6 @@ portfolio.md
 
 # rendered screenshots, regenerable with scripts/shoot.py
 data/shots/
+
+# lab run logs
+lab/.*.log

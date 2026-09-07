@@ -25,7 +25,7 @@ from an import paths  # noqa: E402
 
 SHOTS = paths.ROOT / "data" / "shots"
 DEFAULT_PAGES = ["/analyze/", "/analyze/KLAC/", "/analyze/BKNG/", "/analyze/AAPL/",
-                 "/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA", "/analyze/compare/", "/positioning/", "/index.html"]
+                 "/analyze/compare/?t=KLAC,BKNG,AAPL,NVDA", "/analyze/compare/", "/positioning/", "/paper/", "/index.html"]
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
