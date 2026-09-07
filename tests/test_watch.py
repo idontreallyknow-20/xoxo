@@ -303,3 +303,80 @@ def test_the_cli_dry_run_prints_the_plan_and_sends_nothing():
     assert "never made these requests" in r.stdout
     assert "feeds.finance.yahoo.com" in r.stdout and "data.sec.gov" in r.stdout
     assert "token=" not in r.stdout
+
+
+# -- intraday ------------------------------------------------------------------
+
+def test_an_intraday_print_reads_as_a_print_not_a_close():
+    from an import intraday
+
+    p = intraday.Print("KLAC", 128.0, "2026-09-04T11:45:00-04:00", "2026-09-04", 140.0, 128 / 140 - 1, 141.0, 127.5, 10)
+    r = watch.intraday_read({"KLAC": p}, "KLAC", as_of=AS_OF, price_at_call=172.94, trigger=130.0)
+    assert r.intraday and r.at.startswith("2026-09-04T11:45") and r.chg_5d is None
+    assert r.breached is True and r.chg_1d == pytest.approx(128 / 140 - 1) and r.low_in_window == 127.5
+    a = watch.alerts_for(name(), r, [])
+    kinds = [x.kind for x in a]
+    assert "trigger_intraday" in kinds and "trigger" not in kinds and "drop_week" not in kinds
+    ti = [x for x in a if x.kind == "trigger_intraday"][0]
+    assert "not a close" in ti.text and "11:45" in ti.text and ti.source == "intraday prices"
+    mv = [x for x in a if x.kind == "move_day"][0]
+    assert "on the day at 11:45" in mv.text
+    empty = watch.intraday_read({}, "KLAC", as_of=AS_OF, trigger=130.0)
+    assert empty.last_close is None and empty.intraday and watch.alerts_for(name(), empty, []) == []
+
+
+def test_alert_keys_collapse_repeats_within_a_day_and_the_state_remembers_them(tmp_path):
+    from an import intraday
+
+    early = intraday.Print("KLAC", 128.0, "2026-09-04T10:30:00-04:00", "2026-09-04", 140.0, -0.086, 141.0, 127.5, 4)
+    late = intraday.Print("KLAC", 127.0, "2026-09-04T14:00:00-04:00", "2026-09-04", 140.0, -0.093, 141.0, 126.0, 18)
+    a1 = [x.to_json() for x in watch.alerts_for(name(), watch.intraday_read({"KLAC": early}, "KLAC", as_of=AS_OF, trigger=130.0), [])]
+    a2 = [x.to_json() for x in watch.alerts_for(name(), watch.intraday_read({"KLAC": late}, "KLAC", as_of=AS_OF, trigger=130.0), [])]
+    assert {watch.alert_key(a) for a in a1} == {watch.alert_key(a) for a in a2}
+    s = watch.WatchState.load(tmp_path / "s.json")
+    assert len(s.unsent_alerts(a1)) == len(a1)
+    s.remember_alerts(a1)
+    s.save(tmp_path / "s.json")
+    s2 = watch.WatchState.load(tmp_path / "s.json")
+    assert s2.unsent_alerts(a2) == [], "the afternoon print is the same event as the morning one"
+    tomorrow = dict(a2[0], as_of="2026-09-05T10:00:00-04:00")
+    assert s2.unsent_alerts([tomorrow]) == [tomorrow]
+
+
+def test_the_intraday_report_is_labelled_on_every_row():
+    from an import intraday
+
+    p = intraday.Print("KLAC", 150.0, "2026-09-04T12:00:00-04:00", "2026-09-04", 149.0, 150 / 149 - 1, 151.0, 148.0, 10)
+    names = [name()]
+    reads = {"KLAC": watch.intraday_read({"KLAC": p}, "KLAC", as_of=AS_OF, price_at_call=172.94, trigger=130.0)}
+    blob = watch.build_report(names, reads, {}, {}, [], as_of=AS_OF, sources={}, mode="intraday",
+                              at="2026-09-04T12:00", built_at="X")
+    assert blob["mode"] == "intraday" and blob["at"] == "2026-09-04T12:00"
+    assert blob["names"][0]["price"]["intraday"] is True
+    assert blob["limitations"][0].startswith("INTRADAY")
+    assert watch.not_run_report(names, built_at="X")["mode"] == "close"
+
+
+def test_the_committed_intraday_file_is_honest():
+    blob = json.loads((ROOT / "dashboard" / "watch_intraday.json").read_text())
+    assert blob["status"] == "NOT RUN" and blob["mode"] == "intraday" and blob["names"] == []
+
+
+def test_the_cli_intraday_fixture_shows_a_print_under_the_level(tmp_path):
+    out = tmp_path / "wi.json"
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "scan.py"), "--intraday", "--fixture",
+                        "--as-of", "2026-09-04", "--out", str(out)], capture_output=True, text=True, cwd=str(ROOT), timeout=120)
+    assert r.returncode == 0, r.stderr[-1500:]
+    blob = json.loads(out.read_text())
+    assert blob["status"] == "SYNTHETIC" and blob["mode"] == "intraday"
+    dip = [n for n in blob["names"] if n["ticker"] == "DIP"][0]
+    assert dip["price"]["intraday"] and dip["price"]["last_close"] < 180
+    assert any(a["kind"] == "trigger_intraday" for a in blob["alerts"])
+    assert "not a close" in [a for a in blob["alerts"] if a["kind"] == "trigger_intraday"][0]["text"]
+
+
+def test_the_cli_intraday_dry_run_is_one_batched_call():
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "scan.py"), "--intraday", "--dry-run"],
+                       capture_output=True, text=True, cwd=str(ROOT), timeout=120)
+    assert r.returncode == 0, r.stderr[-1500:]
+    assert "one yfinance call" in r.stdout and "15m bars" in r.stdout and "never made" in r.stdout

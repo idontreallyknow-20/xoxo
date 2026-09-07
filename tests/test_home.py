@@ -28,7 +28,15 @@ def test_the_front_page_is_a_shell_on_the_shared_assets():
     assert "assets/desk.css" in INDEX and "assets/motion.js" in INDEX and "assets/desk-common.js" in INDEX
     assert "<style" not in INDEX, "styles belong in desk.css"
     assert 'href="analyze/"' in INDEX and 'href="positioning/"' in INDEX
-    assert 'href="#journal"' in INDEX
+    assert 'href="#journal"' in INDEX and 'href="#setups"' in INDEX
+
+
+def test_the_setups_tab_reads_setups_json_and_never_calls_it_a_recommendation():
+    m = re.search(r"function renderSetups\(\) \{(.*?)\n  \}", HOME, re.S)
+    assert m
+    assert 'loadJson("setups.json")' in HOME
+    assert "what_this_is" in m.group(1) and "swing.md" in m.group(1)
+    assert "recommend" not in m.group(1).lower().replace("nothing here is a recommendation", "").replace("never a recommendation", "")
 
 
 def test_every_shell_loads_the_motion_layer_before_the_page_script():

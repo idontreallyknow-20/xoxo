@@ -29,7 +29,7 @@
   const cur = (v, dec = 0) => money(v == null ? null : v * fxTo(), dec);
 
   // the scan's closes, when a scan has run: ticker -> {close, date}
-  let W = null, T = null;
+  let W = null, T = null, SU = null;
   const scanned = () => W && W.status === "SCANNED";
   const priceOf = (tk, fallback) => {
     if (scanned()) { const r = (W.names || []).find((n) => n.ticker === tk); if (r && r.price && has(r.price.last_close)) return r.price.last_close; }
@@ -55,7 +55,7 @@
   }
 
   // views
-  const views = ["overview", "picks", "rankings", "holdings", "charts", "journal", "settings"];
+  const views = ["overview", "picks", "rankings", "holdings", "charts", "journal", "setups", "settings"];
   function show(v) {
     if (!views.includes(v)) v = "overview";
     views.forEach((k) => $("v-" + k).classList.toggle("on", k === v));
@@ -287,7 +287,26 @@
       <div><div class="h"><a href="analyze/${encodeURIComponent(g.ticker)}/" style="text-decoration:none">${esc(g.ticker)}</a><span>${esc(g.action || "")}</span></div>
         <div class="th">${g.wrong_if ? `<b>Wrong if</b> ${esc(g.wrong_if)}` : `<span class="muted">no falsifier written</span>`}</div>
         <div class="th muted" style="font-size:13px">${esc(g.verdict || "")}</div></div>
-      <div class="side"><span>at call <b>${g.price_at_call == null ? "n/a" : money(g.price_at_call, 2)}</b></span><span>trigger <b>${g.trigger == null ? "none" : money(g.trigger, 2)}</b></span><span>score at call <b>${g.score_percentile_at_call == null ? "n/a" : "p" + Math.round(g.score_percentile_at_call)}</b></span>${g.ret == null ? "" : `<span>since <b class="${cls(g.ret)}">${pct(g.ret, 1, true)}</b></span>`}</div></div>`).join("") || `<div class="empty">No calls logged.</div>`;
+      <div class="side"><span>at call <b>${g.price_at_call == null ? "n/a" : money(g.price_at_call, 2)}</b></span><span>trigger <b>${g.trigger == null ? "none" : money(g.trigger, 2)}</b></span>${g.is_swing ? `<span>stop <b>${g.stop == null ? "none" : money(g.stop, 2)}</b></span><span>horizon <b>${g.horizon_days} sessions</b></span>` : ""}<span>score at call <b>${g.score_percentile_at_call == null ? "n/a" : "p" + Math.round(g.score_percentile_at_call)}</b></span>${g.ret == null ? "" : `<span>since <b class="${cls(g.ret)}">${pct(g.ret, 1, true)}</b></span>`}${g.is_swing && g.horizon_grades && g.horizon_grades.horizon ? `<span>at horizon <b class="${cls(g.horizon_grades.horizon.excess_vs_spy)}">${pct(g.horizon_grades.horizon.excess_vs_spy, 1, true)} vs SPY</b></span>` : ""}</div></div>`).join("") || `<div class="empty">No calls logged.</div>`;
+  }
+
+  // setups, from setups.json (swing.md). A setup is a pattern that matched, never a recommendation.
+  function renderSetups() {
+    const host = $("setups"), sub = $("setups-sub"), note = $("setups-note"), rules = $("setups-rules");
+    if (!SU) { host.innerHTML = `<div class="empty">No setups file. python scripts/setups.py writes one.</div>`; sub.textContent = ""; note.textContent = ""; rules.innerHTML = ""; return; }
+    const list = SU.setups || [];
+    sub.textContent = SU.status === "SCANNED" ? `${list.length} matched as of ${SU.as_of} over ${money(SU.universe_n)} names` : SU.status;
+    note.textContent = SU.status === "SCANNED"
+      ? "Each row is a mechanical pattern that matched a rule in swing.md, with the entry, the stop and the horizon those rules dictate. Nothing here is a recommendation; the tracker grades what you log, at 5, 10 and 20 sessions against SPY, and swing.md allows no size change before thirty graded calls."
+      : ((SU.why_not_run || [])[0] || "") + " " + ((SU.why_not_run || [])[1] || "");
+    host.innerHTML = list.length ? list.map((x, i) => `<div class="h-pick lift" style="--i:${Math.min(i, 8)}"><div class="n">${i + 1}</div>
+        <div><a href="analyze/${encodeURIComponent(x.ticker)}/" class="tk" style="text-decoration:none">${esc(x.ticker)}</a><span class="nm">${esc(x.name || "")}</span><div class="act"><b>${esc(x.label)}</b></div></div>
+        <div class="amt">${money(x.entry, 2)}<small>stop ${money(x.stop, 2)} (${pct(x.risk_pct, 1)} risk)</small><small>${x.horizon_days} sessions</small></div>
+        <div class="zonecol"><div class="z" style="margin-top:0;flex-direction:column;align-items:flex-start;gap:3px">${Object.entries(x.numbers || {}).map(([k, v]) => `<span>${esc(k)} <b style="color:var(--ink);font-weight:500">${esc(v)}</b></span>`).join("")}</div></div>
+        <div class="thesis">${esc(x.rule)} <b>${esc(x.what_this_is)}.</b></div></div>`).join("")
+      : (SU.status === "SCANNED" ? `<div class="empty">Nothing matched today. A quiet scan is the normal case.</div>` : "");
+    rules.innerHTML = Object.entries(SU.kinds || {}).map(([k, r]) => `<div class="e"><div class="dt">${esc(k)}</div><div><div class="h">${esc(r.label)}</div><div class="th">${esc(r.rule)}</div></div><div class="side"></div></div>`).join("")
+      + (SU.limitations || []).map((l) => `<div class="e"><div class="dt muted">limit</div><div class="th muted">${esc(l)}</div><div class="side"></div></div>`).join("");
   }
 
   // overview extras
@@ -325,10 +344,10 @@
     } catch (e) {}
   }
 
-  function renderAll() { readColors(); status(scanned() ? "scan " + W.as_of : ""); renderHero(); renderScan(); renderIndexChart($("chart"), "chart-sub"); renderPicks(); renderOwn(); renderScreen(false); renderJournal(); renderRest(); renderSettings(); if ($("v-charts").classList.contains("on")) renderCharts(); }
+  function renderAll() { readColors(); status(scanned() ? "scan " + W.as_of : ""); renderHero(); renderScan(); renderIndexChart($("chart"), "chart-sub"); renderPicks(); renderOwn(); renderScreen(false); renderJournal(); renderSetups(); renderRest(); renderSettings(); if ($("v-charts").classList.contains("on")) renderCharts(); }
 
-  Promise.all([loadJson("watch.json"), loadJson("tracker.json")]).then(([w, t]) => {
-    W = w; T = t;
+  Promise.all([loadJson("watch.json"), loadJson("tracker.json"), loadJson("setups.json")]).then(([w, t, su]) => {
+    W = w; T = t; SU = su;
     renderAll();
     show(location.hash.slice(1) || "overview");
     firstRender = false;

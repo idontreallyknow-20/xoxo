@@ -21,6 +21,7 @@ GENERATED = [
     "dashboard/backtest.json",
     "dashboard/tracker.json",
     "dashboard/watch.json",
+    "dashboard/setups.json",
 ]
 
 

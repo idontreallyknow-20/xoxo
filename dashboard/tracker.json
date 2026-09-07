@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-07T04:04:09",
+ "built_at": "2026-09-07T04:51:34",
  "status": "NOT GRADED",
  "is_real": false,
  "as_of": "2026-09-07",
@@ -18,7 +18,13 @@
   "passes_graded": 0,
   "passes_missed": 0,
   "mean_excess_vs_spy_buys": null,
-  "trading_days": null
+  "trading_days": null,
+  "swing_calls": 0,
+  "swing_graded_at_horizon": 0,
+  "swing_ahead_at_horizon": 0,
+  "swing_stopped": 0,
+  "swing_mean_excess_at_horizon": null,
+  "swing_floor": 30
  },
  "limitations": [
   "Price source: none pulled yet.",
@@ -54,7 +60,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -79,7 +90,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -104,7 +120,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -129,7 +150,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -154,7 +180,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -179,7 +210,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -204,7 +240,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -229,7 +270,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -254,7 +300,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -279,7 +330,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -304,7 +360,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -329,7 +390,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -354,7 +420,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -379,7 +450,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -404,7 +480,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   },
   {
    "date": "2026-09-04",
@@ -429,7 +510,12 @@
    "stopped_trading": false,
    "status": "ungraded",
    "reason": "no price history has been pulled",
-   "verdict": "not graded: no price history has been pulled"
+   "verdict": "not graded: no price history has been pulled",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
   }
  ],
  "score_vs_outcome": {

@@ -6,6 +6,7 @@
     python scripts/scan.py --dry-run       # print every URL --live would fetch, send nothing
     python scripts/scan.py --fixture       # the file's shape on committed fixtures; never writes under dashboard/
     python scripts/scan.py --sources prices,edgar   # a subset of the three sources
+    python scripts/scan.py --live --intraday        # the last 15-minute print for each name -> watch_intraday.json
 
 Watched names are every ticker with a journal call plus whatever is in
 portfolio/holdings.csv (not committed). Each is read against its price at call
@@ -27,7 +28,7 @@ from typing import Dict, List, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from an import edgar, journal, paths, positioning, prices, watch  # noqa: E402
+from an import edgar, intraday, journal, paths, positioning, prices, watch  # noqa: E402
 from an.http import DryRunTransport, FixtureTransport, HttpTransport  # noqa: E402
 from an.store import Cache, FetchError, Offline  # noqa: E402
 
@@ -43,20 +44,35 @@ def fixture_transport() -> FixtureTransport:
     return t
 
 
+def intraday_fixture_frame():
+    import pandas as pd
+
+    blob = json.loads((FIXTURES / "yf_intraday.json").read_text())
+    cols = pd.MultiIndex.from_tuples([tuple(c) for c in blob["columns"]])
+    return pd.DataFrame(blob["data"], index=pd.to_datetime(blob["index"], utc=True), columns=cols)
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--live", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--fixture", action="store_true")
+    ap.add_argument("--intraday", action="store_true",
+                    help="read the last 15-minute print instead of the close; no RSS; writes watch_intraday.json")
+    ap.add_argument("--at", default=None, help="with --intraday: the wall-clock cutoff, YYYY-MM-DDTHH:MM (ET)")
     ap.add_argument("--sources", default=",".join(ALL_SOURCES))
     ap.add_argument("--as-of", default=None, help="YYYY-MM-DD, default today")
     ap.add_argument("--since-days", type=int, default=14,
                     help="on the first scan, how far back to list filings (later scans use the state file)")
-    ap.add_argument("--out", type=Path, default=paths.DASHBOARD_DIR / "watch.json")
+    ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--state", type=Path, default=watch.STATE_PATH)
     ap.add_argument("--check", action="store_true", help="accepted for build_all --check; no effect")
     a = ap.parse_args(argv)
 
+    if a.out is None:
+        a.out = paths.DASHBOARD_DIR / ("watch_intraday.json" if a.intraday else "watch.json")
+    if a.intraday:
+        a.sources = ",".join(s for s in a.sources.split(",") if s.strip() != "rss")
     sources = {s.strip() for s in a.sources.split(",") if s.strip()}
     unknown = sources - set(ALL_SOURCES)
     if unknown:
@@ -66,6 +82,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if a.fixture:
         return run_fixture(a, as_of, sources)
+    if a.intraday:
+        return run_intraday(a, as_of, sources)
 
     state = watch.WatchState.load(a.state)
     entries = journal.load()
@@ -195,14 +213,135 @@ def main(argv: Optional[List[str]] = None) -> int:
     return 0
 
 
+def run_intraday(a: argparse.Namespace, as_of: dt.date, sources: set) -> int:
+    """The midday and event scans: one batched pull of 15-minute bars for the watched names."""
+    state = watch.WatchState.load(a.state)
+    entries = journal.load()
+    held, _, _ = positioning._read_holdings()
+    names = watch.names_to_watch(entries, held=[h.ticker for h in held],
+                                 held_triggers={h.ticker: h.wrong_if_price for h in held if h.wrong_if_price})
+    tickers = [n.ticker for n in names]
+    if not names:
+        print("nothing to watch: no journal calls and no holdings", file=sys.stderr)
+        return 2
+    at = dt.datetime.fromisoformat(a.at) if a.at else dt.datetime.now()
+    since = (dt.date.fromisoformat(state.last_scan[:10]) - dt.timedelta(days=1)) if state.last_scan \
+        else as_of - dt.timedelta(days=a.since_days)
+    if a.dry_run:
+        print(f"# dry run. --live --intraday would pull {intraday.INTERVAL} bars over {intraday.PERIOD} for "
+              f"{len(tickers) + len(watch.BENCHMARKS)} names in one yfinance call, cached {intraday.TTL / 60:.0f} min "
+              f"under {intraday.INTRADAY_CACHE}")
+        print(f"#   {' '.join(tickers + list(watch.BENCHMARKS))}")
+        if "edgar" in sources:
+            print(f"#   edgar: filings after {since}, submissions cached 30 minutes")
+        print("# this script has never made these requests")
+        return 0
+
+    paths.ensure_dirs()
+    src: Dict[str, Dict[str, object]] = {"rss": {"live": False, "detail": "not read intraday"}}
+    reads: Dict[str, watch.PriceRead] = {}
+    bench: Dict[str, watch.PriceRead] = {}
+    filings: Dict[str, List[watch.FilingNote]] = {}
+    notes: List[str] = []
+    any_data = False
+
+    # the prior close comes from the daily cache when it is there; the bars themselves otherwise
+    prior: Dict[str, float] = {}
+    try:
+        daily = prices.PriceClient(downloader=prices.OfflineDownloader(), cache=Cache(paths.PRICE_CACHE)) \
+            .daily_closes(tickers + list(watch.BENCHMARKS), as_of - dt.timedelta(days=10), as_of - dt.timedelta(days=1))
+        for t in daily.columns:
+            v = prices.price_on(daily, t, as_of - dt.timedelta(days=1))
+            if v is not None:
+                prior[t] = v
+    except Offline:
+        pass
+
+    if "prices" in sources:
+        client = intraday.IntradayClient(downloader=intraday.YFinanceIntradayDownloader() if a.live
+                                         else intraday.OfflineDownloader())
+        try:
+            bars = client.bars(tickers + list(watch.BENCHMARKS))
+            prints = {t: intraday.last_print(bars, t, prior_close=prior.get(t), as_of=at) for t in bars}
+            for n in names:
+                reads[n.ticker] = watch.intraday_read(prints, n.ticker, as_of=as_of, price_at_call=n.price_at_call,
+                                                      trigger=n.trigger)
+            for b in watch.BENCHMARKS:
+                bench[b] = watch.intraday_read(prints, b, as_of=as_of)
+            any_data = any(r.last_close is not None for r in reads.values())
+            src["prices"] = {"live": client.last_live, "detail": f"{intraday.INTERVAL} bars, {client.last_source}; "
+                             f"prior close from the daily cache for {len(prior)} names"}
+        except Offline as e:
+            src["prices"] = {"live": False, "detail": f"offline: {e}"}
+            notes.append("No intraday bars were available, so no price rule could be checked.")
+    else:
+        src["prices"] = {"live": False, "detail": "not requested"}
+
+    if "edgar" in sources:
+        transport = HttpTransport(edgar.default_user_agent(), rate_per_second=edgar.SEC_RATE_PER_SECOND) \
+            if a.live else DryRunTransport(sink=lambda s: None)
+        c = edgar.EdgarClient(transport=transport, cache=Cache(paths.EDGAR_CACHE, default_ttl=30 * 60.0))
+        n_new = 0
+        try:
+            for n in names:
+                got, note = watch.filings_since(c, n.ticker, since)
+                if note:
+                    notes.append(note)
+                new = state.new_filings(got)
+                filings[n.ticker] = new
+                n_new += len(new)
+            any_data = True
+            src["edgar"] = {"live": a.live, "detail": f"{n_new} new filing(s) since {since}"}
+        except (Offline, FetchError) as e:
+            src["edgar"] = {"live": False, "detail": f"not pulled: {e}"}
+    else:
+        src["edgar"] = {"live": False, "detail": "not requested"}
+
+    if not any_data:
+        blob = watch.not_run_report(names)
+        blob["mode"] = "intraday"
+    else:
+        blob = watch.build_report(names, reads, filings, {}, notes, as_of=as_of, sources=src, bench_reads=bench,
+                                  mode="intraday", at=at.isoformat(timespec="minutes"))
+        if a.live:
+            state.remember([f for v in filings.values() for f in v], [], when=dt.datetime.now().isoformat(timespec="seconds"))
+            state.save(a.state)
+    a.out.parent.mkdir(parents=True, exist_ok=True)
+    a.out.write_text(json.dumps(blob, indent=1), encoding="utf-8")
+    report(blob)
+    print(f"wrote {a.out}")
+    return 0
+
+
 def run_fixture(a: argparse.Namespace, as_of: dt.date, sources: set) -> int:
     """The shape of a scanned file on committed fixtures. Refuses to write under dashboard/."""
-    if a.out.resolve() == (paths.DASHBOARD_DIR / "watch.json").resolve() or \
-            paths.DASHBOARD_DIR.resolve() in a.out.resolve().parents:
+    if paths.DASHBOARD_DIR.resolve() in a.out.resolve().parents:
         out = paths.CACHE_DIR / "watch" / "fixture_watch.json"
     else:
         out = a.out
     t = fixture_transport()
+    if a.intraday:
+        # The intraday fixture describes LIVE and DIP; DIP has a fictional $180 trigger it trades under.
+        client = intraday.IntradayClient(downloader=intraday.RawDownloader(intraday_fixture_frame()),
+                                         cache=Cache(paths.CACHE_DIR / "watch" / "fixture_intraday", default_ttl=1.0))
+        at = dt.datetime.fromisoformat(a.at) if a.at else dt.datetime(2026, 9, 4, 15, 0)
+        bars = client.bars(["LIVE", "DIP"])
+        prints = {tk: intraday.last_print(bars, tk, as_of=at) for tk in bars}
+        names = [watch.WatchName("DIP", "Buy now", "buy", "2026-08-01", 200.0, "A close under $180.", 180.0, False, 4, "compounder"),
+                 watch.WatchName("LIVE", "Watch", "watch", "2026-08-01", 100.0, None, None, False, 3, None)]
+        reads = {n.ticker: watch.intraday_read(prints, n.ticker, as_of=as_of, price_at_call=n.price_at_call, trigger=n.trigger)
+                 for n in names}
+        src = {"prices": {"live": False, "detail": "committed fixture yf_intraday.json"},
+               "edgar": {"live": False, "detail": "not read in the intraday fixture"},
+               "rss": {"live": False, "detail": "not read intraday"}}
+        blob = watch.build_report(names, reads, {}, {}, [], as_of=as_of, sources=src, status="SYNTHETIC",
+                                  mode="intraday", at=at.isoformat(timespec="minutes"))
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(blob, indent=1), encoding="utf-8")
+        print("# FIXTURE. Two fictional names on a committed set of bars. Measures nothing.")
+        report(blob)
+        print(f"wrote {out}")
+        return 0
     name = watch.WatchName(ticker="AAPL", action="Buy now", kind="buy", date="2026-07-01", price_at_call=100.0,
                            wrong_if="A close under $80.", trigger=80.0, held=False, conviction=4, bucket="compounder")
     start = as_of - dt.timedelta(days=watch.WINDOW_DAYS)
@@ -230,7 +369,8 @@ def run_fixture(a: argparse.Namespace, as_of: dt.date, sources: set) -> int:
 
 
 def report(blob: dict) -> None:
-    print(f"status {blob['status']}: {blob['n_watched']} watched, {len(blob.get('alerts', []))} alert(s)")
+    print(f"status {blob['status']} ({blob.get('mode', 'close')}{', at ' + blob['at'] if blob.get('at') else ''}): "
+          f"{blob['n_watched']} watched, {len(blob.get('alerts', []))} alert(s)")
     for s, v in blob["sources"].items():
         print(f"  {s:<7} {'live' if v.get('live') else 'not live':<9} {v.get('detail')}")
     for row in blob.get("names", []):

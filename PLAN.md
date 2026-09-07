@@ -351,6 +351,23 @@ Branch `claude/equity-research-setup-dtxlbl`. Decisions taken by default and rec
       shell and the stylesheet. Freeze lifted for `dashboard/` only, `data.js` excepted.
       Verify: `python -m pytest -q tests/test_home.py tests/test_css_tokens.py tests/test_contrast.py
       tests/test_site_links.py` and `python scripts/shoot.py --mobile --themes night paper`.
+- [x] **X22** Three editions a day. `an/intraday.py` (15-minute bars, watched names only, one batched
+      call, cached ten minutes), `scan.py --intraday` -> `watch_intraday.json`, alert keys and a
+      seen list in `WatchState`, `digest.build_digest(edition=morning|midday|event)`, `daily_email.py
+      --edition --only-new-alerts`, and `setup.ps1 -InstallTask` registering 07:00, 12:00 and every 30
+      minutes 09:30 to 16:30 on weekdays. NOTES.md 10b and 10c.
+      Verify: `python -m pytest -q tests/test_intraday.py tests/test_watch.py tests/test_digest.py`,
+      `python scripts/scan.py --intraday --fixture --out /tmp/wi.json`,
+      `python scripts/daily_email.py --preview --edition midday`.
+- [x] **X23** The swing layer. `swing.md` (the rules, the sleeve, the tax note, the thirty-grade floor),
+      `an/setups.py` + `scripts/setups.py` -> `dashboard/setups.json` (four mechanical setups with entry,
+      stop, horizon; NOT RUN committed), `Horizon:` and `Stop:` in the journal grammar, the tracker
+      grading swing calls at 5, 10, 20 sessions and at the horizon, a Setups tab on the front page and a
+      Setups section in the morning email. NOTES.md 10a, 10d, 10e.
+      Verify: `python -m pytest -q tests/test_setups.py tests/test_tracker.py tests/test_journal.py`,
+      `python scripts/setups.py --fixture --out /tmp/s.json`, `python scripts/setups.py --dry-run`.
+- [ ] **X24** Horizon grades on the positioning page's grades table (`positioning.js`), once a swing
+      call exists to show.
 - [ ] **X19** Reddit mentions through OAuth (NOTES.md 9b). Needs a `post` on the transport. Deferred on
       value, not terms.
 - [ ] **X20** EDGAR full-text search for mentions of a watched name in other filers' documents. Free.

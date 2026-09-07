@@ -3,9 +3,18 @@
 For whoever picks this up next, human or model. `SUMMARY.md` is written for Joseph; this one is
 written for the next person to touch the code.
 
-Fourth session on branch `claude/equity-research-setup-dtxlbl` (the first three were
-`claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI is configured on this repo, so the
-gate is local: see **Before you commit** below.
+Fifth session on branch `claude/equity-research-setup-dtxlbl`, restarted from `main` after PR #5
+merged (the first three sessions were `claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI
+is configured on this repo, so the gate is local: see **Before you commit** below.
+
+**What changed in the fifth session, in one paragraph.** Three email editions a day (07:00 brief,
+12:00 check, an event email whenever a written rule fires and has not been sent), driven by a
+narrow intraday module (`an/intraday.py`, fifteen-minute bars for the watched names only) and
+alert de-duplication in the scan state. A swing layer: `swing.md` holds the rules, `an/setups.py`
+applies four mechanical setups to the liquid universe and writes `setups.json`, the journal grammar
+gained `Horizon:` and `Stop:`, and the tracker grades swing calls at 5, 10 and 20 sessions.
+`NOTES.md` section 10 has the framing (there is no measured edge at that horizon; the layer exists
+to survive while one is measured), what is most likely to break live, and the first-run order.
 
 **What changed in the fourth session, in one paragraph.** The freeze on `dashboard/` is lifted
 (`data.js` excepted; everything outside `dashboard/` is still frozen), the front page is rewritten on
@@ -66,8 +75,11 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
                      merged into the record; universe_with_basis() is what every builder calls (X12)
   guidance.py        8-K Exhibit 99.1 guidance figures, diffed against last quarter's (X3)
   tracker.py         every journal call graded against prices, "so far" (X6)
-  watch.py           the daily scan: prices vs the journal's falsifiers, new filings, headlines (X16)
-  digest.py          the daily email as data, then as HTML (X17)
+  watch.py           the daily scan: prices vs the journal's falsifiers, new filings, headlines (X16);
+                     intraday reads and alert keys (X22)
+  intraday.py        15-minute bars for the watched names, one batched call, cached ten minutes (X22)
+  setups.py          four mechanical swing setups from swing.md, closes only (X23)
+  digest.py          the daily email as data, then as HTML; three editions (X17, X22)
   mail.py            SMTP, credential from the environment only, dry-run and provenance (X15)
   outcomes.py        the grades read back: score at call vs outcome, refusing thin samples (X14)
   positioning.py     the memo: three lists, sized from criteria.md
@@ -79,9 +91,13 @@ scripts/fetch_*.py   the live pulls, plus listing_status.py, guidance_diff.py an
                      All have --dry-run; fetch_dera.py --basis-report and guidance_diff.py
                      --fixture print their shape on committed miniatures
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
-scripts/scan.py      the daily scan -> dashboard/watch.json (--live, --dry-run, --fixture)
-scripts/daily_email.py  the daily email (--preview, --dry-run, --send, --only-if-alerts)
-setup.ps1            -InstallTask registers both Windows tasks; -Daily and -Monthly are what they run
+scripts/scan.py      the daily scan -> dashboard/watch.json; --intraday -> watch_intraday.json
+scripts/setups.py    the swing setups -> dashboard/setups.json (--live, --dry-run, --fixture)
+scripts/daily_email.py  the email (--edition morning|midday|event, --preview, --dry-run, --send,
+                     --only-if-alerts, --only-new-alerts)
+setup.ps1            -InstallTask registers the three weekday tasks and the monthly one;
+                     -Daily -Edition <e> and -Monthly are what they run
+swing.md             the swing rules, read by the scanner and quoted by the email
 scripts/shoot.py     headless Chromium: console errors, overflow, screenshots
 
 dashboard/assets/    desk.css (the one definition of the theme tokens; index.html loads it too),
@@ -127,7 +143,7 @@ before raising, because SMTP servers echo the AUTH string.
 
 ```bash
 pip install pytest playwright                        # neither is in requirements.txt
-python -m pytest -q                                  # 911 tests, ~3 min
+python -m pytest -q                                  # 950 tests, ~4 min
 python scripts/build_all.py                          # regenerate everything
 python scripts/shoot.py --mobile --themes night paper  # 32 page/theme/width combinations
 ```
@@ -142,8 +158,8 @@ intentional. `tests/test_build_determinism.py` compares everything else.
 
 ## What is genuinely unfinished
 
-The fourth session's additions, in the order to run them: `NOTES.md` 9e. Then the list below, which
-is unchanged because none of it could run here either.
+The fifth session's additions, in the order to run them: `NOTES.md` 10g. Then 9e, then the list
+below, which is unchanged because none of it could run here either.
 
 The second session (2026-09-06, `NOTES.md` section 7) built X7, X8, X5 and X6 from the backlog.
 The third (2026-09-07, section 8) wired the modules nothing consumed: DERA into the score (X12),

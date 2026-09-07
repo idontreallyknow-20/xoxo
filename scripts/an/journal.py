@@ -110,6 +110,16 @@ class JournalEntry:
     bucket: Optional[str]
     shared_with: List[str] = field(default_factory=list)
     """Other tickers logged in the same heading, when one entry covered several."""
+    horizon_days: Optional[int] = None
+    """``Horizon: N trading days``, present on a swing call (swing.md). Absent means the
+    2 to 5 year reading in criteria.md."""
+    stop: Optional[float] = None
+    """``Stop: $X``, a closing level named before entry. The tracker checks it like a
+    'close under' falsifier."""
+
+    @property
+    def is_swing(self) -> bool:
+        return self.horizon_days is not None
 
     @property
     def is_shared(self) -> bool:
@@ -154,6 +164,17 @@ def _num(v: Optional[str]) -> Optional[float]:
         return None
 
 
+def _horizon(v: Optional[str]) -> Optional[int]:
+    """``Horizon: 10 trading days`` -> 10. Calendar units are refused: the tracker counts sessions."""
+    if not v:
+        return None
+    m = re.search(r"(\d+)\s*(trading\s+days?|sessions?|d\b)", v, re.I)
+    if not m:
+        return None
+    n = int(m.group(1))
+    return n if n > 0 else None
+
+
 def parse(text: str) -> List[JournalEntry]:
     """One entry per ticker. A heading naming five names produces five entries."""
     out: List[JournalEntry] = []
@@ -174,6 +195,8 @@ def parse(text: str) -> List[JournalEntry]:
                     conviction=int(conv) if conv is not None and 1 <= conv <= 5 else None,
                     bucket=_field(body, "Bucket"),
                     shared_with=[t.upper() for t in tickers if t.upper() != ticker.upper()],
+                    horizon_days=_horizon(_field(body, "Horizon")),
+                    stop=_split_for(_field(body, "Stop"), tickers, ticker),
                 )
             )
     return out

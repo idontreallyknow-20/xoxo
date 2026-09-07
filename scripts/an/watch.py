@@ -53,8 +53,8 @@ __all__ = [
     "WatchName", "PriceRead", "FilingNote", "Headline", "Alert", "WatchState",
     "RssReader", "RSS_TEMPLATE", "WATCH_CACHE", "STATE_PATH",
     "DROP_WEEK", "MOVE_DAY", "NEAR_TRIGGER", "FORMS_WATCHED",
-    "names_to_watch", "price_read", "filings_since", "alerts_for", "build_report", "not_run_report",
-    "rules_text", "BENCHMARKS",
+    "names_to_watch", "price_read", "intraday_read", "filings_since", "alerts_for", "build_report",
+    "not_run_report", "rules_text", "BENCHMARKS", "alert_key",
 ]
 
 WATCH_CACHE = paths.CACHE_DIR / "watch"
@@ -163,9 +163,33 @@ class PriceRead:
     low_in_window: Optional[float]
     sessions: int
     stale_days: Optional[int]
+    intraday: bool = False
+    """True when ``last_close`` is the last fifteen-minute print, not a close."""
+    at: Optional[str] = None
+    """The print's timestamp when intraday, America/New_York."""
 
     def to_json(self) -> Dict[str, Any]:
         return {k: getattr(self, k) for k in self.__dataclass_fields__}
+
+
+def intraday_read(prints: Dict[str, Any], ticker: str, *, as_of: dt.date,
+                  price_at_call: Optional[float] = None, trigger: Optional[float] = None) -> PriceRead:
+    """The same readout from an :class:`an.intraday.Print`. ``chg_1d`` is the move on the
+    day against the prior close; ``chg_5d`` is None because five sessions of bars is not
+    the question. ``breached`` means trading under the level, which the alert says is not a close."""
+    p = prints.get(ticker.upper())
+    empty = PriceRead(ticker, None, None, None, None, None, None, None, None, None, 0, None, True, None)
+    if p is None or p.price is None:
+        return empty
+    last = p.price
+    since = (last / price_at_call - 1.0) if price_at_call else None
+    to_trig = (last / trigger - 1.0) if trigger else None
+    session = dt.date.fromisoformat(p.session) if p.session else None
+    return PriceRead(ticker=ticker, last_close=last, last_date=p.session, prev_close=p.prior_close,
+                     chg_1d=p.change, chg_5d=None, since_call=since, to_trigger=to_trig,
+                     breached=(last < trigger) if trigger else None, low_in_window=p.session_low,
+                     sessions=p.bars_in_session, stale_days=(as_of - session).days if session else None,
+                     intraday=True, at=p.at)
 
 
 def _f(v: Any) -> Optional[float]:
@@ -342,6 +366,8 @@ class RssReader:
 class WatchState:
     seen_filings: Dict[str, List[str]] = field(default_factory=dict)
     seen_headlines: Dict[str, List[str]] = field(default_factory=dict)
+    seen_alerts: List[str] = field(default_factory=list)
+    """Alert keys already sent in an email, so the event edition never repeats one."""
     last_scan: Optional[str] = None
     n_scans: int = 0
 
@@ -356,13 +382,14 @@ class WatchState:
             return cls()
         return cls(seen_filings={k: list(v) for k, v in (blob.get("seen_filings") or {}).items()},
                    seen_headlines={k: list(v) for k, v in (blob.get("seen_headlines") or {}).items()},
+                   seen_alerts=list(blob.get("seen_alerts") or []),
                    last_scan=blob.get("last_scan"), n_scans=int(blob.get("n_scans") or 0))
 
     def save(self, path: Optional[Path] = None) -> Path:
         p = path or STATE_PATH
         p.parent.mkdir(parents=True, exist_ok=True)
         blob = {"seen_filings": self.seen_filings, "seen_headlines": self.seen_headlines,
-                "last_scan": self.last_scan, "n_scans": self.n_scans}
+                "seen_alerts": self.seen_alerts[-2000:], "last_scan": self.last_scan, "n_scans": self.n_scans}
         tmp = p.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(blob, indent=1), encoding="utf-8")
         os.replace(tmp, p)
@@ -373,6 +400,16 @@ class WatchState:
 
     def new_headlines(self, items: Iterable[Headline]) -> List[Headline]:
         return [h for h in items if h.guid not in set(self.seen_headlines.get(h.ticker, []))]
+
+    def unsent_alerts(self, alerts: Iterable[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        seen = set(self.seen_alerts)
+        return [a for a in alerts if alert_key(a) not in seen]
+
+    def remember_alerts(self, alerts: Iterable[Dict[str, Any]]) -> None:
+        for a in alerts:
+            k = alert_key(a)
+            if k not in self.seen_alerts:
+                self.seen_alerts.append(k)
 
     def remember(self, notes: Iterable[FilingNote], items: Iterable[Headline], *, when: str) -> None:
         for n in notes:
@@ -409,6 +446,16 @@ class Alert:
     def to_json(self) -> Dict[str, Any]:
         return {k: getattr(self, k) for k in self.__dataclass_fields__}
 
+    @property
+    def key(self) -> str:
+        """What makes two alerts the same event: name, kind and the day. A print at 10:30
+        and one at 11:00 under the same level are one alert, not two emails."""
+        return f"{self.ticker}|{self.kind}|{(self.as_of or '')[:10]}"
+
+
+def alert_key(a: Dict[str, Any]) -> str:
+    return f"{a.get('ticker')}|{a.get('kind')}|{(a.get('as_of') or '')[:10]}"
+
 
 def _money(v: float) -> str:
     return f"${v:,.2f}"
@@ -422,7 +469,15 @@ def alerts_for(name: WatchName, read: PriceRead, filings: Sequence[FilingNote]) 
     """Mechanical, rule by rule. The text says what crossed what; it never says what to do."""
     out: List[Alert] = []
     t = name.ticker
-    if read.last_close is not None and name.trigger:
+    when = (read.at or "")[11:16]
+    if read.intraday and read.last_close is not None and name.trigger and read.breached:
+        out.append(Alert(t, "trigger_intraday", 3,
+                         f"{t} is trading at {_money(read.last_close)} at {when}, under the {_money(name.trigger)} "
+                         f"level the journal named. That is a print, not a close: the journal's rule is a close under "
+                         f"the level, and the day is not over.",
+                         rule="journal.md, Wrong if: a close under the named level (intraday print)",
+                         value=read.to_trigger, as_of=read.at or read.last_date, source="intraday prices"))
+    elif read.last_close is not None and name.trigger:
         if read.breached:
             out.append(Alert(t, "trigger", 3,
                              f"{t} closed at {_money(read.last_close)} on {read.last_date}, under the "
@@ -444,10 +499,16 @@ def alerts_for(name: WatchName, read: PriceRead, filings: Sequence[FilingNote]) 
                          rule="README, Cadence, Event driven: a holding drops 15%+ in a week",
                          value=read.chg_5d, as_of=read.last_date, source="prices"))
     if read.chg_1d is not None and abs(read.chg_1d) >= MOVE_DAY:
-        out.append(Alert(t, "move_day", 2,
-                         f"{t} moved {_pct(read.chg_1d)} on {read.last_date}.",
-                         rule=f"single session move of {MOVE_DAY:.0%} or more",
-                         value=read.chg_1d, as_of=read.last_date, source="prices"))
+        if read.intraday:
+            out.append(Alert(t, "move_day", 2,
+                             f"{t} is {_pct(read.chg_1d)} on the day at {when}, at {_money(read.last_close)}.",
+                             rule=f"move of {MOVE_DAY:.0%} or more against the prior close (intraday print)",
+                             value=read.chg_1d, as_of=read.at or read.last_date, source="intraday prices"))
+        else:
+            out.append(Alert(t, "move_day", 2,
+                             f"{t} moved {_pct(read.chg_1d)} on {read.last_date}.",
+                             rule=f"single session move of {MOVE_DAY:.0%} or more",
+                             value=read.chg_1d, as_of=read.last_date, source="prices"))
     form4 = [f for f in filings if f.form == "4"]
     for f in filings:
         if f.is_earnings:
@@ -505,6 +566,8 @@ def not_run_report(names: Sequence[WatchName], *, built_at: Optional[str] = None
         "built_at": built_at or dt.datetime.now().isoformat(timespec="seconds"),
         "status": "NOT RUN",
         "is_real": False,
+        "mode": "close",
+        "at": None,
         "as_of": None,
         "watched": [n.to_json() for n in names],
         "n_watched": len(names),
@@ -530,7 +593,8 @@ def not_run_report(names: Sequence[WatchName], *, built_at: Optional[str] = None
 def build_report(names: Sequence[WatchName], reads: Dict[str, PriceRead], filings: Dict[str, List[FilingNote]],
                  headlines: Dict[str, List[Headline]], notes: Sequence[str], *, as_of: dt.date,
                  sources: Dict[str, Dict[str, Any]], bench_reads: Optional[Dict[str, PriceRead]] = None,
-                 built_at: Optional[str] = None, status: str = "SCANNED") -> Dict[str, Any]:
+                 built_at: Optional[str] = None, status: str = "SCANNED", mode: str = "close",
+                 at: Optional[str] = None) -> Dict[str, Any]:
     rows: List[Dict[str, Any]] = []
     alerts: List[Alert] = []
     for n in names:
@@ -553,6 +617,10 @@ def build_report(names: Sequence[WatchName], reads: Dict[str, PriceRead], filing
         "Headlines come from one syndication feed and are not scored. A quiet feed is not a quiet company.",
         "Names without a CIK, which is every Canadian listing here, are not scanned for filings, and the row says so.",
     ] + list(notes)
+    if mode == "intraday":
+        limitations.insert(0, "INTRADAY. Every price is the last fifteen-minute print, not a close. The journal's "
+                              "rules are closing rules; a level crossed at 11:00 can be uncrossed by 16:00, and the "
+                              "alert says so.")
     if status == "SYNTHETIC":
         limitations.insert(0, "SYNTHETIC. Prices are a seeded random walk, the filings and headlines are a committed "
                               "fixture, and nothing here is a fact about any company.")
@@ -563,6 +631,8 @@ def build_report(names: Sequence[WatchName], reads: Dict[str, PriceRead], filing
         "built_at": built_at or dt.datetime.now().isoformat(timespec="seconds"),
         "status": status,
         "is_real": status == "SCANNED",
+        "mode": mode,
+        "at": at,
         "as_of": as_of.isoformat(),
         "watched": [n.to_json() for n in names],
         "n_watched": len(names),

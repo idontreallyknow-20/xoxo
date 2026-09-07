@@ -67,7 +67,7 @@ window.Desk = (function () {
     const home = depth + "index.html#";
     const nav = [[home + "overview", "Overview"], [home + "picks", "Picks"],
                  [home + "rankings", "Rankings"], [home + "holdings", "Holdings"],
-                 [home + "charts", "Charts"], [home + "journal", "Journal"], [depth + "analyze/", "Analyse"],
+                 [home + "charts", "Charts"], [home + "journal", "Journal"], [home + "setups", "Setups"], [depth + "analyze/", "Analyse"],
                  [depth + "positioning/", "Positioning"], [home + "settings", "Settings"]];
     return `<header class="reveal" style="--i:0">
       <a class="brand" href="${depth}index.html">Desk</a>
