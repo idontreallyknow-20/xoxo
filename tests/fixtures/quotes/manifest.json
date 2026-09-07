@@ -1,0 +1,11 @@
+{
+ "basis": "adjusted daily closes as yfinance returns them (auto_adjust=True)",
+ "first": "2017-06-01",
+ "last": "2017-09-29",
+ "missing": [],
+ "n_tickers": 15,
+ "pulled_at": "2017-09-30T00:00:00+00:00",
+ "requested": 15,
+ "sessions": 85,
+ "source": "fixture cut from tests/fixtures/history; VFV.TO is SPY scaled, not real"
+}

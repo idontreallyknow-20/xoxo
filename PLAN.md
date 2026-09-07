@@ -403,3 +403,21 @@ Branch `claude/equity-research-setup-dtxlbl`. Decisions taken by default and rec
       breakout arm gets its revision filter back. Neither exists in any reachable source today.
 - [ ] **X31** Re-run the whole grid on a second regime once a longer panel exists (2018 to 2026 at least);
       one bull market is one weather.
+
+## Seventh session, 2026-09-07: the desk runs itself
+
+- [x] **X32** Quotes through git. `.github/workflows/quotes.yml` + `scripts/fetch_quotes.py` -> the `quotes`
+      branch; `an/quotes.py` (`fetch_branch`, `load`, `ticker_universe`, `age_sessions`);
+      `prices.default_downloader()` honouring `DESK_QUOTES`. NOTES.md 12a.
+      Verify: `python -m pytest -q tests/test_quotes.py`, `python scripts/fetch_quotes.py --dry-run`.
+- [x] **X33** Claude's book. `book.md` (append-only, tested), `an/book.py`, `scripts/build_book.py` ->
+      `dashboard/book.json`, `track_calls.py --journal book.md`. NOTES.md 12b.
+      Verify: `python -m pytest -q tests/test_book.py`, `python scripts/build_book.py --quotes tests/fixtures/quotes
+      --journal book.md --out /tmp/b.json`.
+- [x] **X34** The close edition and the book, memo and tests sections in the digest; `daily_email.py --html-out`;
+      `scripts/run_tests.py`. NOTES.md 12c. Verify: `python -m pytest -q tests/test_digest_book.py`,
+      `python scripts/daily_email.py --edition close --preview`.
+- [x] **X35** The two Routines (Desk morning, Desk close) and the `desk` branch convention. NOTES.md 12d.
+- [ ] **X36** Allow `query1.finance.yahoo.com` and `query2.finance.yahoo.com` in the environment's network policy
+      so Route B works and the scan reaches Yahoo directly. Joseph's setting to change.
+- [ ] **X37** A /book/ page on the dashboard, on the positioning pattern, once the book has a month of marks.

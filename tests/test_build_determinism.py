@@ -23,6 +23,7 @@ GENERATED = [
     "dashboard/watch.json",
     "dashboard/setups.json",
     "dashboard/paper.json",
+    "dashboard/book.json",
 ]
 
 

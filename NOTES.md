@@ -1219,3 +1219,101 @@ stands, and the reason to log swing calls is now to measure the live rules the s
 - No second held-out run. The guard exists so that the number in `paper.json` is the number.
 - No costs below 5 + 5 bp. A rule that only works at zero cost does not work.
 - No earnings dates, no revisions: the sources are not reachable (X30).
+
+## 12. Seventh session, 2026-09-07: the desk runs itself
+
+Joseph asked for the tests to keep running and for an email every morning with Claude's own
+picks, how Claude's own portfolio is doing, and what Claude suggests for his $100,000. He chose
+`josephislockedin@gmail.com`, both price routes below, judgement for the picks, and both a morning
+and a close edition.
+
+### 12a. Prices, two routes, one seam
+
+The container that runs the desk cannot reach a price host, and neither can its web-fetch tool
+(both were tried: Yahoo, Stooq and the rest answer with the proxy's policy denial). Git is
+reachable. So:
+
+- **Route A, GitHub Actions.** `.github/workflows/quotes.yml` runs `scripts/fetch_quotes.py` on a
+  runner at 10:30 and 22:30 UTC on weekdays and commits `data/quotes/{closes.csv,latest.csv,
+  manifest.json}` to the `quotes` branch. `an.quotes.fetch_branch()` does `git fetch origin quotes`
+  and copies the three files under `data/cache/quotes/` without a checkout. The ticker list is
+  `an.quotes.ticker_universe()`: the quality 150, the memo's three lists, every name in both
+  journals, and SPY, QQQ, IWM, VFV.TO. About 450 sessions, roughly a megabyte.
+- **Route B, Yahoo allowed.** At claude.ai/code, the environment's network policy can allow
+  `query1.finance.yahoo.com` and `query2.finance.yahoo.com`; then `YFinanceDownloader` works
+  directly and every `--live` script runs as written.
+- **The seam.** `prices.PriceClient()` with no downloader now calls `prices.default_downloader()`:
+  when `DESK_QUOTES` names a directory with a `closes.csv`, that is a `PanelDownloader` over the
+  file; otherwise it is yfinance. So `scan.py --live`, `setups.py --live`, `track_calls.py --live`
+  and `build_book.py --live` all read the committed quotes with one environment variable and
+  no change to their code.
+
+Both cron lines in the workflow, and both Routines below, are written in UTC and drift an hour
+when Toronto changes its clocks in November.
+
+### 12b. The book
+
+`book.md` holds Claude's own calls in the journal grammar, append-only (`tests/test_book.py::
+test_book_md_is_append_only` compares every committed entry with the working tree). Nothing is
+kept by hand: `an/book.py` derives the ledger from the calls and the closes every time. A Buy
+fills at the first close after its date at its target (whole shares), capped at 12% of equity,
+refused if the month's deployment would pass 25% of equity or cash would fall under 20%, and the
+refusal is written into the position. A Sell exits at the first close after its date. A swing
+call is sized and exited exactly as `swing.md` says (the same arithmetic as `an/paper.py`, with
+the horizon counted from the call session as the tracker counts it). A long position is not sold
+by a falsifier: a close under its ``Wrong if`` level flags it and the email says so, and the next
+call is a judgement with its reason.
+
+`scripts/build_book.py` writes `dashboard/book.json` (`MARKED` with the quotes' age in sessions,
+or `NOT MARKED` with why). `track_calls.py --journal book.md --out dashboard/book_tracker.json`
+grades the same calls with the same tracker as Joseph's journal.
+
+The first calls, made in this session from the research notes: BKNG, REGN and MSFT at $8,000
+each for September, with the October and November tranches named in the plan entry and left for
+the routine to log when their conditions hold. Where I departed from the memo and why is in the
+plan entry too.
+
+### 12c. The email
+
+`an/digest.py` gained a `close` edition and three sections. **My book** (morning and close):
+equity, cash, return since the first fill against SPY, QQQ and VFV over the same window, every
+open position with its distance to its own falsifier, the day's calls with thesis and falsifier
+verbatim, the tracker's grade count. **The memo, sized for $100,000** (morning): the positioning
+memo's candidates with band, percentile, forward P/E against own history, drawdown, the next
+report date and the falsifier, the declined list and the queue in one line each. **Tests**, in
+"Where this came from": the last suite run from `data/cache/pytest_last.json` written by
+`scripts/run_tests.py`; a failure turns the subject red and lists the failing ids.
+`daily_email.py --html-out PATH` writes the HTML, the subject and a text alternative for a
+sender other than SMTP.
+
+Sending. Port 587 is closed here, so the scheduled sessions send with the Gmail connector the
+account carries (`send_message` with the HTML body and the subject from `--html-out`). SMTP
+through `an/mail.py` stays for Joseph's machine. The standing decision from 9a that "the email
+recommends nothing" is amended by request: the email now carries the memo and Claude's book,
+every row with its falsifier and the sizing arithmetic, under the same disclaimer and the same
+language guard, and `README.md`'s "Claude researches, you decide" is unchanged.
+
+### 12d. The routines
+
+Two Routines in this account, each a fresh session in this environment with the Gmail connector:
+**Desk morning** at 11:00 UTC weekdays (07:00 Toronto in summer) and **Desk close** at 22:00 UTC
+weekdays (18:00 Toronto). Each: checks out the `desk` branch (created from `main` if absent),
+installs the requirements, tries a direct quotes pull then the `quotes` branch, runs the full
+suite through `run_tests.py`, runs the scan, the setups, both trackers and the book (the morning
+also the judgement step: read `book.json`, `positioning.json`, `setups.json`, `watch.json`,
+decide, append calls to `book.md` with thesis, falsifier, size and conviction, no more than two
+new long calls a day, never editing an old entry), rebuilds, renders the edition with
+`--html-out`, sends it, commits `book.md`, `dashboard/*.json` and `lab/` to `desk`, pushes. It
+never opens a pull request and never touches `main`; merging `desk` is Joseph's call.
+
+What the routine may not do: skip, delete or weaken a test; change a rule constant; change the
+recipient; run the held-out paper window; send more than one email per fire; make a call without
+a falsifier.
+
+### 12e. Verified here, and not
+
+Verified on the fixture: the seam, the book's fills and caps, the swing arithmetic, both
+editions rendering, the language guard over every new string. Not verified here, because it
+cannot be: a real yfinance pull on the runner, the `quotes` branch appearing, the Gmail send from
+a scheduled session, the first push to `desk`. The first manual fire of Desk morning is the check
+for all four, and its session log is where to look if the email does not arrive.

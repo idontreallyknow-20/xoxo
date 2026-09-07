@@ -7,6 +7,16 @@ Fifth session on branch `claude/equity-research-setup-dtxlbl`, restarted from `m
 merged (the first three sessions were `claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI
 is configured on this repo, so the gate is local: see **Before you commit** below.
 
+**What changed in the seventh session, in one paragraph.** The desk runs itself. Quotes arrive through
+git: a GitHub Actions workflow pulls closes twice a weekday and commits them to the `quotes` branch,
+`an/quotes.py` reads them, and `DESK_QUOTES=data/cache/quotes` makes every `--live` script read the
+file through `prices.default_downloader()`. `book.md` is Claude's own paper book in the journal grammar,
+derived into `dashboard/book.json` by `an/book.py` under criteria.md's caps. The digest gained a `close`
+edition and three sections (My book, The memo sized for $100,000, Tests). Two Routines (Desk morning
+11:00 UTC, Desk close 22:00 UTC, weekdays) run a fresh session each that tests, marks, decides, emails
+`josephislockedin@gmail.com` through the Gmail connector, and commits to the `desk` branch. `NOTES.md`
+section 12 has the routes, the rules the routine works under, and what could not be verified here.
+
 **What changed in the sixth session, in one paragraph.** Real daily prices are on disk for the first
 time: `an/history.py` and `scripts/fetch_history.py` pull five years of S&P 500 closes, SPY and QQQ,
 a cross-check and index membership from public GitHub repositories (the one host the proxy allows),
@@ -89,6 +99,8 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
                      intraday reads and alert keys (X22)
   intraday.py        15-minute bars for the watched names, one batched call, cached ten minutes (X22)
   setups.py          four mechanical swing setups from swing.md, closes only (X23)
+  quotes.py          daily closes through the quotes branch; ticker_universe, age_sessions (X32)
+  book.py            Claude's own paper book, derived from book.md under the caps (X33)
   history.py         real daily closes from public GitHub mirrors, the split audit, the cross-checks,
                      index membership, the committed fixture (X25)
   paper.py           the swing rules replayed with fake money: features, masks, the event study, the
@@ -109,6 +121,11 @@ scripts/fetch_*.py   the live pulls, plus listing_status.py, guidance_diff.py an
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
 scripts/scan.py      the daily scan -> dashboard/watch.json; --intraday -> watch_intraday.json
 scripts/setups.py    the swing setups -> dashboard/setups.json (--live, --dry-run, --fixture)
+scripts/fetch_quotes.py  the daily closes pull (runs on the Actions runner or on Joseph's machine)
+scripts/build_book.py  book.md -> dashboard/book.json (--live, --quotes DIR, --journal, --as-of)
+scripts/run_tests.py  the suite, with its result written for the email
+book.md              Claude's own calls, append-only; the routine appends, never edits
+.github/workflows/quotes.yml  the twice-a-weekday quotes pull into the quotes branch
 scripts/fetch_history.py  the history pull (--dry-run, --audit, --make-fixture); needs raw.githubusercontent.com
 scripts/paper_trade.py  the experiments (--live --split train|test, --fixture, --dry-run) and, with no
                      flags, the render of dashboard/paper.json from lab/results/ (offline, in build_all)

@@ -1,0 +1,47 @@
+# Pull the desk's daily closes where Yahoo is reachable and commit them to the quotes branch.
+#
+# The Claude Code environment that runs the desk cannot reach any price host, but it can
+# reach git. So this runner does the one network call, twice a weekday (before the 07:00
+# Toronto brief and after the 18:00 close), and an.quotes.fetch_branch() reads the result.
+# Both cron lines are UTC and drift one hour when Toronto changes its clocks in November.
+name: quotes
+
+on:
+  schedule:
+    - cron: "30 10 * * 1-5"   # 06:30 Toronto (EDT); 05:30 after the November change
+    - cron: "30 22 * * 1-5"   # 18:30 Toronto (EDT)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q pandas numpy yfinance requests
+      - name: pull closes
+        run: python scripts/fetch_quotes.py --out /tmp/quotes
+      - name: commit to the quotes branch
+        run: |
+          git config user.name "desk-quotes"
+          git config user.email "desk-quotes@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin quotes >/dev/null 2>&1; then
+            git fetch --depth 1 origin quotes
+            git checkout quotes
+          else
+            git checkout --orphan quotes
+            git rm -rf --quiet . || true
+          fi
+          mkdir -p data/quotes
+          cp /tmp/quotes/closes.csv /tmp/quotes/latest.csv /tmp/quotes/manifest.json data/quotes/
+          git add data/quotes
+          git commit -m "quotes $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing changed"
+          git push origin quotes

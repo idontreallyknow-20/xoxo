@@ -29,6 +29,7 @@ STEPS = [
     ("daily scan, from caches only", "scan.py"),
     ("swing setups, from caches only", "setups.py"),
     ("paper trading A/B, rendered from lab/results", "paper_trade.py"),
+    ("Claude's book, from the quotes cache if any", "build_book.py"),
 ]
 
 

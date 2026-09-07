@@ -101,7 +101,7 @@ def test_every_analysis_record_is_clean():
     assert not bad, "\n".join(bad[:20])
 
 
-@pytest.mark.parametrize("name", ["positioning.json", "backtest.json", "scorecard.json", "tracker.json", "watch.json", "watch_intraday.json", "setups.json", "paper.json"])
+@pytest.mark.parametrize("name", ["positioning.json", "backtest.json", "scorecard.json", "tracker.json", "watch.json", "watch_intraday.json", "setups.json", "paper.json", "book.json"])
 def test_built_json_is_clean(name):
     p = ROOT / "dashboard" / name
     if not p.exists():
