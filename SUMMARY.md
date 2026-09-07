@@ -358,15 +358,33 @@ GRADED and shows the columns that need no prices. Note the file's own caveat: ev
 
 ## The one command, on Windows
 
-Everything below that says "run this" is wired into `setup.ps1`. Right-click PowerShell, then:
+Everything below that says "run this" is wired into `setup.ps1`.
+
+**You have to be in the project folder first.** PowerShell resolves `-File setup.ps1` before any of
+the script's own code runs, so from anywhere else it fails with "the argument to the -File parameter
+does not exist". If you have never cloned the repo, or you are not sure where it is, paste this
+whole block into PowerShell:
 
 ```powershell
+cd $HOME\Documents
+if (-not (Test-Path xoxo)) { git clone https://github.com/idontreallyknow-20/xoxo.git }
+cd xoxo
+git pull
 powershell -ExecutionPolicy Bypass -File setup.ps1
 ```
 
-It finds the project, installs what it needs, asks before each pull (so you can skip the 2 GB one),
-rebuilds every page, and opens the dashboard. Keys are read into that window only and never written
-to disk. Run it again any time; every step is resumable and safe to repeat.
+After the first time, only the last two lines matter: `cd $HOME\Documents\xoxo`, then run it.
+
+It installs what it needs, asks before each pull (so you can skip the 2 GB one), rebuilds every
+page, and opens the dashboard. Keys are read into that window only and never written to disk. Run it
+again any time; every step is resumable and safe to repeat.
+
+No admin needed. If PowerShell opened in `C:\WINDOWS\system32` you started it as administrator,
+which is not required and puts you in the wrong folder by default.
+
+If `git` is not installed, either get it from https://git-scm.com/download/win, or download
+https://github.com/idontreallyknow-20/xoxo/archive/refs/heads/main.zip, extract it, and `cd` into
+the extracted folder instead.
 
 **The one that matters more than any pull:**
 

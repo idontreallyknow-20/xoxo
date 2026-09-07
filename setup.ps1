@@ -13,8 +13,15 @@
     to disk and nothing is committed. Close the window and the key is gone.
 
 .EXAMPLE
+    cd $HOME\Documents\xoxo
     powershell -ExecutionPolicy Bypass -File setup.ps1
+
     The normal run. Sets up, asks before each pull, rebuilds, opens the dashboard.
+
+    Note the cd. PowerShell resolves -File before this script runs, so a bare
+    "setup.ps1" only works from the folder the file is in. The project-finding
+    code below runs afterwards and cannot help you get here. From somewhere else,
+    give the full path: -File C:\Users\you\Documents\xoxo\setup.ps1
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1 -SkipPulls
