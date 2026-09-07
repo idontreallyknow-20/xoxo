@@ -159,11 +159,45 @@
       });
     }
 
+    rows += guidanceDiffRows(wc.guidance_diff);
+
     const earn = wc.earnings_text;
     const text = earn && earn.text
       ? `<div class="prose" style="margin-top:22px">${paragraphs(earn.text)}</div>
          <div class="note">Source: ${esc(earn.source)}.</div>` : "";
     return `<div class="ledger">${rows}</div>${text}`;
+  }
+
+  /* X3: the guidance figures of the last two 8-K press releases, diffed by a
+     machine. Labelled mechanical on every row so it is never confused with the
+     read narrative above it, and NOT RUN with the command until the releases
+     have been pulled. The verbatim sentence sits under each row. */
+  function guidanceDiffRows(gd) {
+    if (!gd) return "";
+    if (gd.available === false) {
+      return `<div class="row gap">
+        <div class="k"><span class="mk open"></span>guidance, from the 8-K press releases</div>
+        <div class="v">${esc(gd.why || "")} <code>${esc(gd.command || "")}</code></div>
+        <div class="m">${esc(gd.status || "NOT RUN")}</div></div>`;
+    }
+    const dirOf = (c) => c === "raised" ? "up" : c === "lowered" ? "down" : "flat";
+    let out = `<div class="row gap"><div class="k"><span class="mk open"></span>guidance, from the 8-K press releases</div>
+      <div class="v">Two releases read by machine: ${esc(gd.current && gd.current.filed || "?")} against ${esc(gd.prior && gd.prior.filed || "?")}.
+        ${esc(Object.entries(gd.summary || {}).map(([k, v]) => `${v} ${k}`).join(", "))}.</div>
+      <div class="m">mechanical</div></div>`;
+    (gd.items || []).forEach((it) => {
+      const quote = it.quote || it.prior_quote;
+      out += `<div class="row"><div class="k">${markFor(dirOf(it.change))}${esc(it.what)}</div>
+        <div class="v">${esc(it.detail)}${quote ? `<div class="q">&ldquo;${esc(quote)}&rdquo;</div>` : ""}</div>
+        <div class="m">${esc(it.change)}</div></div>`;
+    });
+    (gd.not_determinable || []).forEach((x) => {
+      out += `<div class="row gap"><div class="k"><span class="mk open"></span>no figure</div>
+        <div class="v">${esc(x)}</div><div class="m">gap</div></div>`;
+    });
+    out += `<div class="row gap"><div class="k"><span class="mk open"></span>how to read the guidance rows</div>
+      <div class="v">${esc(gd.caveat || "")}</div><div class="m">caveat</div></div>`;
+    return out;
   }
 
   /* The confidence fields are written as "low, and it is not higher because ...".
@@ -256,16 +290,55 @@
   }
 
   function fundamentalsTable(r) {
+    const basis = r.fundamentals.basis || { basis: "yfinance", basis_by_field: {}, sec_status: "NOT RUN" };
+    const mixed = basis.basis === "mixed";
     const rows = r.fundamentals.rows.map((row) => {
       const val = row.value === null || row.value === undefined
         ? `<span class="muted">n/a${row.absent_means ? " &mdash; " + esc(row.absent_means) : ""}</span>`
         : esc(byUnit(row.value, row.unit));
+      const src = mixed ? `<td class="muted" style="font-size:12px">${
+        (basis.basis_by_field || {})[row.key] === "yfinance" ? "Yahoo, four years" : "SEC, as reported"}</td>` : "";
       return `<tr><td>${esc(row.label)}</td><td class="n">${val}</td>
-        <td class="muted" style="font-size:12px">${row.higher_is_better ? "higher is better" : "lower is better"}</td></tr>`;
+        <td class="muted" style="font-size:12px">${row.higher_is_better ? "higher is better" : "lower is better"}</td>${src}</tr>`;
     }).join("");
-    return `<div class="scroll"><table><thead><tr><th>screen measure</th><th class="n">value</th><th>direction</th></tr></thead>
+    return `<div class="scroll"><table><thead><tr><th>screen measure</th><th class="n">value</th><th>direction</th>${
+        mixed ? "<th>basis</th>" : ""}</tr></thead>
       <tbody>${rows}</tbody></table></div>
-      <div class="note">Window ${esc(r.fundamentals.window)}. Source: ${esc(r.fundamentals.source)}.</div>`;
+      <div class="note">Window ${esc(r.fundamentals.window)}. Source: ${esc(r.fundamentals.source)}.</div>
+      ${basisBlock(basis)}`;
+  }
+
+  /* Which statements the table rests on. Three honest states: the SEC data sets
+     have not been downloaded (every number is Yahoo's, and the page says how to
+     change that); they have and this name was re-based (with the field-by-field
+     comparison); they have and this name could not be. */
+  function basisBlock(b) {
+    if (b.sec_status !== "IN USE") {
+      return `<div class="note warn"><b>Statement basis: Yahoo Finance, four restated fiscal years.</b>
+        SEC as-reported history: ${esc(b.sec_status || "NOT RUN")}. ${esc(b.why || "")}${
+        b.command ? ` <code>${esc(b.command)}</code>` : ""}</div>`;
+    }
+    if (!b.sec_years) {
+      return `<div class="note warn"><b>Statement basis: Yahoo Finance, four restated fiscal years.</b>
+        SEC as-reported history is loaded for other names but not this one. ${esc(b.why || "")}</div>`;
+    }
+    const rc = b.reconciliation || {};
+    const diffs = (rc.differences || []).filter((d) => d.yahoo !== null || d.sec_same_window !== null);
+    const fmt = (v, f) => (v === null || v === undefined) ? "n/a" : f === "nd_to_ebitda" ? `${num(v, 2)}x` : pct(v, 1, true);
+    const verdict = (d) => d.agrees === true ? "agree" : d.agrees === false
+      ? `<span class="down">differ by ${esc(fmt(d.gap, d.field))}</span>` : `<span class="muted">no verdict</span>`;
+    const table = diffs.length ? `<div class="scroll"><table><thead><tr><th>measure</th><th class="n">Yahoo, ${esc(rc.yahoo_years.join("&ndash;"))}</th>
+        <th class="n">SEC, same years</th><th class="n">SEC, ${esc(rc.sec_long_window_years[0])}&ndash;${esc(rc.sec_long_window_years[rc.sec_long_window_years.length - 1])}</th><th>within tolerance</th></tr></thead>
+        <tbody>${diffs.map((d) => `<tr><td>${esc(d.field)}</td><td class="n">${esc(fmt(d.yahoo, d.field))}</td>
+          <td class="n">${esc(fmt(d.sec_same_window, d.field))}</td><td class="n">${esc(fmt(d.sec_long_window, d.field))}</td><td>${verdict(d)}</td></tr>`).join("")}
+        </tbody></table></div>` : "";
+    const summary = rc.same_window_complete
+      ? (rc.n_disagree ? `${rc.n_disagree} of ${rc.n_compared} measures differ from Yahoo's restated statements beyond tolerance; both are shown and the score reads the SEC figure.`
+                       : `All ${rc.n_compared} measures agree with Yahoo's restated statements within tolerance.`)
+      : "The filings loaded do not cover every fiscal year Yahoo's statements do, so the two are shown without a verdict.";
+    return `<div class="note"><b>Statement basis: SEC filings as reported, ${esc(String(b.sec_years.length))} fiscal years
+      (${esc(b.sec_years[0])} to ${esc(b.sec_years[b.sec_years.length - 1])}), each line as it stood on ${esc(b.known_on)}.</b>
+      ${esc(summary)}</div>${table}`;
   }
 
   /* -- 5. valuation ------------------------------------------------------- */

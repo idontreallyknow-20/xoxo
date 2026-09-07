@@ -31,7 +31,7 @@ from typing import List, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from an import journal, paths, prices, tracker  # noqa: E402
+from an import journal, outcomes, paths, prices, tracker  # noqa: E402
 from an.store import Cache, Offline  # noqa: E402
 
 NOT_GRADED = [
@@ -62,6 +62,9 @@ def build(entries, closes, *, as_of: dt.date, source: str, status: str, built_at
         "summary": summary.to_json(),
         "limitations": lims,
         "grades": [g.to_json() for g in grades],
+        # The read path over the grades: score at call against outcome. Refuses to
+        # report a statistic below its sample floors, and says which floor.
+        "score_vs_outcome": outcomes.readout(grades, is_real=(status == "GRADED")).to_json(),
         "disclaimer": "Research and analysis from public data, not personalised financial advice.",
     }
     if status == "NOT GRADED":

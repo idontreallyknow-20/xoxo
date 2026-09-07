@@ -47,9 +47,12 @@ from __future__ import annotations
 import math
 import random
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import TYPE_CHECKING, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from .stats import bootstrap_ci, mean, median, rank_percentile, spearman, stdev, t_stat
+
+if TYPE_CHECKING:  # the engine never imports the fetcher; it only reads its measurement
+    from .listing_status import MeasuredAttrition
 
 __all__ = [
     "Rebalance",
@@ -420,6 +423,32 @@ def _group_ic(rebalances: Sequence[Rebalance], group_of) -> Dict[str, Tuple[Opti
     return out
 
 
+SURVIVORSHIP_UNMEASURED = (
+    "Survivorship: the universe is the names listed today. Companies delisted, acquired or "
+    "wiped out before today are absent, and those are the ones that lost money. Every number "
+    "here is therefore flattering by an unknown amount. The size of that hole can be measured "
+    "from Alpha Vantage's delisting list (python scripts/listing_status.py --fetch, two requests "
+    "on a free key); it has not been."
+)
+
+
+def survivorship_limitation(attrition: Optional["MeasuredAttrition"] = None) -> str:
+    """The survivorship caveat, quoting the measured hole when a real pull exists.
+
+    ``MeasuredAttrition`` can only be built from a cached response that came
+    through a real request (``an.listing_status.measured_attrition`` refuses
+    fixtures and dry runs), so a number here is always one that was fetched.
+    """
+    if attrition is None:
+        return SURVIVORSHIP_UNMEASURED
+    return (
+        "Survivorship: the universe is the names listed today. Companies delisted, acquired or "
+        "wiped out before today are absent, and those are the ones that lost money. "
+        + attrition.sentence()
+        + " The hole is sized, not filled: no prices exist for the departed names."
+    )
+
+
 def run_backtest(
     rebalances: Sequence[Rebalance],
     *,
@@ -430,8 +459,15 @@ def run_backtest(
     hypotheses_tested: int = 1,
     extra_limitations: Optional[Iterable[str]] = None,
     seed: int = 20260906,
+    attrition: Optional["MeasuredAttrition"] = None,
 ) -> BacktestResult:
-    """Run the whole thing and return a result that carries its own caveats."""
+    """Run the whole thing and return a result that carries its own caveats.
+
+    ``attrition`` is the survivorship hole as measured by
+    ``an.listing_status.measured_attrition`` from a real Alpha Vantage pull. With
+    it the survivorship limitation quotes the number; without it the limitation
+    says the amount is unknown and how to measure it. It is never estimated.
+    """
     ic_series: List[Tuple[str, Optional[float], int]] = []
     names_per_date: List[int] = []
     missing_per_date: List[int] = []
@@ -486,11 +522,7 @@ def run_backtest(
         f"{rebalance_spacing_days} days gives {len(ics)} observations but only about "
         f"{effective:.1f} independent ones. The interval is a moving-block bootstrap, not an ordinary one."
     )
-    limitations.append(
-        "Survivorship: the universe is the names listed today. Companies delisted, acquired or "
-        "wiped out before today are absent, and those are the ones that lost money. Every number "
-        "here is therefore flattering by an unknown amount."
-    )
+    limitations.append(survivorship_limitation(attrition))
     limitations.append(
         "Look-ahead cannot be verified from inside this engine. It depends entirely on whether the "
         "scores handed in were computable on each rebalance date."

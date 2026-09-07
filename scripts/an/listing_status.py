@@ -66,7 +66,7 @@ import os
 import urllib.parse
 from collections import Counter
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from . import paths
@@ -88,6 +88,8 @@ __all__ = [
     "cross_check",
     "provenance",
     "default_horizons",
+    "MeasuredAttrition",
+    "measured_attrition",
     "BASE_URL",
     "KEY_ENV",
     "STATES",
@@ -478,6 +480,109 @@ def provenance(cache: Optional[Cache] = None) -> Dict[str, Any]:
         out["states"][state] = {"fetched_at": blob.get("fetched_at"), "transport": meta.get("transport"), "live": live}
         out["ever_live"] = out["ever_live"] or live
     return out
+
+
+@dataclass(frozen=True)
+class MeasuredAttrition:
+    """The survivorship hole as a number, for the backtest's limitations.
+
+    Built only from a cached response that a real request produced. A fixture or
+    a dry run can never become one of these, because a limitation that quotes a
+    measured rate from made-up rows would be worse than the word "unknown".
+    """
+
+    as_of: date
+    today: date
+    eligible: int
+    gone: int
+    horizon_years: float
+    fetched_at: Optional[str]
+
+    @property
+    def rate(self) -> float:
+        return self.gone / self.eligible
+
+    @property
+    def annualised_rate(self) -> Optional[float]:
+        if self.horizon_years <= 0:
+            return None
+        r = min(self.rate, 1.0)
+        return 1.0 - (1.0 - r) ** (1.0 / self.horizon_years)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "as_of": self.as_of.isoformat(), "today": self.today.isoformat(), "eligible": self.eligible,
+            "gone": self.gone, "rate": round(self.rate, 4),
+            "annualised_rate": None if self.annualised_rate is None else round(self.annualised_rate, 4),
+            "horizon_years": round(self.horizon_years, 2), "fetched_at": self.fetched_at,
+            "synthetic_engine_assumes_per_year": round(SYNTHETIC_ATTRITION_PER_YEAR, 4),
+            "source": "Alpha Vantage LISTING_STATUS, active and delisted, real request",
+        }
+
+    def sentence(self) -> str:
+        ann = self.annualised_rate
+        return (
+            f"Measured rather than guessed: of the {self.eligible:,} NYSE and Nasdaq common stocks that had "
+            f"been listed three years or more on {self.as_of.isoformat()}, {self.gone:,} ({self.rate:.1%}"
+            + (f", about {ann:.1%} a year" if ann is not None else "")
+            + f") no longer existed on {self.today.isoformat()}, from Alpha Vantage's delisting list"
+            + (f" fetched {self.fetched_at[:10]}" if self.fetched_at else "")
+            + ". The list carries no market cap and no reason for leaving, so that is an upper bound on this "
+            f"screen's own attrition over a {self.horizon_years:.0f}-year test, and the synthetic engine's "
+            f"assumption of {SYNTHETIC_ATTRITION_PER_YEAR:.1%} a year sits "
+            + ("above" if ann is not None and SYNTHETIC_ATTRITION_PER_YEAR > ann else "at or below")
+            + " it."
+        )
+
+
+def _cached_blob(cache: Cache, state: str) -> Optional[Dict[str, Any]]:
+    p = cache.path_for(ListingStatusClient.cache_key_for(state))
+    if not p.exists():
+        return None
+    try:
+        blob = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return blob if isinstance(blob, dict) and "payload" in blob else None
+
+
+def measured_attrition(
+    horizon_years: int = 5,
+    *,
+    cache: Optional[Cache] = None,
+    today: Optional[date] = None,
+) -> Optional[MeasuredAttrition]:
+    """The attrition rate over ``horizon_years``, from the cache alone, or None.
+
+    None means one of: nothing cached, a cached file that did not come from a
+    real request, or no eligible names on the as-of date. It never fetches, so a
+    build with no key and no network gets None and writes "unknown", which is the
+    truth in that state.
+    """
+    cache = cache if cache is not None else Cache(paths.ALPHAVANTAGE_CACHE, default_ttl=TTL)
+    blobs = {s: _cached_blob(cache, s) for s in STATES}
+    if any(b is None for b in blobs.values()):
+        return None
+    if not all(bool((b.get("meta") or {}).get("live")) for b in blobs.values()):
+        return None
+    listings: List[Listing] = []
+    for s in STATES:
+        try:
+            listings += parse_listing_csv(str(blobs[s]["payload"]))
+        except FetchError:
+            return None
+    today = today or date.today()
+    try:
+        as_of = today.replace(year=today.year - horizon_years)
+    except ValueError:  # 29 February
+        as_of = today.replace(year=today.year - horizon_years, day=28)
+    rep = attrition(listings, as_of, today=today)
+    if rep.eligible == 0:
+        return None
+    stamps = [float(b.get("fetched_at") or 0.0) for b in blobs.values()]
+    fetched_at = datetime.fromtimestamp(min(stamps)).replace(microsecond=0).isoformat() if all(stamps) else None
+    return MeasuredAttrition(as_of=as_of, today=today, eligible=rep.eligible, gone=rep.gone,
+                             horizon_years=rep.horizon_years, fetched_at=fetched_at)
 
 
 def _fmt_rate(r: Optional[float]) -> str:

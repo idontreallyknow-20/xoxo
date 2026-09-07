@@ -354,6 +354,102 @@ that then beat the market reads "missed", not red. Until you run `--live`, the s
 GRADED and shows the columns that need no prices. Note the file's own caveat: every call is dated
 2026-09-04, so the first grades are one window and one market regime.
 
+---
+
+## Third session, 2026-09-07: the modules that nothing consumed
+
+Branch restarted from `main`. Same egress as before: nothing here has made a real request. The
+brief said "build the algorithm further" means better inputs and better testability, not different
+weights. **No weight changed and no component was added.** Four things were built, in the order
+of the brief. `NOTES.md` section 8 has the detail and the failure modes to expect on the first live run.
+
+### 1. The SEC's as-reported filings now feed the score, once you download them
+
+`scripts/an/dera.py` loaded SEC data sets and nothing read it. Now `scripts/an/dera_fundamentals.py`
+turns those files into the exact aggregates your quality screen computes (same definitions,
+mirrored line by line from `quality_screen.py`), over up to ten fiscal years instead of four, each
+line as it was known on the screen date rather than as later restated, and feeds them into the
+score through the one function every builder now calls. The pages, the scorecard, the memo, the
+snapshot archive and the backtest structure cannot be on different bases.
+
+**The reconciliation policy, since you asked for it to be explicit:** over the fiscal years both
+sources cover, every screen measure is compared with a tolerance (two points on margins and ROIC,
+one point on growth and share change, a quarter turn on leverage). A gap beyond that is a
+**disagreement**, and a disagreement is information: both numbers go on the page, the gaps list
+says which measures differ, and the build counts them by field. It is never an error. When the SEC
+files do not cover every year Yahoo does, no verdict is given at all, because three years against
+four is a different window, not a disagreement. The score reads the SEC figure wherever the filings
+give three or more years for that group of measures, and Yahoo's otherwise, and the page says which
+source each row came from.
+
+On the Apple miniature the definitional gap shows up where it should: Apple's ROIC comes out 56 to
+59 percent on the SEC's invested capital against Yahoo's 59 to 65, because Yahoo's "Invested
+Capital" line is not equity plus interest-bearing debt. That is the kind of thing the reconciliation
+exists to surface.
+
+```bash
+export SEC_USER_AGENT="Joseph your@email"
+python scripts/fetch_dera.py --since 2016q1          # one 50-100 MB zip per quarter, about 40 of them
+python scripts/fetch_edgar.py --dry-run AAPL         # caches the ticker-to-CIK map on the way
+python scripts/fetch_dera.py --basis-report          # what the score would read, name by name
+python scripts/build_all.py
+```
+
+Until then every page says `NOT RUN` in the screen measures and every number is still Yahoo's.
+When it is in use, `scorecard.json` also reports how much the basis swap moved the ranking, which is
+the first sensitivity number this input can produce. Sensitivity to the input, not evidence about returns.
+
+### 2. The backtest quotes the survivorship hole instead of calling it unknown
+
+Every limitation said the numbers were "flattering by an unknown amount" while `listing_status.py`
+could measure the amount. Now the limitation quotes the measured rate, the annualised rate, the
+fetch date and the fact that it is an upper bound, but **only** from a cached Alpha Vantage response
+that came through a real request. The committed fixture cannot become a measurement even if you try.
+`backtest.json` carries a `survivorship` block; this checkout says `NOT MEASURED`.
+
+```bash
+export ALPHAVANTAGE_KEY=...        # two requests
+python scripts/listing_status.py --fetch && python scripts/build_all.py
+```
+
+### 3. X3: guidance from the last two 8-K press releases, diffed by machine
+
+The free substitute for a transcript, read mechanically. Sentences with a forward-looking word and a
+figure, one clause per metric, the nearest period phrase as the period, two releases matched on
+metric and period: raised, lowered, narrowed, widened, reiterated, introduced, *not repeated* (never
+"withdrawn"), lapsed. Every row carries the verbatim sentence and the label `mechanical`, and the
+caveat is a row of its own: it does not read tone, and a guide given in words alone is invisible to
+it. It lands in "What changed since the last report", which is the section you said to judge the
+pages on, and until the releases are pulled it says NOT RUN with the command.
+
+```bash
+export SEC_USER_AGENT="Joseph your@email"
+python scripts/guidance_diff.py KLAC BKNG MSFT       # then python scripts/build_analysis.py
+python scripts/guidance_diff.py --fixture            # the shape, on a fictional filer
+```
+
+### 4. The tracker's grades are read back, and the read path refuses thin samples
+
+`scripts/an/outcomes.py` relates the score's percentile at each call to the excess return since. It
+reports **nothing** below fixed floors: twenty graded calls, four distinct call dates, a
+63-trading-day window, real prices. Below them it lists the shortfalls and the correlation is null,
+not a small number with a caveat, because a correlation over sixteen same-day calls would get
+quoted. Above them it stops at "suggestive"; "supported" belongs to the backtest engine, which has a
+measured false-positive rate. The floors were set now, at zero grades, so nobody picks them after
+seeing a result. `/positioning/` shows it under the grades.
+
+### One thing that broke on the restart
+
+Two tests diffed the branch against its merge base with `main`. After the merge that base was
+`HEAD`, so the diff was empty and both failed. They now diff against the commit before the work
+started, which is what they meant. Against that base the only pre-existing files that differ are
+`.gitignore` and `dashboard/index.html`, still.
+
+### Still yours to decide
+
+Unchanged from the last session: the front page's Journal tab (13 names against 16) and the two
+defects in `price_screen.py`. Neither was touched.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.
@@ -364,7 +460,7 @@ See `NOTES.md` section 6 for the running list.
 
 | | |
 |---|---|
-| tests | 799 (699 from the first session, 29 for X7, 24 for X8, 14 for X5, 30 for X6, plus tracker.json under the language guard and the determinism check) |
+| tests | 862 (799 after the second session, plus 27 for X12, 8 for X13, 17 for X3 and 11 for X14; `python -m pytest` on 2026-09-07: 862 passed) |
 | review findings confirmed and fixed | 48 of 49 (the last one is out of scope, above) |
 | new Python modules | `scripts/an/` |
 | analysis pages generated | 150 |

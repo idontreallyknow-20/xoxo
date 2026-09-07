@@ -122,15 +122,24 @@ def archive(date: Optional[str] = None, *, force: bool = False,
         shutil.copy2(p, out / name)
         files[name] = _sha(p)
 
-    universe = local.load_universe()
+    from . import dera_fundamentals
+
+    universe, basis_report = dera_fundamentals.universe_with_basis()
     top150 = [r for r in universe.values() if r.in_top_150]
     scores = {v: score.score_universe(top150, variant=v) for v in score.VARIANTS}
     # The score as it stood, stored alongside the inputs. Recomputing it later from
     # archived CSVs would give the same answer only if score.py never changed, and
-    # score.py will change.
+    # score.py will change. The basis is recorded for the same reason: a score
+    # computed from SEC figures is not comparable to one from Yahoo's without
+    # knowing which was which.
     (out / "scores.json").write_text(json.dumps({
         "date": date,
         "score_module_version": 1,
+        "fundamentals_basis": {
+            "status": basis_report.status,
+            "quarters": basis_report.panel.quarters,
+            "names_rebased": len(basis_report.applied),
+        },
         "variants": {
             v: {t: {"score": round(b.score, 6), "percentile": b.display,
                     "coverage": round(b.coverage, 4)} for t, b in table.items()}

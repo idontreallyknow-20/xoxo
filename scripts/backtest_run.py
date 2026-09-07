@@ -36,7 +36,7 @@ from typing import Dict, List, Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from an import backtest as B  # noqa: E402
-from an import diagnostics, local, paths, power, score  # noqa: E402
+from an import dera_fundamentals, diagnostics, local, paths, power, score  # noqa: E402
 from an.store import Offline, is_offline  # noqa: E402
 from an.synthetic import PanelSpec, make_panel  # noqa: E402
 
@@ -56,7 +56,7 @@ NOT_RUN_EXPLANATION = [
     "Even a successful live run inherits survivorship bias that cannot be removed with free data. "
     "The universe is the 1,505 names that are listed and screenable today. Every company that was "
     "delisted, acquired or wiped out between the start of the test and now is absent, and those "
-    "are disproportionately the ones that lost money.",
+    "are disproportionately the ones that lost money. {survivorship}",
     "The single highest-value fix is not a cleverer backtest, it is archiving a dated snapshot on "
     "every pipeline run (scripts/snapshot.py). A snapshot holds only what the pipeline could see "
     "that day, so a panel built from several has no look-ahead and no survivorship problem.",
@@ -66,6 +66,35 @@ NOT_RUN_EXPLANATION = [
     "snapshots and one year of monthly ones, and detecting a typical published signal takes eight "
     "years quarterly against under three monthly.",
 ]
+
+
+def survivorship_block(years: int) -> Dict[str, object]:
+    """The survivorship hole as the build can honestly state it.
+
+    Measured from the Alpha Vantage cache when a real pull exists there; otherwise
+    NOT MEASURED, with the command. The synthetic calibration panels do not get
+    the measured number: they plant their own attrition and say so.
+    """
+    from an import listing_status
+
+    m = listing_status.measured_attrition(years)
+    if m is None:
+        return {
+            "status": "NOT MEASURED",
+            "statement": B.SURVIVORSHIP_UNMEASURED,
+            "how_to_measure": "export ALPHAVANTAGE_KEY=... then python scripts/listing_status.py --fetch "
+                              "(two requests), then rebuild. The limitation quotes the measured rate from then on.",
+            "synthetic_engine_assumes_per_year": round(listing_status.SYNTHETIC_ATTRITION_PER_YEAR, 4),
+        }
+    return {
+        "status": "MEASURED",
+        "statement": B.survivorship_limitation(m),
+        "measurement": m.to_dict(),
+    }
+
+
+def not_run_explanation(surv: Dict[str, object]) -> List[str]:
+    return [p.format(survivorship=surv["statement"]) if "{survivorship}" in p else p for p in NOT_RUN_EXPLANATION]
 
 
 def calibrate() -> Dict[str, object]:
@@ -120,7 +149,8 @@ def calibrate() -> Dict[str, object]:
 
 def structure() -> Dict[str, object]:
     """What can be said about the score from the one cross section that exists."""
-    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    universe, _ = dera_fundamentals.universe_with_basis()
+    recs = [r for r in universe.values() if r.in_top_150]
     out: Dict[str, object] = {}
     for variant in score.VARIANTS:
         s = score.score_universe(recs, variant=variant)
@@ -139,7 +169,8 @@ def variant_disagreement() -> Dict[str, object]:
     """
     from an.stats import spearman
 
-    recs = [r for r in local.load_universe().values() if r.in_top_150]
+    universe, _ = dera_fundamentals.universe_with_basis()
+    recs = [r for r in universe.values() if r.in_top_150]
     scored = {v: score.score_universe(recs, variant=v) for v in score.VARIANTS}
     tickers = sorted(scored["quality_value"])
     pairs = {}
@@ -197,11 +228,13 @@ def main() -> int:
     paths.ensure_dirs()
     built_at = dt.datetime.now().replace(microsecond=0).isoformat()
 
+    surv = survivorship_block(a.years)
     payload: Dict[str, object] = {
         "built_at": built_at,
         "snapshot_date": "2026-09-04",
         "status": "NOT RUN",
-        "why_not_run": NOT_RUN_EXPLANATION,
+        "why_not_run": not_run_explanation(surv),
+        "survivorship": surv,
         "engine_calibration": calibrate(),
     }
 
@@ -247,6 +280,7 @@ def main() -> int:
 
     print(f"wrote {out}")
     print(f"status: {payload['status']}")
+    print(f"survivorship: {surv['status']}")
     adv = payload["how_long_until_this_can_say_anything"]["cadence"]
     for cad in ("quarterly", "monthly"):
         d = adv[cad]

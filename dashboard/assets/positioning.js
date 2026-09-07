@@ -354,7 +354,39 @@
         <th class="n">at call</th><th class="n">wrong under</th><th class="n">score then</th>
         <th class="n">since</th><th class="n">vs SPY</th><th>so far</th></tr></thead>
         <tbody>${rows}</tbody></table></div>
-      <ul class="gaps">${(t.limitations || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+      <ul class="gaps">${(t.limitations || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+      ${outcomeBlock(t.score_vs_outcome)}`;
+  }
+
+  /* The read path over the grades: score at call against outcome. Below its
+     sample floors it reports the shortfalls and no number at all, which is the
+     point: a correlation over a handful of same-day calls would get quoted. */
+  function outcomeBlock(o) {
+    if (!o) return "";
+    const s = o.sample || {};
+    const req = o.requirements || {};
+    if (o.status !== "READ") {
+      return `<h2 style="font-size:13px;margin-top:28px">Score against outcome<span class="sub">status ${esc(o.status)}</span></h2>
+        <div class="rule soft"></div>
+        <div class="note warn">${esc(o.verdict)}</div>
+        <div class="lede" style="font-size:14px">${esc(o.question)}</div>
+        <ul class="gaps">${(o.shortfalls || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+        <div class="note">Floors: ${esc(String(req.min_graded_with_score))} graded calls with a score and a return,
+          ${esc(String(req.min_distinct_call_dates))} distinct call dates, ${esc(String(req.min_trading_days))} trading days, real prices.
+          Now: ${esc(String(s.n_with_score_and_return))} calls on ${esc(String(s.distinct_call_dates))} dates,
+          longest window ${esc(String(s.longest_window_trading_days === null ? 0 : s.longest_window_trading_days))} days,
+          prices ${s.is_real ? "real" : "not real"}. ${esc(o.note)}</div>`;
+    }
+    const liked = o.liked_by_the_score || {}, not = o.not_liked_by_the_score || {};
+    return `<h2 style="font-size:13px;margin-top:28px">Score against outcome<span class="sub">status ${esc(o.status)}</span></h2>
+      <div class="rule soft"></div>
+      <div class="lede" style="font-size:14px">${esc(o.question)}</div>
+      <div class="scroll"><table><thead><tr><th>measure</th><th class="n">value</th><th>n</th></tr></thead><tbody>
+        <tr><td>rank correlation, score at call vs excess return</td><td class="n">${esc(num(o.rank_ic, 2))}</td><td>${esc(String(o.rank_ic_n))}</td></tr>
+        <tr><td>mean excess vs SPY, names the score placed in its top half</td><td class="n">${esc(pts(liked.mean_excess_vs_spy, 1))}</td><td>${esc(String(liked.n))}</td></tr>
+        <tr><td>mean excess vs SPY, names it placed in its bottom half</td><td class="n">${esc(pts(not.mean_excess_vs_spy, 1))}</td><td>${esc(String(not.n))}</td></tr>
+      </tbody></table></div>
+      <div class="note warn"><b>${esc(o.verdict)}</b> ${esc(o.note)}</div>`;
   }
 
   /* -- assembly ----------------------------------------------------------- */

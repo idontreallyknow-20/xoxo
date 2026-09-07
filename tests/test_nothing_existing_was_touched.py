@@ -48,7 +48,25 @@ def git(*args):
 
 
 def base_ref():
-    """The commit this branch started from, whichever remote name is available."""
+    """The commit before the analysis layer existed.
+
+    The first version diffed against the merge base with ``main``. That worked
+    while the work lived on a branch and broke the day it merged: from then on
+    the merge base was HEAD itself, the diff was empty, and the test that expects
+    to see the two nav links failed while the test that expects nothing else to
+    have moved started counting every generated page as a pre-existing file.
+
+    "Pre-existing" means before this work started, and the work started with
+    PLAN.md one commit before ``scripts/an/``, so the base is the parent of the
+    earliest commit that added either. The merge base is kept as a fallback for
+    a shallow clone that cannot see that far back.
+    """
+    out, code = git("log", "--diff-filter=A", "--format=%H", "--", "PLAN.md", "scripts/an/__init__.py")
+    if code == 0 and out:
+        first = out.splitlines()[-1]
+        parent, code = git("rev-parse", "--verify", "--quiet", f"{first}^")
+        if code == 0 and parent:
+            return parent
     for ref in ("origin/main", "main", "origin/master", "master"):
         out, code = git("merge-base", "HEAD", ref)
         if code == 0 and out:

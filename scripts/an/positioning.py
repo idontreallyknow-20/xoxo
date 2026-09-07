@@ -385,7 +385,9 @@ def _constraint_check(state: PortfolioState, rules: Rules, universe: Dict[str, l
 
 def build_memo(*, variant: str = "quality_value", top_n: int = 12,
                built_at: Optional[str] = None) -> Dict[str, Any]:
-    universe = local.load_universe()
+    from . import dera_fundamentals
+
+    universe, basis_report = dera_fundamentals.universe_with_basis()
     notes = research_md.load_all()
     top150 = [r for r in universe.values() if r.in_top_150]
     scored = {v: score.score_universe(top150, variant=v) for v in score.VARIANTS}
@@ -522,6 +524,12 @@ def build_memo(*, variant: str = "quality_value", top_n: int = 12,
                 "that test is built and calibrated; it has nothing to run on yet."
             ),
             "where_to_read_more": "backtest.json, and PLAN.md item X1.",
+            "fundamentals_basis": (
+                f"SEC as-reported statements {basis_report.status}: {basis_report.panel.why}."
+                + ("" if basis_report.in_use else
+                   " Every fundamental in the score is Yahoo's four restated fiscal years; "
+                   "scorecard.json carries the command that changes that.")
+            ),
         },
         "how_to_read_this": [
             "This is a memo, not a signal. It says what is true about each company today and what "

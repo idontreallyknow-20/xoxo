@@ -51,15 +51,22 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
   synthetic.py       panels with a known answer, for calibrating the engine
   power.py           how long until a backtest here could detect anything
   snapshots.py       dated archives, the thing that makes a real backtest possible
-  listing_status.py  Alpha Vantage delisting list -> the size of the survivorship hole (X7)
+  listing_status.py  Alpha Vantage delisting list -> the size of the survivorship hole (X7),
+                     and measured_attrition(), which the backtest limitations quote (X13)
   dera.py            SEC DERA quarterly data sets -> point-in-time fundamentals (X8)
+  dera_fundamentals.py  those facts -> the screen's aggregates, reconciled with the CSV and
+                     merged into the record; universe_with_basis() is what every builder calls (X12)
+  guidance.py        8-K Exhibit 99.1 guidance figures, diffed against last quarter's (X3)
   tracker.py         every journal call graded against prices, "so far" (X6)
+  outcomes.py        the grades read back: score at call vs outcome, refusing thin samples (X14)
   positioning.py     the memo: three lists, sized from criteria.md
   analysis.py        assembles the record each page renders
   pages.py           writes the static page shells
 
 scripts/build_*.py   the generators. scripts/build_all.py runs all four (track_calls.py is the fourth)
-scripts/fetch_*.py   the live pulls, plus listing_status.py and track_calls.py. All have --dry-run
+scripts/fetch_*.py   the live pulls, plus listing_status.py, guidance_diff.py and track_calls.py.
+                     All have --dry-run; fetch_dera.py --basis-report and guidance_diff.py
+                     --fixture print their shape on committed miniatures
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
 scripts/shoot.py     headless Chromium: console errors, overflow, screenshots
 
@@ -99,7 +106,8 @@ enforces it. `dashboard/index.html` may only gain lines, and only lines that are
 ## Before you commit
 
 ```bash
-python -m pytest -q                                  # 799 tests, ~80 s
+pip install pytest playwright                        # neither is in requirements.txt
+python -m pytest -q                                  # 862 tests, ~80 s
 python scripts/build_all.py                          # regenerate everything
 python scripts/shoot.py --mobile --themes night paper  # 32 page/theme/width combinations
 ```
@@ -115,21 +123,29 @@ intentional. `tests/test_build_determinism.py` compares everything else.
 ## What is genuinely unfinished
 
 The second session (2026-09-06, `NOTES.md` section 7) built X7, X8, X5 and X6 from the backlog.
-Everything that touches a remote source is fixture-tested and has never made a real request, so
-the list is now mostly **live runs that need a machine with egress**, each a single command that
-prints its own provenance. In order of value:
+The third (2026-09-07, section 8) wired the modules nothing consumed: DERA into the score (X12),
+the measured attrition into the backtest limitations (X13), the 8-K guidance diff (X3) and the
+tracker's read path (X14). Everything that touches a remote source is fixture-tested and has never
+made a real request, so the list is now **live runs that need a machine with egress**, each a
+single command that prints its own provenance. In order of value:
 
-1. **X2b, the 10-year EDGAR pull.** `export SEC_USER_AGENT="Name email"` then
-   `python scripts/fetch_edgar.py --facts --exhibits KLAC`. Read the output against the filing.
-2. **X6 live:** `python scripts/track_calls.py --live`, then look at `/positioning/` under
-   "Every call, graded". The file says NOT GRADED until this has run.
-3. **X7 live:** `export ALPHAVANTAGE_KEY=...` then `python scripts/listing_status.py --fetch`. Two
-   requests. The first line of the report says whether it was real.
-4. **X8 live:** `python scripts/fetch_dera.py --since 2023q1`, one 50-100 MB zip per quarter, then
-   `--show 320193 --metric revenue` and check the numbers against Apple's 10-K.
-5. **X3, 8-K Exhibit 99.1 diffing**, still not started. `edgar.py` already resolves the exhibits.
-6. Once X8 and X7 have run for real: feed DERA fundamentals and the measured attrition into
-   `backtest_run.py --live`, which is the first version of the backtest that could be believed.
+1. **X12 live, the one that changes the score's inputs.** `export SEC_USER_AGENT="Name email"`,
+   `python scripts/fetch_edgar.py --dry-run AAPL` (caches the ticker map), `python
+   scripts/fetch_dera.py --since 2016q1` (about forty zips), `python scripts/fetch_dera.py
+   --basis-report`, read the disagreement counts, then `python scripts/build_all.py`. Section 8b
+   lists what is most likely to be wrong on the first file.
+2. **X2b, the 10-year EDGAR pull.** `python scripts/fetch_edgar.py --facts --exhibits KLAC`. Read
+   the output against the filing.
+3. **X3 live:** `python scripts/guidance_diff.py KLAC BKNG`, then `python scripts/build_analysis.py`
+   and look at "What changed since the last report" on those two pages.
+4. **X6 live:** `python scripts/track_calls.py --live`, then look at `/positioning/` under
+   "Every call, graded". The file says NOT GRADED until this has run, and the read path under it
+   says INSUFFICIENT until there are twenty graded calls on four dates.
+5. **X7 and X13 live:** `export ALPHAVANTAGE_KEY=...` then `python scripts/listing_status.py
+   --fetch`. Two requests. Rebuild and the backtest limitation quotes the measured rate.
+6. Once X12 and X7 have run for real: `backtest_run.py --live`, with
+   `dera_fundamentals.fundamentals_for(..., on_date=rebalance_date)` as the point-in-time
+   fundamentals, which is the first version of the backtest that could be believed.
 
 ## Two things to be careful about
 
