@@ -987,3 +987,109 @@ The list from HANDOFF.md, plus three new entries, in the order to run them on a 
    password; the error says which.
 3. `powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask`, then `-Daily` by hand once.
 4. Everything in HANDOFF.md's list: X12, X2b, X3, X6, X7, X13.
+
+---
+
+## 10. Fifth session, 2026-09-07: three emails a day, and a swing layer
+
+PR #5 merged. Joseph answered the open questions: the email goes to josephislockedin@gmail.com, he
+wants a 07:00 brief, a 12:00 check and an email whenever something important happens, and his
+horizon is days to weeks across any liquid name. Same egress as every session before: nothing below
+has made a real request, and port 587 is still closed.
+
+### 10a. The honest framing, before the build
+
+Nothing in this repository has a measured edge at a days-to-weeks horizon. The score, the memo and
+the journal were built for a 2 to 5 year hold and their one judge, the backtest, has one snapshot.
+The best-documented mechanical setups at the shorter horizon are post-earnings drift (real in small
+names, faded in large ones, and every name here is over $2bn), trend and pullback rules (work in some
+decades, not others) and guidance raises (priced in minutes). So the layer built here is about
+**survival while the edge is measured**: rules written in `swing.md` before any scan ran, a scanner
+that applies them mechanically and labels every row "not a forecast", a journal grammar that carries
+a stop and a horizon, and a tracker that grades every swing call at 5, 10 and 20 sessions against
+SPY and refuses a size change before thirty horizon grades. The sizing assumption (a 20% sleeve, 1%
+of capital at risk per trade) is Joseph's to change and is stated as an assumption in `swing.md`.
+
+One more fact for the file: a Canadian taxable account trading frequently can have gains treated by
+the CRA as business income at the full rate. It is in `swing.md` under "Tax and account".
+
+### 10b. Intraday, and why it is narrow
+
+`scripts/an/intraday.py` pulls fifteen-minute bars over five sessions for the **watched names only**
+(sixteen to thirty, one batched yfinance call), caches them ten minutes, and reads the last print,
+its session, the prior close and the session's extremes. That is the whole of it, on purpose: the
+NOTES 9c answer about hourly prices across 150 names still stands, and the rules Joseph has written
+are closing rules, so an intraday read only needs to say whether a level is being traded through and
+by how much. Every intraday alert says "a print, not a close". `scripts/scan.py --intraday` writes
+`dashboard/watch_intraday.json`; RSS is not read intraday, EDGAR is, with a 30-minute cache.
+
+Alerts now carry a key (name, kind, day) and `WatchState` remembers which keys have been emailed,
+so the half-hourly watch cannot send the same crossing twice. A print under the level at 10:30 and
+another at 14:00 are one event. The 07:00 brief ignores the seen list: it is the daily readout.
+
+### 10c. Editions
+
+`an.digest.build_digest(edition=...)`: **morning** is the full readout of yesterday's closes plus the
+week's reporting dates (from the analysis index and `data.js`) and the setups; **midday** is the
+intraday prints and the alerts since the morning, nothing else; **event** is only the alerts not yet
+sent, and `should_send` is False without one. `daily_email.py --edition` and `--only-new-alerts`
+drive it; the previews land under `dashboard/_daily_preview*.html`, gitignored.
+
+`setup.ps1 -InstallTask` now registers three weekday tasks (07:00, 12:00, and every 30 minutes from
+09:30 to 16:30 through `schtasks /RI 30`) plus the monthly one, removes the old 17:45 task if it finds
+it, and offers josephislockedin@gmail.com as the default "send to". **Still never executed**: no
+PowerShell here. The repetition trigger through `schtasks` is the line most likely to need a look.
+
+### 10d. The setups scanner
+
+`scripts/an/setups.py` and `scripts/setups.py`, `dashboard/setups.json`. Four rules, all in
+`swing.md` and in the module docstring, closes only: post-earnings drift (an 8-K item 2.02 in the
+last three sessions, a 5% release-session gap that still holds), guidance raise (the mechanical 8-K
+diff reads `raised` on revenue or EPS), breakout with revisions (above every close of the prior 251
+sessions, next-year estimates up; quality 150 only, because that is where the field lives), pullback
+in trend (50 over 200, close above the 200, within 3% of the 20, no worse than 15% off the high).
+Each row: entry, stop, horizon, the numbers that fired it, and `what_this_is`. One row per name; the
+other kinds that matched are noted. The fixture is a synthetic panel with one planted name per rule
+and two that match nothing; a flat line was the first false positive (it sat "at its 252-session
+high") and the breakout rule is now strictly above every prior close.
+
+The live pull is the size `price_screen.py` already makes (about 1,900 names, 260 sessions, batched)
+plus one EDGAR submissions read per name with a CIK, about four minutes at the SEC's rate, cached six
+hours. The committed file says NOT RUN.
+
+**Most likely to be wrong on the first live run.** The 8-K filing date is the acceptance date, and
+a release accepted after 16:00 reacts the next session; the rule takes the first session on or after
+the filing date, so an after-close release reads its gap on the right day, but a pre-market one filed
+the same morning does too, which is also right. A company that files the 8-K a day late reads a
+stale gap. Watch the `release session` field on the first few rows.
+
+### 10e. The journal and the tracker
+
+`journal.md` may now carry `Horizon: N trading days` and `Stop: $X` on a call. Calendar units are
+refused; the tracker counts sessions. A call with a horizon is graded at 5, 10 and 20 sessions and
+at its horizon against SPY over the same windows, a stop is checked as a close-under falsifier
+(status `stopped`), and the 21-day "too short" note no longer applies to it. `TrackerSummary`
+carries the swing counts and the thirty-grade floor from `swing.md`, and the limitations say the
+floor out loud. `outcomes.py` is unchanged; its floors were set before any grade existed and stay.
+
+### 10f. What this session did not do
+
+- No Reddit, no StockTwits (NOTES 9b stands). No EDGAR full-text search yet (X20).
+- The positioning page's grades table does not yet show the horizon grades; the front page's Journal
+  tab does. One render function in `positioning.js`, when it matters, which is after the first swing
+  call is logged.
+- No live run of anything. Section 10g is the order.
+
+### 10g. First run, in order, on Joseph's machine
+
+1. `git pull`, then `powershell -ExecutionPolicy Bypass -File setup.ps1 -SkipPulls -NoServe`.
+2. `python scripts/scan.py --dry-run`, then `python scripts/scan.py --live`. Read what broke.
+3. `python scripts/scan.py --intraday --dry-run`, then `--live --intraday` during a session.
+4. `python scripts/setups.py --dry-run`, then `--live` (about five minutes).
+5. `python scripts/daily_email.py --preview --edition morning`, then `midday`, then `event`. Open
+   the three previews under `dashboard/`.
+6. A Gmail app password, then `setup.ps1 -InstallTask`, then by hand:
+   `setup.ps1 -Daily -Edition morning`.
+7. `python scripts/track_calls.py --live` and `python scripts/snapshot.py`, once.
+8. Log the first swing call in `journal.md` with a `Stop:` and a `Horizon:` line. The tracker does
+   the rest.

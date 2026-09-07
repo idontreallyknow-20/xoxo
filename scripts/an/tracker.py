@@ -136,9 +136,39 @@ class Grade:
     status: str = "ungraded"
     reason: str = ""
     verdict: str = ""
+    # swing calls (swing.md): a horizon in sessions and a stop, both named before entry
+    horizon_days: Optional[int] = None
+    stop: Optional[float] = None
+    stop_breached: Optional[bool] = None
+    horizon_grades: Dict[str, Optional[Dict[str, Any]]] = field(default_factory=dict)
+    """``{"5d": {...}, "10d": {...}, "20d": {...}, "horizon": {...}}``: the return, SPY's and the
+    excess at that many sessions after the call, or None where the window has not been reached."""
+
+    @property
+    def is_swing(self) -> bool:
+        return self.horizon_days is not None
 
     def to_json(self) -> Dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        d["is_swing"] = self.is_swing
+        return d
+
+
+SWING_WINDOWS: Tuple[int, ...] = (5, 10, 20)
+
+
+def _at_sessions(closes: pd.DataFrame, ticker: str, call_date: dt.date, n: int, *,
+                 as_of: dt.date, benchmarks: Sequence[str]) -> Optional[Dict[str, Any]]:
+    """The close ``n`` sessions after the call and the return to it, or None if not reached yet."""
+    col = closes.get(ticker.upper())
+    if col is None:
+        return None
+    idx = pd.DatetimeIndex(closes.index)
+    after = idx[(idx > pd.Timestamp(call_date)) & (idx <= pd.Timestamp(as_of))]
+    if len(after) < n:
+        return None
+    on = after[n - 1]
+    return {"sessions": n, "on": on.date().isoformat()}
 
 
 def _snapshot_on_or_before(date: str, root: Optional[Path]) -> Optional[snapshots.Snapshot]:
@@ -191,6 +221,15 @@ def _verdict(g: Grade) -> str:
     parts: List[str] = []
     if g.trigger_breached:
         parts.append(f"closed under the ${g.trigger:,.0f} the call named; the thesis is falsified on its own terms")
+    if g.stop_breached:
+        parts.append(f"closed under the ${g.stop:,.2f} stop named before entry; on swing.md's rules the trade is over")
+    if g.is_swing:
+        h = g.horizon_grades.get("horizon")
+        if h and h.get("excess_vs_spy") is not None:
+            parts.append(f"at the {g.horizon_days}-session horizon: {h['ret'] * 100:+.1f}%, "
+                         f"{h['excess_vs_spy'] * 100:+.1f} pts against SPY, on {h['on']}")
+        elif g.trading_days is not None:
+            parts.append(f"{g.trading_days} of {g.horizon_days} sessions elapsed; the horizon grade is not in yet")
     if g.ret is not None and g.excess_vs_spy is not None:
         moved = f"{g.ret * 100:+.1f}% since the call, {g.excess_vs_spy * 100:+.1f} pts against SPY"
         if g.kind in ("buy", "buy_later", "buy_on_pullback"):
@@ -203,7 +242,7 @@ def _verdict(g: Grade) -> str:
         parts.append(f"{g.ret * 100:+.1f}% since the call; no benchmark to set it against")
     if g.stopped_trading:
         parts.append("the name stopped trading inside the window, so this is the return to its last print")
-    if g.trading_days is not None and g.trading_days < 21:
+    if g.trading_days is not None and g.trading_days < 21 and not g.is_swing:
         parts.append(f"{g.trading_days} trading days is too short to mean anything")
     return "; ".join(parts) if parts else "graded, nothing to say"
 
@@ -232,6 +271,7 @@ def grade_entries(
             price_at_call=e.price_at_call, conviction=e.conviction, bucket=e.bucket,
             wrong_if=e.wrong_if, trigger=parse_trigger(e.wrong_if),
             score_percentile_at_call=pct, score_snapshot=snap,
+            horizon_days=getattr(e, "horizon_days", None), stop=getattr(e, "stop", None),
         )
         call_date = dt.date.fromisoformat(e.date)
         if closes is None:
@@ -263,7 +303,26 @@ def grade_entries(
                 g.low_since_call = _low_between(closes, e.ticker, call_date, as_of)
                 if g.trigger is not None and g.low_since_call is not None:
                     g.trigger_breached = g.low_since_call < g.trigger
-                g.status = "falsified" if g.trigger_breached else "graded"
+                if g.stop is not None and g.low_since_call is not None:
+                    g.stop_breached = g.low_since_call < g.stop
+                g.status = "falsified" if g.trigger_breached else ("stopped" if g.stop_breached else "graded")
+                if g.is_swing:
+                    windows = list(SWING_WINDOWS) + ([g.horizon_days] if g.horizon_days not in SWING_WINDOWS else [])
+                    for n in windows:
+                        key = "horizon" if n == g.horizon_days and n not in SWING_WINDOWS else f"{n}d"
+                        w = _at_sessions(closes, e.ticker, call_date, n, as_of=as_of, benchmarks=benchmarks)
+                        if w is None:
+                            g.horizon_grades[key] = None
+                            continue
+                        on = dt.date.fromisoformat(w["on"])
+                        px = prices.price_on(closes, e.ticker, on)
+                        b0, b1 = prices.price_on(closes, "SPY", call_date), prices.price_on(closes, "SPY", on)
+                        r = None if px is None else px / e.price_at_call - 1.0
+                        spy = None if b0 is None or b1 is None or b0 <= 0 else b1 / b0 - 1.0
+                        w.update({"ret": r, "spy": spy, "excess_vs_spy": None if r is None or spy is None else r - spy})
+                        g.horizon_grades[key] = w
+                    if g.horizon_days in SWING_WINDOWS:
+                        g.horizon_grades["horizon"] = g.horizon_grades.get(f"{g.horizon_days}d")
         g.verdict = _verdict(g)
         out.append(g)
     return out
@@ -281,6 +340,13 @@ class TrackerSummary:
     passes_missed: int
     mean_excess_vs_spy_buys: Optional[float]
     trading_days: Optional[int]
+    swing_calls: int = 0
+    swing_graded_at_horizon: int = 0
+    swing_ahead_at_horizon: int = 0
+    swing_stopped: int = 0
+    swing_mean_excess_at_horizon: Optional[float] = None
+    swing_floor: int = 30
+    """swing.md: no size change before this many horizon grades."""
 
     def to_json(self) -> Dict[str, Any]:
         return asdict(self)
@@ -291,7 +357,15 @@ def summarise(grades: Sequence[Grade]) -> TrackerSummary:
     buys = [g for g in graded if g.kind.startswith("buy") and g.excess_vs_spy is not None]
     passes = [g for g in graded if g.kind in ("pass", "watch") and g.excess_vs_spy is not None]
     days = [g.trading_days for g in graded if g.trading_days is not None]
+    swing = [g for g in grades if g.is_swing]
+    at_h = [g.horizon_grades.get("horizon") for g in swing if g.status != "ungraded"]
+    at_h = [h for h in at_h if h and h.get("excess_vs_spy") is not None]
     return TrackerSummary(
+        swing_calls=len(swing),
+        swing_graded_at_horizon=len(at_h),
+        swing_ahead_at_horizon=sum(1 for h in at_h if h["excess_vs_spy"] > 0),
+        swing_stopped=sum(1 for g in swing if g.stop_breached),
+        swing_mean_excess_at_horizon=(sum(h["excess_vs_spy"] for h in at_h) / len(at_h)) if at_h else None,
         n_calls=len(grades),
         n_graded=len(graded),
         n_ungraded=len(grades) - len(graded),
@@ -328,4 +402,9 @@ def limitations(grades: Sequence[Grade], summary: TrackerSummary, *, source: str
     if summary.n_ungraded:
         out.append(f"{summary.n_ungraded} of {summary.n_calls} calls are ungraded and stay in the table with "
                    "the reason; dropping them would flatter whatever remains.")
+    if summary.swing_calls:
+        out.append(f"{summary.swing_calls} swing call(s) carry a horizon and a stop (swing.md). They are graded at "
+                   f"5, 10 and 20 sessions and at their horizon; {summary.swing_graded_at_horizon} have reached it. "
+                   f"swing.md allows no size change before {summary.swing_floor} horizon grades, and a mean excess "
+                   "over that few trades is a number attached to very little.")
     return out

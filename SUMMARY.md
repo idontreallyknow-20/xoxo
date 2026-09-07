@@ -562,6 +562,58 @@ measuring. The measuring starts when the monthly task takes its first snapshot o
 Everything that touches a network, now including the scan and the email. `NOTES.md` 9e lists the
 first-run commands in order and what is most likely to break on each.
 
+## Fifth session, 2026-09-07: three emails a day, and the swing layer
+
+PR #5 is merged. You answered the three questions and this is what came of them. Same container
+wall as every session: nothing here has pulled a price, read a filing or sent a message.
+
+### Your answers, and one thing to push back on
+
+- **Email to josephislockedin@gmail.com.** `setup.ps1 -InstallTask` offers it as the default.
+- **07:00, 12:00, and one more when something important happens.** Built as three editions and
+  three weekday tasks. The morning brief is the full readout plus what reports this week plus the
+  setups. The midday check is the last fifteen-minute print for each watched name and nothing else.
+  The event email goes out from a half-hourly watch only when a rule you wrote fires and that alert
+  has not been sent already, so a name trading under its level all afternoon is one email, not
+  twelve. Every intraday alert says "a print, not a close", because your rules are closing rules.
+- **Days to weeks, any liquid name.** Here is the pushback, once, plainly: nothing in this repo has
+  a measured edge at that horizon, and the literature is thin where you want to trade. Post-earnings
+  drift is the one documented days-to-weeks effect and it has faded in names over $2bn, which is
+  every name this scanner can reach. So what I built is a way to trade small while the edge is
+  measured, not a claim that one exists. `swing.md` says this in its first section and I would
+  rather you read that than this.
+
+### What the swing layer is
+
+- **`swing.md`**: the rules, written before the scanner ran. A 20% sleeve ($20k of the $100k), 1% of
+  capital at risk per trade, five open positions at most, a stop and a horizon written into the
+  journal before entry, exit at the horizon regardless, and **no size change before thirty graded
+  calls**. Also the tax note: frequent trading in a taxable Canadian account can be taxed as business
+  income at the full rate. Change any number you like; the scanner's constants are at the top of
+  `scripts/an/setups.py`.
+- **`python scripts/setups.py --live`**: four mechanical setups over the 1,895 liquid names (post-
+  earnings drift, guidance raise, breakout with estimates rising, pullback in a trend), each row with
+  its entry, stop, horizon and the numbers that made it fire, each labelled "a pattern that matched,
+  not a forecast". It runs inside the morning task and lands in the morning email and on a new
+  Setups tab. The committed file says NOT RUN.
+- **The journal grades it.** Log a swing call in `journal.md` with two extra lines, `Stop: $X` and
+  `Horizon: 10 trading days`, and the tracker grades it at 5, 10 and 20 sessions and at its horizon
+  against SPY, flags a close under the stop, and counts toward the thirty. The Journal tab shows it.
+
+### What to do now, in order
+
+1. `git pull`, then `powershell -ExecutionPolicy Bypass -File setup.ps1 -SkipPulls -NoServe`.
+2. `python scripts/scan.py --dry-run`, then `python scripts/scan.py --live`. Tell me what broke.
+3. `python scripts/setups.py --dry-run`, then `--live`. About five minutes.
+4. `python scripts/daily_email.py --preview --edition morning`, open `dashboard/_daily_preview.html`.
+5. A Gmail app password (Google account, Security, 2-Step Verification, App passwords). Then
+   `setup.ps1 -InstallTask`, then `setup.ps1 -Daily -Edition morning` by hand once.
+6. `python scripts/track_calls.py --live` and `python scripts/snapshot.py` once.
+7. Read `swing.md`. Log the first swing call with a stop and a horizon. Trade it at 1% risk.
+
+`NOTES.md` 10g has the same list with what is most likely to break on each step; 10d says which
+field to watch on the first setups rows.
+
 ## What I skipped, and why
 
 See `NOTES.md` section 6 for the running list.

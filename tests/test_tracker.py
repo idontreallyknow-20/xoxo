@@ -262,3 +262,90 @@ def test_the_positioning_page_renders_the_tracker():
     assert "function trackerBlock()" in src and "${trackerBlock()}" in src
     assert '"../tracker.json"' in src
 
+
+
+# -- swing calls: a horizon and a stop named before entry --------------------------
+
+SWING = """# Decision journal
+
+## 2026-09-04 SWINGWIN  Recommendation: Buy now
+Price at call: 100.00
+Thesis: post-earnings drift setup.
+Wrong if: n/a
+Stop: $92.00
+Horizon: 10 trading days
+Target size: $5,000
+Conviction: 3
+Bucket: swing
+
+## 2026-09-04 SWINGSTOP  Recommendation: Buy now
+Price at call: 100.00
+Thesis: breakout.
+Wrong if: n/a
+Stop: $95
+Horizon: 20 trading days
+Target size: $5,000
+Conviction: 3
+Bucket: swing
+
+## 2026-09-04 SWINGEARLY  Recommendation: Buy now
+Price at call: 100.00
+Thesis: pullback.
+Wrong if: n/a
+Stop: $90
+Horizon: 120 trading days
+Target size: $5,000
+Conviction: 3
+Bucket: swing
+"""
+
+
+def test_the_journal_reads_a_horizon_and_a_stop():
+    es = journal.parse(SWING)
+    by = {e.ticker: e for e in es}
+    assert by["SWINGWIN"].horizon_days == 10 and by["SWINGWIN"].stop == 92.0 and by["SWINGWIN"].is_swing
+    assert by["SWINGSTOP"].stop == 95.0 and by["SWINGEARLY"].horizon_days == 120
+    long_only = journal.parse(JOURNAL)
+    assert all(not e.is_swing and e.stop is None for e in long_only)
+    assert journal._horizon("3 weeks") is None, "calendar units are refused; the tracker counts sessions"
+
+
+def test_swing_calls_are_graded_at_5_10_20_and_their_horizon(panel):
+    n = len(panel.index)
+    df = panel.copy()
+    df["SWINGWIN"] = path(100, 120, n)                       # rises, never near the stop
+    df["SWINGSTOP"] = path(100, 105, n)
+    df.loc[df.index[n // 2], "SWINGSTOP"] = 94.0             # one close under the $95 stop, then recovers
+    df["SWINGEARLY"] = path(100, 103, n)
+    grades = {g.ticker: g for g in tracker.grade_entries(journal.parse(SWING), df, as_of=AS_OF)}
+
+    win = grades["SWINGWIN"]
+    assert win.is_swing and win.status == "graded" and win.stop_breached is False
+    assert set(win.horizon_grades) == {"5d", "10d", "20d", "horizon"}
+    assert win.horizon_grades["horizon"] == win.horizon_grades["10d"]
+    h = win.horizon_grades["10d"]
+    assert h["sessions"] == 10 and h["ret"] > 0 and h["spy"] is not None
+    assert h["excess_vs_spy"] == pytest.approx(h["ret"] - h["spy"])
+    assert "at the 10-session horizon" in win.verdict and "too short" not in win.verdict
+
+    stopped = grades["SWINGSTOP"]
+    assert stopped.stop_breached is True and stopped.status == "stopped"
+    assert "stop named before entry" in stopped.verdict
+
+    early = grades["SWINGEARLY"]
+    assert early.horizon_grades["horizon"] is None, "120 sessions have not elapsed"
+    assert early.horizon_grades["5d"] is not None
+    assert "horizon grade is not in yet" in early.verdict
+
+    s = tracker.summarise(list(grades.values()))
+    assert s.swing_calls == 3 and s.swing_graded_at_horizon == 2 and s.swing_stopped == 1
+    assert s.swing_floor == 30
+    lims = tracker.limitations(list(grades.values()), s, source="test")
+    assert any("swing.md" in x and "30" in x for x in lims)
+    for g in grades.values():
+        assert g.to_json()["is_swing"] == g.is_swing and "NaN" not in json.dumps(g.to_json())
+
+
+def test_a_long_call_still_gets_the_too_short_note_and_no_horizon(panel, entries):
+    g = {x.ticker: x for x in tracker.grade_entries(entries, panel, as_of=dt.date(2026, 9, 25))}["GOODBUY"]
+    assert not g.is_swing and g.horizon_grades == {} and "too short" in g.verdict

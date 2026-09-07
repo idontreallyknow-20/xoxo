@@ -21,14 +21,20 @@
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1 -InstallTask
-    Register two Windows scheduled tasks: the daily scan and email at 17:45, and
-    the monthly snapshot on the first of the month. Asks for the Gmail app
-    password once and stores it as a user-scope environment variable (the
-    registry under HKCU\Environment, not a file in this folder).
+    Register the Windows scheduled tasks: the morning brief at 07:00, the midday
+    check at 12:00, the intraday watch every 30 minutes from 09:30 to 16:30
+    (weekdays, all three), and the monthly snapshot on the first of the month.
+    Asks for the Gmail app password once and stores it as a user-scope
+    environment variable (the registry under HKCU\Environment, not a file in
+    this folder). Times are local; Richmond Hill is on Eastern time, the same as
+    the exchanges, so nothing is converted.
 
 .EXAMPLE
-    powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily
-    What the daily task runs: scan prices, filings and headlines, then send the email.
+    powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily -Edition morning
+    What the morning task runs: scan closes, filings and headlines, scan for
+    setups, then send the morning brief. -Edition midday runs the intraday scan
+    and sends the midday check; -Edition event runs the intraday scan and sends
+    only if a written rule fired and that alert has not been emailed yet.
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File setup.ps1 -Monthly
@@ -41,14 +47,23 @@ param(
     [switch]$NoServe,       # do everything except start the server
     [switch]$InstallTask,   # register the daily and monthly scheduled tasks, then exit
     [switch]$UninstallTask, # remove them
-    [switch]$Daily,         # run the daily scan and email (what the daily task calls), then exit
+    [switch]$Daily,         # run one edition of the scan and email (what the scheduled tasks call), then exit
+    [ValidateSet("morning", "midday", "event")]
+    [string]$Edition = "morning",   # with -Daily: which edition
     [switch]$Monthly,       # run the monthly snapshot and rebuild (what the monthly task calls), then exit
     [switch]$OnlyIfAlerts,  # with -Daily: send the email only when a written rule fired
-    [string]$DailyAt = "17:45"   # local time for the daily task; the close is 16:00 ET
+    [string]$MorningAt = "07:00",   # local time, Eastern
+    [string]$MiddayAt = "12:00",
+    [string]$WatchFrom = "09:30",   # the intraday watch runs every 30 minutes between these two
+    [string]$WatchTo = "16:30",
+    [string]$DefaultTo = "josephislockedin@gmail.com"   # offered as the default answer to "send to"
 )
 
-$TASK_DAILY = "Desk daily scan and email"
+$TASK_MORNING = "Desk morning brief"
+$TASK_MIDDAY = "Desk midday check"
+$TASK_WATCH = "Desk intraday watch"
 $TASK_MONTHLY = "Desk monthly snapshot"
+$ALL_TASKS = @($TASK_MORNING, $TASK_MIDDAY, $TASK_WATCH, $TASK_MONTHLY, "Desk daily scan and email")
 
 $REPO_URL = "https://github.com/idontreallyknow-20/xoxo.git"
 $PORT = 8765
@@ -155,14 +170,24 @@ Ok "using $root"
 # no pulls beyond their own, log to data\cache\desk-<name>.log, and exit.
 
 if ($Daily) {
-    $log = Join-Path $root "data\cache\desk-daily.log"
+    $log = Join-Path $root "data\cache\desk-$Edition.log"
     New-Item -ItemType Directory -Force -Path (Split-Path $log) | Out-Null
-    "==== $(Get-Date -Format s) daily" | Out-File -Append -FilePath $log
-    Say "Daily scan"
-    & $PY scripts/scan.py --live 2>&1 | Tee-Object -FilePath $log -Append
-    if ($LASTEXITCODE -ne 0) { Warn "the scan did not finish cleanly; the email says what it has" }
-    Say "Daily email"
-    $emailArgs = @("scripts/daily_email.py", "--send", "--preview")
+    "==== $(Get-Date -Format s) $Edition" | Out-File -Append -FilePath $log
+    if ($Edition -eq "morning") {
+        Say "Morning scan: closes, filings, headlines"
+        & $PY scripts/scan.py --live 2>&1 | Tee-Object -FilePath $log -Append
+        if ($LASTEXITCODE -ne 0) { Warn "the scan did not finish cleanly; the email says what it has" }
+        Say "Setups scan (swing.md)"
+        & $PY scripts/setups.py --live 2>&1 | Tee-Object -FilePath $log -Append
+        if ($LASTEXITCODE -ne 0) { Warn "the setups scan did not finish cleanly; the email says NOT RUN for it" }
+    } else {
+        Say "Intraday scan: the last 15-minute print"
+        & $PY scripts/scan.py --live --intraday 2>&1 | Tee-Object -FilePath $log -Append
+        if ($LASTEXITCODE -ne 0) { Warn "the intraday scan did not finish cleanly" }
+    }
+    Say "Email: $Edition"
+    $emailArgs = @("scripts/daily_email.py", "--send", "--preview", "--edition", $Edition)
+    if ($Edition -eq "event") { $emailArgs += "--only-new-alerts" }
     if ($OnlyIfAlerts) { $emailArgs += "--only-if-alerts" }
     & $PY @emailArgs 2>&1 | Tee-Object -FilePath $log -Append
     if ($LASTEXITCODE -eq 2) { Warn "no credential in the environment. Run setup.ps1 -InstallTask once to store it." }
@@ -185,7 +210,7 @@ if ($Monthly) {
 }
 
 if ($UninstallTask) {
-    foreach ($n in @($TASK_DAILY, $TASK_MONTHLY)) {
+    foreach ($n in $ALL_TASKS) {
         if (Get-ScheduledTask -TaskName $n -ErrorAction SilentlyContinue) {
             Unregister-ScheduledTask -TaskName $n -Confirm:$false
             Ok "removed '$n'"
@@ -204,8 +229,9 @@ if ($InstallTask) {
     $user = Read-Host "    Gmail address that sends$(if ($cur) { " [$cur]" })"
     if ([string]::IsNullOrWhiteSpace($user)) { $user = $cur }
     $curTo = [Environment]::GetEnvironmentVariable("DESK_MAIL_TO", "User")
-    $to = Read-Host "    Send to (blank = same address)$(if ($curTo) { " [$curTo]" })"
-    if ([string]::IsNullOrWhiteSpace($to)) { $to = if ($curTo) { $curTo } else { $user } }
+    $toDefault = if ($curTo) { $curTo } else { $DefaultTo }
+    $to = Read-Host "    Send to [$toDefault]"
+    if ([string]::IsNullOrWhiteSpace($to)) { $to = $toDefault }
     $hasPw = -not [string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable("DESK_MAIL_PASSWORD", "User"))
     $pwSecure = Read-Host "    App password$(if ($hasPw) { ' [stored, Enter keeps it]' })" -AsSecureString
     $pw = [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwSecure))
@@ -221,15 +247,28 @@ if ($InstallTask) {
     $secIn = Read-Host "    Name and email for SEC requests (they ask for it)$(if ($sec) { " [$sec]" })"
     if (-not [string]::IsNullOrWhiteSpace($secIn)) { [Environment]::SetEnvironmentVariable("SEC_USER_AGENT", $secIn.Trim(), "User") }
 
-    Say "Registering the scheduled tasks"
+    Say "Registering the scheduled tasks (weekdays; times are local, Eastern)"
     $ps = (Get-Command powershell).Source
     $script = Join-Path $root "setup.ps1"
-    $daily = New-ScheduledTaskAction -Execute $ps -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$script`" -Daily" -WorkingDirectory $root
-    $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 2) -MultipleInstances IgnoreNew
-    $tDaily = New-ScheduledTaskTrigger -Daily -At $DailyAt
-    Register-ScheduledTask -TaskName $TASK_DAILY -Action $daily -Trigger $tDaily -Settings $settings -Force `
-        -Description "Scans prices, SEC filings and headlines for the journal's names and emails the digest. setup.ps1 -Daily" | Out-Null
-    Ok "'$TASK_DAILY' every day at $DailyAt"
+    $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 1) -MultipleInstances IgnoreNew
+    $weekdays = @("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+    # an older install registered one task at 17:45; replace it
+    if (Get-ScheduledTask -TaskName "Desk daily scan and email" -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName "Desk daily scan and email" -Confirm:$false
+    }
+    foreach ($pair in @(@($TASK_MORNING, "morning", $MorningAt), @($TASK_MIDDAY, "midday", $MiddayAt))) {
+        $name, $ed, $at = $pair
+        $action = New-ScheduledTaskAction -Execute $ps -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$script`" -Daily -Edition $ed" -WorkingDirectory $root
+        $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek $weekdays -At $at
+        Register-ScheduledTask -TaskName $name -Action $action -Trigger $trigger -Settings $settings -Force `
+            -Description "setup.ps1 -Daily -Edition $ed" | Out-Null
+        Ok "'$name' weekdays at $at"
+    }
+    # every 30 minutes through the session: a repetition trigger, easiest through schtasks
+    $watchCmd = "`"$ps`" -NoProfile -ExecutionPolicy Bypass -File `"$script`" -Daily -Edition event"
+    schtasks /Create /F /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST $WatchFrom /ET $WatchTo /RI 30 /TN "$TASK_WATCH" /TR $watchCmd | Out-Null
+    if ($LASTEXITCODE -ne 0) { Warn "schtasks could not register the intraday watch; the morning and midday tasks still run" }
+    else { Ok "'$TASK_WATCH' weekdays every 30 minutes from $WatchFrom to $WatchTo (sends only when a rule fires)" }
     # New-ScheduledTaskTrigger has no monthly form, so the monthly task goes through
     # schtasks, which does: the first of every month at 18:30.
     $monthlyCmd = "`"$ps`" -NoProfile -ExecutionPolicy Bypass -File `"$script`" -Monthly"
@@ -237,7 +276,7 @@ if ($InstallTask) {
     if ($LASTEXITCODE -ne 0) { Warn "schtasks could not register the monthly task; run setup.ps1 -Monthly by hand on the first of the month" }
     else { Ok "'$TASK_MONTHLY' on the first of every month at 18:30" }
     Info "see them in Task Scheduler, or: Get-ScheduledTask -TaskName 'Desk*'"
-    Info "try one now:  powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily"
+    Info "try one now:  powershell -ExecutionPolicy Bypass -File setup.ps1 -Daily -Edition morning"
     exit 0
 }
 

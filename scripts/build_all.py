@@ -27,6 +27,7 @@ STEPS = [
     ("backtest calibration and score structure", "backtest_run.py"),
     ("journal calls graded against prices", "track_calls.py"),
     ("daily scan, from caches only", "scan.py"),
+    ("swing setups, from caches only", "setups.py"),
 ]
 
 

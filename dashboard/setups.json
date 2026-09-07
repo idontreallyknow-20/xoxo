@@ -1,0 +1,62 @@
+{
+ "built_at": "2026-09-07T04:51:36",
+ "status": "NOT RUN",
+ "is_real": false,
+ "as_of": null,
+ "universe_n": 1895,
+ "quality_n": 150,
+ "n_setups": 0,
+ "counts": {
+  "pead": 0,
+  "guidance": 0,
+  "breakout": 0,
+  "pullback": 0
+ },
+ "setups": [],
+ "kinds": {
+  "pead": {
+   "label": "post-earnings drift",
+   "rule": "An 8-K with item 2.02 in the last 3 sessions, the release session closed 5% or more above the prior close, and the latest close holds the release close. Stop: the lowest close since the release. Horizon: 20 sessions."
+  },
+  "guidance": {
+   "label": "guidance raise",
+   "rule": "The mechanical 8-K diff reads 'raised' on revenue or EPS for a period still ahead. Stop: the lowest close of the last five sessions. Horizon: 20 sessions."
+  },
+  "breakout": {
+   "label": "breakout with revisions",
+   "rule": "The latest close is above every close of the prior 251 sessions and next-year EPS estimates rose over 30 days. Stop: 8% under entry. Horizon: 10 sessions."
+  },
+  "pullback": {
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions."
+  }
+ },
+ "rules_source": "swing.md",
+ "sources": {
+  "prices": {
+   "live": false,
+   "detail": "no closes pulled"
+  },
+  "edgar": {
+   "live": false,
+   "detail": "no filings pulled"
+  },
+  "guidance": {
+   "live": false,
+   "detail": "no diffs on disk"
+  }
+ },
+ "why_not_run": [
+  "No setups scan has run. It needs a year of closes for the liquid universe and the last three sessions of 8-K filings, neither of which this checkout has pulled.",
+  "To run it: python scripts/setups.py --live, on a machine that can reach Yahoo and data.sec.gov. The morning task runs it every weekday.",
+  "The rules it applies are in swing.md. Read that file first; it says what a setup is not."
+ ],
+ "limitations": [
+  "A setup is a pattern that matched, on adjusted closes. Whether any of these patterns carries an edge for this account is unmeasured until the tracker has graded thirty logged calls; swing.md says so.",
+  "Closes only. The stop is a closing level because no intraday range is pulled; a print through it during the session is not a stop.",
+  "Post-earnings drift is documented mostly in small names and has faded in large ones. Every name here is over $2bn by construction.",
+  "The estimate-revision field exists for the quality 150 only, so the breakout and pullback setups never reach the rest of the universe.",
+  "The guidance diff is mechanical and reads figures, not tone. A raise given in words alone is invisible to it."
+ ],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}
