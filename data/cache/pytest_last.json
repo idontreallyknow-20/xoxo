@@ -1,0 +1,12 @@
+{
+ "args": [],
+ "errors": 0,
+ "failed": 0,
+ "failed_tests": [],
+ "passed": 1035,
+ "ran_at": "2026-09-08T01:10:12+00:00",
+ "returncode": 0,
+ "seconds": 144.2,
+ "skipped": 0,
+ "summary": "1035 passed in 143.75s (0:02:23)"
+}

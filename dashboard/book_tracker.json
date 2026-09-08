@@ -1,0 +1,175 @@
+{
+ "built_at": "2026-09-08T01:10:28",
+ "status": "GRADED",
+ "is_real": true,
+ "as_of": "2026-09-08",
+ "price_source": "yfinance adjusted closes: 0 live, 5 from cache",
+ "benchmarks": [
+  "SPY",
+  "QQQ"
+ ],
+ "summary": {
+  "n_calls": 3,
+  "n_graded": 3,
+  "n_ungraded": 0,
+  "n_falsified": 0,
+  "buys_graded": 3,
+  "buys_ahead_of_spy": 0,
+  "passes_graded": 0,
+  "passes_missed": 0,
+  "mean_excess_vs_spy_buys": -0.016176346872533404,
+  "trading_days": 0,
+  "swing_calls": 0,
+  "swing_graded_at_horizon": 0,
+  "swing_ahead_at_horizon": 0,
+  "swing_stopped": 0,
+  "swing_mean_excess_at_horizon": null,
+  "swing_floor": 30
+ },
+ "limitations": [
+  "Price source: yfinance adjusted closes: 0 live, 5 from cache.",
+  "Every verdict is 'so far'. The calls were underwritten on a twelve-month view and sized for tranches over three months; a grade taken early is a fact about the window, not the call.",
+  "The price at call is the journal's own figure and may not be a close. Returns use adjusted closes, so a dividend between the call and the grade is in the return.",
+  "This grades calls, not positions. Nothing here knows what was bought, when, or in what size.",
+  "Only a falsifier of the form 'a close under $X' is checked against prices. Guidance and growth falsifiers are real and are left to the reader.",
+  "A Pass that then beat the market is a missed gain, not a loss, and is labelled 'missed'.",
+  "Every call carries the same date, 2026-09-07, so the whole table is one window and one market regime. It cannot say anything about consistency.",
+  "The longest window is 0 trading days. Below a quarter, the benchmark comparison is mostly noise."
+ ],
+ "grades": [
+  {
+   "date": "2026-09-07",
+   "ticker": "BKNG",
+   "action": "Buy",
+   "kind": "buy",
+   "price_at_call": 195.13,
+   "conviction": 4,
+   "bucket": "compounder",
+   "wrong_if": "Two consecutive quarters of negative room nights, the take rate down 100 basis points year over year, buybacks paused, or a close under $150.",
+   "trigger": 150.0,
+   "score_percentile_at_call": 96.6,
+   "score_snapshot": "2026-09-04",
+   "graded_on": "2026-09-08",
+   "trading_days": 0,
+   "price_now": 193.29,
+   "ret": -0.009429611028545115,
+   "benchmarks": {
+    "SPY": 0.0,
+    "QQQ": 0.0
+   },
+   "excess_vs_spy": -0.009429611028545115,
+   "low_since_call": null,
+   "trigger_breached": null,
+   "stopped_trading": false,
+   "status": "graded",
+   "reason": "",
+   "verdict": "behind so far: -0.9% since the call, -0.9 pts against SPY; 0 trading days is too short to mean anything",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
+  },
+  {
+   "date": "2026-09-07",
+   "ticker": "REGN",
+   "action": "Buy",
+   "kind": "buy",
+   "price_at_call": 843.47,
+   "conviction": 4,
+   "bucket": "compounder",
+   "wrong_if": "Dupixent growth under 15%, Eylea HD down sequentially for two quarters, a drug pricing law that names Dupixent, or a close under $650.",
+   "trigger": 650.0,
+   "score_percentile_at_call": 75.8,
+   "score_snapshot": "2026-09-04",
+   "graded_on": "2026-09-08",
+   "trading_days": 0,
+   "price_now": 827.72,
+   "ret": -0.018672863290929098,
+   "benchmarks": {
+    "SPY": 0.0,
+    "QQQ": 0.0
+   },
+   "excess_vs_spy": -0.018672863290929098,
+   "low_since_call": null,
+   "trigger_breached": null,
+   "stopped_trading": false,
+   "status": "graded",
+   "reason": "",
+   "verdict": "behind so far: -1.9% since the call, -1.9 pts against SPY; 0 trading days is too short to mean anything",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
+  },
+  {
+   "date": "2026-09-07",
+   "ticker": "MSFT",
+   "action": "Buy",
+   "kind": "buy",
+   "price_at_call": 510.12,
+   "conviction": 4,
+   "bucket": "compounder",
+   "wrong_if": "Azure growth under 30% while capex still rises, an OpenAI restructuring that cuts committed Azure spend, free cash flow margin under 20% for a full year, or a close under $400.",
+   "trigger": 400.0,
+   "score_percentile_at_call": 86.6,
+   "score_snapshot": "2026-09-04",
+   "graded_on": "2026-09-08",
+   "trading_days": 0,
+   "price_now": 499.7,
+   "ret": -0.020426566298126003,
+   "benchmarks": {
+    "SPY": 0.0,
+    "QQQ": 0.0
+   },
+   "excess_vs_spy": -0.020426566298126003,
+   "low_since_call": null,
+   "trigger_breached": null,
+   "stopped_trading": false,
+   "status": "graded",
+   "reason": "",
+   "verdict": "behind so far: -2.0% since the call, -2.0 pts against SPY; 0 trading days is too short to mean anything",
+   "horizon_days": null,
+   "stop": null,
+   "stop_breached": null,
+   "horizon_grades": {},
+   "is_swing": false
+  }
+ ],
+ "score_vs_outcome": {
+  "status": "INSUFFICIENT",
+  "question": "Did the score's percentile on the day of each call line up with the excess return against SPY since? This asks about the score, using the analyst's calls as the sample.",
+  "requirements": {
+   "min_graded_with_score": 20,
+   "min_distinct_call_dates": 4,
+   "min_trading_days": 63
+  },
+  "sample": {
+   "is_real": true,
+   "n_calls": 3,
+   "n_graded": 3,
+   "n_with_score_and_return": 3,
+   "distinct_call_dates": 1,
+   "longest_window_trading_days": 0
+  },
+  "shortfalls": [
+   "3 graded calls carry both a score at call and an excess return; 20 are required",
+   "the usable calls fall on 1 distinct date; 4 are required, because calls made on one day are one draw from one market regime",
+   "the longest window is 0 trading days; 63 are required"
+  ],
+  "rank_ic": null,
+  "rank_ic_n": null,
+  "liked_by_the_score": {
+   "n": 0,
+   "mean_excess_vs_spy": null
+  },
+  "not_liked_by_the_score": {
+   "n": 0,
+   "mean_excess_vs_spy": null
+  },
+  "verdict": "no readout: the sample is too small to say anything, so nothing is said",
+  "note": "No statistic is reported below the floors on purpose. A rank correlation over a handful of same-day calls is not weak evidence; it is a number attached to nothing, and numbers attached to nothing get quoted."
+ },
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

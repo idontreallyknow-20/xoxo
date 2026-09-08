@@ -3,7 +3,7 @@
   "guidance": "no historical 8-K guidance source is reachable, so the guidance-raise setup has no arm",
   "pead": "no earnings dates exist in this history; pead_proxy is a gap-on-volume proxy and is labelled so"
  },
- "built_at": "2026-09-07T18:04:26+00:00",
+ "built_at": "2026-09-08T01:29:26+00:00",
  "costs": {
   "commission_bps": 5.0,
   "round_trip_bps": 20.0,

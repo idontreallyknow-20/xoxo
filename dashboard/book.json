@@ -1,11 +1,11 @@
 {
- "as_of": null,
+ "as_of": "2026-09-04",
  "benchmarks_since_start": {
   "QQQ": null,
   "SPY": null,
   "VFV.TO": null
  },
- "built_at": "2026-09-07T20:16:57+00:00",
+ "built_at": "2026-09-08T01:29:27+00:00",
  "cash": 100000.0,
  "closed": [],
  "curve": [],
@@ -19,10 +19,8 @@
   "VFV.TO": null
  },
  "first_fill": null,
- "flags": [
-  "no prices: every call is pending"
- ],
- "is_real": false,
+ "flags": [],
+ "is_real": true,
  "journal": "book.md",
  "limitations": [
   "Fills are at the first close after each call, with no slippage on the long book and 10 bp each way on the swing sleeve; a real account would not get every close.",
@@ -258,16 +256,12 @@
    "wrong_if": "Azure growth under 30% while capex still rises, an OpenAI restructuring that cuts committed Azure spend, free cash flow margin under 20% for a full year, or a close under $400."
   }
  ],
- "price_source": "no prices",
- "quotes_age_sessions": null,
+ "price_source": "PanelDownloader: 0 live",
+ "quotes_age_sessions": 0,
  "refused": [],
  "ret_since_start": 0.0,
  "rule_checks": [],
  "starting_cash": 100000.0,
- "status": "NOT MARKED",
- "swing": [],
- "why_not_marked": [
-  "No quotes are on this machine, so nothing is filled or marked. The calls below are pending at the first close after each call date.",
-  "python scripts/fetch_quotes.py on a machine that reaches Yahoo, or the quotes branch pulled by an.quotes.fetch_branch(), changes that."
- ]
+ "status": "MARKED",
+ "swing": []
 }
