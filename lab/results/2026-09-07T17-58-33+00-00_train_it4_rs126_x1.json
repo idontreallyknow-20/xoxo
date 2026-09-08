@@ -1,0 +1,728 @@
+{
+ "arms": [
+  {
+   "arm": {
+    "horizon": 20,
+    "id": "breakout_s8_h20_x1+mkt200+rs63",
+    "kind": "breakout_price_only",
+    "label": "breakout, price only: no estimate-revision filter exists in this history",
+    "params": {
+     "filters": [
+      "x1",
+      "mkt200",
+      "rs63"
+     ],
+     "stop_pct": 0.08
+    },
+    "preregistered": false
+   },
+   "block": 2,
+   "by_year": {
+    "2013": {
+     "hit_rate": 0.6419,
+     "mean_excess_vs_spy": 0.0056,
+     "n": 148
+    },
+    "2014": {
+     "hit_rate": 0.5315,
+     "mean_excess_vs_spy": -0.0027,
+     "n": 937
+    },
+    "2015": {
+     "hit_rate": 0.4481,
+     "mean_excess_vs_spy": -0.0032,
+     "n": 607
+    },
+    "2016": {
+     "hit_rate": 0.5758,
+     "mean_excess_vs_spy": -0.0108,
+     "n": 231
+    }
+   },
+   "decision_rule": {
+    "survives": false,
+    "why": "verdict wrong way; interval touches or crosses zero; mean excess not above the random control's p95"
+   },
+   "excess_ci": [
+    -0.0073,
+    -0.0004
+   ],
+   "excess_t": -1.8882,
+   "exit_reasons": {
+    "horizon": 1669,
+    "stop": 254
+   },
+   "hit_rate": 0.519,
+   "hypotheses_tested": 35,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2013-02-28",
+      20000.0
+     ],
+     [
+      "2013-03-28",
+      20000.0
+     ],
+     [
+      "2013-04-30",
+      20000.0
+     ],
+     [
+      "2013-05-31",
+      20000.0
+     ],
+     [
+      "2013-06-28",
+      20000.0
+     ],
+     [
+      "2013-07-31",
+      20000.0
+     ],
+     [
+      "2013-08-30",
+      20000.0
+     ],
+     [
+      "2013-09-30",
+      20000.0
+     ],
+     [
+      "2013-10-31",
+      20000.0
+     ],
+     [
+      "2013-11-29",
+      20043.48
+     ],
+     [
+      "2013-12-31",
+      20667.45
+     ],
+     [
+      "2014-01-31",
+      20221.92
+     ],
+     [
+      "2014-02-28",
+      21298.52
+     ],
+     [
+      "2014-03-31",
+      20585.45
+     ],
+     [
+      "2014-04-30",
+      20091.65
+     ],
+     [
+      "2014-05-30",
+      20090.47
+     ],
+     [
+      "2014-06-30",
+      20010.04
+     ],
+     [
+      "2014-07-31",
+      19342.93
+     ],
+     [
+      "2014-08-29",
+      19994.39
+     ],
+     [
+      "2014-09-30",
+      19162.6
+     ],
+     [
+      "2014-10-31",
+      18744.21
+     ],
+     [
+      "2014-11-28",
+      19032.73
+     ],
+     [
+      "2014-12-31",
+      18468.95
+     ],
+     [
+      "2015-01-30",
+      18494.64
+     ],
+     [
+      "2015-02-27",
+      18768.12
+     ],
+     [
+      "2015-03-31",
+      18316.93
+     ],
+     [
+      "2015-04-30",
+      18029.8
+     ],
+     [
+      "2015-05-29",
+      18743.76
+     ],
+     [
+      "2015-06-30",
+      18672.49
+     ],
+     [
+      "2015-07-31",
+      18489.48
+     ],
+     [
+      "2015-08-31",
+      17691.92
+     ],
+     [
+      "2015-09-30",
+      17673.53
+     ],
+     [
+      "2015-10-30",
+      17700.58
+     ],
+     [
+      "2015-11-30",
+      18300.27
+     ],
+     [
+      "2015-12-31",
+      17525.27
+     ],
+     [
+      "2016-01-29",
+      16250.78
+     ],
+     [
+      "2016-02-29",
+      16250.78
+     ],
+     [
+      "2016-03-31",
+      16275.45
+     ],
+     [
+      "2016-04-29",
+      16063.3
+     ],
+     [
+      "2016-05-31",
+      16459.5
+     ],
+     [
+      "2016-06-30",
+      16972.37
+     ]
+    ],
+    "exposure": 1.2202,
+    "final_equity": 16972.37,
+    "max_drawdown": -0.2639,
+    "n_trades": 149,
+    "skipped": {
+     "already_open": 0,
+     "capacity": 1685,
+     "cash": 11,
+     "sector": 54
+    },
+    "turnover": 16.441
+   },
+   "mean_excess_vs_spy": -0.0032,
+   "mean_ret_from_signal_close": 0.0005,
+   "mean_ret_net": -0.0021,
+   "median_ret_net": 0.0019,
+   "n_buckets": 30,
+   "n_effective": 15.0,
+   "n_events": 1923,
+   "n_signals": 7637,
+   "n_trades": 1923,
+   "null": {
+    "arm_id": "breakout_s8_h20_x1+mkt200+rs63",
+    "means": [
+     -0.0011,
+     -0.0025,
+     -0.0012,
+     -0.0018,
+     -0.0014,
+     -0.003,
+     -0.0029,
+     -0.0027,
+     -0.0035,
+     -0.0006,
+     -0.0004,
+     -0.0009,
+     -0.0024,
+     -0.0009,
+     -0.0025,
+     -0.0024,
+     -0.0006,
+     -0.0019,
+     -0.0034,
+     0.0005
+    ],
+    "n_per_replicate": 1923,
+    "n_replicates": 20,
+    "p05": -0.0034,
+    "p50": -0.0019,
+    "p95": -0.0004,
+    "percentile_of_arm": 0.1
+   },
+   "profit_factor": 0.9031,
+   "signal_skips": {
+    "bad_stop": 0,
+    "no_next_session": 0,
+    "outside_window": 3793,
+    "truncated_at_panel_end": 0,
+    "within_previous_horizon": 1921
+   },
+   "verdict": "wrong way",
+   "window": [
+    "2013-02-08",
+    "2016-06-30"
+   ],
+   "worst_five": [
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-06-18",
+     "ret_net": -0.655,
+     "ticker": "NI"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-07-17",
+     "ret_net": -0.5694,
+     "ticker": "EBAY"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2013-11-26",
+     "ret_net": -0.2049,
+     "ticker": "IR"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2014-09-18",
+     "ret_net": -0.1902,
+     "ticker": "KLAC"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-10-30",
+     "ret_net": -0.1871,
+     "ticker": "AAP"
+    }
+   ]
+  },
+  {
+   "arm": {
+    "horizon": 20,
+    "id": "pullback_b3_h20_mkt200+rs126",
+    "kind": "pullback",
+    "label": "pullback in trend (as swing.md)",
+    "params": {
+     "band": 0.03,
+     "filters": [
+      "mkt200",
+      "rs126"
+     ],
+     "max_dd": -0.15
+    },
+    "preregistered": false
+   },
+   "block": 2,
+   "by_year": {
+    "2013": {
+     "hit_rate": 0.5546,
+     "mean_excess_vs_spy": 0.0057,
+     "n": 366
+    },
+    "2014": {
+     "hit_rate": 0.4618,
+     "mean_excess_vs_spy": -0.0023,
+     "n": 2564
+    },
+    "2015": {
+     "hit_rate": 0.3894,
+     "mean_excess_vs_spy": -0.0013,
+     "n": 2098
+    },
+    "2016": {
+     "hit_rate": 0.5158,
+     "mean_excess_vs_spy": -0.0017,
+     "n": 853
+    }
+   },
+   "decision_rule": {
+    "survives": false,
+    "why": "verdict no evidence; interval touches or crosses zero; mean excess not above the random control's p95"
+   },
+   "excess_ci": [
+    -0.0036,
+    0.0034
+   ],
+   "excess_t": 0.2012,
+   "exit_reasons": {
+    "horizon": 3426,
+    "stop": 2455
+   },
+   "hit_rate": 0.4496,
+   "hypotheses_tested": 35,
+   "ledger": {
+    "equity_curve": [
+     [
+      "2013-02-28",
+      20000.0
+     ],
+     [
+      "2013-03-28",
+      20000.0
+     ],
+     [
+      "2013-04-30",
+      20000.0
+     ],
+     [
+      "2013-05-31",
+      20000.0
+     ],
+     [
+      "2013-06-28",
+      20000.0
+     ],
+     [
+      "2013-07-31",
+      20000.0
+     ],
+     [
+      "2013-08-30",
+      20000.0
+     ],
+     [
+      "2013-09-30",
+      20000.0
+     ],
+     [
+      "2013-10-31",
+      20000.0
+     ],
+     [
+      "2013-11-29",
+      20150.9
+     ],
+     [
+      "2013-12-31",
+      20591.03
+     ],
+     [
+      "2014-01-31",
+      19716.25
+     ],
+     [
+      "2014-02-28",
+      20152.07
+     ],
+     [
+      "2014-03-31",
+      20846.97
+     ],
+     [
+      "2014-04-30",
+      19953.64
+     ],
+     [
+      "2014-05-30",
+      19656.17
+     ],
+     [
+      "2014-06-30",
+      20356.0
+     ],
+     [
+      "2014-07-31",
+      20536.34
+     ],
+     [
+      "2014-08-29",
+      20871.31
+     ],
+     [
+      "2014-09-30",
+      19789.56
+     ],
+     [
+      "2014-10-31",
+      19914.13
+     ],
+     [
+      "2014-11-28",
+      21414.71
+     ],
+     [
+      "2014-12-31",
+      21075.14
+     ],
+     [
+      "2015-01-30",
+      20724.11
+     ],
+     [
+      "2015-02-27",
+      21563.54
+     ],
+     [
+      "2015-03-31",
+      21383.11
+     ],
+     [
+      "2015-04-30",
+      21280.85
+     ],
+     [
+      "2015-05-29",
+      21799.98
+     ],
+     [
+      "2015-06-30",
+      21636.92
+     ],
+     [
+      "2015-07-31",
+      21536.04
+     ],
+     [
+      "2015-08-31",
+      20050.42
+     ],
+     [
+      "2015-09-30",
+      20050.42
+     ],
+     [
+      "2015-10-30",
+      20228.52
+     ],
+     [
+      "2015-11-30",
+      19843.6
+     ],
+     [
+      "2015-12-31",
+      18764.66
+     ],
+     [
+      "2016-01-29",
+      18456.85
+     ],
+     [
+      "2016-02-29",
+      18456.85
+     ],
+     [
+      "2016-03-31",
+      19202.09
+     ],
+     [
+      "2016-04-29",
+      18576.82
+     ],
+     [
+      "2016-05-31",
+      19077.57
+     ],
+     [
+      "2016-06-30",
+      18229.88
+     ]
+    ],
+    "exposure": 1.2677,
+    "final_equity": 18229.88,
+    "max_drawdown": -0.2209,
+    "n_trades": 183,
+    "skipped": {
+     "already_open": 0,
+     "capacity": 5614,
+     "cash": 34,
+     "sector": 38
+    },
+    "turnover": 21.896
+   },
+   "mean_excess_vs_spy": -0.0014,
+   "mean_ret_from_signal_close": 0.0048,
+   "mean_ret_net": -0.0029,
+   "median_ret_net": -0.0054,
+   "n_buckets": 30,
+   "n_effective": 15.0,
+   "n_events": 5881,
+   "n_signals": 127658,
+   "n_trades": 5881,
+   "null": {
+    "arm_id": "pullback_b3_h20_mkt200+rs126",
+    "means": [
+     -0.0029,
+     -0.0005,
+     -0.0019,
+     -0.0022,
+     -0.001,
+     -0.002,
+     -0.0021,
+     -0.002,
+     -0.0017,
+     -0.0008,
+     -0.0026,
+     -0.0021,
+     -0.0026,
+     -0.0018,
+     -0.0031,
+     -0.0017,
+     -0.0021,
+     -0.0022,
+     -0.0023,
+     -0.0019
+    ],
+    "n_per_replicate": 5881,
+    "n_replicates": 20,
+    "p05": -0.0029,
+    "p50": -0.0021,
+    "p95": -0.0008,
+    "percentile_of_arm": 0.85
+   },
+   "profit_factor": 0.861,
+   "signal_skips": {
+    "bad_stop": 0,
+    "no_next_session": 0,
+    "outside_window": 56918,
+    "truncated_at_panel_end": 0,
+    "within_previous_horizon": 64859
+   },
+   "verdict": "no evidence",
+   "window": [
+    "2013-02-08",
+    "2016-06-30"
+   ],
+   "worst_five": [
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-07-01",
+     "ret_net": -0.6302,
+     "ticker": "NI"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-07-08",
+     "ret_net": -0.532,
+     "ticker": "EBAY"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-07-02",
+     "ret_net": -0.2361,
+     "ticker": "BIIB"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2014-09-23",
+     "ret_net": -0.2131,
+     "ticker": "AVGO"
+    },
+    {
+     "exit_reason": "stop",
+     "fill_date": "2015-08-03",
+     "ret_net": -0.1996,
+     "ticker": "INTU"
+    }
+   ]
+  }
+ ],
+ "costs": {
+  "commission_bps": 5.0,
+  "round_trip_bps": 20.0,
+  "slippage_bps": 5.0
+ },
+ "data": {
+  "basis": "price returns; no dividends on either side",
+  "dataset_verdict": "adjusted",
+  "eligible_cells": 463640,
+  "excluded_as_suspect": [
+   "LNT",
+   "NWL"
+  ],
+  "fetched_at": "2026-09-07T17:40:19+00:00",
+  "first": "2013-02-08",
+  "last": "2018-02-07",
+  "membership": {
+   "members_on_first_session": 387,
+   "members_on_last_session": 497,
+   "n_tickers": 505
+  },
+  "quality_gate": "PASS",
+  "scope": "full",
+  "sessions": 1259,
+  "sha256": {
+   "factor_aapl": "86f7f2508a11259dfbb53b2f81fc8e711c8a4b97a9ee599b661079a9566801c9",
+   "factor_aig": "1bd3b9e896fee271e9a7af9b4826da3fc6a8ff21661e211047a173ffcd6801e3",
+   "factor_bac": "2c6be614492df18bcaf40cb1b63feeaab55bed1e43cf1f090d492e2c4420b465",
+   "factor_ibm": "8a310e86aca164304e93596ca919ec413fc3a11d3aefa0c0c2edf1e6feffbc5a",
+   "factor_qqq": "780ee5c6a9a4c3b3dbecd13f6a2faf4aa67c4802f08665b66e5e87960a77840b",
+   "factor_spy": "ad53e292de2e7076ff36721e1dcffd1db0d04fe6813b59aeece8620fb0d4cec1",
+   "lean_aapl": "a6f609711a1f550252f95a4edfaa5ac2c6dd75ca9a1fbbb417e853d1516831fe",
+   "lean_aig": "9e194e786d9104af09799559972a883113c36e2a550093d20ac1df0a30df884b",
+   "lean_bac": "29224f2b8e9b03bd0c4a1c9c937b33c78e5baf82eb3b5f8e86e05bf28f196cdb",
+   "lean_ibm": "dbc2eb8db4793506612cdc2426047e35fb170f97271d05760b7faf418c63127e",
+   "lean_qqq": "09de2fda712d1d54f74b4bd2215c7df8787b7e2643b79c0c2ab531d188a5c056",
+   "lean_spy": "aaa1febad0cb8f91011212c92ff7caac6d4d6415a3b7f73c4b98c438db4274ad",
+   "membership": "b2f4fe2f2e4dce8eaf0eb4fbd3946a32a20c1ddfe69687dfca3b6b59a0b71f9f",
+   "plotly": "6aea253cd19de60b568143991aaf1fa482456565c389205658d236e595e716cf",
+   "stocknet_AAPL": "4c91141cc818b836fa7a1fabb683622c63048db450565d607418bfec3ed5bc4e",
+   "stocknet_MSFT": "1b8e97121e3a5c945c9994d49e923d528acd6db41239b87f723ba635412cc275"
+  },
+  "source": "plotly all_stocks_5yr + QuantConnect Lean SPY/QQQ (split-only adjusted)",
+  "tickers": 505,
+  "worst_cross_check": {
+   "a": "plotly",
+   "b": "lean split-adjusted",
+   "level_ratio": 4.0,
+   "max_abs_rel_diff": 0.057419,
+   "median_abs_rel_diff": 0.0,
+   "n_overlap": 1259,
+   "passed": true,
+   "ticker": "AAPL"
+  }
+ },
+ "flags": [],
+ "forced": false,
+ "hypotheses_tested": 35,
+ "limitations": [
+  "Survivorship: the panel holds the 505 names in the S&P 500 as of February 2018; names that left the index before then have no prices here. The membership filter keeps a name out until it was actually added (387 of 505 were members on the first session, 497 on the last), but it cannot add the departed back.",
+  "One regime: February 2013 to February 2018 was one bull market with two shallow corrections. A rule that worked here has been tested in one weather.",
+  "pead_proxy is a gap-on-volume proxy, not post-earnings drift: no earnings dates exist in this history. breakout is price-only: no estimate revisions exist in this history. The guidance setup cannot be tested at all.",
+  "Every return is a price return with no dividends, on the stocks and on SPY alike; excess figures are unbiased by that, absolute figures are understated by roughly the yield.",
+  "Costs are assumed: 5 bps commission and 5 bps slippage each way. Fills are the next session's close after a signal; stops are closing levels exited at the following close.",
+  "Dataset adjustment status from the audit: adjusted. Suspected data artefacts excluded from the eligible universe: LNT, NWL.",
+  "Sector labels come from the 2026 quality screen, not from 2013; names not in that screen count as one 'unknown' sector and the two-per-sector cap applies to it.",
+  "Everything chosen on the train window is in-sample. An arm's own interval says nothing until it is run on the held-out window, once, as pre-registered."
+ ],
+ "pairs": [],
+ "rules": {
+  "max_open": 5,
+  "max_per_sector": 2,
+  "max_position_usd": 5000.0,
+  "raise_stop_to_entry_after_1r": true,
+  "risk_usd": 1000.0,
+  "sleeve_usd": 20000.0
+ },
+ "run_at": "2026-09-07T17:58:33+00:00",
+ "split": "train",
+ "survivors": [],
+ "verdict": "in-sample only",
+ "verdict_sentence": "In-sample only: 2 rule arms on 2013-02-08 to 2016-06-30, 35 hypotheses counted so far. Nothing here is a finding.",
+ "window": [
+  "2013-02-08",
+  "2016-06-30"
+ ]
+}

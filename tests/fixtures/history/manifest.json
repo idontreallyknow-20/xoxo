@@ -1,0 +1,39 @@
+{
+ "cut_from": {
+  "factor_aapl": "86f7f2508a11259dfbb53b2f81fc8e711c8a4b97a9ee599b661079a9566801c9",
+  "factor_aig": "1bd3b9e896fee271e9a7af9b4826da3fc6a8ff21661e211047a173ffcd6801e3",
+  "factor_bac": "2c6be614492df18bcaf40cb1b63feeaab55bed1e43cf1f090d492e2c4420b465",
+  "factor_ibm": "8a310e86aca164304e93596ca919ec413fc3a11d3aefa0c0c2edf1e6feffbc5a",
+  "factor_qqq": "780ee5c6a9a4c3b3dbecd13f6a2faf4aa67c4802f08665b66e5e87960a77840b",
+  "factor_spy": "ad53e292de2e7076ff36721e1dcffd1db0d04fe6813b59aeece8620fb0d4cec1",
+  "lean_aapl": "a6f609711a1f550252f95a4edfaa5ac2c6dd75ca9a1fbbb417e853d1516831fe",
+  "lean_aig": "9e194e786d9104af09799559972a883113c36e2a550093d20ac1df0a30df884b",
+  "lean_bac": "29224f2b8e9b03bd0c4a1c9c937b33c78e5baf82eb3b5f8e86e05bf28f196cdb",
+  "lean_ibm": "dbc2eb8db4793506612cdc2426047e35fb170f97271d05760b7faf418c63127e",
+  "lean_qqq": "09de2fda712d1d54f74b4bd2215c7df8787b7e2643b79c0c2ab531d188a5c056",
+  "lean_spy": "aaa1febad0cb8f91011212c92ff7caac6d4d6415a3b7f73c4b98c438db4274ad",
+  "membership": "b2f4fe2f2e4dce8eaf0eb4fbd3946a32a20c1ddfe69687dfca3b6b59a0b71f9f",
+  "plotly": "6aea253cd19de60b568143991aaf1fa482456565c389205658d236e595e716cf",
+  "stocknet_AAPL": "4c91141cc818b836fa7a1fabb683622c63048db450565d607418bfec3ed5bc4e",
+  "stocknet_MSFT": "1b8e97121e3a5c945c9994d49e923d528acd6db41239b87f723ba635412cc275"
+ },
+ "end": "2017-09-29",
+ "missing": [],
+ "note": "a 12-name slice for tests; it measures nothing about any market",
+ "sessions": 692,
+ "start": "2015-01-02",
+ "tickers": [
+  "AAPL",
+  "AMZN",
+  "BA",
+  "CAT",
+  "JNJ",
+  "JPM",
+  "KO",
+  "MSFT",
+  "NFLX",
+  "NVDA",
+  "PG",
+  "XOM"
+ ]
+}

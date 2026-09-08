@@ -9,6 +9,7 @@
     python scripts/daily_email.py --send               # send over SMTP with the environment's credential
     python scripts/daily_email.py --send --only-if-alerts   # send only when a written rule fired
     python scripts/daily_email.py --eml some/dir       # write the message as a .eml file instead
+    python scripts/daily_email.py --edition close --html-out data/cache/mail/out.html   # for the Gmail connector
 
 The credential is read from the environment and from nowhere else:
 
@@ -56,8 +57,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--date", default=None, help="YYYY-MM-DD, default today")
     ap.add_argument("--inputs", type=Path, default=None, help="directory holding watch.json etc. (default dashboard/)")
     ap.add_argument("--subject-prefix", default="")
+    ap.add_argument("--html-out", type=Path, default=None,
+                    help="write the rendered HTML here and the subject beside it (PATH.subject.txt), for another sender")
     a = ap.parse_args(argv)
-    if not (a.send or a.dry_run or a.preview or a.eml):
+    if not (a.send or a.dry_run or a.preview or a.eml or a.html_out):
         a.preview = True
 
     today = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
@@ -69,6 +72,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(f"{a.edition}: {d['status']}, {d['n_watched']} watched, {d['n_alerts']} lines, {d['n_rule_alerts']} rules fired"
           + (f" ({len(state.seen_alerts)} alert keys already sent)" if state else ""))
     print(f"subject: {subject}")
+
+    if a.html_out:
+        a.html_out.parent.mkdir(parents=True, exist_ok=True)
+        a.html_out.write_text(html, encoding="utf-8")
+        Path(str(a.html_out) + ".subject.txt").write_text(subject + "\n", encoding="utf-8")
+        Path(str(a.html_out) + ".txt").write_text(mail.text_from_html(html), encoding="utf-8")
+        print(f"wrote {a.html_out} and its subject and text alternative")
 
     if a.preview:
         out = preview_path(a.edition)

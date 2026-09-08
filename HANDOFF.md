@@ -7,6 +7,26 @@ Fifth session on branch `claude/equity-research-setup-dtxlbl`, restarted from `m
 merged (the first three sessions were `claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI
 is configured on this repo, so the gate is local: see **Before you commit** below.
 
+**What changed in the seventh session, in one paragraph.** The desk runs itself. Quotes arrive through
+git: a GitHub Actions workflow pulls closes twice a weekday and commits them to the `quotes` branch,
+`an/quotes.py` reads them, and `DESK_QUOTES=data/cache/quotes` makes every `--live` script read the
+file through `prices.default_downloader()`. `book.md` is Claude's own paper book in the journal grammar,
+derived into `dashboard/book.json` by `an/book.py` under criteria.md's caps. The digest gained a `close`
+edition and three sections (My book, The memo sized for $100,000, Tests). Two Routines (Desk morning
+11:00 UTC, Desk close 22:00 UTC, weekdays) run a fresh session each that tests, marks, decides, emails
+`josephislockedin@gmail.com` through the Gmail connector, and commits to the `desk` branch. `NOTES.md`
+section 12 has the routes, the rules the routine works under, and what could not be verified here.
+
+**What changed in the sixth session, in one paragraph.** Real daily prices are on disk for the first
+time: `an/history.py` and `scripts/fetch_history.py` pull five years of S&P 500 closes, SPY and QQQ,
+a cross-check and index membership from public GitHub repositories (the one host the proxy allows),
+audit them, and write a manifest; `pip install pandas numpy pytest` first, nothing else is needed.
+`an/paper.py` replays the `swing.md` rules on that panel with fake money, `an/ab.py` runs them against
+twenty matched random-entry controls with a fixed train/held-out split and a pre-registration guard,
+`scripts/paper_trade.py` is the CLI, `lab/LAB.md` and `lab/results/` are the append-only record,
+`dashboard/paper.json` and `/paper/` show the result. `NOTES.md` section 11 has the data audit, the
+mechanics and the verdict. In one line: no edge found at these horizons on this data. The pullback rule as written lost 27 bp a trade to SPY on the held-out window (2016-07 to 2018-02, n=10,375, interval [-39, -12] bp); the in-sample favourite, the filtered pullback at 20 sessions, lost 26 bp with an interval straddling zero and sat inside its random control; the gap-on-volume proxy lost 55 bp. 36 hypotheses were counted. No arm beat a matched random entry.
+
 **What changed in the fifth session, in one paragraph.** Three email editions a day (07:00 brief,
 12:00 check, an event email whenever a written rule fires and has not been sent), driven by a
 narrow intraday module (`an/intraday.py`, fifteen-minute bars for the watched names only) and
@@ -79,6 +99,14 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
                      intraday reads and alert keys (X22)
   intraday.py        15-minute bars for the watched names, one batched call, cached ten minutes (X22)
   setups.py          four mechanical swing setups from swing.md, closes only (X23)
+  quotes.py          daily closes through the quotes branch; ticker_universe, age_sessions (X32)
+  book.py            Claude's own paper book, derived from book.md under the caps (X33)
+  history.py         real daily closes from public GitHub mirrors, the split audit, the cross-checks,
+                     index membership, the committed fixture (X25)
+  paper.py           the swing rules replayed with fake money: features, masks, the event study, the
+                     ledger replay under swing.md's caps (X26)
+  ab.py              named arms against twenty matched random controls, the fixed split, the
+                     pre-registration guard, dashboard/paper.json (X27)
   digest.py          the daily email as data, then as HTML; three editions (X17, X22)
   mail.py            SMTP, credential from the environment only, dry-run and provenance (X15)
   outcomes.py        the grades read back: score at call vs outcome, refusing thin samples (X14)
@@ -93,6 +121,16 @@ scripts/fetch_*.py   the live pulls, plus listing_status.py, guidance_diff.py an
 scripts/snapshot.py  run this MONTHLY (see power.py for why)
 scripts/scan.py      the daily scan -> dashboard/watch.json; --intraday -> watch_intraday.json
 scripts/setups.py    the swing setups -> dashboard/setups.json (--live, --dry-run, --fixture)
+scripts/fetch_quotes.py  the daily closes pull (runs on the Actions runner or on Joseph's machine)
+scripts/build_book.py  book.md -> dashboard/book.json (--live, --quotes DIR, --journal, --as-of)
+scripts/run_tests.py  the suite, with its result written for the email
+book.md              Claude's own calls, append-only; the routine appends, never edits
+.github/workflows/quotes.yml  the twice-a-weekday quotes pull into the quotes branch
+scripts/fetch_history.py  the history pull (--dry-run, --audit, --make-fixture); needs raw.githubusercontent.com
+scripts/paper_trade.py  the experiments (--live --split train|test, --fixture, --dry-run) and, with no
+                     flags, the render of dashboard/paper.json from lab/results/ (offline, in build_all)
+lab/LAB.md           the append-only lab notebook: pre-registration block, one entry per iteration
+lab/results/         one committed JSON summary per --live run; never pruned (a test checks)
 scripts/daily_email.py  the email (--edition morning|midday|event, --preview, --dry-run, --send,
                      --only-if-alerts, --only-new-alerts)
 setup.ps1            -InstallTask registers the three weekday tasks and the monthly one;
@@ -143,7 +181,7 @@ before raising, because SMTP servers echo the AUTH string.
 
 ```bash
 pip install pytest playwright                        # neither is in requirements.txt
-python -m pytest -q                                  # 950 tests, ~4 min
+python -m pytest -q                                  # ~1000 tests, ~5 min
 python scripts/build_all.py                          # regenerate everything
 python scripts/shoot.py --mobile --themes night paper  # 32 page/theme/width combinations
 ```

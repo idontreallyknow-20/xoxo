@@ -33,7 +33,7 @@ from . import paths
 
 __all__ = ["load_inputs", "build_digest", "render_html", "subject_for", "should_send", "MAX_HEADLINES", "EDITIONS"]
 
-EDITIONS = ("morning", "midday", "event")
+EDITIONS = ("morning", "midday", "event", "close")
 
 MAX_HEADLINES = 4
 MAX_HEADLINES_TOTAL = 24
@@ -67,7 +67,9 @@ def load_inputs(root: Optional[Path] = None) -> Dict[str, Optional[Dict[str, Any
     return {"watch": _read(d / "watch.json"), "tracker": _read(d / "tracker.json"),
             "memo": _read(d / "positioning.json"), "intraday": _read(d / "watch_intraday.json"),
             "setups": _read(d / "setups.json"), "index": _read(d / "analysis" / "index.json"),
-            "dash": _read_data_js(d / "data.js")}
+            "dash": _read_data_js(d / "data.js"), "book": _read(d / "book.json"),
+            "book_tracker": _read(d / "book_tracker.json"),
+            "tests": _read(paths.CACHE_DIR / "pytest_last.json")}
 
 
 def _pct(v: Optional[float], sign: bool = True) -> str:
@@ -99,9 +101,14 @@ def build_digest(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional
     if edition not in EDITIONS:
         raise ValueError(f"edition must be one of {EDITIONS}, not {edition!r}")
     today = today or dt.date.today()
-    w = (inputs.get("intraday") if edition in ("midday", "event") else inputs.get("watch")) or {}
+    if edition in ("midday", "event"):
+        w = inputs.get("intraday") or {}
+    elif edition == "close":
+        w = inputs.get("intraday") or inputs.get("watch") or {}
+    else:
+        w = inputs.get("watch") or {}
     t = inputs.get("tracker") or {} if edition == "morning" else {}
-    m = inputs.get("memo") or {} if edition == "morning" else {}
+    m = inputs.get("memo") or {} if edition in ("morning", "close") else {}
     scanned = bool(w) and w.get("status") == "SCANNED"
     synthetic = bool(w) and w.get("status") == "SYNTHETIC"
     intraday = w.get("mode") == "intraday"
@@ -199,6 +206,12 @@ def build_digest(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional
         else:
             setups_line = f"Setups: {st.get('status', 'NOT RUN')}. python scripts/setups.py --live scans for them."
 
+    # Claude's book (morning and close): marks, the day's calls, the tracker's count
+    book = _book_block(inputs.get("book"), inputs.get("book_tracker"), today) if edition in ("morning", "close") else None
+    # the memo sized for $100,000 (morning only)
+    memo = _memo_block(m) if edition == "morning" else None
+    tests = _tests_block(inputs.get("tests"))
+
     where = "at " + (w.get("at") or "")[11:16] if intraday and w.get("at") else "as of the close"
     if not w:
         status = "NO SCAN FILE"
@@ -250,6 +263,9 @@ def build_digest(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional
         "setups": setups,
         "setups_line": setups_line,
         "setups_status": st.get("status") if st else None,
+        "book": book,
+        "memo": memo,
+        "tests": tests,
         "sources": w.get("sources") or {},
         "limitations": list(w.get("limitations") or []),
         "rules": list(w.get("rules") or []),
@@ -257,13 +273,87 @@ def build_digest(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional
     }
 
 
-EDITION_NAMES = {"morning": "morning brief", "midday": "midday check", "event": "something crossed a rule"}
+def _book_block(b: Optional[Dict[str, Any]], bt: Optional[Dict[str, Any]], today: dt.date) -> Dict[str, Any]:
+    """Claude's own paper book, as data. Says NOT MARKED plainly when there are no quotes."""
+    if not b:
+        return {"status": "NO BOOK FILE", "line": "No book.json exists. python scripts/build_book.py writes one.",
+                "open": [], "calls_today": [], "flags": []}
+    status = b.get("status", "NOT MARKED")
+    eq, start = b.get("equity"), b.get("starting_cash") or 100_000.0
+    xs = b.get("excess_since_start") or {}
+    bench = b.get("benchmarks_since_start") or {}
+    age = b.get("quotes_age_sessions")
+    if status == "MARKED":
+        line = (f"Equity ${eq:,.0f} ({_pct(b.get('ret_since_start'))} since {b.get('first_fill') or 'the start'}), "
+                f"{b.get('n_open', 0)} open, ${b.get('cash') or 0:,.0f} cash, marked at the {b.get('as_of')} close"
+                + (f" ({age} session{'s' if age != 1 else ''} old)" if age else "") + ". "
+                + " ".join(f"{k} {_pct(bench.get(k))} over the same window ({_pct(xs.get(k))} for the book against it)."
+                           for k in ("SPY", "QQQ", "VFV.TO") if bench.get(k) is not None))
+    else:
+        line = (f"{status}: {b.get('n_pending', 0)} call{'s' if b.get('n_pending', 0) != 1 else ''} pending at the first "
+                f"close after each call date; no quotes on this machine yet.")
+    calls_today = [p for p in (b.get("long") or []) + (b.get("swing") or []) if p.get("call_date") == today.isoformat()]
+    recent = sorted((p for p in (b.get("long") or []) + (b.get("swing") or [])
+                     if p.get("call_date") and p["call_date"] >= (today - dt.timedelta(days=3)).isoformat()),
+                    key=lambda p: p["call_date"], reverse=True)
+    graded = None
+    if bt and bt.get("summary"):
+        s = bt["summary"]
+        graded = (f"{s.get('n_graded', 0)} of {s.get('n_calls', 0)} book calls graded against prices so far, "
+                  f"{s.get('buys_ahead_of_spy', 0)} of {s.get('buys_graded', 0)} buys ahead of SPY, "
+                  f"{s.get('n_falsified', 0)} falsified on their own terms.") if bt.get("status") == "GRADED" else \
+                 f"Book calls: {s.get('n_calls', 0)}, none graded yet (tracker status {bt.get('status')})."
+    return {"status": status, "line": line, "equity": eq, "cash": b.get("cash"), "ret_since_start": b.get("ret_since_start"),
+            "benchmarks": bench, "excess": xs, "as_of": b.get("as_of"), "age_sessions": age,
+            "open": b.get("open") or [], "closed_recent": [p for p in (b.get("closed") or []) if p.get("exit_date") and
+                                                          p["exit_date"] >= (today - dt.timedelta(days=7)).isoformat()],
+            "calls_today": calls_today or recent[:6], "refused": b.get("refused") or [], "flags": b.get("flags") or [],
+            "rule_checks": b.get("rule_checks") or [], "tracker_line": graded, "max_drawdown": b.get("max_drawdown")}
+
+
+def _memo_block(m: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """The positioning memo's candidates, sized for the $100,000 book, each with its falsifier."""
+    if not m:
+        return None
+    rows = []
+    for c in m.get("candidates") or []:
+        band = c.get("suggested_band_usd") or [None, None]
+        wrong = c.get("what_would_be_wrong") or []
+        rows.append({"rank": c.get("rank"), "ticker": c.get("ticker"), "company": c.get("company"), "sector": c.get("sector"),
+                     "percentile": c.get("percentile"), "price": c.get("price"), "forward_pe": c.get("forward_pe"),
+                     "pe_vs_median": c.get("pe_vs_median"), "dd_52w": c.get("dd_52w"), "band_lo": band[0], "band_hi": band[1],
+                     "wrong_if": wrong[0].get("text") if wrong else None, "next_earnings": c.get("next_earnings"),
+                     "constraint_notes": c.get("constraint_notes") or [], "stance": c.get("stance")})
+    return {"snapshot_date": m.get("snapshot_date"), "rows": rows,
+            "declined": [c.get("ticker") for c in m.get("reviewed_and_declined") or []],
+            "queue": [c.get("ticker") for c in m.get("research_queue") or []],
+            "status": (m.get("status_of_the_score") or {}).get("statement"),
+            "line": (f"{len(rows)} names with a research note whose verdict starts with buy, ranked by the score as of "
+                     f"{m.get('snapshot_date')}, sized by criteria.md for a $100,000 book. The band is arithmetic from the "
+                     f"rules, not a view on the outcome, and every row carries what would prove it wrong. The score has never "
+                     f"been validated out of sample; the paper replay of the swing rules found no edge. You decide.")}
+
+
+def _tests_block(t: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not t:
+        return None
+    failed = list(t.get("failed_tests") or [])
+    return {"passed": t.get("passed"), "failed": t.get("failed"), "errors": t.get("errors"), "ran_at": t.get("ran_at"),
+            "seconds": t.get("seconds"), "failed_tests": failed[:12],
+            "line": (f"{t.get('passed', 0)} tests passed, {t.get('failed', 0)} failed, {t.get('errors', 0)} errors, "
+                     f"in {t.get('seconds', 0):.0f}s at {t.get('ran_at', '')}")}
+
+
+EDITION_NAMES = {"morning": "morning brief", "midday": "midday check", "event": "something crossed a rule",
+                 "close": "close"}
 
 
 def subject_for(d: Dict[str, Any]) -> str:
     day = dt.date.fromisoformat(d["date"]).strftime("%a %d %b").replace(" 0", " ")
     ed = d.get("edition", "morning")
     head = f"Desk {EDITION_NAMES.get(ed, ed).split(' ')[0] if ed != 'event' else 'alert'}, {day}"
+    if d.get("tests") and d["tests"].get("failed"):
+        head = "TESTS RED, " + head
     if d["status"] == "SCANNED":
         if d["n_rule_alerts"]:
             names = sorted({a["ticker"] for a in d["alerts"] if a.get("severity", 0) >= 3})
@@ -406,6 +496,61 @@ def render_html(d: Dict[str, Any]) -> str:
                      + (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%">{rows}</table>' if rows else "")
                      + '</td></tr>')
 
+    bk = d.get("book")
+    if bk:
+        rows = ""
+        for p in bk.get("open") or []:
+            rows += (f'<tr><td style="font-family:{SANS};font-size:14px;color:{INK};padding:6px 0;border-bottom:1px solid {SOFT};">'
+                     f'<b style="font-weight:600;">{_esc(p["ticker"])}</b> <span style="font-family:{MONO};font-size:11px;color:{INK3};">{_esc(p.get("kind"))}</span></td>'
+                     f'<td style="font-family:{MONO};font-size:12px;color:{INK2};padding:6px 0;border-bottom:1px solid {SOFT};">{_esc(p.get("shares"))} @ {_esc(_money(p.get("entry")))}</td>'
+                     f'<td style="font-family:{MONO};font-size:12px;color:{INK2};padding:6px 0;border-bottom:1px solid {SOFT};">last {_esc(_money(p.get("last")))}</td>'
+                     f'<td style="font-family:{MONO};font-size:12px;padding:6px 0;border-bottom:1px solid {SOFT};">{_signed(p.get("ret"))}</td>'
+                     f'<td style="font-family:{MONO};font-size:12px;padding:6px 0;border-bottom:1px solid {SOFT};">vs SPY {_signed(p.get("excess_vs_spy"))}</td>'
+                     f'<td style="font-family:{MONO};font-size:11px;color:{INK3};padding:6px 0;border-bottom:1px solid {SOFT};">'
+                     + (f'{_esc(_pct(p.get("distance_to_trigger"), sign=False))} above its wrong-if' if p.get("distance_to_trigger") is not None else "")
+                     + (f' <span style="background:{MARK};">FALSIFIER BREACHED</span>' if p.get("falsifier_breached") else "")
+                     + (f' <span style="background:{MARK};">STOP</span>' if p.get("stop_breached") else "")
+                     + '</td></tr>')
+        calls = ""
+        for p in bk.get("calls_today") or []:
+            calls += (f'<tr><td style="padding:10px 0;border-bottom:1px solid {SOFT};">'
+                      f'<div style="font-family:{SANS};font-size:15px;color:{INK};"><b style="font-weight:600;">{_esc(p["ticker"])}</b> '
+                      f'<span style="font-family:{MONO};font-size:11px;color:{INK3};">{_esc(p.get("call_date"))} · {_esc(p.get("status"))} · target {_esc(_money(p.get("target_usd")))} · conviction {_esc(p.get("conviction"))}</span></div>'
+                      f'<div style="font-family:{SANS};font-size:14px;line-height:1.5;color:{INK2};margin-top:4px;">{_esc(p.get("thesis"))}</div>'
+                      f'<div style="font-family:{SANS};font-size:13px;line-height:1.5;color:{INK};margin-top:4px;">Wrong if: {_esc(p.get("wrong_if"))}</div>'
+                      + (f'<div style="font-family:{MONO};font-size:11px;color:{DOWN};margin-top:3px;">refused: {_esc(p.get("refused_because"))}</div>' if p.get("refused_because") else "")
+                      + '</td></tr>')
+        extra = "".join(f'<div style="font-family:{MONO};font-size:11px;color:{INK3};margin-top:4px;">{_esc(f)}</div>' for f in (bk.get("flags") or [])[:6])
+        tl = f'<div style="font-family:{SANS};font-size:13px;color:{INK2};margin-top:8px;">{_esc(bk["tracker_line"])}</div>' if bk.get("tracker_line") else ""
+        parts.append(f'<tr><td style="padding-top:36px;">{_h("My book", "fake money, real closes, my own calls")}'
+                     f'<div style="font-family:{SANS};font-size:14px;line-height:1.6;color:{INK2};margin-bottom:8px;">{_esc(bk["line"])}</div>'
+                     + (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%">{rows}</table>' if rows else "")
+                     + (f'<div style="font-family:{SANS};font-size:13px;font-weight:600;color:{INK};margin-top:14px;">Calls</div>'
+                        f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%">{calls}</table>' if calls else "")
+                     + tl + extra + '</td></tr>')
+
+    memo = d.get("memo")
+    if memo:
+        rows = ""
+        for r in memo.get("rows") or []:
+            band = (f'{_esc(_money(r.get("band_lo")))} to {_esc(_money(r.get("band_hi")))}' if r.get("band_lo") is not None else "unsized")
+            rows += (f'<tr><td style="padding:10px 0;border-bottom:1px solid {SOFT};">'
+                     f'<div style="font-family:{SANS};font-size:15px;color:{INK};"><b style="font-weight:600;">{_esc(r["ticker"])}</b> '
+                     f'<span style="color:{INK2};">{_esc(r.get("company") or "")}</span> '
+                     f'<span style="font-family:{MONO};font-size:11px;color:{INK3};">#{_esc(r.get("rank"))} · p{_esc(None if r.get("percentile") is None else round(r["percentile"]))} · {_esc(r.get("sector"))}</span></div>'
+                     f'<div style="font-family:{MONO};font-size:12px;color:{INK};margin-top:4px;">sized at {band} &nbsp; price {_esc(_money(r.get("price")))} &nbsp; '
+                     f'forward P/E {_esc(None if r.get("forward_pe") is None else round(r["forward_pe"], 1))} ({_esc(_pct(r.get("pe_vs_median")))} vs its own median) &nbsp; '
+                     f'{_esc(_pct(r.get("dd_52w")))} from the 52-week high &nbsp; reports {_esc(r.get("next_earnings") or "n/a")}</div>'
+                     f'<div style="font-family:{SANS};font-size:13px;line-height:1.5;color:{INK2};margin-top:4px;">Wrong if: {_esc(r.get("wrong_if") or "not written")}</div>'
+                     + "".join(f'<div style="font-family:{MONO};font-size:11px;color:{INK3};margin-top:2px;">{_esc(n)}</div>' for n in (r.get("constraint_notes") or [])[:2])
+                     + '</td></tr>')
+        tail = (f'<div style="font-family:{MONO};font-size:11px;color:{INK3};margin-top:10px;">read and left out: {_esc(", ".join(memo.get("declined") or []) or "none")} '
+                f'&nbsp; not yet read: {_esc(", ".join(memo.get("queue") or []) or "none")}</div>')
+        memo_sub = "as of " + str(memo.get("snapshot_date"))
+        parts.append(f'<tr><td style="padding-top:36px;">{_h("The memo, sized for $100,000", memo_sub)}'
+                     f'<div style="font-family:{SANS};font-size:14px;line-height:1.6;color:{INK2};margin-bottom:8px;">{_esc(memo["line"])}</div>'
+                     f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%">{rows}</table>{tail}</td></tr>')
+
     standing = "".join(f'<div style="font-family:{SANS};font-size:14px;line-height:1.6;color:{INK2};margin-bottom:8px;">{_esc(s)}</div>'
                        for s in (d["tracker_line"], d["memo_line"]) if s)
     if standing:
@@ -414,8 +559,14 @@ def render_html(d: Dict[str, Any]) -> str:
     src = "".join(f'<div>{_esc(k)}: {"live" if v.get("live") else "not live"}, {_esc(v.get("detail"))}</div>'
                   for k, v in d["sources"].items())
     lims = "".join(f'<li style="margin-bottom:4px;">{_esc(s)}</li>' for s in d["limitations"])
+    tests = d.get("tests")
+    tests_html = ""
+    if tests:
+        colour = DOWN if (tests.get("failed") or tests.get("errors")) else INK2
+        tests_html = (f'<div style="font-family:{MONO};font-size:12px;color:{colour};line-height:1.7;">tests: {_esc(tests["line"])}'
+                      + "".join(f'<div style="padding-left:12px;">{_esc(x)}</div>' for x in tests.get("failed_tests") or []) + '</div>')
     parts.append(f'<tr><td style="padding-top:36px;">{_h("Where this came from")}'
-                 f'<div style="font-family:{MONO};font-size:12px;color:{INK2};line-height:1.7;">{src or "no sources"}</div>'
+                 f'<div style="font-family:{MONO};font-size:12px;color:{INK2};line-height:1.7;">{src or "no sources"}</div>{tests_html}'
                  + (f'<ul style="font-family:{SANS};font-size:12px;color:{INK3};line-height:1.5;padding-left:18px;margin:10px 0 0;">{lims}</ul>' if lims else "")
                  + '</td></tr>')
 

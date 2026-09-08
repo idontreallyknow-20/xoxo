@@ -6,6 +6,7 @@
     python scripts/track_calls.py --synthetic     # a labelled demonstration on a synthetic panel
     python scripts/track_calls.py --dry-run       # print what --live would pull, send nothing
     python scripts/track_calls.py --as-of 2027-03-01 --out /tmp/t.json
+    python scripts/track_calls.py --journal book.md --out dashboard/book_tracker.json   # Claude's own calls
 
 Reads journal.md through an.journal, so a heading naming five names produces
 five grades. The score's percentile at the time of the call comes from the last
@@ -82,13 +83,14 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--dry-run", action="store_true", help="print the tickers and window --live would pull")
     ap.add_argument("--as-of", default=None, help="grading date, YYYY-MM-DD (default: today)")
     ap.add_argument("--out", type=Path, default=paths.DASHBOARD_DIR / "tracker.json")
+    ap.add_argument("--journal", type=Path, default=None, help="another journal-grammar file, e.g. book.md")
     ap.add_argument("--check", action="store_true", help="accepted for build_all --check; no effect")
     a = ap.parse_args(argv)
 
-    entries = journal.load()
+    entries = journal.load(a.journal)
     calls = [e for e in entries if not e.is_system]
     if not calls:
-        print("journal.md has no calls to grade", file=sys.stderr)
+        print(f"{a.journal or 'journal.md'} has no calls to grade", file=sys.stderr)
         return 2
     as_of = dt.date.fromisoformat(a.as_of) if a.as_of else dt.date.today()
     tickers = journal_tickers(entries) + list(tracker.BENCHMARKS)

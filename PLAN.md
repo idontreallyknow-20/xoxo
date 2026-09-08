@@ -372,3 +372,52 @@ Branch `claude/equity-research-setup-dtxlbl`. Decisions taken by default and rec
       value, not terms.
 - [ ] **X20** EDGAR full-text search for mentions of a watched name in other filers' documents. Free.
 - [ ] **X21** The first live run of everything above, on Joseph's machine: NOTES.md 9e, in order.
+
+## Sixth session, 2026-09-07: real history, fake money, and the loop
+
+- [x] **X25** The history layer. `an/history.py` + `scripts/fetch_history.py`: the plotly mirror of the
+      five-year S&P 500 daily set (505 names, 2013-02 to 2018-02, split-adjusted, no dividends), QuantConnect
+      Lean SPY/QQQ split-only adjusted so the basis matches, stocknet as a cross-check, fja05680 membership
+      intervals; the split audit, the volume-classed sweep for split-like moves, daily-return cross-checks,
+      the benchmark-split check, the membership tilt; a manifest with every sha256; a 12-name committed
+      fixture. NOTES.md 11a, 11b.
+      Verify: `python -m pytest -q tests/test_history.py`, `python scripts/fetch_history.py --dry-run`,
+      `python scripts/fetch_history.py` (needs raw.githubusercontent.com), `--audit`, `--make-fixture` twice.
+- [x] **X26** The paper-trading simulator. `an/paper.py`: features once per panel, the four rules as masks
+      (pullback, price-only breakout, the gap-on-volume proxy, random control, SPY held), the event study at
+      fixed risk, the ledger replay under swing.md's caps, the mechanics fixed in the module docstring,
+      the tracker-parity test and the scanner-parity test. NOTES.md 11c.
+      Verify: `python -m pytest -q tests/test_paper.py`.
+- [x] **X27** The A/B harness and the pre-registration guard. `an/ab.py` + `scripts/paper_trade.py` ->
+      `lab/results/*.json` -> `dashboard/paper.json` -> `/paper/`. Twenty matched random replicates per
+      arm, month-bucket block bootstrap, paired differences, a fixed split, hypotheses counted from the
+      results directory, the held-out run refused unless pre-registered and unrun. NOTES.md 11d.
+      Verify: `python -m pytest -q tests/test_ab.py`, `python scripts/paper_trade.py --fixture`,
+      `python scripts/paper_trade.py --dry-run`, `python scripts/paper_trade.py` (renders from lab/results).
+- [x] **X28** The loop. `lab/LAB.md` is the append-only notebook with the pre-registration block, one entry
+      per iteration and the verdict; `lab/results/` holds every run. NOTES.md 11e has the result.
+- [ ] **X29** A delisting-aware source, when one is reachable. Survivorship is the largest hole left in the
+      paper result: departed names have no prices here. The membership filter quantifies the tilt (387 of
+      505 on the first session, 497 on the last); it cannot fix it.
+- [ ] **X30** Real earnings dates and estimate-revision history, so `pead_proxy` becomes PEAD and the
+      breakout arm gets its revision filter back. Neither exists in any reachable source today.
+- [ ] **X31** Re-run the whole grid on a second regime once a longer panel exists (2018 to 2026 at least);
+      one bull market is one weather.
+
+## Seventh session, 2026-09-07: the desk runs itself
+
+- [x] **X32** Quotes through git. `.github/workflows/quotes.yml` + `scripts/fetch_quotes.py` -> the `quotes`
+      branch; `an/quotes.py` (`fetch_branch`, `load`, `ticker_universe`, `age_sessions`);
+      `prices.default_downloader()` honouring `DESK_QUOTES`. NOTES.md 12a.
+      Verify: `python -m pytest -q tests/test_quotes.py`, `python scripts/fetch_quotes.py --dry-run`.
+- [x] **X33** Claude's book. `book.md` (append-only, tested), `an/book.py`, `scripts/build_book.py` ->
+      `dashboard/book.json`, `track_calls.py --journal book.md`. NOTES.md 12b.
+      Verify: `python -m pytest -q tests/test_book.py`, `python scripts/build_book.py --quotes tests/fixtures/quotes
+      --journal book.md --out /tmp/b.json`.
+- [x] **X34** The close edition and the book, memo and tests sections in the digest; `daily_email.py --html-out`;
+      `scripts/run_tests.py`. NOTES.md 12c. Verify: `python -m pytest -q tests/test_digest_book.py`,
+      `python scripts/daily_email.py --edition close --preview`.
+- [x] **X35** The two Routines (Desk morning, Desk close) and the `desk` branch convention. NOTES.md 12d.
+- [ ] **X36** Allow `query1.finance.yahoo.com` and `query2.finance.yahoo.com` in the environment's network policy
+      so Route B works and the scan reaches Yahoo directly. Joseph's setting to change.
+- [ ] **X37** A /book/ page on the dashboard, on the positioning pattern, once the book has a month of marks.

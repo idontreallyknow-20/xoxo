@@ -54,6 +54,8 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import os
+from pathlib import Path
 import math
 import re
 from dataclasses import dataclass, field
@@ -473,6 +475,29 @@ class OfflineDownloader:
         raise self.error or Offline("offline downloader: no request was sent")
 
 
+ENV_QUOTES = "DESK_QUOTES"
+
+
+def default_downloader() -> Downloader:
+    """What a client uses when nobody hands it a downloader.
+
+    ``DESK_QUOTES`` naming a directory with a ``closes.csv`` (the wide panel that
+    ``scripts/fetch_quotes.py`` writes and the ``quotes`` branch carries) turns every
+    ``--live`` script in the repository into a reader of that file, which is how the
+    scheduled desk marks itself on a machine that cannot reach Yahoo. Unset, it is
+    the live yfinance downloader, as before.
+    """
+    root = os.environ.get(ENV_QUOTES)
+    if root:
+        p = Path(root) / "closes.csv"
+        if p.exists():
+            panel = pd.read_csv(p, index_col=0, parse_dates=True)
+            panel.index = pd.DatetimeIndex(panel.index).tz_localize(None).normalize()
+            panel.columns = [str(c).upper() for c in panel.columns]
+            return PanelDownloader(panel=panel.astype(float))
+    return YFinanceDownloader()
+
+
 # ---------------------------------------------------------------------------
 # the client
 # ---------------------------------------------------------------------------
@@ -495,7 +520,7 @@ class PriceClient:
         ttl: float = DEFAULT_TTL,
         empty_ttl: float = EMPTY_TTL,
     ):
-        self.downloader: Downloader = downloader if downloader is not None else YFinanceDownloader()
+        self.downloader: Downloader = downloader if downloader is not None else default_downloader()
         self.cache = cache if cache is not None else Cache(paths.PRICE_CACHE, default_ttl=ttl)
         self.ttl = float(ttl)
         # "Nothing" is never remembered for longer than "something". An empty result

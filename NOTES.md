@@ -1093,3 +1093,227 @@ floor out loud. `outcomes.py` is unchanged; its floors were set before any grade
 7. `python scripts/track_calls.py --live` and `python scripts/snapshot.py`, once.
 8. Log the first swing call in `journal.md` with a `Stop:` and a `Horizon:` line. The tracker does
    the rest.
+
+## 11. Sixth session, 2026-09-07: real history, fake money, and the loop
+
+Joseph asked for the system to trade fake money against real prices, A/B the rules, and keep
+iterating until there was either an edge or an honest verdict that there is none. Same egress as
+before for every market-data host, with one new fact that changed what was possible: the proxy
+allows `raw.githubusercontent.com`, and public repositories carry real daily closes.
+
+### 11a. The data, and the basis decision
+
+Four sources, each with a job, each hashed into `data/cache/history/manifest.json`:
+
+- **plotly/datasets `all_stocks_5yr.csv`**, the Kaggle "S&P 500" set: 505 names as constituted in
+  February 2018, daily OHLCV, 2013-02-08 to 2018-02-07, 1259 sessions, 29.6 MB. The universe.
+- **QuantConnect Lean `Data/equity/usa/daily/{spy,qqq}.zip`** with their factor files: SPY and QQQ
+  from 1998, raw, prices scaled by 10000. The benchmarks. AAPL, IBM, BAC and AIG from the same
+  place are cross-checks.
+- **yumoxu/stocknet-dataset `price/raw/{AAPL,MSFT}.csv`**: a second, independent cross-check.
+- **fja05680/sp500 `sp500_ticker_start_end.csv`**: membership intervals, so a name is eligible only
+  on dates it was actually in the index.
+
+The audit (`history.audit`) found what it was built to find, and none of it was assumed:
+
+- The plotly set is **split-adjusted**: AAPL's 7:1 on 2014-06-09 shows a ratio of 0.98, NFLX's 7:1 on
+  2015-07-15 shows 1.02, V's 4:1 and NKE's 2:1 both about 1.00. It is **not dividend-adjusted**.
+- The sweep for split-like moves found seven. Three are real events on ten to sixteen times the
+  usual volume (AMD 2016-04-22, VRTX 2013-04-19 and 2014-06-24). Four are on ordinary volume:
+  DISCA and DISCK on 2014-08-07 (the Discovery stock dividend, unadjusted in the set), LNT on
+  2016-05-20 (a doubling that is the wrong direction for its split) and NWL on 2017-09-15 (a bad
+  print). The volume rule (`history.suspect_tickers`, under twice the 20-session mean) excludes
+  LNT and NWL from the eligible universe; DISCA and DISCK sit just over the line at 2.1x and 5.6x
+  and stay in, which is a limitation the manifest records rather than a fix.
+- Cross-checks compare **daily returns, not levels**: Lean's AAPL factor file includes the 2020
+  4:1 split, so its split-adjusted level is a constant quarter of plotly's (the audit prints the
+  ratio, 4.0). On returns the median disagreement is 0.0000 on every pair and the worst single day
+  is 5.7% (AAPL, one print, both against Lean and against stocknet).
+- SPY and QQQ have no split inside the window; the factor files say so and a test checks it.
+- 387 of the 505 names were index members on the first session, 497 on the last. That is the
+  survivorship tilt in one line: the membership filter keeps later additions out until they were
+  added, and cannot add back the names that left.
+
+**Every return in this work is a price return.** The universe has no dividends, so the benchmark
+must not either; a dividend-adjusted SPY against price-only stocks would bias every excess figure
+down by roughly the yield. Lean's `split_factor` is applied and its `price_factor` is not.
+
+### 11b. Fixture and cache
+
+`data/cache/history/` is gitignored and holds the raw files, the parsed panel as CSV and the
+manifest. `tests/fixtures/history/` is a committed 12-name slice (2015-01-02 to 2017-09-29,
+NFLX inside so the split test runs on committed data), cut by `fetch_history.py --make-fixture`,
+byte-identical on a second cut, 188 KB. Every test runs on it or on hand-built frames.
+
+### 11c. The simulator, and the two measurements
+
+`an/paper.py` computes the features once per panel (rolling means, highs, lows, volume, the
+membership and liquidity mask) and expresses each rule as a boolean mask, the vector form of the
+producers in `an/setups.py`. A test samples thirty dates on the fixture and asserts the masks fire
+on the same names with the same stops as `setups.pullback_setups` and `setups.breakout_setups`,
+so the scanner Joseph runs live and the simulator cannot drift apart.
+
+The mechanics were fixed before the first run and are in the module docstring: signal on close t,
+fill at close t+1; a stop is a close strictly below the level, exited at the following close; the
+horizon exit is the close of the horizon-th session after the signal, which is the tracker's own
+window, so a simulated trade and the same call logged in `journal.md` get the same horizon return
+(`test_simulated_grades_agree_with_the_tracker` proves it on forty trades, to 1e-9). One open
+position per name: a state that holds day after day is one event, not twenty. The stop moves to
+entry once the position is up by its initial risk. Five basis points of commission and five of
+slippage each way.
+
+Two measurements, kept apart. The **event study** trades every signal at a fixed $1,000 of risk
+with no caps, and is what the A/B compares, because the caps throw away most signals and what
+survives depends on a tie-break. The **ledger replay** applies `swing.md` in full ($20,000, five
+positions, two per sector, $5,000 cap, cash never negative, candidates in `KINDS` order then
+ticker) and reports what the sleeve would have shown. Sector labels are 2026's; 327 of the 505
+names have one, the rest share an "unknown" bucket and the two-per-sector cap applies to it.
+
+### 11d. The harness, the control, and the guard
+
+`an/ab.py` runs named arms on the same panel. For every rule arm it draws **twenty replicates of a
+random control**: the same number of entries, uniformly from the eligible name-days in the same
+window, the same horizon, the stop at the arm's median risk distance, through the same mechanics.
+The interval on an arm's mean excess is a moving-block bootstrap over month buckets, the engine's
+own `_block_bootstrap_ci`; the verdict ladder is `BacktestResult.verdict` applied to a mean excess
+instead of a mean IC, with one addition: an interval entirely below zero says "wrong way" rather
+than "suggestive". `hypotheses_tested` is read from `lab/results/`, every rule arm ever run on
+the train window, and widens the threshold every arm has to clear.
+
+The split is a constant: train 2013-02-08 to 2016-06-30, held out 2016-07-01 to 2018-02-07.
+`lab/LAB.md` carries a pre-registration block written before any held-out run; the CLI refuses a
+held-out run for an arm not listed there, refuses a second run of the same arm, and refuses if the
+window in the file differs from the code. `--force-oos` overrides and is written into the result.
+
+The decision rule, written before the grid ran: an arm counts only if, on the held-out window,
+its mean excess vs SPY has an interval above zero after the widening **and** sits above the 95th
+percentile of its random control.
+
+### 11e. What the loop found
+
+The grid and every iteration are in `lab/LAB.md`, with the result files beside it. In one
+paragraph: on the train window, all 24 arms of the pre-declared grid have a negative mean excess
+vs SPY per trade after costs (-10 to -51 bp), and every one sits inside its random control
+(percentile 0.10 to 1.00, median about 0.6). The random controls themselves average -5 to -20 bp,
+which is the cost of the round trip plus the fact that an equal-weighted draw from these names
+lagged cap-weighted SPY over 2013 to 2016. Filtering on the market regime (SPY above its
+200-session mean), on relative strength (the name ahead of SPY over 63 or 126 sessions), on both,
+and on a breakout extension, moved the means by single-digit basis points and never produced an
+interval above zero. The closest arm, the pullback at 20 sessions with both filters, cleared all
+twenty replicates of its control and still lost 9 bp a trade to SPY.
+
+The held-out window, run once for three pre-registered arms under Stop B (the budget spent with no candidate), says the same thing more plainly. The pullback rule exactly as `swing.md` writes it: -27 bp a trade vs SPY, interval [-39, -12] bp, n=10,375, percentile 0.50 in its control. The in-sample favourite, the filtered pullback at 20 sessions: -26 bp, interval [-51, +8] bp, percentile 0.90, so it fell back into its control. The best in-sample mean, the filtered gap proxy: -55 bp, interval [-122, -15] bp, the worst of the three. **Verdict: no edge found at these horizons on this data**, 36 hypotheses counted. The arm chosen for looking best in sample did worst out of sample, which is what selecting on noise does, and is the most useful single line in `lab/LAB.md`.
+
+What this does and does not say. It says the four rules in `swing.md`, in the forms testable on
+this data, do not carry information at 5 to 20 sessions on large US names in a bull market after
+realistic costs, and that the honest control for any such rule is random entry, not zero. It does
+not say anything about post-earnings drift proper or guidance raises, which have no historical
+source here and were tested only as a gap-on-volume proxy or not at all. It does not fix
+survivorship. It is one regime. And it changes nothing in `swing.md`'s rules: the thirty-call floor
+stands, and the reason to log swing calls is now to measure the live rules the same way.
+
+### 11f. What this session did not do, on purpose
+
+- No constant in `setups.py` or `swing.md` was retuned. The train window preferred nothing worth
+  moving to, and moving to it would have been in-sample.
+- No second held-out run. The guard exists so that the number in `paper.json` is the number.
+- No costs below 5 + 5 bp. A rule that only works at zero cost does not work.
+- No earnings dates, no revisions: the sources are not reachable (X30).
+
+## 12. Seventh session, 2026-09-07: the desk runs itself
+
+Joseph asked for the tests to keep running and for an email every morning with Claude's own
+picks, how Claude's own portfolio is doing, and what Claude suggests for his $100,000. He chose
+`josephislockedin@gmail.com`, both price routes below, judgement for the picks, and both a morning
+and a close edition.
+
+### 12a. Prices, two routes, one seam
+
+The container that runs the desk cannot reach a price host, and neither can its web-fetch tool
+(both were tried: Yahoo, Stooq and the rest answer with the proxy's policy denial). Git is
+reachable. So:
+
+- **Route A, GitHub Actions.** `.github/workflows/quotes.yml` runs `scripts/fetch_quotes.py` on a
+  runner at 10:30 and 22:30 UTC on weekdays and commits `data/quotes/{closes.csv,latest.csv,
+  manifest.json}` to the `quotes` branch. `an.quotes.fetch_branch()` does `git fetch origin quotes`
+  and copies the three files under `data/cache/quotes/` without a checkout. The ticker list is
+  `an.quotes.ticker_universe()`: the quality 150, the memo's three lists, every name in both
+  journals, and SPY, QQQ, IWM, VFV.TO. About 450 sessions, roughly a megabyte.
+- **Route B, Yahoo allowed.** At claude.ai/code, the environment's network policy can allow
+  `query1.finance.yahoo.com` and `query2.finance.yahoo.com`; then `YFinanceDownloader` works
+  directly and every `--live` script runs as written.
+- **The seam.** `prices.PriceClient()` with no downloader now calls `prices.default_downloader()`:
+  when `DESK_QUOTES` names a directory with a `closes.csv`, that is a `PanelDownloader` over the
+  file; otherwise it is yfinance. So `scan.py --live`, `setups.py --live`, `track_calls.py --live`
+  and `build_book.py --live` all read the committed quotes with one environment variable and
+  no change to their code.
+
+Both cron lines in the workflow, and both Routines below, are written in UTC and drift an hour
+when Toronto changes its clocks in November.
+
+### 12b. The book
+
+`book.md` holds Claude's own calls in the journal grammar, append-only (`tests/test_book.py::
+test_book_md_is_append_only` compares every committed entry with the working tree). Nothing is
+kept by hand: `an/book.py` derives the ledger from the calls and the closes every time. A Buy
+fills at the first close after its date at its target (whole shares), capped at 12% of equity,
+refused if the month's deployment would pass 25% of equity or cash would fall under 20%, and the
+refusal is written into the position. A Sell exits at the first close after its date. A swing
+call is sized and exited exactly as `swing.md` says (the same arithmetic as `an/paper.py`, with
+the horizon counted from the call session as the tracker counts it). A long position is not sold
+by a falsifier: a close under its ``Wrong if`` level flags it and the email says so, and the next
+call is a judgement with its reason.
+
+`scripts/build_book.py` writes `dashboard/book.json` (`MARKED` with the quotes' age in sessions,
+or `NOT MARKED` with why). `track_calls.py --journal book.md --out dashboard/book_tracker.json`
+grades the same calls with the same tracker as Joseph's journal.
+
+The first calls, made in this session from the research notes: BKNG, REGN and MSFT at $8,000
+each for September, with the October and November tranches named in the plan entry and left for
+the routine to log when their conditions hold. Where I departed from the memo and why is in the
+plan entry too.
+
+### 12c. The email
+
+`an/digest.py` gained a `close` edition and three sections. **My book** (morning and close):
+equity, cash, return since the first fill against SPY, QQQ and VFV over the same window, every
+open position with its distance to its own falsifier, the day's calls with thesis and falsifier
+verbatim, the tracker's grade count. **The memo, sized for $100,000** (morning): the positioning
+memo's candidates with band, percentile, forward P/E against own history, drawdown, the next
+report date and the falsifier, the declined list and the queue in one line each. **Tests**, in
+"Where this came from": the last suite run from `data/cache/pytest_last.json` written by
+`scripts/run_tests.py`; a failure turns the subject red and lists the failing ids.
+`daily_email.py --html-out PATH` writes the HTML, the subject and a text alternative for a
+sender other than SMTP.
+
+Sending. Port 587 is closed here, so the scheduled sessions send with the Gmail connector the
+account carries (`send_message` with the HTML body and the subject from `--html-out`). SMTP
+through `an/mail.py` stays for Joseph's machine. The standing decision from 9a that "the email
+recommends nothing" is amended by request: the email now carries the memo and Claude's book,
+every row with its falsifier and the sizing arithmetic, under the same disclaimer and the same
+language guard, and `README.md`'s "Claude researches, you decide" is unchanged.
+
+### 12d. The routines
+
+Two Routines in this account, each a fresh session in this environment with the Gmail connector:
+**Desk morning** at 11:00 UTC weekdays (07:00 Toronto in summer) and **Desk close** at 22:00 UTC
+weekdays (18:00 Toronto). Each: checks out the `desk` branch (created from `main` if absent),
+installs the requirements, tries a direct quotes pull then the `quotes` branch, runs the full
+suite through `run_tests.py`, runs the scan, the setups, both trackers and the book (the morning
+also the judgement step: read `book.json`, `positioning.json`, `setups.json`, `watch.json`,
+decide, append calls to `book.md` with thesis, falsifier, size and conviction, no more than two
+new long calls a day, never editing an old entry), rebuilds, renders the edition with
+`--html-out`, sends it, commits `book.md`, `dashboard/*.json` and `lab/` to `desk`, pushes. It
+never opens a pull request and never touches `main`; merging `desk` is Joseph's call.
+
+What the routine may not do: skip, delete or weaken a test; change a rule constant; change the
+recipient; run the held-out paper window; send more than one email per fire; make a call without
+a falsifier.
+
+### 12e. Verified here, and not
+
+Verified on the fixture: the seam, the book's fills and caps, the swing arithmetic, both
+editions rendering, the language guard over every new string. Not verified here, because it
+cannot be: a real yfinance pull on the runner, the `quotes` branch appearing, the Gmail send from
+a scheduled session, the first push to `desk`. The first manual fire of Desk morning is the check
+for all four, and its session log is where to look if the email does not arrive.

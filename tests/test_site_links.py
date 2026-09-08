@@ -23,6 +23,7 @@ COMMON = DASH / "assets" / "desk-common.js"
 PAGES = {
     "dashboard/analyze/index.html": "../",
     "dashboard/positioning/index.html": "../",
+    "dashboard/paper/index.html": "../",
     "dashboard/analyze/KLAC/index.html": "../../",
     "dashboard/analyze/compare/index.html": "../../",
 }
@@ -49,7 +50,7 @@ def chrome_hrefs(depth: str):
     out = subprocess.run(["node", "-e", script], capture_output=True, text=True, timeout=30)
     assert out.returncode == 0, out.stderr
     hrefs = json.loads(out.stdout)
-    assert len(hrefs) >= 9, hrefs  # brand plus eight tabs
+    assert len(hrefs) >= 10, hrefs  # brand plus nine tabs
     return hrefs
 
 

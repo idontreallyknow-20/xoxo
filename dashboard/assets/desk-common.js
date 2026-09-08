@@ -68,7 +68,7 @@ window.Desk = (function () {
     const nav = [[home + "overview", "Overview"], [home + "picks", "Picks"],
                  [home + "rankings", "Rankings"], [home + "holdings", "Holdings"],
                  [home + "charts", "Charts"], [home + "journal", "Journal"], [home + "setups", "Setups"], [depth + "analyze/", "Analyse"],
-                 [depth + "positioning/", "Positioning"], [home + "settings", "Settings"]];
+                 [depth + "positioning/", "Positioning"], [depth + "paper/", "Paper"], [home + "settings", "Settings"]];
     return `<header class="reveal" style="--i:0">
       <a class="brand" href="${depth}index.html">Desk</a>
       <nav>${nav.map(([h, l]) => `<a href="${h}"${l === active ? ' class="on"' : ""}>${l}</a>`).join("")}</nav>
