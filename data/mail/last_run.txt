@@ -1,0 +1,3 @@
+Email: sent from the build session via Gmail (id 1a09284bc90e72ca), subject "Desk close, Fri 11 Sep: 1 rule fired (ADSK)".
+Book: MARKED at the 2026-09-09 close, equity $99,637 (-0.36%), 3 open (BKNG, REGN, MSFT); no stop or falsifier breached; ADSK (a watched name, not in the book) crossed the 15%-in-a-week rule.
+Tests: fast subset 78 passed at 22:04 UTC; whole suite 1035 passed at 11:20 UTC. No calls (close edition).

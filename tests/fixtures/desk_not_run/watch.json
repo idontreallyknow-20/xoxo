@@ -1,0 +1,235 @@
+{
+ "built_at": "2026-09-07T04:51:35",
+ "status": "NOT RUN",
+ "is_real": false,
+ "mode": "close",
+ "at": null,
+ "as_of": null,
+ "watched": [
+  {
+   "ticker": "ACN",
+   "action": "Watch or Pass",
+   "kind": "pass",
+   "date": "2026-09-04",
+   "price_at_call": 193.12,
+   "wrong_if": null,
+   "trigger": null,
+   "held": false,
+   "conviction": 2,
+   "bucket": null
+  },
+  {
+   "ticker": "ADBE",
+   "action": "Buy after September 10 earnings",
+   "kind": "buy_later",
+   "date": "2026-09-04",
+   "price_at_call": 285.75,
+   "wrong_if": "Digital Media ARR growth under 8%, net new ARR down twice, or a close under $220.",
+   "trigger": 220.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "ADSK",
+   "action": "Buy now",
+   "kind": "buy",
+   "date": "2026-09-04",
+   "price_at_call": 237.52,
+   "wrong_if": "Billings growth under 5% twice, or a close under $185.",
+   "trigger": 185.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "AMAT",
+   "action": "Watch or Pass",
+   "kind": "pass",
+   "date": "2026-09-04",
+   "price_at_call": 435.91,
+   "wrong_if": null,
+   "trigger": null,
+   "held": false,
+   "conviction": 2,
+   "bucket": null
+  },
+  {
+   "ticker": "BKNG",
+   "action": "Buy now",
+   "kind": "buy",
+   "date": "2026-09-04",
+   "price_at_call": 195.13,
+   "wrong_if": "Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.",
+   "trigger": 150.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "CPRT",
+   "action": "Buy after September 10 earnings",
+   "kind": "buy_later",
+   "date": "2026-09-04",
+   "price_at_call": 33.58,
+   "wrong_if": "Insurance unit declines past 8%, or a close under $25.",
+   "trigger": 25.0,
+   "held": false,
+   "conviction": 3,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "GOOGL",
+   "action": "Buy on pullback to $300 to $335",
+   "kind": "buy_on_pullback",
+   "date": "2026-09-04",
+   "price_at_call": 342.48,
+   "wrong_if": "Search growth under 5% twice, adtech breakup, or a close under $260.",
+   "trigger": 260.0,
+   "held": false,
+   "conviction": 3,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "IDXX",
+   "action": "Buy on pullback to $470 to $535",
+   "kind": "buy_on_pullback",
+   "date": "2026-09-04",
+   "price_at_call": 529.29,
+   "wrong_if": "CAG recurring growth under 6%, or a close under $410.",
+   "trigger": 410.0,
+   "held": false,
+   "conviction": 3,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "ISRG",
+   "action": "Buy now",
+   "kind": "buy",
+   "date": "2026-09-04",
+   "price_at_call": 369.83,
+   "wrong_if": "Procedure growth under 10%, placements down twice, or a close under $290.",
+   "trigger": 290.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "KLAC",
+   "action": "Buy in October",
+   "kind": "buy_later",
+   "date": "2026-09-04",
+   "price_at_call": 172.94,
+   "wrong_if": "December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.",
+   "trigger": 130.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "cyclical turn"
+  },
+  {
+   "ticker": "LRCX",
+   "action": "Buy on pullback to $250 to $290",
+   "kind": "buy_on_pullback",
+   "date": "2026-09-04",
+   "price_at_call": 292.66,
+   "wrong_if": "2027 equipment spending guided down, or a close under $215.",
+   "trigger": 215.0,
+   "held": false,
+   "conviction": 3,
+   "bucket": "cyclical turn"
+  },
+  {
+   "ticker": "META",
+   "action": "Watch or Pass",
+   "kind": "pass",
+   "date": "2026-09-04",
+   "price_at_call": 610.68,
+   "wrong_if": null,
+   "trigger": null,
+   "held": false,
+   "conviction": 2,
+   "bucket": null
+  },
+  {
+   "ticker": "MSFT",
+   "action": "Buy in October",
+   "kind": "buy_later",
+   "date": "2026-09-04",
+   "price_at_call": 510.12,
+   "wrong_if": "Azure growth under 30% with capex still rising, or a close under $400.",
+   "trigger": 400.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  },
+  {
+   "ticker": "NOW",
+   "action": "Watch or Pass",
+   "kind": "pass",
+   "date": "2026-09-04",
+   "price_at_call": 145.59,
+   "wrong_if": null,
+   "trigger": null,
+   "held": false,
+   "conviction": 2,
+   "bucket": null
+  },
+  {
+   "ticker": "NVR",
+   "action": "Watch or Pass",
+   "kind": "pass",
+   "date": "2026-09-04",
+   "price_at_call": 6373.95,
+   "wrong_if": null,
+   "trigger": null,
+   "held": false,
+   "conviction": 2,
+   "bucket": null
+  },
+  {
+   "ticker": "REGN",
+   "action": "Buy now",
+   "kind": "buy",
+   "date": "2026-09-04",
+   "price_at_call": 843.47,
+   "wrong_if": "Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.",
+   "trigger": 650.0,
+   "held": false,
+   "conviction": 4,
+   "bucket": "compounder"
+  }
+ ],
+ "n_watched": 16,
+ "sources": {
+  "prices": {
+   "live": false,
+   "detail": "no closes pulled"
+  },
+  "edgar": {
+   "live": false,
+   "detail": "no filings pulled"
+  },
+  "rss": {
+   "live": false,
+   "detail": "no feeds pulled"
+  }
+ },
+ "names": [],
+ "alerts": [],
+ "benchmarks": {},
+ "why_not_run": [
+  "No scan has run. The names below are what it would watch: every ticker with a journal call, plus anything in portfolio/holdings.csv, which is not committed.",
+  "To run it: python scripts/scan.py --live, on a machine that can reach Yahoo, data.sec.gov and feeds.finance.yahoo.com. setup.ps1 -InstallTask schedules it daily on Windows.",
+  "Until then the daily email has nothing to report and says so."
+ ],
+ "rules": [
+  "A trigger alert fires when the latest close is under the 'close under $X' level in the journal's Wrong if line, parsed the same way the tracker parses it. Falsifiers that name no price are not checked.",
+  "A weekly-drop alert fires at -15% or worse over five sessions, the README's event-driven rule.",
+  "A single-session move of 5% or more gets a line. It is a line, not a signal.",
+  "A new 8-K with item 2.02 is an earnings release. Other new 8-Ks, 10-Qs, 10-Ks, Form 4s and 13D/13Gs are listed with their item codes and not read.",
+  "Headlines are listed with their source and date. No sentiment is read from them.",
+  "Nothing in the scan recommends a trade. It says what crossed a rule you wrote down."
+ ],
+ "limitations": [],
+ "disclaimer": "Research and analysis from public data, not personalised financial advice."
+}

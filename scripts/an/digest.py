@@ -69,7 +69,8 @@ def load_inputs(root: Optional[Path] = None) -> Dict[str, Optional[Dict[str, Any
             "setups": _read(d / "setups.json"), "index": _read(d / "analysis" / "index.json"),
             "dash": _read_data_js(d / "data.js"), "book": _read(d / "book.json"),
             "book_tracker": _read(d / "book_tracker.json"),
-            "tests": _read(paths.CACHE_DIR / "pytest_last.json")}
+            # the last suite run belongs to the checkout, not to an arbitrary inputs directory
+            "tests": _read(paths.CACHE_DIR / "pytest_last.json") if root is None else None}
 
 
 def _pct(v: Optional[float], sign: bool = True) -> str:
@@ -104,7 +105,9 @@ def build_digest(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional
     if edition in ("midday", "event"):
         w = inputs.get("intraday") or {}
     elif edition == "close":
-        w = inputs.get("intraday") or inputs.get("watch") or {}
+        # the close marks the day's closes: the intraday file only if it actually scanned, else the daily scan
+        intra = inputs.get("intraday") or {}
+        w = intra if intra.get("status") == "SCANNED" else (inputs.get("watch") or intra or {})
     else:
         w = inputs.get("watch") or {}
     t = inputs.get("tracker") or {} if edition == "morning" else {}

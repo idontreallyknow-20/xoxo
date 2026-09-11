@@ -17,13 +17,53 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import sys
+import time
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
+
+import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from an import paths, prices, quotes  # noqa: E402
 from an.store import Cache, Offline  # noqa: E402
+
+
+BATCH = 100
+PAUSE = 3.0
+
+
+def pull_in_batches(client, tickers: List[str], start: dt.date, as_of: dt.date, *, batch: int = BATCH,
+                    pause: float = PAUSE, sleep=time.sleep) -> Tuple[pd.DataFrame, List[str]]:
+    """One Yahoo call per ``batch`` names, a pause between calls, and one retry of any batch
+    that came back mostly empty, after a longer wait.
+
+    Yahoo rate-limits a runner that asks for fifteen hundred names in one go, and a
+    throttled call returns nothing for most of them. Smaller calls with a pause finish; a
+    batch that still comes back thin after its retry is reported as missing, not invented."""
+    frames: List[pd.DataFrame] = []
+    missing: List[str] = []
+    chunks = [tickers[i:i + batch] for i in range(0, len(tickers), max(1, batch))]
+    for n, chunk in enumerate(chunks):
+        if n:
+            sleep(pause)
+        got = _pull_once(client, chunk, start, as_of)
+        if len(got.columns) < len(chunk) / 2:
+            sleep(pause * 10)
+            got = _pull_once(client, chunk, start, as_of, refresh=True)
+        frames.append(got)
+        missing.extend(t for t in chunk if t not in got.columns)
+    closes = pd.concat([f for f in frames if not f.empty], axis=1).sort_index() if frames else pd.DataFrame()
+    return closes, sorted(set(missing))
+
+
+def _pull_once(client, chunk: List[str], start: dt.date, as_of: dt.date, *, refresh: bool = False) -> pd.DataFrame:
+    try:
+        closes = client.daily_closes(chunk, start, as_of, refresh=refresh)
+    except Offline:
+        return pd.DataFrame()
+    got = [t for t in chunk if t in closes.columns and closes[t].notna().any()]
+    return closes[got].dropna(how="all")
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -33,6 +73,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--tickers", default=None, help="comma-separated override")
     ap.add_argument("--sessions", type=int, default=450)
     ap.add_argument("--as-of", default=None, help="YYYY-MM-DD, default today")
+    ap.add_argument("--batch", type=int, default=BATCH, help="names per Yahoo call (default %(default)s)")
+    ap.add_argument("--pause", type=float, default=PAUSE, help="seconds between calls; a throttled batch waits ten times this")
     a = ap.parse_args(argv)
 
     tickers = [t.strip().upper() for t in a.tickers.split(",") if t.strip()] if a.tickers else quotes.ticker_universe()
@@ -46,11 +88,10 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     client = prices.PriceClient(downloader=prices.YFinanceDownloader(), cache=Cache(paths.PRICE_CACHE))
     try:
-        closes = client.daily_closes(tickers, start, as_of)
+        closes, missing = pull_in_batches(client, tickers, start, as_of, batch=a.batch, pause=a.pause)
     except Offline as e:
         print(f"offline: {e}", file=sys.stderr)
         return 1
-    missing = [t for t, v in client.last_source.items() if v == "missing"]
     got = [t for t in tickers if t in closes.columns and closes[t].notna().any()]
     closes = closes[got].dropna(how="all")
     if len(closes) > a.sessions:
