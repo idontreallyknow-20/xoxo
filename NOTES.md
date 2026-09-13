@@ -1310,6 +1310,20 @@ What the routine may not do: skip, delete or weaken a test; change a rule consta
 recipient; run the held-out paper window; send more than one email per fire; make a call without
 a falsifier.
 
+### 12d (addendum). What the first two fires taught
+
+Two manual fires of the fresh-session form finished (18 and 27 minutes, real work done) and pushed
+nothing, and their transcripts cannot be read from another session. A Routine created from inside a
+session carries no repository source and no connector for its fired session, and adding an
+`add_repo` step to the prompt did not change the outcome. So both Routines were recreated **bound to
+the build session itself** (`persistent_session_id`), which holds the repository with push access,
+the quotes route and the Gmail connector. The first real morning brief went out from that session by
+hand on 2026-09-08 at 01:37 UTC as plain text; the automated editions send the plain-text
+alternative the same way (the HTML is too large to pass through the connector inline) and commit the
+HTML to `desk` for the mail workflow. If Joseph ever recreates the Routines from the claude.ai
+Routines page, the fresh-session prompts in the git history of this file's session are the ones to
+paste, with the repository attached there.
+
 ### 12e. Verified here, and not
 
 Verified on the fixture: the seam, the book's fills and caps, the swing arithmetic, both

@@ -72,3 +72,53 @@ def test_workflow_file_targets_the_quotes_branch():
     text = (ROOT / ".github" / "workflows" / "quotes.yml").read_text()
     assert "fetch_quotes.py" in text and "git push origin quotes" in text and "contents: write" in text
     assert "1-5" in text, "weekdays only"
+
+
+def test_a_partial_last_session_is_set_aside_and_named():
+    p = quotes.load(QFIX)
+    thin = p.closes.copy()
+    extra = thin.iloc[[-1]].copy()
+    extra.index = [extra.index[-1] + pd.Timedelta(days=1)]
+    extra.iloc[0, 2:] = float("nan")          # two of fifteen names have a close
+    trimmed, dropped = quotes.trim_partial_tail(pd.concat([thin, extra]))
+    assert dropped == [extra.index[0].date().isoformat()] and len(trimmed) == len(thin)
+    full, none = quotes.trim_partial_tail(thin)
+    assert none == [] and len(full) == len(thin)
+
+
+def test_a_row_dated_the_day_of_a_mid_session_pull_is_set_aside(tmp_path):
+    p = quotes.load(QFIX)
+    last = p.closes.index[-1].date().isoformat()
+    quotes.write(p.closes, tmp_path, source="test", pulled_at=f"{last}T14:33:00+00:00")
+    during = quotes.load(tmp_path)
+    assert during.last == p.closes.index[-2].date()
+    assert during.manifest["intraday_session_set_aside"] == last and "pulled during the session" in during.describe()
+    quotes.write(p.closes, tmp_path, source="test", pulled_at=f"{last}T22:30:00+00:00")
+    after = quotes.load(tmp_path)
+    assert after.last == p.closes.index[-1].date() and "intraday_session_set_aside" not in after.manifest
+
+
+def test_fetch_pulls_in_batches_and_retries_a_throttled_one(monkeypatch):
+    import fetch_quotes
+    from an.store import Cache
+    p = quotes.load(QFIX)
+    names = list(p.closes.columns)
+    calls = []
+
+    class Throttled:
+        """Empty for the first call of the second batch, whole otherwise."""
+        def __init__(self):
+            self.n = 0
+        def download(self, tickers, start, end):
+            self.n += 1
+            calls.append(list(tickers))
+            if list(tickers)[0] == names[5] and self.n == 2:
+                return pd.DataFrame()
+            return prices.PanelDownloader(p.closes).download(tickers, start, end)
+
+    naps = []
+    client = prices.PriceClient(downloader=Throttled(), cache=Cache(pytest.importorskip("tempfile").mkdtemp()))
+    closes, missing = fetch_quotes.pull_in_batches(client, names, p.first, p.last, batch=5, pause=1.0, sleep=naps.append)
+    assert [len(c) for c in calls] == [5, 5, 5, 5] and missing == []
+    assert sorted(closes.columns) == sorted(names) and len(closes) == len(p.closes)
+    assert naps == [1.0, 10.0, 1.0]

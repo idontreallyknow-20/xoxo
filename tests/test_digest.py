@@ -53,9 +53,14 @@ def scanned_watch():
     }
 
 
+# The committed NOT RUN / NOT GRADED artefacts, frozen as a fixture. The live dashboard/ on the
+# desk branch is real after the first scan, so a test about the honest empty state cannot read it.
+NOT_RUN = ROOT / "tests" / "fixtures" / "desk_not_run"
+
+
 def inputs(watch=None):
-    return {"watch": watch, "tracker": json.loads((ROOT / "dashboard" / "tracker.json").read_text()),
-            "memo": json.loads((ROOT / "dashboard" / "positioning.json").read_text())}
+    return {"watch": watch, "tracker": json.loads((NOT_RUN / "tracker.json").read_text()),
+            "memo": json.loads((NOT_RUN / "positioning.json").read_text())}
 
 
 def test_a_scanned_digest_leads_with_the_rules_that_fired():
@@ -72,7 +77,7 @@ def test_a_scanned_digest_leads_with_the_rules_that_fired():
 
 
 def test_the_not_run_file_produces_an_honest_digest():
-    d = digest.build_digest(digest.load_inputs(ROOT / "dashboard"), today=TODAY)
+    d = digest.build_digest(digest.load_inputs(NOT_RUN), today=TODAY)
     assert d["status"] == "NOT RUN" and not d["is_real"]
     assert d["rows"] == [] and d["alerts"] == []
     assert len(d["watched"]) == 16
@@ -96,7 +101,7 @@ def test_a_quiet_scan_reads_as_quiet():
 
 def test_only_if_alerts_is_a_function_of_the_rule_count_only():
     fired = digest.build_digest(inputs(scanned_watch()), today=TODAY)
-    quiet = digest.build_digest(digest.load_inputs(ROOT / "dashboard"), today=TODAY)
+    quiet = digest.build_digest(digest.load_inputs(NOT_RUN), today=TODAY)
     assert digest.should_send(fired, only_if_alerts=True)
     assert not digest.should_send(quiet, only_if_alerts=True)
     assert digest.should_send(quiet, only_if_alerts=False)
@@ -131,7 +136,7 @@ def test_a_missing_value_renders_as_na_never_as_zero():
 
 
 def test_the_language_guard_passes_over_the_whole_digest():
-    for w in (scanned_watch(), json.loads((ROOT / "dashboard" / "watch.json").read_text())):
+    for w in (scanned_watch(), json.loads((NOT_RUN / "watch.json").read_text())):
         d = digest.build_digest(inputs(w), today=TODAY)
         bad = check(d, "digest")
         assert not bad, "\n".join(bad)
@@ -178,7 +183,7 @@ def all_inputs(watch=None, intraday=None):
     d = inputs(watch)
     d["intraday"] = intraday
     d["setups"] = None
-    d["index"] = json.loads((ROOT / "dashboard" / "analysis" / "index.json").read_text())
+    d["index"] = json.loads((NOT_RUN / "analysis" / "index.json").read_text())
     d["dash"] = None
     return d
 

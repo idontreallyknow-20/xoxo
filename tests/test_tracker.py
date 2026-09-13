@@ -229,8 +229,20 @@ def test_script_dry_run_names_the_pull_and_sends_nothing():
 
 
 def test_script_offline_writes_an_honest_not_graded_file(tmp_path):
+    """Offline with nothing cached. The real checkout may carry a price cache after a live run, so
+    the script runs against a copy of the journal and the snapshots under an empty DESK_ROOT."""
+    import os
+    import shutil
+
+    root = tmp_path / "root"
+    root.mkdir()
+    shutil.copy(ROOT / "journal.md", root / "journal.md")
+    shutil.copytree(ROOT / "universe" / "snapshots", root / "universe" / "snapshots")
     out = tmp_path / "t.json"
-    r = run_script("--out", str(out), "--as-of", "2026-09-06")
+    env = {**os.environ, "DESK_OFFLINE": "1", "DESK_ROOT": str(root)}
+    env.pop("DESK_QUOTES", None)
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "track_calls.py"), "--out", str(out), "--as-of", "2026-09-06"],
+                       capture_output=True, text=True, cwd=str(ROOT), env=env)
     assert r.returncode == 0, r.stderr
     blob = json.loads(out.read_text())
     assert blob["status"] == "NOT GRADED" and blob["is_real"] is False

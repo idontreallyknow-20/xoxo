@@ -13,8 +13,9 @@ git: a GitHub Actions workflow pulls closes twice a weekday and commits them to 
 file through `prices.default_downloader()`. `book.md` is Claude's own paper book in the journal grammar,
 derived into `dashboard/book.json` by `an/book.py` under criteria.md's caps. The digest gained a `close`
 edition and three sections (My book, The memo sized for $100,000, Tests). Two Routines (Desk morning
-11:00 UTC, Desk close 22:00 UTC, weekdays) run a fresh session each that tests, marks, decides, emails
-`josephislockedin@gmail.com` through the Gmail connector, and commits to the `desk` branch. `NOTES.md`
+11:00 UTC, Desk close 22:00 UTC, weekdays) wake the build session, which tests, marks, decides, emails
+`josephislockedin@gmail.com` through its Gmail connector, and commits to the `desk` branch (fresh-session
+Routines could not reach the repository; NOTES.md 12d addendum). `NOTES.md`
 section 12 has the routes, the rules the routine works under, and what could not be verified here.
 
 **What changed in the sixth session, in one paragraph.** Real daily prices are on disk for the first

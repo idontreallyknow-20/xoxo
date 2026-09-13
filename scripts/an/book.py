@@ -225,6 +225,10 @@ def build_book(entries: Sequence[journal.JournalEntry], closes: Optional[pd.Data
     pending: List[Position] = []
     for n, e in enumerate(calls):
         pos = _next_session(idx, e.date)
+        # a gap in the panel on the fill session (a name that did not print, a partial pull) defers
+        # the fill to the next session that has a price, rather than refusing the call
+        while pos is not None and _px_at(closes, e.ticker, idx, pos) is None and e.ticker in closes.columns:
+            pos = pos + 1 if pos + 1 < len(idx) else None
         if pos is None:
             pending.append(_pending(e, sectors))
             continue
