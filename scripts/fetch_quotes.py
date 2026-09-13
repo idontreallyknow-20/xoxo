@@ -66,6 +66,23 @@ def _pull_once(client, chunk: List[str], start: dt.date, as_of: dt.date, *, refr
     return closes[got].dropna(how="all")
 
 
+def _fresh_yfinance_cache() -> None:
+    """Point yfinance's timezone cache (a sqlite file) at an empty directory for this run.
+
+    Two download threads sharing the default ``~/.cache/py-yfinance`` produce
+    ``OperationalError('database is locked')`` on Linux runners, which yfinance reports as
+    a failed download for the name that lost the race. A fresh directory per process
+    removes the contention; the cache is tiny and rebuilds in one request."""
+    try:
+        import tempfile
+
+        import yfinance as yf
+
+        yf.set_tz_cache_location(tempfile.mkdtemp(prefix="yf-tz-"))
+    except Exception:  # noqa: BLE001 - an older yfinance without the setter still pulls, just noisier
+        pass
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
@@ -86,6 +103,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("#   " + " ".join(tickers))
         return 0
 
+    _fresh_yfinance_cache()
     client = prices.PriceClient(downloader=prices.YFinanceDownloader(), cache=Cache(paths.PRICE_CACHE))
     try:
         closes, missing = pull_in_batches(client, tickers, start, as_of, batch=a.batch, pause=a.pause)

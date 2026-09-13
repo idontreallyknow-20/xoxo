@@ -5,7 +5,7 @@
 # credentials) it already did and this job is a duplicate guard away from doing nothing:
 # it only sends when the commit message does not say the email went out. Needs two
 # repository secrets, set once: DESK_MAIL_USER (the Gmail address) and DESK_MAIL_PASSWORD
-# (a sixteen-character Gmail app password). The recipient is fixed below.
+# (a sixteen-character Gmail app password). The recipients are fixed below.
 name: desk-mail
 
 on:
@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.DESK_MAIL_USER }}
           password: ${{ secrets.DESK_MAIL_PASSWORD }}
           subject: ${{ steps.subj.outputs.subject }}
-          to: josephislockedin@gmail.com
+          to: josephislockedin@gmail.com, j_k-leung@yahoo.ca
           from: Desk <${{ secrets.DESK_MAIL_USER }}>
           html_body: file://data/mail/latest.html
           body: file://data/mail/latest.html.txt

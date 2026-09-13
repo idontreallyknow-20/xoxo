@@ -7,6 +7,14 @@ Fifth session on branch `claude/equity-research-setup-dtxlbl`, restarted from `m
 merged (the first three sessions were `claude/stock-analysis-scoring-xhuyl9`, PRs #1 to #3). No CI
 is configured on this repo, so the gate is local: see **Before you commit** below.
 
+**What changed in the eighth session, in one paragraph.** `desk` is merged into `main`, so the quotes
+runner finally runs the batched pull; `fetch_quotes.py` gives yfinance a fresh timezone cache per
+process (the `database is locked` failures), and `quotes.yml` retries once. `an/ghactions.py` and
+`scripts/refresh_quotes.py` let the desk fire the quotes workflow itself through `api.github.com` and
+wait for the `quotes` branch to move, instead of trusting the cron. `an/note.py` is the short morning
+email (`daily_email.py --edition note`): prose, four parts, the journal's standing calls sorted by
+whether they are in a buy zone today. It goes to both Joseph and his dad. `NOTES.md` section 13.
+
 **What changed in the seventh session, in one paragraph.** The desk runs itself. Quotes arrive through
 git: a GitHub Actions workflow pulls closes twice a weekday and commits them to the `quotes` branch,
 `an/quotes.py` reads them, and `DESK_QUOTES=data/cache/quotes` makes every `--live` script read the
@@ -109,6 +117,8 @@ scripts/an/          the analysis layer. Everything new lives here so the origin
   ab.py              named arms against twenty matched random controls, the fixed split, the
                      pre-registration guard, dashboard/paper.json (X27)
   digest.py          the daily email as data, then as HTML; three editions (X17, X22)
+  note.py            the short morning note: four paragraphs of prose from the same inputs
+  ghactions.py       workflow_dispatch and branch polling through api.github.com, network behind one argument
   mail.py            SMTP, credential from the environment only, dry-run and provenance (X15)
   outcomes.py        the grades read back: score at call vs outcome, refusing thin samples (X14)
   positioning.py     the memo: three lists, sized from criteria.md
@@ -123,6 +133,7 @@ scripts/snapshot.py  run this MONTHLY (see power.py for why)
 scripts/scan.py      the daily scan -> dashboard/watch.json; --intraday -> watch_intraday.json
 scripts/setups.py    the swing setups -> dashboard/setups.json (--live, --dry-run, --fixture)
 scripts/fetch_quotes.py  the daily closes pull (runs on the Actions runner or on Joseph's machine)
+scripts/refresh_quotes.py  fetch the quotes branch; if it is behind, dispatch quotes.yml and wait for it
 scripts/build_book.py  book.md -> dashboard/book.json (--live, --quotes DIR, --journal, --as-of)
 scripts/run_tests.py  the suite, with its result written for the email
 book.md              Claude's own calls, append-only; the routine appends, never edits
@@ -132,7 +143,7 @@ scripts/paper_trade.py  the experiments (--live --split train|test, --fixture, -
                      flags, the render of dashboard/paper.json from lab/results/ (offline, in build_all)
 lab/LAB.md           the append-only lab notebook: pre-registration block, one entry per iteration
 lab/results/         one committed JSON summary per --live run; never pruned (a test checks)
-scripts/daily_email.py  the email (--edition morning|midday|event, --preview, --dry-run, --send,
+scripts/daily_email.py  the email (--edition note|morning|midday|event|close, --preview, --dry-run, --send,
                      --only-if-alerts, --only-new-alerts)
 setup.ps1            -InstallTask registers the three weekday tasks and the monthly one;
                      -Daily -Edition <e> and -Monthly are what they run

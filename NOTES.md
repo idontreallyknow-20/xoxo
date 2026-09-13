@@ -1331,3 +1331,54 @@ editions rendering, the language guard over every new string. Not verified here,
 cannot be: a real yfinance pull on the runner, the `quotes` branch appearing, the Gmail send from
 a scheduled session, the first push to `desk`. The first manual fire of Desk morning is the check
 for all four, and its session log is where to look if the email does not arrive.
+
+## 13. Eighth session, 2026-09-13: the morning note, and the quotes that stopped arriving
+
+Joseph asked for whatever was wrong to be fixed, for a simpler email, and for it to reach
+`j_k-leung@yahoo.ca` as well as `josephislockedin@gmail.com` every morning, with nothing left
+for him to do by hand.
+
+### 13a. What was wrong
+
+- **The quotes runner failed about half its runs.** Runs 2, 4, 5, 8 and 9 of `quotes.yml` came
+  back with `0 of 1509 names` and one `OperationalError('database is locked')` from yfinance's
+  timezone cache. Two things: Yahoo throttles a single fifteen-hundred-name call, and two download
+  threads share one sqlite file under `~/.cache/py-yfinance`. The batched pull already written on
+  `desk` never ran, because the workflow checks out `main` and `desk` was never merged.
+- **`main` was three sessions behind `desk`.** The routine's fixes (batching, the intraday and
+  partial-session guards, the fixture-rooted digest tests) lived only on the branch the routine
+  commits to. This session merged `desk` into the branch behind this PR so `main` carries them.
+- **The schedule is not a clock.** GitHub ran the 10:30 UTC cron at 14:30 and the 22:30 one after
+  midnight, and skipped Friday's entirely. A morning brief at 11:00 UTC that waits on a cron for
+  the previous close waits on something GitHub does not promise.
+- **One recipient**, hard-coded in two Routine prompts and the mail workflow.
+
+### 13b. What changed
+
+- `scripts/fetch_quotes.py` points yfinance's timezone cache at a fresh temp directory per process
+  (`_fresh_yfinance_cache`), which is the documented fix for the lock. `quotes.yml` retries once
+  after four minutes, and a `concurrency` group keeps a dispatched run from overlapping a scheduled one.
+- `an/ghactions.py` and `scripts/refresh_quotes.py`: the desk's container can reach `api.github.com`
+  with the token it already pushes with, so the morning routine now fires `quotes.yml` itself
+  when the `quotes` branch is behind the last completed session, waits for the branch to move
+  (up to ten minutes), and fetches again. Stooq, the one key-free alternative worth a look, now
+  gates its CSV endpoint behind a captcha-issued key, so Yahoo through the runner stays the route.
+- `an/note.py`, `daily_email.py --edition note`: the short morning email. Four parts in prose:
+  the market (SPY, QQQ and VFV, one day, one week and the year, from the quotes file; the day's
+  moves among the watched names), my book (equity, since the start against SPY, each position
+  with its wrong-if level, anything breached), what I would buy this week (the journal's standing
+  calls sorted by whether they are in a buy zone today, each with size and falsifier; the waiting
+  list with the reason; anything whose falsifier fired taken off), and what crossed a rule. Same
+  language guard as the digest. The full digest is still rendered and committed as the record.
+- Recipients: both addresses in `desk-mail.yml` and in the Routine prompts. The morning note goes
+  to both; the close edition stays Joseph's.
+- The two Routines' prompts were rewritten from this session: `refresh_quotes.py` replaces the
+  direct pull that cannot work in the container, the note is what gets sent, and the routines
+  still never touch `main`.
+
+### 13c. Verified here, and not
+
+Verified: the suite, the note on the live desk data (Monday 14 September, rendered from the
+Thursday 10 September closes on the branch), the dispatch of `quotes.yml` from this container
+and the branch moving afterwards, and one real send of the note to both addresses through the
+Gmail connector. Not verified until Monday: the routine doing the same unattended.

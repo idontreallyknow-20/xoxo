@@ -15,6 +15,11 @@ on:
 permissions:
   contents: write
 
+# one pull at a time: the desk can dispatch this by hand while a scheduled run is still going
+concurrency:
+  group: quotes
+  cancel-in-progress: false
+
 jobs:
   pull:
     runs-on: ubuntu-latest
@@ -28,7 +33,13 @@ jobs:
           python-version: "3.11"
       - run: pip install -q pandas numpy yfinance requests
       - name: pull closes
-        run: python scripts/fetch_quotes.py --out /tmp/quotes
+        # Yahoo throttles a runner now and then; a second attempt after a pause is the whole retry policy.
+        run: |
+          python scripts/fetch_quotes.py --out /tmp/quotes && exit 0
+          echo "first pull came back thin; waiting four minutes and trying once more"
+          sleep 240
+          rm -rf data/cache/prices
+          python scripts/fetch_quotes.py --out /tmp/quotes
       - name: commit to the quotes branch
         run: |
           git config user.name "desk-quotes"
