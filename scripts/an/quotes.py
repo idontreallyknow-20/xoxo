@@ -19,14 +19,14 @@ import json
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import pandas as pd
 
 from . import paths
 
 __all__ = ["QUOTES_CACHE", "QUOTES_BRANCH", "QUOTES_DIR_IN_BRANCH", "QuotePanel", "load", "write", "fetch_branch",
-           "ticker_universe", "age_sessions", "BENCHMARKS"]
+           "ticker_universe", "age_sessions", "BENCHMARKS", "trim_partial_tail", "intraday_tail"]
 
 QUOTES_CACHE = paths.CACHE_DIR / "quotes"
 QUOTES_BRANCH = "quotes"
@@ -57,7 +57,53 @@ class QuotePanel:
         m = self.manifest
         return (f"{len(self.tickers)} names, {len(self.closes)} sessions, {self.first} to {self.last}, "
                 f"pulled {m.get('pulled_at', 'unknown')} via {m.get('source', 'unknown')}"
-                + (f", missing {', '.join(m['missing'][:8])}" if m.get("missing") else ""))
+                + (f", missing {', '.join(m['missing'][:8])}" if m.get("missing") else "")
+                + (f"; {', '.join(m['partial_sessions_set_aside'])} set aside as a partial session"
+                   if m.get("partial_sessions_set_aside") else "")
+                + (f"; {m['intraday_session_set_aside']} set aside, pulled during the session"
+                   if m.get("intraday_session_set_aside") else ""))
+
+
+PARTIAL_SESSION_FLOOR = 0.5
+
+
+def trim_partial_tail(closes: pd.DataFrame, *, floor: float = PARTIAL_SESSION_FLOOR) -> Tuple[pd.DataFrame, List[str]]:
+    """Drop trailing sessions where fewer than ``floor`` of the names have a close.
+
+    A pull made before a session's data has fully landed (or a batch that came back
+    half empty) leaves a last row with a few dozen names. Marking a book at that row would
+    call it "today's close" for the names that have one and silently keep yesterday's for
+    the rest. The row is set aside instead and the manifest says so; the next pull carries it."""
+    dropped: List[str] = []
+    out = closes
+    while len(out) and out.shape[1] and out.iloc[-1].notna().sum() < floor * out.shape[1]:
+        dropped.append(out.index[-1].date().isoformat())
+        out = out.iloc[:-1]
+    return out, dropped
+
+
+SESSION_CLOSE_UTC = dt.time(20, 30)   # 16:00 New York plus a settle; 15:30 during standard time, still after the bell
+
+
+def intraday_tail(closes: pd.DataFrame, pulled_at: Optional[str]) -> Tuple[pd.DataFrame, Optional[str]]:
+    """Drop the last row when it is dated the day of the pull and the pull came before the close.
+
+    Yahoo returns a row for today during the session, carrying the last trade so far. A
+    runner that fires at 10:30 Toronto would otherwise write that print as "today's close"
+    and the book would be marked on it. The row is set aside; the evening pull carries the
+    real close."""
+    if closes.empty or not pulled_at:
+        return closes, None
+    try:
+        when = dt.datetime.fromisoformat(pulled_at.replace("Z", "+00:00"))
+    except ValueError:
+        return closes, None
+    if when.tzinfo is not None:
+        when = when.astimezone(dt.timezone.utc).replace(tzinfo=None)
+    last = closes.index[-1].date()
+    if last == when.date() and when.time() < SESSION_CLOSE_UTC:
+        return closes.iloc[:-1], last.isoformat()
+    return closes, None
 
 
 def load(root: Optional[Path] = None) -> Optional[QuotePanel]:
@@ -79,6 +125,12 @@ def load(root: Optional[Path] = None) -> Optional[QuotePanel]:
             manifest = json.loads(mp.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             manifest = {}
+    closes, intraday = intraday_tail(closes, manifest.get("pulled_at"))
+    if intraday:
+        manifest = {**manifest, "intraday_session_set_aside": intraday}
+    closes, dropped = trim_partial_tail(closes)
+    if dropped:
+        manifest = {**manifest, "partial_sessions_set_aside": dropped}
     return QuotePanel(closes, manifest, d)
 
 

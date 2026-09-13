@@ -10,6 +10,7 @@
     python scripts/daily_email.py --send --only-if-alerts   # send only when a written rule fired
     python scripts/daily_email.py --eml some/dir       # write the message as a .eml file instead
     python scripts/daily_email.py --edition close --html-out data/cache/mail/out.html   # for the Gmail connector
+    python scripts/daily_email.py --edition note --html-out data/mail/latest.html       # the short morning note
 
 The credential is read from the environment and from nowhere else:
 
@@ -34,9 +35,16 @@ from typing import List, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from an import digest, mail, paths, watch  # noqa: E402
+from an import digest, mail, note, paths, watch  # noqa: E402
 
 PREVIEW = paths.DASHBOARD_DIR / "_daily_preview.html"   # dashboard/_* is gitignored
+
+
+def note_benchmarks():
+    """Benchmarks from the quotes file when one is on disk (it carries VFV and the year), else None."""
+    from an import quotes
+
+    return note.benchmarks_from_panel(quotes.load())
 
 
 def preview_path(edition: str) -> Path:
@@ -50,7 +58,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--preview", action="store_true")
     ap.add_argument("--eml", type=Path, default=None, help="write a .eml into this directory instead of sending")
     ap.add_argument("--only-if-alerts", action="store_true", help="skip the send when no written rule fired")
-    ap.add_argument("--edition", choices=digest.EDITIONS, default="morning")
+    ap.add_argument("--edition", choices=digest.EDITIONS + ("note",), default="morning",
+                    help="note is the short morning email (an/note.py); the rest are the full digest")
     ap.add_argument("--only-new-alerts", action="store_true",
                     help="drop alerts already emailed (data/cache/watch/state.json) and remember the ones sent")
     ap.add_argument("--state", type=Path, default=watch.STATE_PATH)
@@ -65,19 +74,28 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     today = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
     state = watch.WatchState.load(a.state) if a.only_new_alerts else None
-    d = digest.build_digest(digest.load_inputs(a.inputs), today=today, edition=a.edition,
-                            seen_alert_keys=set(state.seen_alerts) if state else None)
-    html = digest.render_html(d)
-    subject = (a.subject_prefix + " " if a.subject_prefix else "") + digest.subject_for(d)
-    print(f"{a.edition}: {d['status']}, {d['n_watched']} watched, {d['n_alerts']} lines, {d['n_rule_alerts']} rules fired"
-          + (f" ({len(state.seen_alerts)} alert keys already sent)" if state else ""))
+    text = None
+    if a.edition == "note":
+        n = note.build_note(digest.load_inputs(a.inputs), today=today, bench_from_quotes=note_benchmarks())
+        html, text, subject = note.render_html(n), note.render_text(n), note.subject_for(n)
+        d = {"edition": "note", "status": "SCANNED" if n["scanned"] else "NOT RUN", "n_rule_alerts": len(n["alerts"]),
+             "alerts": n["alerts"]}
+        print(f"note: {d['status']}, book {n['book']['status']}, {len(n['buy_now'])} in a buy zone, {len(n['alerts'])} rules fired")
+    else:
+        d = digest.build_digest(digest.load_inputs(a.inputs), today=today, edition=a.edition,
+                                seen_alert_keys=set(state.seen_alerts) if state else None)
+        html = digest.render_html(d)
+        subject = digest.subject_for(d)
+        print(f"{a.edition}: {d['status']}, {d['n_watched']} watched, {d['n_alerts']} lines, {d['n_rule_alerts']} rules fired"
+              + (f" ({len(state.seen_alerts)} alert keys already sent)" if state else ""))
+    subject = (a.subject_prefix + " " if a.subject_prefix else "") + subject
     print(f"subject: {subject}")
 
     if a.html_out:
         a.html_out.parent.mkdir(parents=True, exist_ok=True)
         a.html_out.write_text(html, encoding="utf-8")
         Path(str(a.html_out) + ".subject.txt").write_text(subject + "\n", encoding="utf-8")
-        Path(str(a.html_out) + ".txt").write_text(mail.text_from_html(html), encoding="utf-8")
+        Path(str(a.html_out) + ".txt").write_text(text if text is not None else mail.text_from_html(html), encoding="utf-8")
         print(f"wrote {a.html_out} and its subject and text alternative")
 
     if a.preview:
@@ -106,7 +124,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 return 2
             print(f"dry run without a credential: {e}")
             settings = None
-        message = mail.Message(subject=subject, html=html,
+        message = mail.Message(subject=subject, html=html, text=text,
                                to=settings.to if settings else ["<DESK_MAIL_TO>"],
                                sender=settings.user if settings else "<DESK_MAIL_USER>")
         if a.dry_run:
