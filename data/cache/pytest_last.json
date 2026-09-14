@@ -1,16 +1,12 @@
 {
- "args": [
-  "tests/test_note.py",
-  "tests/test_book.py",
-  "tests/test_quotes.py"
- ],
+ "args": [],
  "errors": 0,
  "failed": 0,
  "failed_tests": [],
- "passed": 34,
- "ran_at": "2026-09-13T19:31:14+00:00",
+ "passed": 1054,
+ "ran_at": "2026-09-14T11:06:34+00:00",
  "returncode": 0,
- "seconds": 3.2,
+ "seconds": 278.5,
  "skipped": 0,
- "summary": "34 passed in 2.86s"
+ "summary": "1054 passed in 277.46s (0:04:37)"
 }

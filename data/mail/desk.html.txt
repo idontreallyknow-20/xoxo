@@ -1,5 +1,5 @@
 Desk morning brief
-Monday 14 September 2026   closes as of 2026-09-13
+Monday 14 September 2026   closes as of 2026-09-14
 
 Nothing crossed a written rule and nothing moved five percent. A quiet day, as far as these sources see.
 
@@ -62,7 +62,7 @@ benchmarks 1d / 5d: SPY +0.9% / -1.1%   QQQ +0.9% / -0.4%
 
 Setups mechanical, from swing.md
 
-30 mechanical setups as of 2026-09-13, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
+30 mechanical setups as of 2026-09-14, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
 EXPD Expeditors International of Washington, Inc. breakout with revisions
 entry $192.60   stop $177.19 (8.0% risk)   horizon 10 sessions
 prior 251-session high $190.97 · above it +0.9% · EPS FY1 30d +13.5% · also pullback in trend
@@ -215,7 +215,7 @@ vs 20-session mean -0.8% · 50 over 200 +14.5% · under the high -5.5%
 
 My book fake money, real closes, my own calls
 
-Equity $99,506 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-11 close. SPY -0.2% over the same window (-0.3% for the book against it). QQQ -0.5% over the same window (-0.0% for the book against it). VFV.TO +0.4% over the same window (-0.9% for the book against it).
+Equity $99,506 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-11 close (1 session old). SPY -0.2% over the same window (-0.3% for the book against it). QQQ -0.5% over the same window (-0.0% for the book against it). VFV.TO +0.4% over the same window (-0.9% for the book against it).
 BKNG long 44 @ $179.87 last $173.92 -3.3% vs SPY -3.1% 16.0% above its wrong-if
 REGN long 9 @ $810.31 last $781.49 -3.6% vs SPY -3.3% 20.2% above its wrong-if
 MSFT long 16 @ $493.95 last $495.63 +0.3% vs SPY +0.6% 23.9% above its wrong-if
@@ -287,7 +287,7 @@ prices: not live, yfinance adjusted closes: 0 live, 18 from cache
 edgar: not live, not pulled: dry run: no request was sent
 rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
 
-tests: 34 tests passed, 0 failed, 0 errors, in 3s at 2026-09-13T19:31:14+00:00
+tests: 1054 tests passed, 0 failed, 0 errors, in 278s at 2026-09-14T11:06:34+00:00
 Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
 Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
 Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
