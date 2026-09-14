@@ -521,6 +521,10 @@ class PriceClient:
         empty_ttl: float = EMPTY_TTL,
     ):
         self.downloader: Downloader = downloader if downloader is not None else default_downloader()
+        # A client built with no downloader while DESK_QUOTES names a file is reading that file,
+        # and the file is the cache: an entry written from an earlier copy of it the same day
+        # (the morning pull, before the close landed) must never be served in its place.
+        self.serves_file: bool = downloader is None and isinstance(self.downloader, PanelDownloader)
         self.cache = cache if cache is not None else Cache(paths.PRICE_CACHE, default_ttl=ttl)
         self.ttl = float(ttl)
         # "Nothing" is never remembered for longer than "something". An empty result
@@ -667,6 +671,7 @@ class PriceClient:
             return _empty_panel([])
 
         offline = is_offline()
+        refresh = refresh or self.serves_file
         series_by_ticker: Dict[str, Optional[pd.Series]] = {}
         misses: List[str] = []
         for t in names:

@@ -4,7 +4,13 @@
     python scripts/refresh_quotes.py              # fetch the quotes branch; if it is behind, dispatch
                                                   # quotes.yml on main, wait for the commit, fetch again
     python scripts/refresh_quotes.py --no-dispatch   # just fetch and report
+    python scripts/refresh_quotes.py --wait          # someone else dispatched the runner (the desk's GitHub
+                                                     # tool, say); poll the branch until it carries the session
     python scripts/refresh_quotes.py --ref mybranch --timeout 900
+
+The token the container pushes with can read the API but is refused for workflow_dispatch
+(403, "not accessible by integration"); the session's GitHub tool can dispatch. So the routine
+runs this once, and on "refused" dispatches with the tool and runs it again with --wait.
 
 Exit 0 when data/cache/quotes carries the last completed session, 1 when it is still
 behind (the routine then marks at whatever close it has, and the email prints the age).
@@ -15,6 +21,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import sys
+import time
 from pathlib import Path
 from typing import List, Optional
 
@@ -38,9 +45,27 @@ def last_completed_session(now: dt.datetime) -> dt.date:
     return d
 
 
+def wait_for_session(want: dt.date, *, timeout: float, poll: float, fetch=None, sleep=time.sleep,
+                     clock=time.monotonic) -> Optional[quotes.QuotePanel]:
+    """Fetch the quotes branch every ``poll`` seconds until its last session is ``want`` or later."""
+    fetch = fetch or quotes.fetch_branch
+    t0 = clock()
+    while True:
+        panel = fetch()
+        if panel and panel.last and panel.last >= want:
+            print(f"quotes branch now: {panel.describe()}")
+            return panel
+        if clock() - t0 >= timeout:
+            print("the runner did not commit in time", file=sys.stderr)
+            return None
+        sleep(poll)
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-dispatch", action="store_true")
+    ap.add_argument("--wait", action="store_true", help="do not dispatch; poll the branch until it carries the session")
+    ap.add_argument("--poll", type=float, default=20.0, help="seconds between polls in --wait")
     ap.add_argument("--ref", default="main", help="branch whose quotes.yml to run (default main)")
     ap.add_argument("--timeout", type=float, default=600.0, help="seconds to wait for the runner's commit")
     ap.add_argument("--now", default=None, help="ISO datetime in UTC, for tests")
@@ -54,6 +79,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
     if a.no_dispatch:
         return 1
+    if a.wait:
+        return 0 if wait_for_session(want, timeout=a.timeout, poll=a.poll) else 1
     slug = ghactions.repo_slug()
     tok = ghactions.token()
     if not slug or not tok:

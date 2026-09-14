@@ -122,3 +122,21 @@ def test_fetch_pulls_in_batches_and_retries_a_throttled_one(monkeypatch):
     assert [len(c) for c in calls] == [5, 5, 5, 5] and missing == []
     assert sorted(closes.columns) == sorted(names) and len(closes) == len(p.closes)
     assert naps == [1.0, 10.0, 1.0]
+
+
+def test_a_quotes_file_is_never_served_from_a_stale_cache_entry(monkeypatch, tmp_path):
+    """The morning pull writes a cache entry for today's window; the evening file carries the close.
+    A client reading the file must read the file, not the morning's entry."""
+    from an.store import Cache
+    p = quotes.load(QFIX)
+    early = p.closes.iloc[:-1]
+    quotes.write(early, tmp_path / "q", source="test")
+    monkeypatch.setenv(prices.ENV_QUOTES, str(tmp_path / "q"))
+    cache = Cache(tmp_path / "c")
+    closes = prices.PriceClient(cache=cache).daily_closes(["AAPL"], "2017-09-01", "2017-09-29")
+    assert closes.index[-1].date() == early.index[-1].date()
+    quotes.write(p.closes, tmp_path / "q", source="test")
+    closes = prices.PriceClient(cache=cache).daily_closes(["AAPL"], "2017-09-01", "2017-09-29")
+    assert closes.index[-1].date() == dt.date(2017, 9, 29), "the file moved, so the answer moves"
+    client = prices.PriceClient(downloader=prices.PanelDownloader(panel=p.closes), cache=cache)
+    assert not client.serves_file, "an explicit downloader keeps the cache semantics it always had"
