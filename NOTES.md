@@ -1378,7 +1378,25 @@ for him to do by hand.
 
 ### 13c. Verified here, and not
 
-Verified: the suite, the note on the live desk data (Monday 14 September, rendered from the
-Thursday 10 September closes on the branch), the dispatch of `quotes.yml` from this container
-and the branch moving afterwards, and one real send of the note to both addresses through the
-Gmail connector. Not verified until Monday: the routine doing the same unattended.
+Verified: the suite, the note on the live desk data, the branch moving after a dispatch, and one
+real send of the note to both addresses through the Gmail connector. The Monday routines ran
+unattended: the morning note went out at 11:20 UTC, and the close edition found the one thing
+this session had got wrong. The token the container pushes with (`GH_TOKEN`, a proxy credential)
+can read the API but gets 403 "Resource not accessible by integration" on `workflow_dispatch`;
+the session's GitHub tool can dispatch. So `refresh_quotes.py` reports "refused", the routine
+dispatches with the tool, and `refresh_quotes.py --wait` polls the branch until it carries the
+session. The earlier line in this section claiming the dispatch was verified from the container
+was wrong: it had been done with the tool.
+
+### 13d. What the first close edition taught (2026-09-14)
+
+Two things. First, `PriceClient` served a stale cache entry to `build_book.py --live` after the
+evening quotes had landed: the morning pull had written an entry for today's window, and the TTL
+had not run out. `prices.PriceClient` now sets `serves_file` when it was built with no downloader
+and `DESK_QUOTES` names a file, and always re-reads the file; `tests/test_quotes.py` pins it.
+Second, the close edition's per-name table is a session behind: `scan.py --intraday` takes its
+prior close from an offline daily cache and its bars from Yahoo, which this container cannot
+reach, so the table shows the previous close while the book block (from `build_book.py`) is
+marked at today's. Making the intraday path fall back to the quotes file is the next session's
+job; until then the close email's book is right and its table is a day old, and the email says
+which date each row is from.

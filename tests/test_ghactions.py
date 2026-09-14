@@ -87,3 +87,22 @@ def test_the_cli_reports_without_dispatching_when_told(monkeypatch, tmp_path):
     monkeypatch.setattr(refresh_quotes.ghactions, "branch_head", lambda *a, **k: "aaa")
     monkeypatch.setattr(refresh_quotes.ghactions, "dispatch", lambda *a, **k: False)
     assert refresh_quotes.main(["--now", "2026-09-14T11:00:00"]) == 1
+
+
+def test_wait_for_session_polls_until_the_branch_carries_it():
+    class P:
+        def __init__(self, last):
+            self.last = last
+
+        def describe(self):
+            return f"panel to {self.last}"
+
+    panels = iter([None, P(dt.date(2026, 9, 11)), P(dt.date(2026, 9, 14))])
+    slept = []
+    got = refresh_quotes.wait_for_session(dt.date(2026, 9, 14), timeout=600, poll=7, fetch=lambda: next(panels),
+                                          sleep=slept.append, clock=lambda: 0.0)
+    assert got is not None and got.last == dt.date(2026, 9, 14) and slept == [7, 7]
+    ticks = iter([0.0, 700.0])
+    assert refresh_quotes.wait_for_session(dt.date(2026, 9, 14), timeout=600, poll=7, fetch=lambda: None,
+                                           sleep=lambda s: None, clock=lambda: next(ticks)) is None
+    assert refresh_quotes.main(["--wait", "--timeout", "0", "--now", "2026-09-14T22:00:00"]) in (0, 1)
