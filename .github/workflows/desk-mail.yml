@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.DESK_MAIL_USER }}
           password: ${{ secrets.DESK_MAIL_PASSWORD }}
           subject: ${{ steps.subj.outputs.subject }}
-          to: josephislockedin@gmail.com, j_k-leung@yahoo.ca
+          to: josephislockedin@gmail.com, j_k_leung@yahoo.ca
           from: Desk <${{ secrets.DESK_MAIL_USER }}>
           html_body: file://data/mail/latest.html
           body: file://data/mail/latest.html.txt

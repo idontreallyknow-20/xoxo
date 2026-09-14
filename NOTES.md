@@ -1335,7 +1335,7 @@ for all four, and its session log is where to look if the email does not arrive.
 ## 13. Eighth session, 2026-09-13: the morning note, and the quotes that stopped arriving
 
 Joseph asked for whatever was wrong to be fixed, for a simpler email, and for it to reach
-`j_k-leung@yahoo.ca` as well as `josephislockedin@gmail.com` every morning, with nothing left
+`j_k_leung@yahoo.ca` as well as `josephislockedin@gmail.com` every morning, with nothing left
 for him to do by hand.
 
 ### 13a. What was wrong
@@ -1382,3 +1382,14 @@ Verified: the suite, the note on the live desk data (Monday 14 September, render
 Thursday 10 September closes on the branch), the dispatch of `quotes.yml` from this container
 and the branch moving afterwards, and one real send of the note to both addresses through the
 Gmail connector. Not verified until Monday: the routine doing the same unattended.
+
+### 13d. The second address was wrong
+
+Joseph's address is `j_k_leung@yahoo.ca`, an underscore between `j_k` and `leung`, not the hyphen
+this session wrote. `desk-mail.yml` and the line above are corrected. The Routine prompt for Desk
+morning note is not, and cannot be from here: its fires deliver into the build session, and a
+session can only rewrite the prompt of a Routine bound to itself, so `update_trigger` refuses.
+Until Joseph changes that one character on the claude.ai Routines page, or the build session
+rewrites its own prompt on a later run, the morning note still names the hyphen in its Gmail call.
+A hyphen is not legal in a Yahoo ID, so that copy reaches nobody; the `josephislockedin@gmail.com`
+copy in the same call is unaffected. The close edition never carried the second address.
