@@ -38,6 +38,7 @@ python scripts/price_screen.py      # Step 3. Valuation vs own history, drawdown
 python scripts/write_research.py    # Regenerates research/TICKER.md for the shortlist from research_notes.py
 python scripts/build_dashboard.py   # Rebuilds dashboard/data.js and portfolio.md
 python scripts/serve.py             # Serves the dashboard and rebuilds every 15 min during market hours
+python scripts/build_artifact.py    # Bundles dashboard/ into dashboard/_artifact/ for publishing as a Claude artifact
 ```
 
 The page polls for new snapshots on its own. Paste a free Finnhub key in Settings for quotes that update every minute in the browser.
