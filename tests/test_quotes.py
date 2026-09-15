@@ -140,3 +140,17 @@ def test_a_quotes_file_is_never_served_from_a_stale_cache_entry(monkeypatch, tmp
     assert closes.index[-1].date() == dt.date(2017, 9, 29), "the file moved, so the answer moves"
     client = prices.PriceClient(downloader=prices.PanelDownloader(panel=p.closes), cache=cache)
     assert not client.serves_file, "an explicit downloader keeps the cache semantics it always had"
+
+
+def test_a_throttled_pull_merged_over_the_previous_file_only_adds(tmp_path):
+    p = quotes.load(QFIX)
+    full = p.closes
+    thin = full.iloc[:-1, :5].copy()               # a batch missing and the last session absent
+    merged = quotes.merge_panels(thin, full)
+    pd.testing.assert_frame_equal(merged, full)
+    newer = full.copy()
+    newer.iloc[-1, 0] = full.iloc[-1, 0] + 1.0       # a fresh print for the last session
+    assert quotes.merge_panels(newer, full).iloc[-1, 0] == full.iloc[-1, 0] + 1.0
+    assert quotes.merge_panels(pd.DataFrame(), full).equals(full) and quotes.merge_panels(thin, None).equals(thin)
+    text = (ROOT / ".github" / "workflows" / "quotes.yml").read_text()
+    assert "--merge-existing /tmp/prev" in text and "origin/quotes:data/quotes/closes.csv" in text
