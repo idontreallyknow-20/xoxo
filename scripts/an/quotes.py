@@ -26,7 +26,7 @@ import pandas as pd
 from . import paths
 
 __all__ = ["QUOTES_CACHE", "QUOTES_BRANCH", "QUOTES_DIR_IN_BRANCH", "QuotePanel", "load", "write", "fetch_branch",
-           "ticker_universe", "age_sessions", "BENCHMARKS", "trim_partial_tail", "intraday_tail"]
+           "ticker_universe", "age_sessions", "BENCHMARKS", "trim_partial_tail", "intraday_tail", "merge_panels"]
 
 QUOTES_CACHE = paths.CACHE_DIR / "quotes"
 QUOTES_BRANCH = "quotes"
@@ -154,6 +154,21 @@ def write(closes: pd.DataFrame, root: Path, *, source: str, missing: Sequence[st
     lf.index.name = "ticker"
     lf.to_csv(root / "latest.csv", lineterminator="\n")
     return manifest
+
+
+def merge_panels(new: pd.DataFrame, old: Optional[pd.DataFrame]) -> pd.DataFrame:
+    """The new pull where it has a value, the previous file everywhere else.
+
+    A throttled runner comes back with whole batches missing and a thin last row, and
+    the workflow used to commit that over a complete pull from a few hours earlier. Now a
+    pull can only add: every name and every session the branch already carried survives,
+    and a fresh print replaces the old one where both exist."""
+    if old is None or old.empty:
+        return new
+    if new.empty:
+        return old
+    merged = new.combine_first(old)
+    return merged.sort_index().reindex(sorted(merged.columns), axis=1)
 
 
 def fetch_branch(repo_root: Optional[Path] = None, *, branch: str = QUOTES_BRANCH, dest: Optional[Path] = None,

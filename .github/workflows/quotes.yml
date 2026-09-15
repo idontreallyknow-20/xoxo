@@ -32,14 +32,22 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -q pandas numpy yfinance requests
+      - name: previous file
+        # the pull is merged over what the branch already carries, so a throttled run can only add
+        run: |
+          mkdir -p /tmp/prev
+          if git fetch --depth 1 origin quotes 2>/dev/null; then
+            git show origin/quotes:data/quotes/closes.csv > /tmp/prev/closes.csv || true
+            git show origin/quotes:data/quotes/manifest.json > /tmp/prev/manifest.json || true
+          fi
       - name: pull closes
         # Yahoo throttles a runner now and then; a second attempt after a pause is the whole retry policy.
         run: |
-          python scripts/fetch_quotes.py --out /tmp/quotes && exit 0
+          python scripts/fetch_quotes.py --out /tmp/quotes --merge-existing /tmp/prev && exit 0
           echo "first pull came back thin; waiting four minutes and trying once more"
           sleep 240
           rm -rf data/cache/prices
-          python scripts/fetch_quotes.py --out /tmp/quotes
+          python scripts/fetch_quotes.py --out /tmp/quotes --merge-existing /tmp/prev
       - name: commit to the quotes branch
         run: |
           git config user.name "desk-quotes"
