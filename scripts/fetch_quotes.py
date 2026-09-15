@@ -6,6 +6,8 @@
     python scripts/fetch_quotes.py --out data/quotes          # what the GitHub Actions workflow runs
     python scripts/fetch_quotes.py --tickers AAPL,MSFT,SPY    # a narrow pull
     python scripts/fetch_quotes.py --sessions 450             # how much history (default 450 sessions)
+    python scripts/fetch_quotes.py --merge-existing DIR       # keep every name and session DIR's closes.csv
+                                                              # already has; the pull only adds (the workflow does this)
 
 The list is an.quotes.ticker_universe(): the quality 150, the memo's three lists, every
 name in journal.md and book.md, and SPY, QQQ, IWM, VFV.TO. The pull goes through the
@@ -90,6 +92,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--tickers", default=None, help="comma-separated override")
     ap.add_argument("--sessions", type=int, default=450)
     ap.add_argument("--as-of", default=None, help="YYYY-MM-DD, default today")
+    ap.add_argument("--merge-existing", type=Path, default=None,
+                    help="a directory with the previous closes.csv; the pull is merged over it so a throttled run cannot lose names")
     ap.add_argument("--batch", type=int, default=BATCH, help="names per Yahoo call (default %(default)s)")
     ap.add_argument("--pause", type=float, default=PAUSE, help="seconds between calls; a throttled batch waits ten times this")
     a = ap.parse_args(argv)
@@ -112,6 +116,16 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 1
     got = [t for t in tickers if t in closes.columns and closes[t].notna().any()]
     closes = closes[got].dropna(how="all")
+    carried = 0
+    if a.merge_existing:
+        prev = quotes.load(a.merge_existing)
+        if prev is not None:
+            before = set(closes.columns)
+            closes = quotes.merge_panels(closes, prev.closes)
+            carried = len(set(closes.columns) - before)
+            missing = [t for t in missing if t not in closes.columns]
+            print(f"merged over {a.merge_existing}: {carried} name(s) carried from the previous file, "
+                  f"{len(missing)} still missing")
     if len(closes) > a.sessions:
         closes = closes.iloc[-a.sessions:]
     manifest = quotes.write(closes, a.out, source="yfinance via an.prices.PriceClient (auto_adjust=True)",

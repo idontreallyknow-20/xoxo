@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0a1f9ffb073363) to josephislockedin@gmail.com, subject "Desk close, Mon 14 Sep: nothing crossed a rule".
-Book: MARKED at the 2026-09-14 close, equity $99,836 (-0.16%), 3 open (BKNG, REGN, MSFT); no stop or falsifier breached. The container token cannot dispatch the runner (403); the GitHub tool did, and refresh_quotes.py --wait now covers that route.
-Tests: fast subset 96 passed. No calls (close edition).
+Email: sent via Gmail (id 1a0a4d8c81400eba) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Tue 15 Sep: book -0.2%, 6 names in a buy zone".
+Tests: 1056 passed in 392s. The overnight scheduled pull was throttled (100 names missing, Monday thin) and overwrote the good one; dispatched a fresh pull with the GitHub tool, complete. fetch_quotes.py --merge-existing now makes a pull add-only.
+Calls: no calls. September at $22,946 deployed (23.0% of equity against the 25% cap); October names wait; nothing breached. Big moves: ADSK +7.8%, NOW +7.4%, LRCX -8.3%, AMAT -7.1%, none past a written rule.
