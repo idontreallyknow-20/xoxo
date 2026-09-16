@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0a9fa9ac9a0b9d) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Wed 16 Sep: LRCX crossed a rule".
-Tests: 1057 passed in 464s. Quotes branch current (overnight scheduled pull complete for the first time since the merge fix).
-Calls: no calls. September at $22,459 deployed (22.6% of equity against the 25% cap); LRCX fired the 15%-week rule but is not in the book and the plan left it out (KLAC carries the equipment cycle); nothing in the book breached.
+Email: sent via Gmail (id 1a0ac476bfc625a9) to josephislockedin@gmail.com, subject "Desk close, Wed 16 Sep: 1 rule fired (LRCX)".
+Book: MARKED at the 2026-09-16 close, equity $99,248 (-0.75%), 3 open (BKNG -4.7%, REGN -4.4%, MSFT -0.7%); no stop or falsifier breached; 0.8 points ahead of SPY since the start. LRCX (not held) fired the 15%-week rule.
+Tests: fast subset 97 passed. No calls (close edition). Quotes dispatched with the GitHub tool, complete.
