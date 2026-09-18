@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0b44b2f0c22c98) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Fri 18 Sep: book -0.5%, 6 names in a buy zone".
-Tests: 1057 passed in 723s. Quotes branch current from the overnight scheduled pull.
-Calls: no calls. September at $22,572 deployed (22.7% of equity against the 25% cap); October names wait; nothing breached, no rule fired.
+Email: sent via Gmail (id 1a0b694e74f24028) to josephislockedin@gmail.com, subject "Desk close, Fri 18 Sep: nothing crossed a rule".
+Book: MARKED at the 2026-09-18 close, equity $99,242 (-0.76%), 3 open (BKNG -6.7%, REGN -3.1%, MSFT flat); no stop or falsifier breached; 0.2 points behind SPY since the start.
+Tests: fast subset 97 passed. No calls (close edition). Quotes dispatched with the GitHub tool, complete.
