@@ -1,33 +1,71 @@
 {
- "built_at": "2026-09-17T22:13:52",
+ "built_at": "2026-09-18T11:32:56",
  "status": "SCANNED",
  "is_real": true,
- "as_of": "2026-09-17",
+ "as_of": "2026-09-18",
  "universe_n": 1895,
  "quality_n": 150,
- "n_setups": 32,
+ "n_setups": 34,
  "counts": {
   "pead": 0,
   "guidance": 0,
-  "breakout": 0,
+  "breakout": 2,
   "pullback": 32
  },
  "setups": [
+  {
+   "ticker": "FFIV",
+   "name": "F5, Inc.",
+   "kind": "breakout",
+   "label": "breakout with revisions",
+   "rule": "The latest close is above every close of the prior 251 sessions and next-year EPS estimates rose over 30 days. Stop: 8% under entry. Horizon: 10 sessions.",
+   "entry": 434.62,
+   "stop": 399.8504,
+   "risk_pct": 0.08,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "prior 251-session high": "$431.26",
+    "above it": "+0.8%",
+    "EPS FY1 30d": "+2.2%"
+   },
+   "source": "price_screen_latest.csv + yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "WAT",
+   "name": "Waters Corporation",
+   "kind": "breakout",
+   "label": "breakout with revisions",
+   "rule": "The latest close is above every close of the prior 251 sessions and next-year EPS estimates rose over 30 days. Stop: 8% under entry. Horizon: 10 sessions.",
+   "entry": 429.72,
+   "stop": 395.3424,
+   "risk_pct": 0.08,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "prior 251-session high": "$421.26",
+    "above it": "+2.0%",
+    "EPS FY1 30d": "+0.3%"
+   },
+   "source": "price_screen_latest.csv + yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
   {
    "ticker": "ABEV",
    "name": "Ambev S.A.",
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 2.99,
-   "stop": 2.81,
-   "risk_pct": 0.0602,
+   "entry": 2.98,
+   "stop": 2.83,
+   "risk_pct": 0.0503,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+1.4%",
+    "vs 20-session mean": "+0.8%",
     "50 over 200": "+1.6%",
-    "under the high": "-12.6%"
+    "under the high": "-12.9%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -38,15 +76,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 273.19,
+   "entry": 272.24,
    "stop": 263.5334,
-   "risk_pct": 0.0353,
+   "risk_pct": 0.032,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.3%",
-    "50 over 200": "+13.5%",
-    "under the high": "-4.4%"
+    "vs 20-session mean": "-1.6%",
+    "50 over 200": "+13.8%",
+    "under the high": "-4.7%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -57,72 +95,34 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 232.19,
+   "entry": 234.32,
    "stop": 230.9834,
-   "risk_pct": 0.0052,
+   "risk_pct": 0.0142,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-2.2%",
+    "vs 20-session mean": "-1.1%",
     "50 over 200": "+5.9%",
-    "under the high": "-10.1%"
+    "under the high": "-9.2%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
   },
   {
-   "ticker": "ANET",
-   "name": "Arista Networks, Inc.",
+   "ticker": "CORT",
+   "name": "Corcept Therapeutics Incorporated",
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 197.54,
-   "stop": 183.75,
-   "risk_pct": 0.0698,
+   "entry": 114.86,
+   "stop": 110.43,
+   "risk_pct": 0.0386,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+2.7%",
-    "50 over 200": "+20.6%",
-    "under the high": "-6.2%"
-   },
-   "source": "yfinance closes",
-   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
-  },
-  {
-   "ticker": "CHE",
-   "name": "Chemed Corporation",
-   "kind": "pullback",
-   "label": "pullback in trend",
-   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 509.91,
-   "stop": 506.47,
-   "risk_pct": 0.0067,
-   "horizon_days": 10,
-   "as_of": "2026-09-17",
-   "numbers": {
-    "vs 20-session mean": "-2.8%",
-    "50 over 200": "+15.9%",
-    "under the high": "-7.6%"
-   },
-   "source": "yfinance closes",
-   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
-  },
-  {
-   "ticker": "CTAS",
-   "name": "Cintas Corporation",
-   "kind": "pullback",
-   "label": "pullback in trend",
-   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 199.46,
-   "stop": 198.09,
-   "risk_pct": 0.0069,
-   "horizon_days": 10,
-   "as_of": "2026-09-17",
-   "numbers": {
-    "vs 20-session mean": "-1.2%",
-    "50 over 200": "+7.5%",
-    "under the high": "-7.6%"
+    "vs 20-session mean": "-0.5%",
+    "50 over 200": "+58.7%",
+    "under the high": "-7.0%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -133,15 +133,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 87.34,
+   "entry": 87.93,
    "stop": 83.03,
-   "risk_pct": 0.0493,
+   "risk_pct": 0.0557,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.0%",
-    "50 over 200": "+15.8%",
-    "under the high": "-5.4%"
+    "vs 20-session mean": "-0.2%",
+    "50 over 200": "+16.0%",
+    "under the high": "-4.8%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -152,34 +152,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 89.28,
+   "entry": 88.25,
    "stop": 84.37,
-   "risk_pct": 0.055,
+   "risk_pct": 0.044,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+0.3%",
-    "50 over 200": "+4.4%",
-    "under the high": "-6.2%"
-   },
-   "source": "yfinance closes",
-   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
-  },
-  {
-   "ticker": "EXEL",
-   "name": "Exelixis, Inc.",
-   "kind": "pullback",
-   "label": "pullback in trend",
-   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 56.78,
-   "stop": 53.69,
-   "risk_pct": 0.0544,
-   "horizon_days": 10,
-   "as_of": "2026-09-17",
-   "numbers": {
-    "vs 20-session mean": "+0.8%",
-    "50 over 200": "+14.6%",
-    "under the high": "-4.0%"
+    "vs 20-session mean": "-0.7%",
+    "50 over 200": "+4.2%",
+    "under the high": "-7.3%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -190,14 +171,14 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 189.04,
+   "entry": 189.08,
    "stop": 185.96,
-   "risk_pct": 0.0163,
+   "risk_pct": 0.0165,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.0%",
-    "50 over 200": "+13.6%",
+    "vs 20-session mean": "-0.1%",
+    "50 over 200": "+13.7%",
     "under the high": "-2.5%"
    },
    "source": "yfinance closes",
@@ -209,15 +190,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 68.01,
+   "entry": 68.19,
    "stop": 67.21,
-   "risk_pct": 0.0118,
+   "risk_pct": 0.0144,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.7%",
-    "50 over 200": "+0.3%",
-    "under the high": "-13.6%"
+    "vs 20-session mean": "-1.3%",
+    "50 over 200": "+0.6%",
+    "under the high": "-13.3%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -228,15 +209,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 49.03,
+   "entry": 49.18,
    "stop": 47.93,
-   "risk_pct": 0.0224,
+   "risk_pct": 0.0254,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.6%",
-    "50 over 200": "+7.4%",
-    "under the high": "-6.4%"
+    "vs 20-session mean": "-1.0%",
+    "50 over 200": "+7.5%",
+    "under the high": "-6.1%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -247,15 +228,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 342.87,
+   "entry": 347.33,
    "stop": 330.65,
-   "risk_pct": 0.0356,
+   "risk_pct": 0.048,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+0.5%",
-    "50 over 200": "+2.4%",
-    "under the high": "-14.7%"
+    "vs 20-session mean": "+1.8%",
+    "50 over 200": "+2.3%",
+    "under the high": "-13.6%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -266,15 +247,34 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 276.93,
+   "entry": 275.35,
    "stop": 271.1301,
-   "risk_pct": 0.0209,
+   "risk_pct": 0.0153,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.8%",
-    "50 over 200": "+15.2%",
-    "under the high": "-11.2%"
+    "vs 20-session mean": "-2.0%",
+    "50 over 200": "+15.3%",
+    "under the high": "-11.7%"
+   },
+   "source": "yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "GWW",
+   "name": "W.W. Grainger, Inc.",
+   "kind": "pullback",
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
+   "entry": 1262.61,
+   "stop": 1258.26,
+   "risk_pct": 0.0034,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "vs 20-session mean": "-2.6%",
+    "50 over 200": "+11.1%",
+    "under the high": "-9.8%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -285,15 +285,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 124.75,
+   "entry": 127.62,
    "stop": 121.47,
-   "risk_pct": 0.0263,
+   "risk_pct": 0.0482,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.9%",
+    "vs 20-session mean": "+1.4%",
     "50 over 200": "+15.7%",
-    "under the high": "-4.0%"
+    "under the high": "-1.8%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -304,15 +304,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 112.64,
+   "entry": 110.74,
    "stop": 109.7011,
-   "risk_pct": 0.0261,
+   "risk_pct": 0.0094,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.2%",
-    "50 over 200": "+19.3%",
-    "under the high": "-11.7%"
+    "vs 20-session mean": "-2.7%",
+    "50 over 200": "+19.0%",
+    "under the high": "-13.2%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -323,15 +323,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 267.28,
+   "entry": 270.22,
    "stop": 265.58,
-   "risk_pct": 0.0064,
+   "risk_pct": 0.0172,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.8%",
-    "50 over 200": "+10.8%",
-    "under the high": "-4.0%"
+    "vs 20-session mean": "+0.3%",
+    "50 over 200": "+10.7%",
+    "under the high": "-2.9%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -342,15 +342,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 36.2,
+   "entry": 35.88,
    "stop": 35.775,
-   "risk_pct": 0.0117,
+   "risk_pct": 0.0029,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-2.3%",
-    "50 over 200": "+7.5%",
-    "under the high": "-10.5%"
+    "vs 20-session mean": "-2.9%",
+    "50 over 200": "+7.2%",
+    "under the high": "-11.3%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -361,15 +361,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 100.54,
+   "entry": 100.8,
    "stop": 99.97,
-   "risk_pct": 0.0057,
+   "risk_pct": 0.0082,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.1%",
-    "50 over 200": "+18.0%",
-    "under the high": "-9.4%"
+    "vs 20-session mean": "+0.2%",
+    "50 over 200": "+17.6%",
+    "under the high": "-9.1%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -380,15 +380,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 212.03,
+   "entry": 210.82,
    "stop": 201.82,
-   "risk_pct": 0.0482,
+   "risk_pct": 0.0427,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.6%",
-    "50 over 200": "+20.3%",
-    "under the high": "-5.2%"
+    "vs 20-session mean": "-1.3%",
+    "50 over 200": "+20.9%",
+    "under the high": "-5.8%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -399,15 +399,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 887.29,
+   "entry": 879.57,
    "stop": 837.8595,
-   "risk_pct": 0.0557,
+   "risk_pct": 0.0474,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.2%",
-    "50 over 200": "+2.6%",
-    "under the high": "-10.7%"
+    "vs 20-session mean": "-1.3%",
+    "50 over 200": "+2.7%",
+    "under the high": "-11.5%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -418,15 +418,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 123.43,
+   "entry": 122.61,
    "stop": 117.53,
-   "risk_pct": 0.0478,
+   "risk_pct": 0.0414,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+1.1%",
-    "50 over 200": "+11.8%",
-    "under the high": "-7.6%"
+    "vs 20-session mean": "+0.5%",
+    "50 over 200": "+11.6%",
+    "under the high": "-8.2%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -437,15 +437,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 616.44,
+   "entry": 615.18,
    "stop": 583.16,
-   "risk_pct": 0.054,
+   "risk_pct": 0.052,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+2.4%",
-    "50 over 200": "+12.0%",
-    "under the high": "-0.7%"
+    "vs 20-session mean": "+2.1%",
+    "50 over 200": "+12.2%",
+    "under the high": "-0.9%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -456,15 +456,34 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 44.57,
+   "entry": 44.51,
    "stop": 42.84,
-   "risk_pct": 0.0388,
+   "risk_pct": 0.0375,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-2.1%",
-    "50 over 200": "+10.8%",
-    "under the high": "-10.8%"
+    "vs 20-session mean": "-2.0%",
+    "50 over 200": "+10.5%",
+    "under the high": "-10.9%"
+   },
+   "source": "yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "MO",
+   "name": "Altria Group, Inc.",
+   "kind": "pullback",
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
+   "entry": 69.7,
+   "stop": 65.0511,
+   "risk_pct": 0.0667,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "vs 20-session mean": "+2.7%",
+    "50 over 200": "+5.1%",
+    "under the high": "-5.5%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -475,53 +494,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 490.3,
+   "entry": 497.75,
    "stop": 481.15,
-   "risk_pct": 0.0187,
+   "risk_pct": 0.0334,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-1.2%",
-    "50 over 200": "+7.3%",
-    "under the high": "-8.8%"
-   },
-   "source": "yfinance closes",
-   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
-  },
-  {
-   "ticker": "MTD",
-   "name": "Mettler-Toledo International Inc.",
-   "kind": "pullback",
-   "label": "pullback in trend",
-   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 1378.6899,
-   "stop": 1280.58,
-   "risk_pct": 0.0712,
-   "horizon_days": 10,
-   "as_of": "2026-09-17",
-   "numbers": {
-    "vs 20-session mean": "+1.2%",
-    "50 over 200": "+4.1%",
-    "under the high": "-8.5%"
-   },
-   "source": "yfinance closes",
-   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
-  },
-  {
-   "ticker": "NTAP",
-   "name": "NetApp, Inc.",
-   "kind": "pullback",
-   "label": "pullback in trend",
-   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 191.49,
-   "stop": 180.77,
-   "risk_pct": 0.056,
-   "horizon_days": 10,
-   "as_of": "2026-09-17",
-   "numbers": {
-    "vs 20-session mean": "+1.5%",
-    "50 over 200": "+37.2%",
-    "under the high": "-7.5%"
+    "vs 20-session mean": "+0.2%",
+    "50 over 200": "+7.8%",
+    "under the high": "-7.4%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -532,15 +513,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 213.9,
+   "entry": 219.34,
    "stop": 208.247,
-   "risk_pct": 0.0264,
+   "risk_pct": 0.0506,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-2.0%",
-    "50 over 200": "+7.7%",
-    "under the high": "-9.1%"
+    "vs 20-session mean": "+0.4%",
+    "50 over 200": "+7.8%",
+    "under the high": "-6.7%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -551,15 +532,15 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 227.59,
+   "entry": 226.06,
    "stop": 215.58,
-   "risk_pct": 0.0528,
+   "risk_pct": 0.0464,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.6%",
-    "50 over 200": "+29.1%",
-    "under the high": "-5.4%"
+    "vs 20-session mean": "-1.3%",
+    "50 over 200": "+30.0%",
+    "under the high": "-6.0%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -570,15 +551,72 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 147.32,
+   "entry": 146.23,
    "stop": 141.66,
-   "risk_pct": 0.0384,
+   "risk_pct": 0.0313,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-2.4%",
-    "50 over 200": "+13.3%",
-    "under the high": "-11.1%"
+    "vs 20-session mean": "-3.0%",
+    "50 over 200": "+13.8%",
+    "under the high": "-11.5%"
+   },
+   "source": "yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "QLYS",
+   "name": "Qualys, Inc.",
+   "kind": "pullback",
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
+   "entry": 178.08,
+   "stop": 150.28,
+   "risk_pct": 0.1561,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "vs 20-session mean": "+1.1%",
+    "50 over 200": "+33.8%",
+    "under the high": "-9.1%"
+   },
+   "source": "yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "REGN",
+   "name": "Regeneron Pharmaceuticals, Inc.",
+   "kind": "pullback",
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
+   "entry": 789.45,
+   "stop": 774.11,
+   "risk_pct": 0.0194,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "vs 20-session mean": "-2.6%",
+    "50 over 200": "+4.1%",
+    "under the high": "-7.3%"
+   },
+   "source": "yfinance closes",
+   "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
+  },
+  {
+   "ticker": "ROST",
+   "name": "Ross Stores, Inc.",
+   "kind": "pullback",
+   "label": "pullback in trend",
+   "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
+   "entry": 229.48,
+   "stop": 224.8,
+   "risk_pct": 0.0204,
+   "horizon_days": 10,
+   "as_of": "2026-09-18",
+   "numbers": {
+    "vs 20-session mean": "-0.5%",
+    "50 over 200": "+10.0%",
+    "under the high": "-9.9%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -589,34 +627,34 @@
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 417.72,
-   "stop": 410.12,
-   "risk_pct": 0.0182,
+   "entry": 430.26,
+   "stop": 409.0227,
+   "risk_pct": 0.0494,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "-0.7%",
-    "50 over 200": "+10.1%",
-    "under the high": "-12.5%"
+    "vs 20-session mean": "+2.3%",
+    "50 over 200": "+9.8%",
+    "under the high": "-9.7%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
   },
   {
-   "ticker": "WAT",
-   "name": "Waters Corporation",
+   "ticker": "WHD",
+   "name": "Cactus, Inc.",
    "kind": "pullback",
    "label": "pullback in trend",
    "rule": "50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.",
-   "entry": 418.64,
-   "stop": 401.64,
-   "risk_pct": 0.0406,
+   "entry": 67.26,
+   "stop": 66.2969,
+   "risk_pct": 0.0143,
    "horizon_days": 10,
-   "as_of": "2026-09-17",
+   "as_of": "2026-09-18",
    "numbers": {
-    "vs 20-session mean": "+1.8%",
-    "50 over 200": "+9.9%",
-    "under the high": "-0.6%"
+    "vs 20-session mean": "-2.6%",
+    "50 over 200": "+15.9%",
+    "under the high": "-8.6%"
    },
    "source": "yfinance closes",
    "what_this_is": "a mechanical pattern that matched a rule in swing.md, not a forecast and not a recommendation"
@@ -648,7 +686,7 @@
   },
   "edgar": {
    "live": false,
-   "detail": "0 names with a CIK read, 0 with an earnings 8-K since 2026-09-10"
+   "detail": "0 names with a CIK read, 0 with an earnings 8-K since 2026-09-11"
   },
   "guidance": {
    "live": false,
