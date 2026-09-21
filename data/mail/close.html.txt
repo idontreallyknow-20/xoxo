@@ -1,0 +1,97 @@
+Desk close
+Monday 21 September 2026   closes as of 2026-09-21
+
+Nothing crossed a written rule as of the close. 1 line worth a glance.
+
+16 names watched   1 lines   0 rules fired   status SCANNED
+
+What crossed a rule 0 of 1 are written rules
+
+META move day · prices · 2026-09-21
+META moved +11.3% on 2026-09-21.
+rule: single session move of 5% or more
+
+Every watched name close, one day, five days, since the call, and room above the falsifier
+
+name close 1d 5d since call falsifier room
+METAWatch or Pass
+$741.25Mon 21 Sep
++11.3% +11.4% +21.4% none set none set
+ACNWatch or Pass
+$186.11Mon 21 Sep
++2.7% -4.6% -3.6% none set none set
+ADBEBuy after September 10 earnings
+$249.52Mon 21 Sep
++0.2% -6.1% -12.7% $220.00 +13.4%
+ADSKBuy now
+$218.85Mon 21 Sep
++0.9% -4.4% -7.9% $185.00 +18.3%
+AMATWatch or Pass
+$464.24Mon 21 Sep
++4.4% +9.4% +6.5% none set none set
+BKNGBuy now
+$168.52Mon 21 Sep
++0.4% -3.9% -13.6% $150.00 +12.3%
+CPRTBuy after September 10 earnings
+$28.91Mon 21 Sep
+-1.3% -8.9% -13.9% $25.00 +15.6%
+GOOGLBuy on pullback to $300 to $335
+$354.97Mon 21 Sep
++1.6% +1.6% +3.6% $260.00 +36.5%
+IDXXBuy on pullback to $470 to $535
+$515.30Mon 21 Sep
++0.7% +1.1% -2.6% $410.00 +25.7%
+ISRGBuy now
+$401.65Mon 21 Sep
++2.1% +6.3% +8.6% $290.00 +38.5%
+KLACBuy in October
+$183.97Mon 21 Sep
++3.9% +8.8% +6.4% $130.00 +41.5%
+LRCXBuy on pullback to $250 to $290
+$302.28Mon 21 Sep
++4.9% +10.5% +3.3% $215.00 +40.6%
+MSFTBuy in October
+$501.61Mon 21 Sep
++1.6% -0.8% -1.7% $400.00 +25.4%
+NOWWatch or Pass
+$137.68Mon 21 Sep
++1.6% -3.3% -5.4% none set none set
+NVRWatch or Pass
+$6,188.95Mon 21 Sep
++0.6% -1.8% -2.9% none set none set
+REGNBuy now
+$798.17Mon 21 Sep
++1.7% +0.6% -5.4% $650.00 +22.8%
+
+benchmarks 1d / 5d: SPY +1.6% / +1.9%   QQQ +2.8% / +4.6%
+● a written rule fired. Room is the distance above the journal's close-under level; negative means under it.
+
+My book fake money, real closes, my own calls
+
+Equity $99,514 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-21 close. SPY +1.2% over the same window (-1.7% for the book against it). QQQ +3.2% over the same window (-3.7% for the book against it). VFV.TO +3.1% over the same window (-3.6% for the book against it).
+BKNG long 44 @ $179.87 last $168.52 -6.3% vs SPY -7.5% 12.3% above its wrong-if
+REGN long 9 @ $810.31 last $798.17 -1.5% vs SPY -2.7% 22.8% above its wrong-if
+MSFT long 16 @ $493.95 last $501.61 +1.6% vs SPY +0.3% 25.4% above its wrong-if
+
+3 of 3 book calls graded against prices so far, 0 of 3 buys ahead of SPY, 0 falsified on their own terms.
+
+Standing state
+
+Positioning memo as of 2026-09-04: 0 positions, $100,000 cash. The ranked memo is on /positioning/. Nothing in this email is a trade recommendation.
+
+Where this came from
+
+prices: not live, yfinance adjusted closes: 0 live, 18 from cache
+edgar: not live, not pulled: dry run: no request was sent
+rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
+
+tests: 1057 tests passed, 0 failed, 0 errors, in 760s at 2026-09-21T22:25:05+00:00
+Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
+Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
+Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
+Headlines come from one syndication feed and are not scored. A quiet feed is not a quiet company.
+Names without a CIK, which is every Canadian listing here, are not scanned for filings, and the row says so.
+Filings were not pulled, so nothing new from EDGAR is listed.
+No feed could be read, so no headlines are listed.
+
+Research and analysis from public data, not personalised financial advice.

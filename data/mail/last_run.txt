@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0b694e74f24028) to josephislockedin@gmail.com, subject "Desk close, Fri 18 Sep: nothing crossed a rule".
-Book: MARKED at the 2026-09-18 close, equity $99,242 (-0.76%), 3 open (BKNG -6.7%, REGN -3.1%, MSFT flat); no stop or falsifier breached; 0.2 points behind SPY since the start.
-Tests: fast subset 97 passed. No calls (close edition). Quotes dispatched with the GitHub tool, complete.
+Email: the desk was offline at 11:00 UTC, so both editions ran at 22:10 UTC on Monday's close. Note sent via Gmail (id 1a0c61eb2ffd3e5e) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Mon 21 Sep: book -0.5%, 5 names in a buy zone"; close sent (id 1a0c61ece534201e) to josephislockedin@gmail.com, subject "Desk close, Mon 21 Sep: nothing crossed a rule".
+Book: MARKED at the 2026-09-21 close, equity $99,514 (-0.49%), 3 open (BKNG -6.3%, REGN -1.5%, MSFT +1.6%); nothing breached; 1.7 points behind SPY since the start after today's rally.
+Tests: 1057 passed in 759s. No calls: September at $22,624 deployed (22.7% against the 25% cap); October names wait.
