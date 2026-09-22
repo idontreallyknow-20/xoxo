@@ -1,5 +1,5 @@
 Desk morning brief
-Monday 21 September 2026   closes as of 2026-09-21
+Tuesday 22 September 2026   closes as of 2026-09-22
 
 Nothing crossed a written rule as of the close. 1 line worth a glance.
 
@@ -68,7 +68,7 @@ benchmarks 1d / 5d: SPY +1.6% / +1.9%   QQQ +2.8% / +4.6%
 
 Setups mechanical, from swing.md
 
-38 mechanical setups as of 2026-09-21, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
+38 mechanical setups as of 2026-09-22, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
 FFIV F5, Inc. breakout with revisions
 entry $450.10   stop $414.09 (8.0% risk)   horizon 10 sessions
 prior 251-session high $434.62 · above it +3.6% · EPS FY1 30d +2.2%
@@ -261,7 +261,7 @@ vs 20-session mean -2.0% · 50 over 200 +16.4% · under the high -8.3%
 
 My book fake money, real closes, my own calls
 
-Equity $99,514 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-21 close. SPY +1.2% over the same window (-1.7% for the book against it). QQQ +3.2% over the same window (-3.7% for the book against it). VFV.TO +3.1% over the same window (-3.6% for the book against it).
+Equity $99,514 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-21 close (1 session old). SPY +1.2% over the same window (-1.7% for the book against it). QQQ +3.2% over the same window (-3.7% for the book against it). VFV.TO +3.1% over the same window (-3.6% for the book against it).
 BKNG long 44 @ $179.87 last $168.52 -6.3% vs SPY -7.5% 12.3% above its wrong-if
 REGN long 9 @ $810.31 last $798.17 -1.5% vs SPY -2.7% 22.8% above its wrong-if
 MSFT long 16 @ $493.95 last $501.61 +1.6% vs SPY +0.3% 25.4% above its wrong-if
@@ -333,7 +333,7 @@ prices: not live, yfinance adjusted closes: 0 live, 18 from cache
 edgar: not live, not pulled: dry run: no request was sent
 rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
 
-tests: 1057 tests passed, 0 failed, 0 errors, in 760s at 2026-09-21T22:25:05+00:00
+tests: 1057 tests passed, 0 failed, 0 errors, in 1004s at 2026-09-22T11:25:13+00:00
 Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
 Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
 Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.

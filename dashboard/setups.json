@@ -1,8 +1,8 @@
 {
- "built_at": "2026-09-21T22:37:33",
+ "built_at": "2026-09-22T11:37:43",
  "status": "SCANNED",
  "is_real": true,
- "as_of": "2026-09-21",
+ "as_of": "2026-09-22",
  "universe_n": 1895,
  "quality_n": 150,
  "n_setups": 38,
@@ -23,7 +23,7 @@
    "stop": 414.092,
    "risk_pct": 0.08,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "prior 251-session high": "$434.62",
     "above it": "+3.6%",
@@ -42,7 +42,7 @@
    "stop": 161.2116,
    "risk_pct": 0.08,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "prior 251-session high": "$172.78",
     "above it": "+1.4%",
@@ -61,7 +61,7 @@
    "stop": 574.264,
    "risk_pct": 0.08,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "prior 251-session high": "$620.75",
     "above it": "+0.6%",
@@ -80,7 +80,7 @@
    "stop": 2.86,
    "risk_pct": 0.0403,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.4%",
     "50 over 200": "+1.2%",
@@ -99,7 +99,7 @@
    "stop": 263.5334,
    "risk_pct": 0.0237,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-2.1%",
     "50 over 200": "+14.2%",
@@ -118,7 +118,7 @@
    "stop": 230.9834,
    "risk_pct": 0.0425,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.8%",
     "50 over 200": "+5.8%",
@@ -137,7 +137,7 @@
    "stop": 1575.15,
    "risk_pct": 0.0796,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.5%",
     "50 over 200": "+13.1%",
@@ -156,7 +156,7 @@
    "stop": 110.29,
    "risk_pct": 0.0305,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.6%",
     "50 over 200": "+59.2%",
@@ -175,7 +175,7 @@
    "stop": 33.81,
    "risk_pct": 0.0611,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.1%",
     "50 over 200": "+20.6%",
@@ -194,7 +194,7 @@
    "stop": 57.27,
    "risk_pct": 0.0472,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-2.9%",
     "50 over 200": "+14.9%",
@@ -213,7 +213,7 @@
    "stop": 206.74,
    "risk_pct": 0.0216,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.2%",
     "50 over 200": "+4.5%",
@@ -232,7 +232,7 @@
    "stop": 83.03,
    "risk_pct": 0.0689,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.4%",
     "50 over 200": "+16.5%",
@@ -251,7 +251,7 @@
    "stop": 101.96,
    "risk_pct": 0.0585,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.8%",
     "50 over 200": "+8.1%",
@@ -270,7 +270,7 @@
    "stop": 84.37,
    "risk_pct": 0.0449,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.4%",
     "50 over 200": "+4.0%",
@@ -289,7 +289,7 @@
    "stop": 54.45,
    "risk_pct": 0.0484,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.5%",
     "50 over 200": "+14.2%",
@@ -308,7 +308,7 @@
    "stop": 185.96,
    "risk_pct": 0.0322,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+1.3%",
     "50 over 200": "+13.9%",
@@ -327,7 +327,7 @@
    "stop": 47.93,
    "risk_pct": 0.0346,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.2%",
     "50 over 200": "+7.5%",
@@ -346,7 +346,7 @@
    "stop": 271.1301,
    "risk_pct": 0.0327,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.3%",
     "50 over 200": "+15.5%",
@@ -365,7 +365,7 @@
    "stop": 1258.26,
    "risk_pct": 0.0153,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.2%",
     "50 over 200": "+10.5%",
@@ -384,7 +384,7 @@
    "stop": 38.5,
    "risk_pct": 0.0855,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+2.3%",
     "50 over 200": "+11.8%",
@@ -403,7 +403,7 @@
    "stop": 152.77,
    "risk_pct": 0.0118,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.9%",
     "50 over 200": "+6.7%",
@@ -422,7 +422,7 @@
    "stop": 121.47,
    "risk_pct": 0.0255,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.7%",
     "50 over 200": "+15.7%",
@@ -441,7 +441,7 @@
    "stop": 109.7011,
    "risk_pct": 0.0271,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.8%",
     "50 over 200": "+18.4%",
@@ -460,7 +460,7 @@
    "stop": 265.58,
    "risk_pct": 0.0144,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.1%",
     "50 over 200": "+10.6%",
@@ -479,7 +479,7 @@
    "stop": 35.775,
    "risk_pct": 0.0139,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.5%",
     "50 over 200": "+6.6%",
@@ -498,7 +498,7 @@
    "stop": 100.25,
    "risk_pct": 0.0003,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.4%",
     "50 over 200": "+16.8%",
@@ -517,7 +517,7 @@
    "stop": 201.82,
    "risk_pct": 0.036,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.9%",
     "50 over 200": "+22.0%",
@@ -536,7 +536,7 @@
    "stop": 872.8622,
    "risk_pct": 0.0154,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.9%",
     "50 over 200": "+3.0%",
@@ -555,7 +555,7 @@
    "stop": 117.53,
    "risk_pct": 0.0194,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.3%",
     "50 over 200": "+11.2%",
@@ -574,7 +574,7 @@
    "stop": 42.84,
    "risk_pct": 0.0264,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-2.4%",
     "50 over 200": "+10.0%",
@@ -593,7 +593,7 @@
    "stop": 66.6062,
    "risk_pct": 0.0281,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.5%",
     "50 over 200": "+4.8%",
@@ -612,7 +612,7 @@
    "stop": 487.31,
    "risk_pct": 0.0285,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.6%",
     "50 over 200": "+8.8%",
@@ -631,7 +631,7 @@
    "stop": 215.58,
    "risk_pct": 0.0471,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.2%",
     "50 over 200": "+31.8%",
@@ -650,7 +650,7 @@
    "stop": 774.11,
    "risk_pct": 0.0301,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-1.0%",
     "50 over 200": "+4.7%",
@@ -669,7 +669,7 @@
    "stop": 224.8,
    "risk_pct": 0.0279,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+0.5%",
     "50 over 200": "+9.9%",
@@ -688,7 +688,7 @@
    "stop": 40.46,
    "risk_pct": 0.0553,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-0.1%",
     "50 over 200": "+8.7%",
@@ -707,7 +707,7 @@
    "stop": 401.64,
    "risk_pct": 0.0526,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "+2.5%",
     "50 over 200": "+10.6%",
@@ -726,7 +726,7 @@
    "stop": 66.2969,
    "risk_pct": 0.0171,
    "horizon_days": 10,
-   "as_of": "2026-09-21",
+   "as_of": "2026-09-22",
    "numbers": {
     "vs 20-session mean": "-2.0%",
     "50 over 200": "+16.4%",
@@ -762,7 +762,7 @@
   },
   "edgar": {
    "live": false,
-   "detail": "0 names with a CIK read, 0 with an earnings 8-K since 2026-09-14"
+   "detail": "0 names with a CIK read, 0 with an earnings 8-K since 2026-09-15"
   },
   "guidance": {
    "live": false,
