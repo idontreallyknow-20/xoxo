@@ -1,5 +1,5 @@
 {
- "built_at": "2026-09-23T11:42:09",
+ "built_at": "2026-09-23T22:04:35",
  "status": "GRADED",
  "is_real": true,
  "as_of": "2026-09-23",
@@ -17,8 +17,8 @@
   "buys_ahead_of_spy": 0,
   "passes_graded": 0,
   "passes_missed": 0,
-  "mean_excess_vs_spy_buys": -0.08299521470236167,
-  "trading_days": 11,
+  "mean_excess_vs_spy_buys": -0.08908761050343506,
+  "trading_days": 12,
   "swing_calls": 0,
   "swing_graded_at_horizon": 0,
   "swing_ahead_at_horizon": 0,
@@ -34,7 +34,7 @@
   "Only a falsifier of the form 'a close under $X' is checked against prices. Guidance and growth falsifiers are real and are left to the reader.",
   "A Pass that then beat the market is a missed gain, not a loss, and is labelled 'missed'.",
   "Every call carries the same date, 2026-09-07, so the whole table is one window and one market regime. It cannot say anything about consistency.",
-  "The longest window is 11 trading days. Below a quarter, the benchmark comparison is mostly noise."
+  "The longest window is 12 trading days. Below a quarter, the benchmark comparison is mostly noise."
  ],
  "grades": [
   {
@@ -50,20 +50,20 @@
    "score_percentile_at_call": 96.6,
    "score_snapshot": "2026-09-04",
    "graded_on": "2026-09-23",
-   "trading_days": 11,
-   "price_now": 164.22,
-   "ret": -0.15840721570235228,
+   "trading_days": 12,
+   "price_now": 155.9,
+   "ret": -0.20104545687490383,
    "benchmarks": {
-    "SPY": 0.0066353222813180235,
-    "QQQ": 0.04072393149873954
+    "SPY": -0.0006146179099295601,
+    "QQQ": 0.032021760717872105
    },
-   "excess_vs_spy": -0.1650425379836703,
-   "low_since_call": 164.22,
+   "excess_vs_spy": -0.20043083896497427,
+   "low_since_call": 155.9,
    "trigger_breached": false,
    "stopped_trading": false,
    "status": "graded",
    "reason": "",
-   "verdict": "behind so far: -15.8% since the call, -16.5 pts against SPY; 11 trading days is too short to mean anything",
+   "verdict": "behind so far: -20.1% since the call, -20.0 pts against SPY; 12 trading days is too short to mean anything",
    "horizon_days": null,
    "stop": null,
    "stop_breached": null,
@@ -83,20 +83,20 @@
    "score_percentile_at_call": 75.8,
    "score_snapshot": "2026-09-04",
    "graded_on": "2026-09-23",
-   "trading_days": 11,
-   "price_now": 803.9,
-   "ret": -0.046913346058543914,
+   "trading_days": 12,
+   "price_now": 801.82,
+   "ret": -0.04937934959156809,
    "benchmarks": {
-    "SPY": 0.0066353222813180235,
-    "QQQ": 0.04072393149873954
+    "SPY": -0.0006146179099295601,
+    "QQQ": 0.032021760717872105
    },
-   "excess_vs_spy": -0.05354866833986194,
+   "excess_vs_spy": -0.04876473168163853,
    "low_since_call": 774.11,
    "trigger_breached": false,
    "stopped_trading": false,
    "status": "graded",
    "reason": "",
-   "verdict": "behind so far: -4.7% since the call, -5.4 pts against SPY; 11 trading days is too short to mean anything",
+   "verdict": "behind so far: -4.9% since the call, -4.9 pts against SPY; 12 trading days is too short to mean anything",
    "horizon_days": null,
    "stop": null,
    "stop_breached": null,
@@ -116,20 +116,20 @@
    "score_percentile_at_call": 86.6,
    "score_snapshot": "2026-09-04",
    "graded_on": "2026-09-23",
-   "trading_days": 11,
-   "price_now": 498.0,
-   "ret": -0.02375911550223475,
+   "trading_days": 12,
+   "price_now": 500.59,
+   "ret": -0.01868187877362193,
    "benchmarks": {
-    "SPY": 0.0066353222813180235,
-    "QQQ": 0.04072393149873954
+    "SPY": -0.0006146179099295601,
+    "QQQ": 0.032021760717872105
    },
-   "excess_vs_spy": -0.030394437783552775,
+   "excess_vs_spy": -0.01806726086369237,
    "low_since_call": 490.3,
    "trigger_breached": false,
    "stopped_trading": false,
    "status": "graded",
    "reason": "",
-   "verdict": "behind so far: -2.4% since the call, -3.0 pts against SPY; 11 trading days is too short to mean anything",
+   "verdict": "behind so far: -1.9% since the call, -1.8 pts against SPY; 12 trading days is too short to mean anything",
    "horizon_days": null,
    "stop": null,
    "stop_breached": null,
@@ -151,12 +151,12 @@
    "n_graded": 3,
    "n_with_score_and_return": 3,
    "distinct_call_dates": 1,
-   "longest_window_trading_days": 11
+   "longest_window_trading_days": 12
   },
   "shortfalls": [
    "3 graded calls carry both a score at call and an excess return; 20 are required",
    "the usable calls fall on 1 distinct date; 4 are required, because calls made on one day are one draw from one market regime",
-   "the longest window is 11 trading days; 63 are required"
+   "the longest window is 12 trading days; 63 are required"
   ],
   "rank_ic": null,
   "rank_ic_n": null,
