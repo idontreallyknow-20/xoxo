@@ -65,25 +65,17 @@ def test_secondary_text_meets_aa(theme):
     assert r >= 4.5, f"{theme}: --ink-2 on --paper is {r:.2f}:1"
 
 
-# Measured, not assumed. These two are inherited from dashboard/index.html and are
-# not mine to change: the whole point of copying the palette verbatim is that the
-# new pages match the old one. They are recorded here so the shortfall is a known
-# quantity rather than a discovery, and they are flagged in NOTES.md.
-INHERITED_SHORTFALLS = {
-    ("--ink-3", "bone"): 2.90,
-    ("--ink-3", "amber"): 2.81,
-    ("--up", "bone"): 4.47,
-}
+# Measured, not assumed. The inherited palette had --ink-3 below 3:1 in bone and
+# amber and below 4.5:1 everywhere, and --up at 4.47:1 in bone. The 2026-09-23 polish
+# pass lifted all of them to AA (Lighthouse flagged the captions on the front page),
+# so nothing is waved through any more. A pairing that has to fall short again goes
+# here with its measured ratio and a line in NOTES.md.
+INHERITED_SHORTFALLS = {}
 
 
 @pytest.mark.parametrize("theme", THEMES)
 def test_tertiary_text_meets_the_large_text_bar(theme):
-    """--ink-3 is captions, units and as-of dates. 3:1, the large-text bar.
-
-    It falls short in two of the six inherited themes. That is recorded rather than
-    waved through, and the new pages never make --ink-3 the only carrier of a fact:
-    every caption restates something that is also in the body text or a value.
-    """
+    """--ink-3 is captions, units and as-of dates: small text, so it is held to 4.5:1."""
     t = tokens(theme)
     r = ratio(t["--ink-3"], t["--paper"])
     known = INHERITED_SHORTFALLS.get(("--ink-3", theme))
@@ -92,7 +84,7 @@ def test_tertiary_text_meets_the_large_text_bar(theme):
             f"{theme}: --ink-3 measured {r:.2f}:1, recorded as {known}. If the palette changed, "
             "update the record and re-check.")
         return
-    assert r >= 3.0, f"{theme}: --ink-3 on --paper is {r:.2f}:1"
+    assert r >= 4.5, f"{theme}: --ink-3 on --paper is {r:.2f}:1"
 
 
 @pytest.mark.parametrize("theme", THEMES)

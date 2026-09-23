@@ -19,35 +19,44 @@
  */
 
 :root, [data-theme="night"] {
-  --paper: #131311; --ink: #f1efe6; --ink-2: #a8a69b; --ink-3: #6f6e66;
+  --paper: #131311; --ink: #f1efe6; --ink-2: #a8a69b; --ink-3: #807f77;
   --rule: #33332e; --rule-soft: #22221f; --mark: #ffcf3f; --mark-soft: #2a2718; --mark-ink: #131311;
   --up: #4fc97a; --down: #ff6b57; --spy: #3987e5; --qqq: #d95926; --vfv: #199e70; --track: #2a2a26;
 }
 [data-theme="paper"] {
-  --paper: #ffffff; --ink: #121212; --ink-2: #5b5b57; --ink-3: #8f8f89;
+  --paper: #ffffff; --ink: #121212; --ink-2: #5b5b57; --ink-3: #757570;
   --rule: #d9d9d3; --rule-soft: #ecece9; --mark: #fff27a; --mark-soft: #fffbd6; --mark-ink: #121212;
   --up: #0b7a3b; --down: #c2361f; --spy: #2a78d6; --qqq: #eb6834; --vfv: #1baf7a; --track: #ecece9;
 }
 [data-theme="slate"] {
-  --paper: #0f1418; --ink: #e6edf3; --ink-2: #9aa7b2; --ink-3: #61707c;
+  --paper: #0f1418; --ink: #e6edf3; --ink-2: #9aa7b2; --ink-3: #74828d;
   --rule: #26313a; --rule-soft: #1a2229; --mark: #7dd3fc; --mark-soft: #142430; --mark-ink: #0f1418;
   --up: #3ddc97; --down: #ff7a6b; --spy: #5aa0f2; --qqq: #f0824f; --vfv: #2cc48a; --track: #1f2a33;
 }
 [data-theme="forest"] {
-  --paper: #0c1410; --ink: #e4efe6; --ink-2: #93a897; --ink-3: #5c6f60;
+  --paper: #0c1410; --ink: #e4efe6; --ink-2: #93a897; --ink-3: #728375;
   --rule: #223328; --rule-soft: #16221a; --mark: #b6f09c; --mark-soft: #16281c; --mark-ink: #0c1410;
   --up: #7ee787; --down: #ff8d7a; --spy: #6ea8ff; --qqq: #ffa15c; --vfv: #46d39a; --track: #1a2820;
 }
 [data-theme="bone"] {
-  --paper: #f3f1ea; --ink: #1b1a17; --ink-2: #5f5c53; --ink-3: #928e82;
+  --paper: #f3f1ea; --ink: #1b1a17; --ink-2: #5f5c53; --ink-3: #6f6c63;
   --rule: #cfcbbf; --rule-soft: #e4e1d7; --mark: #1b1a17; --mark-soft: #e9e5d8; --mark-ink: #f3f1ea;
-  --up: #2f7d4a; --down: #b83a2a; --spy: #2a6fcf; --qqq: #d9561f; --vfv: #178f63; --track: #e4e1d7;
+  --up: #2f7b49; --down: #b83a2a; --spy: #2a6fcf; --qqq: #d9561f; --vfv: #178f63; --track: #e4e1d7;
 }
 [data-theme="amber"] {
-  --paper: #0a0a0a; --ink: #f4b942; --ink-2: #b88a2f; --ink-3: #6e5520;
+  --paper: #0a0a0a; --ink: #f4b942; --ink-2: #b88a2f; --ink-3: #99752b;
   --rule: #2e2410; --rule-soft: #1a1508; --mark: #f4b942; --mark-soft: #1f1809; --mark-ink: #0a0a0a;
   --up: #9be26b; --down: #ff6f4c; --spy: #7fb2ff; --qqq: #ff9a4a; --vfv: #5fd6a5; --track: #1f1809;
 }
+/* Self-hosted, latin subset only: no third-party request stands between the first
+ * byte and the first paint. Bricolage is the variable file (opsz and wght axes). */
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 300 600;
+             font-display: swap; src: url("fonts/bricolage-grotesque-latin.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400;
+             font-display: swap; src: url("fonts/ibm-plex-mono-400-latin.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500;
+             font-display: swap; src: url("fonts/ibm-plex-mono-500-latin.woff2") format("woff2"); }
+
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -99,6 +108,7 @@ footer { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule);
 /* ---- nameplate ---------------------------------------------------------- */
 .plate { margin-top: 34px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; }
 @media (max-width: 780px) { .plate { grid-template-columns: 1fr; align-items: start; } }
+h1 { margin: 0; font-size: inherit; font-weight: inherit; }
 .plate .tk { font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
 .plate .co { font-size: 17px; color: var(--ink-2); margin-top: 6px; }
 .plate .facts { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 10px;
@@ -299,7 +309,7 @@ html[data-motion="off"] .reveal { opacity: 1; transform: none; }
               font-family: var(--mono); font-size: 10.5px; color: var(--ink-3);
               font-variant-numeric: tabular-nums; }
 .card .vals span { display: flex; flex-direction: column; gap: 2px; }
-.card .vals em { font-style: normal; color: var(--ink-3); opacity: 0.7; }
+.card .vals em { font-style: normal; color: var(--ink-3); }
 .card .vals span:last-child { color: var(--ink); }
 
 /* ---- positioning: candidate memo ----------------------------------------
@@ -661,3 +671,23 @@ button.primary { background: var(--ink); color: var(--paper); border-color: var(
 @keyframes flash { 0% { color: var(--mark); } 100% { color: inherit; } }
 footer { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 svg .hit { cursor: crosshair; }
+
+/* ---- intro and credit ----------------------------------------------------- */
+.intro { margin-top: 44px; max-width: 70ch; }
+.intro h1 { font-size: clamp(22px, 3.2vw, 30px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+.intro p { color: var(--ink-2); font-size: 15px; margin: 12px 0 0; }
+.intro + .hero { margin-top: 40px; }
+footer .credit a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--rule);
+                   transition: color 140ms ease, border-color 140ms ease; }
+footer .credit a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.notfound { margin-top: 72px; max-width: 60ch; }
+.notfound h1 { font-size: clamp(40px, 8vw, 72px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
+.notfound p { color: var(--ink-2); margin: 16px 0 24px; }
+.notfound .links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-family: var(--mono); font-size: 13px; }
+.notfound .links a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.notfound .links a:hover { border-bottom-color: var(--ink); }
+.fail-h { font-size: 15px; font-weight: 500; margin: 0 0 4px; }
+/* What a page shows between the first paint and its data arriving. */
+.loading { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 96px; text-align: center;
+           animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.45; } }
