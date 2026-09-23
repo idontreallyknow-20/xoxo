@@ -14,6 +14,10 @@ collides with the freeze on ``dashboard/index.html``. The freeze is lifted for
 that writes it, ``scripts/build_dashboard.py``, is still frozen, and a hand edit
 to a generated file would be overwritten by the next pipeline run. Everything
 outside ``dashboard/`` is as untouchable as it was. NOTES.md section 9a.
+
+Polish pass, 2026-09-23: Joseph asked for a README that says what this is, how to
+run it and who built it, so ``README.md`` comes off the list. The pipeline scripts
+and ``data.js`` stay frozen.
 """
 import subprocess
 from pathlib import Path
@@ -36,7 +40,6 @@ UNTOUCHABLE = [
     "scripts/email_picks.py",
     "scripts/email_hero_gif.py",
     "scripts/_repull.py",
-    "README.md",
     "criteria.md",
     "journal.md",
     "requirements.txt",
@@ -110,7 +113,7 @@ def test_everything_else_new_is_additive(base):
     """
     out, _ = git("diff", "--name-status", base)
     modified = [ln.split("\t", 1)[1] for ln in out.splitlines() if ln.startswith("M")]
-    allowed = {".gitignore", "setup.ps1"}
+    allowed = {".gitignore", "setup.ps1", "README.md"}
     unexpected = [m for m in modified
                   if m not in allowed and not (m.startswith("dashboard/") and m != "dashboard/data.js")]
     assert not unexpected, f"pre-existing files modified: {unexpected}"

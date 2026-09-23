@@ -1,4 +1,26 @@
-# Stock research system
+# Desk
+
+A stock research dashboard by [Joseph Leung](https://josephleung-site.vercel.app/). It screens about 1,900 US and Canadian companies for quality and price, writes every call into a journal before any money moves, and scores the process against SPY, QQQ and VFV.
+
+Live: https://xoxo-tau-umber.vercel.app/
+
+## Run it
+
+```bash
+pip install -r requirements.txt pytest
+python scripts/serve.py            # http://localhost:8765
+python -m pytest                   # ~1,000 tests, about three minutes
+```
+
+The determinism test rebuilds the generated files under `dashboard/` in place. Without the quotes cache that rebuild blanks the live marks, so run `git checkout -- dashboard/*.json dashboard/analysis` afterwards unless you meant to rebuild.
+
+The site is the static `dashboard/` folder. Vercel deploys it as is from `main` (see `vercel.json`); there is no build step. The full pipeline that regenerates the data is below.
+
+Built by [Joseph Leung](https://josephleung-site.vercel.app/) (Joseph Wah Sing Leung), Richmond Hill, Ontario.
+
+---
+
+## Stock research system
 
 A repeatable process for finding good companies at reasonable prices, logging every call, and checking whether the process beats an index. Claude does the research and bookkeeping. You make every buy and sell decision. Nothing here connects to a brokerage.
 
