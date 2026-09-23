@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from an import analysis, pages, paths  # noqa: E402
+from an import analysis, pages, paths, seo  # noqa: E402
 
 FIXED_STAMP = "1970-01-01T00:00:00"  # deprecated; see --check below
 
@@ -88,6 +88,8 @@ def main() -> int:
     pages.write_analyze_index()
     pages.write_compare_page()
     pages.write_positioning_page()
+    seo.write_sitemap(sorted(records), lastmod=index.get("snapshot_date"))
+    seo.write_robots()
 
     deep = sum(1 for r in records.values() if r["depth"] == "deep")
     narrated = sum(1 for r in records.values() if r["what_changed"]["read"].get("available") is not False)

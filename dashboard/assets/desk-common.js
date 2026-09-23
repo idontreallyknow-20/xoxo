@@ -76,6 +76,14 @@ window.Desk = (function () {
     </header>`;
   }
 
+  /* Every page ends with the same two things: what the page is not (advice), and
+   * who built it, linked to Joseph's own site. */
+  const HUB = "https://josephleung-site.vercel.app/";
+  function footer(note) {
+    return `<footer><span>${esc(note || "Research and analysis from public data, not personalised financial advice.")}</span>
+      <span class="credit">Built by <a href="${HUB}" rel="author">Joseph Leung</a></span></footer>`;
+  }
+
   function themeBar() {
     const cur = store.get("theme", "night");
     return `<div class="seg-btns">${THEMES.map(([k, l]) =>
@@ -173,10 +181,11 @@ window.Desk = (function () {
   }
 
   function fail(message, detail) {
-    document.body.innerHTML = `<div class="page"><section><h2>${esc(message)}</h2><div class="rule"></div>
-      <div class="empty">${esc(detail || "")}</div></section></div>`;
+    document.body.innerHTML = `<main class="page"><section><h1 class="fail-h">${esc(message)}</h1><div class="rule"></div>
+      <div class="empty">${esc(detail || "")}</div>
+      <p class="mono" style="font-size:13px"><a href="/">&larr; back to Desk</a> &nbsp; <a href="" onclick="location.reload();return false">try again</a></p></section></main>`;
   }
 
   return { store, esc, has, num, pct, pts, mult, money, bn, cap, count, byUnit,
-           chrome, themeBar, wireTheme, rail, spark, sparkValues, fail, THEMES, applyChrome };
+           chrome, footer, themeBar, wireTheme, rail, spark, sparkValues, fail, THEMES, applyChrome };
 })();

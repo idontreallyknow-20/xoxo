@@ -17,10 +17,23 @@ MOTION = (DASH / "assets" / "motion.js").read_text()
 CSS = (DASH / "assets" / "desk.css").read_text()
 
 
+# The only absolute URLs the front page may carry: its own canonical address, the
+# author's site and profiles in the head and footer, and schema.org. None of them is
+# fetched by a script; the check below is that no market-data host ever joins them.
+LINK_ONLY_HOSTS = {
+    "xoxo-tau-umber.vercel.app", "josephleung-site.vercel.app", "schema.org",
+    "www.linkedin.com", "github.com", "dailybriefhq.com", "nerfchess.com", "ratings.fide.com",
+    "www.chess.ca", "www.chess.com", "lichess.org",
+}
+
+
 def test_the_front_page_no_longer_calls_a_market_data_service_from_the_browser():
     for src in (INDEX, HOME):
         assert "finnhub.io" not in src.lower(), "the comment may name it; the code may not call it"
-        assert "token=" not in src and "https://" not in src.replace("https://fonts.g", "")
+        assert "token=" not in src
+        hosts = set(re.findall(r"https://([^/\s\"'<>)]+)", src))
+        assert hosts <= LINK_ONLY_HOSTS, hosts - LINK_ONLY_HOSTS
+        assert not re.search(r'<script[^>]+src="https?://', src), "no third-party script on the front page"
         assert 'store.get("key"' not in src and "savekey" not in src
 
 
@@ -74,4 +87,4 @@ def test_the_journal_tab_reads_the_tracker_not_data_js():
 
 def test_the_front_page_still_reads_the_frozen_data_js():
     assert "window.DASH" in HOME
-    assert '<script src="data.js">' in INDEX
+    assert re.search(r'<script (defer )?src="data.js">', INDEX)

@@ -79,12 +79,11 @@
   function render() {
     const d = S.data;
     const deep = d.tickers.filter((t) => t.depth === "deep").length;
-    document.title = "Analyse · Desk";
-    document.body.innerHTML = `<div class="page">
+    document.body.innerHTML = `<main class="page">
 ${D.chrome("Analyse", "../")}
 <div class="plate reveal" style="--i:0">
   <div>
-    <div class="tk">Analyse</div>
+    <h1 class="tk">Analyse</h1>
     <div class="co">One page per name in the quality top 150.</div>
     <div class="facts">
       <span><b>${deep}</b> with a research note behind them</span>
@@ -95,11 +94,11 @@ ${D.chrome("Analyse", "../")}
 </div>
 <section class="reveal" style="--i:1">
   <div class="toolbar">
-    <div class="seg-btns" id="depth">
+    <div class="seg-btns" id="depth-filter" role="group" aria-label="filter by depth">
       ${[["all", "all"], ["deep", "research note"], ["screen", "screen only"]].map(([k, l]) =>
         `<button data-depth="${k}"${k === S.depth ? ' class="on"' : ""}>${esc(l)}</button>`).join("")}
     </div>
-    <input type="search" id="q" placeholder="find a ticker, company, sector or industry" value="${esc(S.q)}">
+    <input type="search" id="q" aria-label="find a ticker, company, sector or industry" placeholder="find a ticker, company, sector or industry" value="${esc(S.q)}">
     <span class="right"><a class="mono" style="font-size:12px" href="compare/">compare &rarr;</a>
       <a class="mono" style="font-size:12px;margin-left:14px" href="../positioning/">positioning &rarr;</a></span>
   </div>
@@ -108,8 +107,8 @@ ${D.chrome("Analyse", "../")}
 <section class="reveal" style="--i:2">
   <div class="toolbar">${D.themeBar()}</div>
 </section>
-<footer>Research and analysis from public data, not personalised financial advice.</footer>
-</div>`;
+${D.footer()}
+</main>`;
     const st = document.getElementById("status");
     if (st) st.innerHTML = `snapshot ${esc(d.snapshot_date)}`;
     D.wireTheme(document);

@@ -294,7 +294,7 @@
 
   function render() {
     const m = model(S.tickers.map((t) => S.records[t]));
-    document.title = (S.tickers.length ? S.tickers.join(" vs ") + " · " : "") + "Compare · Desk";
+    document.title = (S.tickers.length ? S.tickers.join(" vs ") + " compared" : "Compare stocks side by side") + " | Desk by Joseph Leung";
     const empty = !S.tickers.length ? `<section class="reveal" style="--i:2"><div class="empty">
       Pick up to four names from the quality top 150 and they are set side by side: the standing call
       and what would prove it wrong, four fiscal years of the business numbers with the strongest move
@@ -303,11 +303,11 @@
       a page. The selection is in the address, so a comparison is a link you can send.
       Start by typing a ticker above, or open <a href="?t=KLAC,BKNG,AAPL,NVDA">KLAC, BKNG, AAPL and NVDA</a>.
       </div></section>` : "";
-    document.body.innerHTML = `<div class="page">
+    document.body.innerHTML = `<main class="page">
 ${D.chrome("Analyse", "../../")}
 <div class="plate reveal" style="--i:0">
   <div>
-    <div class="tk">Compare</div>
+    <h1 class="tk">Compare</h1>
     <div class="co">${S.tickers.length ? esc(S.tickers.join("  ·  ")) : "up to four analysed names, side by side"}</div>
     <div class="facts"><span>snapshot <b>${esc((S.index || {}).snapshot_date || "?")}</b></span>
       <span><a href="../">back to the index</a></span></div>
@@ -317,8 +317,8 @@ ${D.chrome("Analyse", "../../")}
 ${empty}
 ${m.sections.map((s, i) => sectionHtml(s, i + 2)).join("")}
 <section class="reveal" style="--i:9"><div class="toolbar">${D.themeBar()}</div></section>
-<footer>Research and analysis from public data, not personalised financial advice.</footer>
-</div>`;
+${D.footer()}
+</main>`;
     const st = document.getElementById("status");
     if (st) st.innerHTML = `${S.tickers.length} of ${MAX}`;
     D.wireTheme(document);
