@@ -120,13 +120,12 @@
 
   function render() {
     const p = S.p;
-    document.title = "Paper · Desk";
-    document.body.innerHTML = `<div class="page">
+    document.body.innerHTML = `<main class="page">
 ${D.chrome("Paper", "../")}
 
 <div class="plate reveal" style="--i:0">
   <div>
-    <div class="tk">Paper</div>
+    <h1 class="tk">Paper</h1>
     <div class="co">${esc(p.what_this_is || "The swing rules replayed on real closes with fake money.")}</div>
     <div class="facts"><span>status <b>${esc(p.status)}</b></span>
       <span>real data <b>${p.is_real ? "yes" : "no"}</b></span>
@@ -140,7 +139,8 @@ ${armTable(p.test, "Held-out window", 3)}
 ${armTable(p.train, "Train window, in-sample", 4)}
 ${limitations()}
 <div class="toolbar" style="margin-top:26px">${D.themeBar()}</div>
-</div>`;
+${D.footer("A measurement of the rules on past prices, not a recommendation and not financial advice.")}
+</main>`;
     D.wireTheme(document);
   }
 

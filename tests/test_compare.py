@@ -173,7 +173,7 @@ def test_the_shell_exists_and_points_two_levels_up():
     html = p.read_text()
     assert 'src="../../assets/compare.js"' in html and 'href="../../assets/desk.css"' in html
     assert "window.DESK_COMPARE = true;" in html
-    assert "<title>Compare · Desk</title>" in html
+    assert "<title>Compare stocks side by side | Desk by Joseph Leung</title>" in html
 
 
 def test_the_index_and_the_deep_page_link_to_compare():

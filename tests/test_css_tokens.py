@@ -58,7 +58,8 @@ def test_border_radius_is_zero_everywhere():
 
 
 def test_only_the_two_loaded_font_families_are_used():
-    css = CSS.read_text()
+    # the @font-face rules name the two families; every other rule has to use the tokens
+    css = re.sub(r"@font-face\s*\{[^}]*\}", "", CSS.read_text())
     fams = set(re.findall(r"font-family:\s*([^;]+);", css))
     for f in fams:
         assert "var(--mono)" in f or "var(--display)" in f or "inherit" in f, f
@@ -69,7 +70,8 @@ def test_no_font_weight_outside_the_loaded_range():
     be synthesised by the browser and look wrong."""
     css = CSS.read_text()
     weights = {w.strip() for w in re.findall(r"font-weight:\s*([^;]+);", css)}
-    allowed = {"300", "400", "500", "600", "inherit", "normal"}
+    allowed = {"300", "400", "500", "600", "inherit", "normal",
+               "300 600"}  # the variable face's range in its @font-face
     assert weights <= allowed, weights - allowed
 
 

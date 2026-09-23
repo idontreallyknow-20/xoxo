@@ -312,7 +312,7 @@
   // overview extras
   function renderRest() {
     const E = D.earnings || [];
-    $("earnings").innerHTML = E.length ? `<table><thead><tr><th>date</th><th>company</th><th></th></tr></thead><tbody>${E.map((e, i) => `<tr class="row" style="animation-delay:${i * 30}ms"><td class="mono">${esc(e.date)}</td><td><span class="tk">${esc(e.ticker)}</span><span class="nm">${esc(e.name || "")}</span></td><td class="muted" style="font-size:13px">${e.held ? "held" : e.watch ? "pick" : "screen"}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">Nothing held or picked reports in the next two weeks.</div>`;
+    $("earnings").innerHTML = E.length ? `<table><thead><tr><th>date</th><th>company</th><th>list</th></tr></thead><tbody>${E.map((e, i) => `<tr class="row" style="animation-delay:${i * 30}ms"><td class="mono">${esc(e.date)}</td><td><span class="tk">${esc(e.ticker)}</span><span class="nm">${esc(e.name || "")}</span></td><td class="muted" style="font-size:13px">${e.held ? "held" : e.watch ? "pick" : "screen"}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">Nothing held or picked reports in the next two weeks.</div>`;
     const C = D.counts || {};
     $("funnel").innerHTML = [["universe", C.universe, "US or Canada, over $2B, liquid, 3+ years public"], ["scored", C.scored, "banks, insurers and Chinese ADRs set aside"], ["quality 150", C.top, "top of the quality score"], ["compounders", C.compounders, "at or below their usual price"], ["cyclical turns", C.cyclical_turns, "35%+ off highs, estimates stable"]].map(([k, v, d]) => `<div><b>${v == null ? "n/a" : money(v)}</b>${k}<br><span class="muted">${d}</span></div>`).join("");
   }

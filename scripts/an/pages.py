@@ -18,16 +18,9 @@ import html
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
-from . import paths
+from . import paths, seo
 
 __all__ = ["write_ticker_pages", "write_analyze_index", "write_compare_page", "write_positioning_page", "SHELL"]
-
-FONTS = (
-    '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
-    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-    '<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;'
-    "12..96,400;12..96,500;12..96,600&family=IBM+Plex+Mono:wght@400;500&display=swap\" rel=\"stylesheet\">"
-)
 
 SHELL = """<!doctype html>
 <html lang="en" data-theme="night">
@@ -35,11 +28,11 @@ SHELL = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
-<meta name="description" content="{description}">
-{fonts}
+{head}
 <link rel="stylesheet" href="{root}assets/desk.css">
 </head>
 <body>
+<div class="page"><p class="loading" role="status">loading</p></div>
 <noscript><div style="padding:24px 40px;font-family:sans-serif">
 This page renders from {data}. Without JavaScript, read that file directly.
 </div></noscript>
@@ -52,9 +45,11 @@ This page renders from {data}. Without JavaScript, read that file directly.
 """
 
 
-def _shell(*, title: str, description: str, root: str, script: str, setup: str, data: str) -> str:
+def _shell(*, title: str, description: str, path: str, root: str, script: str, setup: str,
+           data: str) -> str:
     return SHELL.format(
-        title=html.escape(title), description=html.escape(description), fonts=FONTS,
+        title=html.escape(title),
+        head=seo.head(path=path, title=title, description=description, root=root),
         root=root, script=script, setup=setup, data=html.escape(data),
     )
 
@@ -71,9 +66,11 @@ def write_ticker_pages(tickers: Iterable[str], index: Optional[Dict] = None) -> 
         p = d / "index.html"
         p.write_text(
             _shell(
-                title=f"{t} · Desk",
-                description=f"Deep analysis of {company} ({t}) from public data. "
-                            "Research, not personalised financial advice.",
+                title=f"{company} ({t}) stock analysis | Desk by Joseph Leung",
+                description=f"{company} ({t}): quality score, valuation against its own history, "
+                            "the standing call and what would prove it wrong. From Desk, Joseph "
+                            "Leung's stock research dashboard. Research, not financial advice.",
+                path=f"/analyze/{t}/",
                 root="../../",
                 script="analyze.js",
                 setup=f'window.DESK_TICKER = "{t}";',
@@ -90,8 +87,11 @@ def write_analyze_index() -> Path:
     p = paths.ANALYZE_PAGES_DIR / "index.html"
     p.write_text(
         _shell(
-            title="Analyse · Desk",
-            description="Every name in the quality top 150, with a deep analysis page each.",
+            title="Analyse the quality top 150 | Desk by Joseph Leung",
+            description="The 150 highest-quality US and Canadian companies from Joseph Leung's "
+                        "stock screen, each with its own analysis page: score, valuation, "
+                        "drawdown and next report date.",
+            path="/analyze/",
             root="../",
             script="analyze-index.js",
             setup="window.DESK_INDEX = true;",
@@ -107,9 +107,10 @@ def write_positioning_page() -> Path:
     p = paths.POSITIONING_DIR / "index.html"
     p.write_text(
         _shell(
-            title="Positioning · Desk",
-            description="The scoring model, what validating it would take, and a ranked memo of "
-                        "candidate positions. Research, not personalised financial advice.",
+            title="Positioning memo | Desk by Joseph Leung",
+            description="The scoring model behind Desk, what validating it would take, and a "
+                        "ranked memo of candidate positions. Research, not financial advice.",
+            path="/positioning/",
             root="../",
             script="positioning.js",
             setup="window.DESK_POSITIONING = true;",
@@ -127,9 +128,10 @@ def write_compare_page() -> Path:
     p = d / "index.html"
     p.write_text(
         _shell(
-            title="Compare · Desk",
+            title="Compare stocks side by side | Desk by Joseph Leung",
             description="Up to four analysed names side by side: the call, the falsifier, four "
-                        "fiscal years, valuation and the score. Research, not personalised financial advice.",
+                        "fiscal years, valuation and the score. Research, not financial advice.",
+            path="/analyze/compare/",
             root="../../",
             script="compare.js",
             setup="window.DESK_COMPARE = true;",

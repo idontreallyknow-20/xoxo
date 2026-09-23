@@ -545,7 +545,6 @@
   /* -- assembly ----------------------------------------------------------- */
   function render(r) {
     const id = r.identity;
-    document.title = `${id.ticker} · Desk`;
     const depthLabel = { deep: "research note", screen: "screen only", universe: "universe" }[r.depth];
     const buckets = (r.valuation.available && r.valuation.buckets) || [];
 
@@ -559,7 +558,7 @@
 ${D.chrome("Analyse", "../../")}
 <div class="plate reveal" style="--i:1">
   <div>
-    <div class="tk">${esc(id.ticker)}</div>
+    <h1 class="tk">${esc(id.ticker)}</h1>
     <div class="co">${esc(id.company)}</div>
     <div class="facts">
       <span>${esc(id.sector || "?")}</span><span>${esc(id.industry || "")}</span>
@@ -632,9 +631,9 @@ ${r.thesis.available ? `<section class="reveal" style="--i:9">
   <div class="toolbar" style="margin-top:26px">${D.themeBar()}</div>
 </section>
 
-<footer>${esc(r.disclaimer)}</footer>`;
+${D.footer(r.disclaimer)}`;
 
-    document.body.innerHTML = `<div class="page">${html}</div>`;
+    document.body.innerHTML = `<main class="page">${html}</main>`;
     const st = document.getElementById("status");
     if (st) st.innerHTML = `snapshot ${esc(r.identity.as_of)}`;
     D.wireTheme(document);

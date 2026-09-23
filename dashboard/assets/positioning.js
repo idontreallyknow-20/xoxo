@@ -239,7 +239,7 @@
       <div class="rule soft"></div>
       <div class="scroll"><table><thead><tr>
         <th>case</th><th class="n">planted alpha</th><th class="n">expected IC</th>
-        <th class="n">measured IC</th><th>verdict</th><th></th></tr></thead>
+        <th class="n">measured IC</th><th>verdict</th><th>flags</th></tr></thead>
         <tbody>${calRows}</tbody></table></div>
       <div class="note">${esc(cal ? cal.note : "")} Its own false-positive rate against panels with no
         signal at all is ${esc(pct(cal ? cal.measured_false_positive_rate : null, 1))}, against a
@@ -392,15 +392,14 @@
   /* -- assembly ----------------------------------------------------------- */
   function render() {
     const m = S.memo;
-    document.title = "Positioning · Desk";
     const how = m.how_to_read_this.map((x) => `<li>${esc(x)}</li>`).join("");
 
-    document.body.innerHTML = `<div class="page">
+    document.body.innerHTML = `<main class="page">
 ${D.chrome("Positioning", "../")}
 
 <div class="plate reveal" style="--i:0">
   <div>
-    <div class="tk">Positioning</div>
+    <h1 class="tk">Positioning</h1>
     <div class="co">A scoring model, an honest account of what validating it would take, and a ranked memo.</div>
     <div class="facts"><span>snapshot <b>${esc(m.snapshot_date)}</b></span>
       <span>universe <b>${esc(S.card.n_names)} names</b></span>
@@ -447,8 +446,8 @@ ${statusBlock()}
   <div class="toolbar" style="margin-top:26px">${D.themeBar()}</div>
 </section>
 
-<footer>${esc(m.disclaimer)}</footer>
-</div>`;
+${D.footer(m.disclaimer)}
+</main>`;
 
     const st = document.getElementById("status");
     if (st) st.innerHTML = `snapshot ${esc(m.snapshot_date)}`;
