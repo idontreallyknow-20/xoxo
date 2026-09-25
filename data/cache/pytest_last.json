@@ -1,20 +1,15 @@
 {
- "args": [
-  "tests/test_book.py",
-  "tests/test_quotes.py",
-  "tests/test_note.py",
-  "tests/test_ghactions.py",
-  "tests/test_digest_book.py",
-  "tests/test_digest.py",
-  "tests/test_tracker.py"
- ],
+ "args": [],
  "errors": 0,
- "failed": 0,
- "failed_tests": [],
- "passed": 97,
- "ran_at": "2026-09-24T22:03:56+00:00",
- "returncode": 0,
- "seconds": 8.0,
+ "failed": 2,
+ "failed_tests": [
+  "tests/test_setups.py::test_the_not_run_file_is_honest_and_names_the_command",
+  "tests/test_watch.py::test_the_committed_file_is_honest"
+ ],
+ "passed": 1055,
+ "ran_at": "2026-09-25T11:41:22+00:00",
+ "returncode": 1,
+ "seconds": 297.4,
  "skipped": 0,
- "summary": "97 passed in 7.70s"
+ "summary": "2 failed, 1055 passed in 296.93s (0:04:56)"
 }

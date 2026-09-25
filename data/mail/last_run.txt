@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0d57312202c56c) to josephislockedin@gmail.com, subject "Desk close, Thu 24 Sep: nothing crossed a rule".
-Book: MARKED at the 2026-09-24 close, equity $98,947 (-1.05%), 3 open (BKNG -12.5%, 4.9% above its $150 wrong-if; REGN -1.8%; MSFT +0.8%); no stop or falsifier breached; 1.5 points behind SPY since the start.
-Tests: fast subset 97 passed. No calls (close edition). Quotes dispatched with the GitHub tool, complete.
+Email: sent via Gmail (id 1a0d86c2a198873e) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "TESTS RED, Morning note, Fri 25 Sep: book -1.1%, 5 names in a buy zone".
+Tests: 1055 passed, 2 failed (tests/test_setups.py::test_the_not_run_file_is_honest_and_names_the_command, tests/test_watch.py::test_the_committed_file_is_honest). Both assert that build_all --check leaves dashboard files NOT RUN; on this desk the price cache under data/cache/prices is full from live runs, so the offline check reads 18 cached closes and writes SCANNED. Not a code regression; the tests are left as they are.
+Calls: no calls. Book MARKED at the 2026-09-24 close, equity $98,947 (-1.05%), BKNG 4.9% above its $150 wrong-if, nothing breached. Quotes branch already carried the session, no dispatch needed. setups.py --live hit its 600s cap after writing setups.json (SCANNED, 27 setups).
