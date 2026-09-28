@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a0da9af3f3e9f48) to josephislockedin@gmail.com, subject "Desk close, Fri 25 Sep: nothing crossed a rule".
-Book: MARKED at the 2026-09-25 close, equity $99,455 (-0.55%), 3 open (BKNG -8.8%, 9.3% above its $150 wrong-if; REGN -2.8%; MSFT +4.5%); no stop or falsifier breached; 1.5 points behind SPY since the start. The per-name table is still a session behind (known limitation, NOTES 13d); the book block is authoritative.
-Tests: fast subset 97 passed. No calls (close edition). Quotes dispatched by refresh_quotes.py itself this time (the container token was accepted), complete.
+Email: sent via Gmail (id 1a0e7ea4f7f03696) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Mon 28 Sep: book -0.5%, 5 names in a buy zone". Sent late (about 13:00 UTC): the session's shell permission check was erroring for a stretch after the build finished.
+Tests: whole suite, 1057 passed, 0 failed (39 minutes; the runner is slow today). setups.py --live hit its 600s cap after writing setups.json (SCANNED, 28 setups, as of 2026-09-28).
+Calls: no calls. Book MARKED at the 2026-09-25 close, equity $99,455 (-0.55%), BKNG 9.3% above its $150 wrong-if, nothing breached. October tranche (KLAC, ADBE, IDXX) waits for October. Quotes branch already carried Friday's close, no dispatch needed.

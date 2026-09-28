@@ -1,69 +1,63 @@
 Desk morning brief
-Friday 25 September 2026   closes as of 2026-09-25
+Monday 28 September 2026   closes as of 2026-09-28
 
-Nothing crossed a written rule as of the close. 1 line worth a glance.
+Nothing crossed a written rule and nothing moved five percent. A quiet day, as far as these sources see.
 
-16 names watched   1 lines   0 rules fired   status SCANNED
-
-What crossed a rule 0 of 1 are written rules
-
-BKNG near trigger · prices · 2026-09-24
-BKNG closed at $157.41, 4.9% above the $150.00 falsifier.
-rule: within 5% of the journal's falsifier
+16 names watched   0 lines   0 rules fired   status SCANNED
 
 Every watched name close, one day, five days, since the call, and room above the falsifier
 
 name close 1d 5d since call falsifier room
-BKNGBuy now
-$157.41Thu 24 Sep
-+1.0% -7.7% -19.3% $150.00 +4.9%
 ACNWatch or Pass
-$177.41Thu 24 Sep
--3.3% -6.8% -8.1% none set none set
+$176.11Fri 25 Sep
+-0.7% -2.9% -8.8% none set none set
 ADBEBuy after September 10 earnings
-$238.93Thu 24 Sep
--0.7% -5.4% -16.4% $220.00 +8.6%
+$235.47Fri 25 Sep
+-1.4% -5.4% -17.6% $220.00 +7.0%
 ADSKBuy now
-$211.35Thu 24 Sep
--2.7% -3.3% -11.0% $185.00 +14.2%
+$209.40Fri 25 Sep
+-0.9% -3.5% -11.8% $185.00 +13.2%
 AMATWatch or Pass
-$474.25Thu 24 Sep
--0.0% +13.6% +8.8% none set none set
+$485.00Fri 25 Sep
++2.3% +9.1% +11.3% none set none set
+BKNGBuy now
+$163.95Fri 25 Sep
++4.2% -2.4% -16.0% $150.00 +9.3%
 CPRTBuy after September 10 earnings
-$28.04Thu 24 Sep
--2.9% -5.5% -16.5% $25.00 +12.2%
+$27.59Fri 25 Sep
+-1.6% -5.8% -17.8% $25.00 +10.4%
 GOOGLBuy on pullback to $300 to $335
-$342.36Thu 24 Sep
-+1.3% -1.4% -0.0% $260.00 +31.7%
+$343.92Fri 25 Sep
++0.5% -1.6% +0.4% $260.00 +32.3%
 IDXXBuy on pullback to $470 to $535
-$513.39Thu 24 Sep
--1.7% +1.4% -3.0% $410.00 +25.2%
+$519.26Fri 25 Sep
++1.1% +1.5% -1.9% $410.00 +26.6%
 ISRGBuy now
-$399.52Thu 24 Sep
-+0.3% +4.2% +8.0% $290.00 +37.8%
+$405.18Fri 25 Sep
++1.4% +3.0% +9.6% $290.00 +39.7%
 KLACBuy in October
-$187.11Thu 24 Sep
--0.4% +10.7% +8.2% $130.00 +43.9%
+$187.92Fri 25 Sep
++0.4% +6.2% +8.7% $130.00 +44.6%
 LRCXBuy on pullback to $250 to $290
-$307.16Thu 24 Sep
--0.0% +14.2% +5.0% $215.00 +42.9%
+$315.21Fri 25 Sep
++2.6% +9.5% +7.7% $215.00 +46.6%
 METAWatch or Pass
-$777.59Thu 24 Sep
-+4.5% +14.1% +27.3% none set none set
+$751.66Fri 25 Sep
+-3.3% +13.0% +23.1% none set none set
 MSFTBuy in October
-$497.93Thu 24 Sep
--0.5% +0.0% -2.4% $400.00 +24.5%
+$516.17Fri 25 Sep
++3.7% +4.5% +1.2% $400.00 +29.0%
 NOWWatch or Pass
-$137.78Thu 24 Sep
--2.1% -0.5% -5.4% none set none set
+$135.62Fri 25 Sep
+-1.6% +0.1% -6.8% none set none set
 NVRWatch or Pass
-$6,235.49Thu 24 Sep
--0.1% -0.1% -2.2% none set none set
+$6,297.60Fri 25 Sep
++1.0% +2.4% -1.2% none set none set
 REGNBuy now
-$796.02Thu 24 Sep
--0.7% +0.8% -5.6% $650.00 +22.5%
+$788.04Fri 25 Sep
+-1.0% +0.4% -6.6% $650.00 +21.2%
 
-benchmarks 1d / 5d: SPY -0.1% / +0.9%   QQQ -0.0% / +3.5%
+benchmarks 1d / 5d: SPY +0.5% / +1.3%   QQQ +0.5% / +3.3%
 ● a written rule fired. Room is the distance above the journal's close-under level; negative means under it.
 
 Reports in the next week estimated dates from the screen
@@ -72,150 +66,155 @@ Thu 1 Oct ACN Accenture plc watched
 
 Setups mechanical, from swing.md
 
-27 mechanical setups as of 2026-09-25, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
-MTD Mettler-Toledo International Inc. breakout with revisions
-entry $1,519.15   stop $1,397.62 (8.0% risk)   horizon 10 sessions
-prior 251-session high $1,506.02 · above it +0.9% · EPS FY1 30d +0.5%
-The latest close is above every close of the prior 251 sessions and next-year EPS estimates rose over 30 days. Stop: 8% under entry. Horizon: 10 sessions.
-
+28 mechanical setups as of 2026-09-28, by the rules in swing.md. A setup is a pattern that matched, not a forecast.
 WAT Waters Corporation breakout with revisions
-entry $430.30   stop $395.88 (8.0% risk)   horizon 10 sessions
-prior 251-session high $429.72 · above it +0.1% · EPS FY1 30d +0.3%
+entry $433.54   stop $398.86 (8.0% risk)   horizon 10 sessions
+prior 251-session high $430.30 · above it +0.8% · EPS FY1 30d +0.3%
 The latest close is above every close of the prior 251 sessions and next-year EPS estimates rose over 30 days. Stop: 8% under entry. Horizon: 10 sessions.
 
-AAPL Apple Inc. pullback in trend
-entry $335.92   stop $314.58 (6.3% risk)   horizon 10 sessions
-vs 20-session mean +2.4% · 50 over 200 +11.9% · under the high -1.1%
+CHE Chemed Corporation pullback in trend
+entry $512.16   stop $495.65 (3.2% risk)   horizon 10 sessions
+vs 20-session mean +0.1% · 50 over 200 +15.5% · under the high -7.2%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
-ASML ASML Holding N.V. pullback in trend
-entry $1,722.50   stop $1,575.15 (8.6% risk)   horizon 10 sessions
-vs 20-session mean +2.3% · 50 over 200 +12.3% · under the high -13.3%
+CORT Corcept Therapeutics Incorporated pullback in trend
+entry $116.10   stop $110.29 (5.0% risk)   horizon 10 sessions
+vs 20-session mean +2.2% · 50 over 200 +61.0% · under the high -6.0%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 CTAS Cintas Corporation pullback in trend
-entry $197.68   stop $191.97 (2.9% risk)   horizon 10 sessions
-vs 20-session mean -0.9% · 50 over 200 +8.2% · under the high -8.5%
-50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
-
-DRI Darden Restaurants, Inc. pullback in trend
-entry $207.24   stop $206.74 (0.2% risk)   horizon 10 sessions
-vs 20-session mean -2.4% · 50 over 200 +4.6% · under the high -9.0%
+entry $199.91   stop $191.97 (4.0% risk)   horizon 10 sessions
+vs 20-session mean +0.3% · 50 over 200 +8.1% · under the high -7.4%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 DXCM DexCom, Inc. pullback in trend
-entry $87.47   stop $83.03 (5.1% risk)   horizon 10 sessions
-vs 20-session mean -0.3% · 50 over 200 +17.1% · under the high -5.3%
+entry $86.62   stop $83.03 (4.1% risk)   horizon 10 sessions
+vs 20-session mean -1.1% · 50 over 200 +17.2% · under the high -6.2%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 EBAY eBay Inc. pullback in trend
-entry $107.83   stop $101.96 (5.4% risk)   horizon 10 sessions
-vs 20-session mean +0.9% · 50 over 200 +7.4% · under the high -8.8%
+entry $107.90   stop $103.41 (4.2% risk)   horizon 10 sessions
+vs 20-session mean +0.6% · 50 over 200 +7.2% · under the high -8.8%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 EW Edwards Lifesciences Corporation pullback in trend
-entry $85.73   stop $84.37 (1.6% risk)   horizon 10 sessions
-vs 20-session mean -2.7% · 50 over 200 +3.8% · under the high -9.9%
+entry $86.29   stop $84.37 (2.2% risk)   horizon 10 sessions
+vs 20-session mean -1.9% · 50 over 200 +3.7% · under the high -9.3%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 EXEL Exelixis, Inc. pullback in trend
-entry $57.95   stop $54.45 (6.0% risk)   horizon 10 sessions
-vs 20-session mean +1.4% · 50 over 200 +13.8% · under the high -2.0%
+entry $58.16   stop $54.45 (6.4% risk)   horizon 10 sessions
+vs 20-session mean +1.4% · 50 over 200 +13.8% · under the high -1.6%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+EXPD Expeditors International of Washington, Inc. pullback in trend
+entry $187.46   stop $183.66 (2.0% risk)   horizon 10 sessions
+vs 20-session mean -0.9% · 50 over 200 +13.8% · under the high -3.3%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 FAST Fastenal Company pullback in trend
-entry $50.73   stop $47.93 (5.5% risk)   horizon 10 sessions
-vs 20-session mean +2.6% · 50 over 200 +7.8% · under the high -3.2%
+entry $50.43   stop $47.93 (5.0% risk)   horizon 10 sessions
+vs 20-session mean +2.0% · 50 over 200 +7.9% · under the high -3.7%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 GOOGL Alphabet Inc. pullback in trend
-entry $342.36   stop $330.65 (3.4% risk)   horizon 10 sessions
-vs 20-session mean +0.1% · 50 over 200 +1.7% · under the high -14.9%
-50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
-
-GWW W.W. Grainger, Inc. pullback in trend
-entry $1,279.47   stop $1,258.26 (1.7% risk)   horizon 10 sessions
-vs 20-session mean -0.5% · 50 over 200 +9.6% · under the high -8.6%
+entry $343.92   stop $330.65 (3.9% risk)   horizon 10 sessions
+vs 20-session mean +0.5% · 50 over 200 +1.6% · under the high -14.5%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 HRMY Harmony Biosciences Holdings, Inc. pullback in trend
-entry $41.16   stop $39.21 (4.7% risk)   horizon 10 sessions
-vs 20-session mean -0.8% · 50 over 200 +12.8% · under the high -4.0%
+entry $41.26   stop $39.21 (5.0% risk)   horizon 10 sessions
+vs 20-session mean -0.6% · 50 over 200 +13.2% · under the high -3.7%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 IHG InterContinental Hotels Group PLC pullback in trend
-entry $157.66   stop $152.77 (3.1% risk)   horizon 10 sessions
-vs 20-session mean +0.8% · 50 over 200 +6.3% · under the high -9.1%
+entry $158.16   stop $152.77 (3.4% risk)   horizon 10 sessions
+vs 20-session mean +1.2% · 50 over 200 +6.2% · under the high -8.8%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 INCY Incyte Corporation pullback in trend
-entry $124.44   stop $121.47 (2.4% risk)   horizon 10 sessions
-vs 20-session mean -0.4% · 50 over 200 +15.8% · under the high -4.2%
-50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
-
-IPAR Interparfums, Inc. pullback in trend
-entry $115.79   stop $109.70 (5.3% risk)   horizon 10 sessions
-vs 20-session mean +2.0% · 50 over 200 +17.6% · under the high -9.3%
+entry $123.89   stop $121.47 (1.9% risk)   horizon 10 sessions
+vs 20-session mean -0.8% · 50 over 200 +15.8% · under the high -4.6%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 JNJ Johnson & Johnson pullback in trend
-entry $270.68   stop $265.58 (1.9% risk)   horizon 10 sessions
-vs 20-session mean +0.5% · 50 over 200 +10.6% · under the high -2.8%
+entry $271.22   stop $265.58 (2.1% risk)   horizon 10 sessions
+vs 20-session mean +0.6% · 50 over 200 +10.6% · under the high -2.6%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+LAUR Laureate Education, Inc. pullback in trend
+entry $37.40   stop $35.77 (4.3% risk)   horizon 10 sessions
+vs 20-session mean +2.3% · 50 over 200 +5.9% · under the high -7.6%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+LNTH Lantheus Holdings, Inc. pullback in trend
+entry $99.74   stop $99.72 (0.0% risk)   horizon 10 sessions
+vs 20-session mean -0.7% · 50 over 200 +15.4% · under the high -10.1%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 MANH Manhattan Associates, Inc. pullback in trend
-entry $209.63   stop $201.82 (3.7% risk)   horizon 10 sessions
-vs 20-session mean -1.5% · 50 over 200 +23.5% · under the high -6.3%
+entry $206.03   stop $201.82 (2.0% risk)   horizon 10 sessions
+vs 20-session mean -2.7% · 50 over 200 +23.9% · under the high -7.9%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 MCRI Monarch Casino & Resort, Inc. pullback in trend
-entry $118.05   stop $117.53 (0.4% risk)   horizon 10 sessions
-vs 20-session mean -2.2% · 50 over 200 +10.5% · under the high -11.6%
+entry $117.74   stop $117.24 (0.4% risk)   horizon 10 sessions
+vs 20-session mean -2.1% · 50 over 200 +10.3% · under the high -11.8%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 MEDP Medpace Holdings, Inc. pullback in trend
-entry $620.59   stop $583.16 (6.0% risk)   horizon 10 sessions
-vs 20-session mean +2.9% · 50 over 200 +13.5% · under the high -0.6%
+entry $618.88   stop $583.16 (5.8% risk)   horizon 10 sessions
+vs 20-session mean +2.5% · 50 over 200 +13.8% · under the high -1.8%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+MNST Monster Beverage Corporation pullback in trend
+entry $43.11   stop $42.67 (1.0% risk)   horizon 10 sessions
+vs 20-session mean -2.4% · 50 over 200 +8.6% · under the high -13.7%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 MO Altria Group, Inc. pullback in trend
-entry $68.88   stop $66.61 (3.3% risk)   horizon 10 sessions
-vs 20-session mean +0.7% · 50 over 200 +4.4% · under the high -6.6%
-50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
-
-MSFT Microsoft Corporation pullback in trend
-entry $497.93   stop $490.30 (1.5% risk)   horizon 10 sessions
-vs 20-session mean -0.3% · 50 over 200 +10.3% · under the high -7.4%
+entry $68.82   stop $66.82 (2.9% risk)   horizon 10 sessions
+vs 20-session mean +0.5% · 50 over 200 +4.2% · under the high -6.7%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 NVDA NVIDIA Corporation pullback in trend
-entry $224.58   stop $210.96 (6.1% risk)   horizon 10 sessions
-vs 20-session mean +1.3% · 50 over 200 +8.1% · under the high -4.5%
+entry $225.07   stop $210.96 (6.3% risk)   horizon 10 sessions
+vs 20-session mean +1.5% · 50 over 200 +8.1% · under the high -4.3%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+PAYC Paycom Software, Inc. pullback in trend
+entry $220.46   stop $215.58 (2.2% risk)   horizon 10 sessions
+vs 20-session mean -2.8% · 50 over 200 +34.8% · under the high -8.3%
+50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
+
+QLYS Qualys, Inc. pullback in trend
+entry $172.43   stop $150.28 (12.8% risk)   horizon 10 sessions
+vs 20-session mean -2.0% · 50 over 200 +35.0% · under the high -12.0%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 REGN Regeneron Pharmaceuticals, Inc. pullback in trend
-entry $796.02   stop $774.11 (2.8% risk)   horizon 10 sessions
-vs 20-session mean -0.8% · 50 over 200 +5.7% · under the high -6.6%
+entry $788.04   stop $774.11 (1.8% risk)   horizon 10 sessions
+vs 20-session mean -1.7% · 50 over 200 +6.0% · under the high -7.5%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 ROST Ross Stores, Inc. pullback in trend
-entry $235.40   stop $224.80 (4.5% risk)   horizon 10 sessions
-vs 20-session mean +2.7% · 50 over 200 +9.8% · under the high -7.6%
+entry $236.12   stop $224.80 (4.8% risk)   horizon 10 sessions
+vs 20-session mean +2.8% · 50 over 200 +9.7% · under the high -7.3%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 VRTX Vertex Pharmaceuticals Incorporated pullback in trend
-entry $522.38   stop $508.34 (2.7% risk)   horizon 10 sessions
-vs 20-session mean -1.0% · 50 over 200 +8.8% · under the high -6.4%
+entry $526.19   stop $508.34 (3.4% risk)   horizon 10 sessions
+vs 20-session mean -0.1% · 50 over 200 +8.9% · under the high -5.7%
 50-session mean above the 200, close above the 200, close within 3% of the 20-session mean, no worse than 15% under the 252-session high. Stop: the lowest close of the last 20 sessions. Horizon: 10 sessions.
 
 My book fake money, real closes, my own calls
 
-Equity $98,947 (-1.1% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-24 close (1 session old). SPY +0.4% over the same window (-1.5% for the book against it). QQQ +3.3% over the same window (-4.3% for the book against it). VFV.TO +3.1% over the same window (-4.1% for the book against it).
-BKNG long 44 @ $179.87 last $157.41 -12.5% vs SPY -12.9% 4.9% above its wrong-if
-REGN long 9 @ $810.31 last $796.02 -1.8% vs SPY -2.2% 22.5% above its wrong-if
-MSFT long 16 @ $493.95 last $497.93 +0.8% vs SPY +0.4% 24.5% above its wrong-if
+Equity $99,455 (-0.5% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-25 close (1 session old). SPY +0.9% over the same window (-1.5% for the book against it). QQQ +3.8% over the same window (-4.3% for the book against it). VFV.TO +3.6% over the same window (-4.2% for the book against it).
+BKNG long 44 @ $179.87 last $163.95 -8.8% vs SPY -9.8% 9.3% above its wrong-if
+REGN long 9 @ $810.31 last $788.04 -2.8% vs SPY -3.7% 21.2% above its wrong-if
+MSFT long 16 @ $493.95 last $516.17 +4.5% vs SPY +3.5% 29.0% above its wrong-if
 
-3 of 3 book calls graded against prices so far, 0 of 3 buys ahead of SPY, 0 falsified on their own terms.
+3 of 3 book calls graded against prices so far, 1 of 3 buys ahead of SPY, 0 falsified on their own terms.
 
 The memo, sized for $100,000 as of 2026-09-04
 
@@ -273,7 +272,7 @@ read and left out: AMAT, ACN, META, NVR   not yet read: NVDA, HRMY, MEDP, MANH,
 
 Standing state
 
-16 of 16 journal calls graded against prices, 0 falsified on their own terms so far, 4 of 11 buys ahead of SPY so far.
+16 of 16 journal calls graded against prices, 0 falsified on their own terms so far, 5 of 11 buys ahead of SPY so far.
 Positioning memo as of 2026-09-04: 0 positions, $100,000 cash. The ranked memo is on /positioning/. Nothing in this email is a trade recommendation.
 
 Where this came from
@@ -282,9 +281,7 @@ prices: not live, yfinance adjusted closes: 0 live, 18 from cache
 edgar: not live, not pulled: dry run: no request was sent
 rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
 
-tests: 1055 tests passed, 2 failed, 0 errors, in 297s at 2026-09-25T11:41:22+00:00tests/test_setups.py::test_the_not_run_file_is_honest_and_names_the_command
-tests/test_watch.py::test_the_committed_file_is_honest
-
+tests: 1057 tests passed, 0 failed, 0 errors, in 2358s at 2026-09-28T11:50:55+00:00
 Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
 Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
 Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
