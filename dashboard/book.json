@@ -3,9 +3,9 @@
  "benchmarks_since_start": {
   "QQQ": 0.0264,
   "SPY": 0.002,
-  "VFV.TO": 0.0281
+  "VFV.TO": 0.0303
  },
- "built_at": "2026-09-28T22:05:55+00:00",
+ "built_at": "2026-09-29T11:56:30+00:00",
  "cash": 76889.92,
  "closed": [],
  "curve": [
@@ -82,7 +82,7 @@
  "excess_since_start": {
   "QQQ": -0.0362,
   "SPY": -0.0118,
-  "VFV.TO": -0.0379
+  "VFV.TO": -0.0401
  },
  "first_fill": "2026-09-08",
  "flags": [],
@@ -322,8 +322,8 @@
   }
  ],
  "pending": [],
- "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-24 to 2026-09-28, pulled 2026-09-28T22:04:36+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
- "quotes_age_sessions": 0,
+ "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-24 to 2026-09-28, pulled 2026-09-29T02:14:26+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
+ "quotes_age_sessions": 1,
  "refused": [],
  "ret_since_start": -0.0098,
  "rule_checks": [
