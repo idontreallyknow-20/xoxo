@@ -1,91 +1,31 @@
-Desk close
-Tuesday 29 September 2026   closes as of 2026-09-29
+Morning note, Wednesday 30 September 2026
 
-Nothing crossed a written rule and nothing moved five percent. A quiet day, as far as these sources see.
+THE MARKET
 
-16 names watched   0 lines   0 rules fired   status SCANNED
+The S&P 500 (SPY) closed at $764.20 on Tuesday, down 0.2% on the day, down 1.2% on the week and up 12.9% since 1 January. The Nasdaq 100 (QQQ) was up 0.2% on the day, down 1.3% on the week and up 20.5% since 1 January. VFV, the Toronto-listed S&P 500 fund, was down 0.1% on the day, down 0.4% on the week and up 16.5% since 1 January.
 
-Every watched name close, one day, five days, since the call, and room above the falsifier
+Among the names I watch, the moves worth a look on the day: AMAT +5.2%, KLAC +3.9%.
 
-name close 1d 5d since call falsifier room
-ACNWatch or Pass
-$174.47Mon 28 Sep
--0.9% -6.3% -9.7% none set none set
-ADBEBuy after September 10 earnings
-$231.01Mon 28 Sep
--1.9% -7.4% -19.2% $220.00 +5.0%
-ADSKBuy now
-$207.19Mon 28 Sep
--1.1% -5.3% -12.8% $185.00 +12.0%
-AMATWatch or Pass
-$486.76Mon 28 Sep
-+0.4% +4.9% +11.7% none set none set
-BKNGBuy now
-$163.87Mon 28 Sep
--0.0% -2.8% -16.0% $150.00 +9.2%
-CPRTBuy after September 10 earnings
-$27.22Mon 28 Sep
--1.3% -5.8% -18.9% $25.00 +8.9%
-GOOGLBuy on pullback to $300 to $335
-$342.75Mon 28 Sep
--0.3% -3.4% +0.1% $260.00 +31.8%
-IDXXBuy on pullback to $470 to $535
-$529.06Mon 28 Sep
-+1.9% +2.7% -0.0% $410.00 +29.0%
-ISRGBuy now
-$414.79Mon 28 Sep
-+2.4% +3.3% +12.2% $290.00 +43.0%
-KLACBuy in October
-$189.17Mon 28 Sep
-+0.7% +2.8% +9.4% $130.00 +45.5%
-LRCXBuy on pullback to $250 to $290
-$314.47Mon 28 Sep
--0.2% +4.1% +7.5% $215.00 +46.3%
-METAWatch or Pass
-$715.62Mon 28 Sep
--4.8% -3.5% +17.2% none set none set
-MSFTBuy in October
-$509.22Mon 28 Sep
--1.3% +1.5% -0.2% $400.00 +27.3%
-NOWWatch or Pass
-$131.45Mon 28 Sep
--3.1% -4.5% -9.7% none set none set
-NVRWatch or Pass
-$6,267.89Mon 28 Sep
--0.5% +1.3% -1.7% none set none set
-REGNBuy now
-$752.25Mon 28 Sep
--4.5% -5.8% -10.8% $650.00 +15.7%
+MY BOOK
 
-benchmarks 1d / 5d: SPY -0.7% / -1.0%   QQQ -1.1% / -0.7%
-● a written rule fired. Room is the distance above the journal's close-under level; negative means under it.
+$98,931, down 1.1% since I started on 8 September. SPY was flat over the same stretch, so I am 1.1 points behind. 3 positions and $76,890 in cash.
 
-My book fake money, real closes, my own calls
+  BKNG: 44 shares at $179.87, now $162.34, -9.7%. Wrong if it closes under $150.
+  REGN: 9 shares at $810.31, now $750.51, -7.4%. Wrong if it closes under $650.
+  MSFT: 16 shares at $493.95, now $508.96, +3.0%. Wrong if it closes under $400.
 
-Equity $98,931 (-1.1% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-09-29 close. SPY +0.0% over the same window (-1.1% for the book against it). QQQ +2.8% over the same window (-3.9% for the book against it). VFV.TO +2.9% over the same window (-4.0% for the book against it).
-BKNG long 44 @ $179.87 last $162.34 -9.7% vs SPY -9.8% 8.2% above its wrong-if
-REGN long 9 @ $810.31 last $750.51 -7.4% vs SPY -7.4% 15.5% above its wrong-if
-MSFT long 16 @ $493.95 last $508.96 +3.0% vs SPY +3.0% 27.2% above its wrong-if
+Nothing is under the level I said would prove me wrong.
 
-3 of 3 book calls graded against prices so far, 1 of 3 buys ahead of SPY, 0 falsified on their own terms.
+WHAT I'D BUY THIS WEEK
 
-Standing state
+If I were putting fresh money in, in this order. Sizes are for a $100,000 account, and the last line of each is what would make me wrong.
 
-Positioning memo as of 2026-09-04: 0 positions, $100,000 cash. The ranked memo is on /positioning/. Nothing in this email is a trade recommendation.
+  1. ADSK at $203.18, the note calls it a buy now. $6,000. Wrong if: Billings growth under 5% twice, or a close under $185.
+  2. ISRG at $412.18, the note calls it a buy now. $7,000. Wrong if: Procedure growth under 10%, placements down twice, or a close under $290.
+  3. BKNG at $162.34, the note calls it a buy now. $8,000. Already in my book. Wrong if: Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.
+  4. REGN at $750.51, the note calls it a buy now. $7,000. Already in my book. Wrong if: Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.
+  5. IDXX at $533.44, inside the $470 to $535 buy zone. $6,000. Wrong if: CAG recurring growth under 6%, or a close under $410.
 
-Where this came from
+Waiting: ADBE (the September 10 report has printed; the note wants a read of it before buying, now $233.17); KLAC (pencilled in for October, now $196.53); GOOGL (above its $300 to $335 buy zone, now $340.92); CPRT (the September 10 report has printed; the note wants a read of it before buying, now $27.14); LRCX (above its $250 to $290 buy zone, now $323.86).
 
-prices: not live, yfinance adjusted closes: 0 live, 18 from cache
-edgar: not live, not pulled: dry run: no request was sent
-rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
-
-tests: 97 tests passed, 0 failed, 0 errors, in 10s at 2026-09-29T22:04:29+00:00
-Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
-Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
-Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
-Headlines come from one syndication feed and are not scored. A quiet feed is not a quiet company.
-Names without a CIK, which is every Canadian listing here, are not scanned for filings, and the row says so.
-Filings were not pulled, so nothing new from EDGAR is listed.
-No feed could be read, so no headlines are listed.
-
-Research and analysis from public data, not personalised financial advice.
+Prices are Yahoo closes through Tuesday. Fake money in the book, real closes. Research from public data, not personalised financial advice; every buy or sell is your call.

@@ -5,7 +5,7 @@
   "SPY": 0.0002,
   "VFV.TO": 0.0291
  },
- "built_at": "2026-09-29T22:05:11+00:00",
+ "built_at": "2026-09-30T12:04:35+00:00",
  "cash": 76889.92,
  "closed": [],
  "curve": [
@@ -326,8 +326,8 @@
   }
  ],
  "pending": [],
- "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-26 to 2026-09-29, pulled 2026-09-29T22:03:53+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
- "quotes_age_sessions": 0,
+ "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-26 to 2026-09-29, pulled 2026-09-30T01:27:52+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
+ "quotes_age_sessions": 1,
  "refused": [],
  "ret_since_start": -0.0107,
  "rule_checks": [
