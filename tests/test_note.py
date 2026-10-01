@@ -148,3 +148,25 @@ def test_the_cli_writes_the_note_and_its_text_beside_it(tmp_path):
     assert r.returncode == 0, r.stderr
     assert out.exists() and Path(str(out) + ".subject.txt").read_text().startswith("Morning note, Mon 14 Sep")
     assert Path(str(out) + ".txt").read_text().startswith("Morning note, Monday 14 September 2026")
+
+
+def test_the_books_own_decisions_today_win_over_the_journals_standing():
+    # EEE's journal standing is "wait for the report", but the book bought it today and the fill is pending;
+    # AAA is a buy-now in the journal, but the book logged a Pass on it today
+    i = inputs()
+    i["book"]["long"].append({"ticker": "EEE", "call_date": TODAY.isoformat(), "fill_date": None, "status": "pending",
+                              "target_usd": 7000.0, "wrong_if": "or a close under $90.", "thesis": "Bought after the report."})
+    passed = journal.JournalEntry(date=TODAY.isoformat(), ticker="AAA", title="Recommendation: Pass", price_at_call=110.0,
+                                  thesis="Above the zone I set, so I wait.", wrong_if="A close over $140 without printing $100.",
+                                  target_size="$0", conviction=4, bucket="compounder")
+    n = note.build_note(i, today=TODAY, entries=ENTRIES, book_entries=[passed])
+    now = {x["ticker"]: x for x in n["buy_now"]}
+    assert "EEE" in now and now["EEE"]["pending"] and "EEE" not in [x["ticker"] for x in n["waiting"]]
+    assert now["AAA"]["passed"] and n["book"]["passes_today"][0]["ticker"] == "AAA"
+    text = note.render_text(n)
+    assert "EEE at $0.00" not in text
+    assert "In my book from today; it fills at tonight's close." in text
+    assert "I passed on it today at this price; the reason is under my book." in text
+    assert "Passed today: AAA. Above the zone I set, so I wait. Wrong if: A close over $140" in text
+    bad = check(n, "note") + check({"text": text, "html": note.render_html(n)}, "note")
+    assert not bad, "\n".join(bad)

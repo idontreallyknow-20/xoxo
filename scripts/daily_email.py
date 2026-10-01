@@ -76,7 +76,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     state = watch.WatchState.load(a.state) if a.only_new_alerts else None
     text = None
     if a.edition == "note":
-        n = note.build_note(digest.load_inputs(a.inputs), today=today, bench_from_quotes=note_benchmarks())
+        from an import journal as _journal
+
+        book_md = paths.ROOT / "book.md"
+        n = note.build_note(digest.load_inputs(a.inputs), today=today, bench_from_quotes=note_benchmarks(),
+                            book_entries=_journal.load(book_md) if book_md.exists() else None)
         html, text, subject = note.render_html(n), note.render_text(n), note.subject_for(n)
         d = {"edition": "note", "status": "SCANNED" if n["scanned"] else "NOT RUN", "n_rule_alerts": len(n["alerts"]),
              "alerts": n["alerts"]}

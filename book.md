@@ -66,3 +66,27 @@ Wrong if: Azure growth under 30% while capex still rises, an OpenAI restructurin
 Target size: $8,000 (8%)
 Conviction: 4
 Bucket: compounder
+
+## 2026-10-01 ADBE  Recommendation: Buy
+Price at call: 239.94
+Thesis: The September 10 report was the test the plan set, and the numbers passed it: record revenue of $6.76 billion, up 13%, EPS of $6.13 above guidance, total ARR of $27.5 billion growing 11.2%, the full year raised to $24.45 to $24.50 of EPS, and an internal successor (Anil Chakravarthy) named as CEO from December 1, which answers the management question in the research note. The stock fell anyway, on a fourth quarter revenue guide a touch under consensus and the same AI worry that has run the tape all year, and now sits at $240, under the $250 to $300 zone the note set and about 10 times this year's earnings for a business that turns 39% of revenue into free cash and is retiring 2 to 3% of its shares a year. I read the report before buying, as the plan said, and it gave a better price rather than a reason to wait longer.
+Wrong if: Digital Media ARR growth under 8%, net new ARR down two quarters in a row, fiscal 2027 guided below fiscal 2026, or a close under $220.
+Target size: $8,000 (8%)
+Conviction: 4
+Bucket: compounder
+
+## 2026-10-01 IDXX  Recommendation: Buy
+Price at call: 522.19
+Thesis: The plan's condition for October was that IDEXX stay inside its $470 to $535 buy zone, and at $522 it has. Recurring diagnostics revenue grew 10% organic in the August quarter while US clinic visits were soft, guidance for the year went up to $14.69 to $14.94 of EPS, and the stock still trades near 31 times forward against its own 51 times median because the growth is coming from price and mix rather than more pets. The installed base of analyzers on clinic counters is the moat, and the consumables follow it for a decade. Conviction 3 because it is cheap only against its own history, not in absolute terms, which is why the size is 6% and not 8%.
+Wrong if: CAG recurring growth under 6%, US clinic visits down more than 3% for a full year, or a close under $410.
+Target size: $6,000 (6%)
+Conviction: 3
+Bucket: compounder
+
+## 2026-10-01 KLAC  Recommendation: Pass
+Price at call: 194.93
+Thesis: October is the month the plan pencilled KLA in, but at $195 the stock is 5% above the top of the $150 to $185 buy zone and 13% above where the note was written, and the whole equipment group has run on AI capex since. Nothing in the business has changed; the price has. A cyclical bought above its zone at the top of a capex cycle is how a 5% position turns into a lesson, so this is a pass for now, not a rejection: a close at or under $185 before the October 28 report reopens it, and the $5,000 stays in cash until then.
+Wrong if: The pass is the mistake if KLA runs away from the zone, a close over $230 before the October 28 report without ever printing $185, or a December quarter guide over $4.2 billion that confirms 2027 is not the peak; and the pass is right, and the position is off the table, on a close under $130.
+Target size: $0 (5% pencilled in, undeployed)
+Conviction: 4
+Bucket: cyclical turn

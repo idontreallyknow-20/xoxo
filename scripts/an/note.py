@@ -168,6 +168,7 @@ def benchmarks_from_panel(panel) -> Optional[Dict[str, Dict[str, Any]]]:
 # ---------------------------------------------------------------- the note as data
 
 def build_note(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional[dt.date] = None,
+               book_entries: Optional[List[journal.JournalEntry]] = None,
                entries: Optional[Sequence[journal.JournalEntry]] = None,
                bench_from_quotes: Optional[Dict[str, Dict[str, Any]]] = None) -> Dict[str, Any]:
     """Everything the note says, as data. ``inputs`` is :func:`an.digest.load_inputs`'s dict.
@@ -219,6 +220,13 @@ def build_note(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional[d
         if p.get("call_date") == today.isoformat():
             book["calls_today"].append({"ticker": p["ticker"], "target_usd": p.get("target_usd"),
                                         "wrong_if": p.get("wrong_if"), "thesis": p.get("thesis")})
+    # a call that has not filled yet is still a decision made: it is in the book from today
+    pending = {p["ticker"].upper() for p in (b.get("long") or []) + (b.get("swing") or [])
+               if p.get("status") == "pending" or (p.get("call_date") == today.isoformat() and not p.get("fill_date"))}
+    # a Pass logged in the book today is a decision too, and the list below must not contradict it
+    passed_today = {e.ticker.upper(): e for e in (book_entries or [])
+                    if not e.is_system and e.date == today.isoformat() and (e.action or "").strip().lower().startswith("pass")}
+    book["passes_today"] = [{"ticker": t, "thesis": e.thesis, "wrong_if": e.wrong_if} for t, e in sorted(passed_today.items())]
     book["closed_recent"] = [{"ticker": p["ticker"], "ret": p.get("ret"), "reason": p.get("exit_reason"),
                               "exit_date": p.get("exit_date")}
                              for p in (b.get("closed") or [])
@@ -240,11 +248,14 @@ def build_note(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional[d
         breached = bool((row.get("price") or {}).get("breached")) or (price is not None and trig is not None and price < trig)
         item = {"ticker": t, "price": price, "target_usd": e.target_usd, "conviction": e.conviction,
                 "wrong_if": e.wrong_if, "trigger": trig, "why": why, "held": t in held,
+                "pending": t in pending, "passed": t in passed_today,
                 "since_call": (row.get("price") or {}).get("since_call"), "thesis": e.thesis}
         if breached:
             item["why"] = f"closed under its own wrong-if level of {_money(trig, 0)}" if trig else "its falsifier fired"
             out_list.append(item)
-        elif state == "now":
+        elif state == "now" or t in pending:
+            if state != "now":
+                item["why"] = "bought into my book today after reading the note again"
             now_list.append(item)
         elif t not in held:
             wait_list.append(item)
@@ -330,6 +341,8 @@ def _paragraphs(n: Dict[str, Any]) -> List[Tuple[str, Any]]:
             blocks.append(("p", f"Closed {c['ticker']} on {_weekday(c['exit_date'], today)} at {_pct(c['ret'])}: {c['reason']}."))
         for c in b["calls_today"]:
             blocks.append(("p", f"New today: {c['ticker']}, {_shares_money(c['target_usd'])}. {c['thesis']} Wrong if: {c['wrong_if']}"))
+        for c in b.get("passes_today") or []:
+            blocks.append(("p", f"Passed today: {c['ticker']}. {c['thesis']} Wrong if: {c['wrong_if']}"))
 
     # buy
     blocks.append(("h", "What I'd buy this week"))
@@ -340,8 +353,12 @@ def _paragraphs(n: Dict[str, Any]) -> List[Tuple[str, Any]]:
         for i, x in enumerate(n["buy_now"], 1):
             s = f"{i}. {x['ticker']} at {_money(x['price']) if x['price'] is not None else 'no close'}"
             s += f", {x['why']}. {_shares_money(x['target_usd'])}." if x["target_usd"] else f", {x['why']}."
-            if x["held"]:
+            if x.get("pending"):
+                s += " In my book from today; it fills at tonight's close."
+            elif x["held"]:
                 s += " Already in my book."
+            if x.get("passed"):
+                s += " I passed on it today at this price; the reason is under my book."
             if x["wrong_if"]:
                 s += f" Wrong if: {x['wrong_if'].rstrip('.')}."
             lines.append(s)
