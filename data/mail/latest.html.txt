@@ -1,40 +1,100 @@
-Morning note, Thursday 1 October 2026
+Desk close
+Thursday 1 October 2026   closes as of 2026-10-01
 
-THE MARKET
+Nothing crossed a written rule and nothing moved five percent. A quiet day, as far as these sources see.
 
-The S&P 500 (SPY) closed at $762.63 on Wednesday, down 0.2% on the day, down 0.7% on the week and up 12.7% since 1 January. The Nasdaq 100 (QQQ) was up 0.2% on the day, down 0.2% on the week and up 20.8% since 1 January. VFV, the Toronto-listed S&P 500 fund, was up 0.2% on the day, up 0.2% on the week and up 16.7% since 1 January.
+16 names watched   0 lines   0 rules fired   status SCANNED
 
-Among the names I watch, the moves worth a look on the day: ACN +3.5%, NOW +3.1%, IDXX -2.1%.
+Every watched name close, one day, five days, since the call, and room above the falsifier
 
-MY BOOK
+name close 1d 5d since call falsifier room
+ACNWatch or Pass
+$183.37Wed 30 Sep
++3.5% -0.1% -5.0% none set none set
+ADBEBuy after September 10 earnings
+$239.94Wed 30 Sep
++2.9% -0.3% -16.0% $220.00 +9.1%
+ADSKBuy now
+$209.00Wed 30 Sep
++2.9% -3.8% -12.0% $185.00 +13.0%
+AMATWatch or Pass
+$511.38Wed 30 Sep
+-0.1% +7.8% +17.3% none set none set
+BKNGBuy now
+$162.91Wed 30 Sep
++0.4% +4.5% -16.5% $150.00 +8.6%
+CPRTBuy after September 10 earnings
+$27.28Wed 30 Sep
++0.5% -5.5% -18.8% $25.00 +9.1%
+GOOGLBuy on pullback to $300 to $335
+$344.08Wed 30 Sep
++0.9% +1.9% +0.5% $260.00 +32.3%
+IDXXBuy on pullback to $470 to $535
+$522.19Wed 30 Sep
+-2.1% +0.0% -1.3% $410.00 +27.4%
+ISRGBuy now
+$406.63Wed 30 Sep
+-1.3% +2.1% +10.0% $290.00 +40.2%
+KLACBuy in October
+$194.93Wed 30 Sep
+-0.8% +3.8% +12.7% $130.00 +49.9%
+LRCXBuy on pullback to $250 to $290
+$328.51Wed 30 Sep
++1.4% +6.9% +12.2% $215.00 +52.8%
+METAWatch or Pass
+$725.18Wed 30 Sep
+-1.8% -2.5% +18.7% none set none set
+MSFTBuy in October
+$512.90Wed 30 Sep
++0.8% +2.5% +0.5% $400.00 +28.2%
+NOWWatch or Pass
+$134.01Wed 30 Sep
++3.1% -4.8% -8.0% none set none set
+NVRWatch or Pass
+$6,154.39Wed 30 Sep
+-1.3% -1.4% -3.4% none set none set
+REGNBuy now
+$758.27Wed 30 Sep
++1.0% -5.4% -10.1% $650.00 +16.7%
 
-$99,089, down 0.9% since I started on 8 September. SPY was down 0.2% over the same stretch, so I am 0.7 points behind. 3 positions and $76,890 in cash.
+benchmarks 1d / 5d: SPY -0.2% / -0.7%   QQQ +0.2% / -0.2%
+● a written rule fired. Room is the distance above the journal's close-under level; negative means under it.
 
-  BKNG: 44 shares at $179.87, now $162.91, -9.4%. Wrong if it closes under $150.
-  REGN: 9 shares at $810.31, now $758.27, -6.4%. Wrong if it closes under $650.
-  MSFT: 16 shares at $493.95, now $512.90, +3.8%. Wrong if it closes under $400.
+My book fake money, real closes, my own calls
 
-Nothing is under the level I said would prove me wrong.
+Equity $98,760 (-1.2% since 2026-09-08), 3 open, $76,890 cash, marked at the 2026-10-01 close. SPY -0.0% over the same window (-1.2% for the book against it). QQQ +3.4% over the same window (-4.6% for the book against it). VFV.TO +3.2% over the same window (-4.4% for the book against it).
+BKNG long 44 @ $179.87 last $160.28 -10.9% vs SPY -10.9% 6.9% above its wrong-if
+REGN long 9 @ $810.31 last $734.81 -9.3% vs SPY -9.3% 13.1% above its wrong-if
+MSFT long 16 @ $493.95 last $512.80 +3.8% vs SPY +3.8% 28.2% above its wrong-if
 
-New today: ADBE, $8,000. The September 10 report was the test the plan set, and the numbers passed it: record revenue of $6.76 billion, up 13%, EPS of $6.13 above guidance, total ARR of $27.5 billion growing 11.2%, the full year raised to $24.45 to $24.50 of EPS, and an internal successor (Anil Chakravarthy) named as CEO from December 1, which answers the management question in the research note. The stock fell anyway, on a fourth quarter revenue guide a touch under consensus and the same AI worry that has run the tape all year, and now sits at $240, under the $250 to $300 zone the note set and about 10 times this year's earnings for a business that turns 39% of revenue into free cash and is retiring 2 to 3% of its shares a year. I read the report before buying, as the plan said, and it gave a better price rather than a reason to wait longer. Wrong if: Digital Media ARR growth under 8%, net new ARR down two quarters in a row, fiscal 2027 guided below fiscal 2026, or a close under $220.
+Calls
+ADBE 2026-10-01 · pending · target $8,000.00 · conviction 4
+The September 10 report was the test the plan set, and the numbers passed it: record revenue of $6.76 billion, up 13%, EPS of $6.13 above guidance, total ARR of $27.5 billion growing 11.2%, the full year raised to $24.45 to $24.50 of EPS, and an internal successor (Anil Chakravarthy) named as CEO from December 1, which answers the management question in the research note. The stock fell anyway, on a fourth quarter revenue guide a touch under consensus and the same AI worry that has run the tape all year, and now sits at $240, under the $250 to $300 zone the note set and about 10 times this year's earnings for a business that turns 39% of revenue into free cash and is retiring 2 to 3% of its shares a year. I read the report before buying, as the plan said, and it gave a better price rather than a reason to wait longer.
+Wrong if: Digital Media ARR growth under 8%, net new ARR down two quarters in a row, fiscal 2027 guided below fiscal 2026, or a close under $220.
 
-New today: IDXX, $6,000. The plan's condition for October was that IDEXX stay inside its $470 to $535 buy zone, and at $522 it has. Recurring diagnostics revenue grew 10% organic in the August quarter while US clinic visits were soft, guidance for the year went up to $14.69 to $14.94 of EPS, and the stock still trades near 31 times forward against its own 51 times median because the growth is coming from price and mix rather than more pets. The installed base of analyzers on clinic counters is the moat, and the consumables follow it for a decade. Conviction 3 because it is cheap only against its own history, not in absolute terms, which is why the size is 6% and not 8%. Wrong if: CAG recurring growth under 6%, US clinic visits down more than 3% for a full year, or a close under $410.
+IDXX 2026-10-01 · pending · target $6,000.00 · conviction 3
+The plan's condition for October was that IDEXX stay inside its $470 to $535 buy zone, and at $522 it has. Recurring diagnostics revenue grew 10% organic in the August quarter while US clinic visits were soft, guidance for the year went up to $14.69 to $14.94 of EPS, and the stock still trades near 31 times forward against its own 51 times median because the growth is coming from price and mix rather than more pets. The installed base of analyzers on clinic counters is the moat, and the consumables follow it for a decade. Conviction 3 because it is cheap only against its own history, not in absolute terms, which is why the size is 6% and not 8%.
+Wrong if: CAG recurring growth under 6%, US clinic visits down more than 3% for a full year, or a close under $410.
 
-Passed today: KLAC. October is the month the plan pencilled KLA in, but at $195 the stock is 5% above the top of the $150 to $185 buy zone and 13% above where the note was written, and the whole equipment group has run on AI capex since. Nothing in the business has changed; the price has. A cyclical bought above its zone at the top of a capex cycle is how a 5% position turns into a lesson, so this is a pass for now, not a rejection: a close at or under $185 before the October 28 report reopens it, and the $5,000 stays in cash until then. Wrong if: The pass is the mistake if KLA runs away from the zone, a close over $230 before the October 28 report without ever printing $185, or a December quarter guide over $4.2 billion that confirms 2027 is not the peak; and the pass is right, and the position is off the table, on a close under $130.
+6 of 6 book calls graded against prices so far, 2 of 5 buys ahead of SPY, 0 falsified on their own terms.
 
-WHAT I'D BUY THIS WEEK
+Standing state
 
-If I were putting fresh money in, in this order. Sizes are for a $100,000 account, and the last line of each is what would make me wrong.
+Positioning memo as of 2026-09-04: 0 positions, $100,000 cash. The ranked memo is on /positioning/. Nothing in this email is a trade recommendation.
 
-  1. ADBE at $239.94, bought into my book today after reading the note again. $8,000. In my book from today; it fills at tonight's close. Wrong if: Digital Media ARR growth under 8%, net new ARR down twice, or a close under $220.
-  2. ADSK at $209.00, the note calls it a buy now. $6,000. Wrong if: Billings growth under 5% twice, or a close under $185.
-  3. ISRG at $406.63, the note calls it a buy now. $7,000. Wrong if: Procedure growth under 10%, placements down twice, or a close under $290.
-  4. KLAC at $194.93, the note said October, and it is October. $5,000. I passed on it today at this price; the reason is under my book. Wrong if: December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.
-  5. BKNG at $162.91, the note calls it a buy now. $8,000. Already in my book. Wrong if: Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.
-  6. MSFT at $512.90, the note said October, and it is October. $8,000. Already in my book. Wrong if: Azure growth under 30% with capex still rising, or a close under $400.
-  7. REGN at $758.27, the note calls it a buy now. $7,000. Already in my book. Wrong if: Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.
-  8. IDXX at $522.19, inside the $470 to $535 buy zone. $6,000. In my book from today; it fills at tonight's close. Wrong if: CAG recurring growth under 6%, or a close under $410.
+Where this came from
 
-Waiting: GOOGL (above its $300 to $335 buy zone, now $344.08); CPRT (the September 10 report has printed; the note wants a read of it before buying, now $27.28); LRCX (above its $250 to $290 buy zone, now $328.51).
+prices: not live, yfinance adjusted closes: 0 live, 18 from cache
+edgar: not live, not pulled: dry run: no request was sent
+rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
 
-Prices are Yahoo closes through Wednesday. Fake money in the book, real closes. Research from public data, not personalised financial advice; every buy or sell is your call.
+tests: 98 tests passed, 0 failed, 0 errors, in 8s at 2026-10-01T22:04:32+00:00
+Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
+Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
+Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
+Headlines come from one syndication feed and are not scored. A quiet feed is not a quiet company.
+Names without a CIK, which is every Canadian listing here, are not scanned for filings, and the row says so.
+Filings were not pulled, so nothing new from EDGAR is listed.
+No feed could be read, so no headlines are listed.
+
+Research and analysis from public data, not personalised financial advice.
