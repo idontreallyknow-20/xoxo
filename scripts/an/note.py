@@ -221,11 +221,16 @@ def build_note(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional[d
             book["calls_today"].append({"ticker": p["ticker"], "target_usd": p.get("target_usd"),
                                         "wrong_if": p.get("wrong_if"), "thesis": p.get("thesis")})
     # a call that has not filled yet is still a decision made: it is in the book from today
-    pending = {p["ticker"].upper() for p in (b.get("long") or []) + (b.get("swing") or [])
+    pending = {p["ticker"].upper(): p.get("call_date") for p in (b.get("long") or []) + (b.get("swing") or [])
                if p.get("status") == "pending" or (p.get("call_date") == today.isoformat() and not p.get("fill_date"))}
-    # a Pass logged in the book today is a decision too, and the list below must not contradict it
-    passed_today = {e.ticker.upper(): e for e in (book_entries or [])
-                    if not e.is_system and e.date == today.isoformat() and (e.action or "").strip().lower().startswith("pass")}
+    # a Pass is a decision too, and it stands until a later entry on the name replaces it; the list
+    # below must not contradict it. The reasoning is printed only on the day it was written.
+    latest: Dict[str, journal.JournalEntry] = {}
+    for e in book_entries or []:
+        if not e.is_system:
+            latest[e.ticker.upper()] = e
+    passes = {t: e for t, e in latest.items() if (e.action or "").strip().lower().startswith("pass")}
+    passed_today = {t: e for t, e in passes.items() if e.date == today.isoformat()}
     book["passes_today"] = [{"ticker": t, "thesis": e.thesis, "wrong_if": e.wrong_if} for t, e in sorted(passed_today.items())]
     book["closed_recent"] = [{"ticker": p["ticker"], "ret": p.get("ret"), "reason": p.get("exit_reason"),
                               "exit_date": p.get("exit_date")}
@@ -248,14 +253,17 @@ def build_note(inputs: Dict[str, Optional[Dict[str, Any]]], *, today: Optional[d
         breached = bool((row.get("price") or {}).get("breached")) or (price is not None and trig is not None and price < trig)
         item = {"ticker": t, "price": price, "target_usd": e.target_usd, "conviction": e.conviction,
                 "wrong_if": e.wrong_if, "trigger": trig, "why": why, "held": t in held,
-                "pending": t in pending, "passed": t in passed_today,
+                "pending": t in pending, "pending_since": pending.get(t),
+                "passed": t in passes, "passed_on": passes[t].date if t in passes else None,
+                "passed_at": passes[t].price_at_call if t in passes else None,
                 "since_call": (row.get("price") or {}).get("since_call"), "thesis": e.thesis}
         if breached:
             item["why"] = f"closed under its own wrong-if level of {_money(trig, 0)}" if trig else "its falsifier fired"
             out_list.append(item)
         elif state == "now" or t in pending:
             if state != "now":
-                item["why"] = "bought into my book today after reading the note again"
+                when = "today" if pending.get(t) == today.isoformat() else f"on {_weekday(pending.get(t), today)}"
+                item["why"] = f"bought into my book {when} after reading the note again"
             now_list.append(item)
         elif t not in held:
             wait_list.append(item)
@@ -354,11 +362,16 @@ def _paragraphs(n: Dict[str, Any]) -> List[Tuple[str, Any]]:
             s = f"{i}. {x['ticker']} at {_money(x['price']) if x['price'] is not None else 'no close'}"
             s += f", {x['why']}. {_shares_money(x['target_usd'])}." if x["target_usd"] else f", {x['why']}."
             if x.get("pending"):
-                s += " In my book from today; it fills at tonight's close."
+                since = "from today" if x.get("pending_since") == n["date"] else f"since {_weekday(x.get('pending_since'), today)}"
+                s += f" In my book {since}; it fills at tonight's close."
             elif x["held"]:
                 s += " Already in my book."
             if x.get("passed"):
-                s += " I passed on it today at this price; the reason is under my book."
+                if x.get("passed_on") == n["date"]:
+                    s += " I passed on it today at this price; the reason is under my book."
+                else:
+                    at = f" at {_money(x['passed_at'])}" if x.get("passed_at") is not None else ""
+                    s += f" I passed on it on {_weekday(x.get('passed_on'), today)}{at}; the reason is in the book."
             if x["wrong_if"]:
                 s += f" Wrong if: {x['wrong_if'].rstrip('.')}."
             lines.append(s)

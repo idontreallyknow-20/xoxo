@@ -6,15 +6,16 @@
   "tests/test_ghactions.py",
   "tests/test_digest_book.py",
   "tests/test_digest.py",
-  "tests/test_tracker.py"
+  "tests/test_tracker.py",
+  "tests/test_language_guard.py"
  ],
  "errors": 0,
  "failed": 0,
  "failed_tests": [],
- "passed": 98,
- "ran_at": "2026-10-01T22:04:32+00:00",
+ "passed": 118,
+ "ran_at": "2026-10-02T12:23:36+00:00",
  "returncode": 0,
- "seconds": 8.4,
+ "seconds": 11.8,
  "skipped": 0,
- "summary": "98 passed in 7.20s"
+ "summary": "118 passed in 11.25s"
 }

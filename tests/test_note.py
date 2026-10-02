@@ -170,3 +170,26 @@ def test_the_books_own_decisions_today_win_over_the_journals_standing():
     assert "Passed today: AAA. Above the zone I set, so I wait. Wrong if: A close over $140" in text
     bad = check(n, "note") + check({"text": text, "html": note.render_html(n)}, "note")
     assert not bad, "\n".join(bad)
+
+
+def test_a_pass_and_a_pending_fill_from_an_earlier_day_keep_their_dates():
+    i = inputs()
+    i["book"]["long"].append({"ticker": "EEE", "call_date": "2026-09-11", "fill_date": None, "status": "pending",
+                              "target_usd": 7000.0, "wrong_if": "or a close under $90.", "thesis": "Bought after the report."})
+    passed = journal.JournalEntry(date="2026-09-11", ticker="AAA", title="Recommendation: Pass", price_at_call=108.5,
+                                  thesis="Above the zone I set, so I wait.", wrong_if="A close over $140 without printing $100.",
+                                  target_size="$0", conviction=4, bucket="compounder")
+    n = note.build_note(i, today=TODAY, entries=ENTRIES, book_entries=[passed])
+    text = note.render_text(n)
+    assert "bought into my book on Friday after reading the note again" in text
+    assert "In my book since Friday; it fills at tonight's close." in text
+    assert "I passed on it on Friday at $108.50; the reason is in the book." in text
+    assert "Passed today" not in text, "the reasoning is printed only on the day it was written"
+    # a later Buy on the same name lifts the pass
+    bought = journal.JournalEntry(date="2026-09-12", ticker="AAA", title="Recommendation: Buy", price_at_call=104.0,
+                                  thesis="Back in the zone.", wrong_if="or a close under $100.", target_size="$8,000 (8%)",
+                                  conviction=4, bucket="compounder")
+    n2 = note.build_note(i, today=TODAY, entries=ENTRIES, book_entries=[passed, bought])
+    assert not [x for x in n2["buy_now"] if x["ticker"] == "AAA"][0]["passed"]
+    bad = check(n, "note") + check({"text": text, "html": note.render_html(n)}, "note")
+    assert not bad, "\n".join(bad)

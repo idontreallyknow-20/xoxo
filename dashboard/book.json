@@ -5,7 +5,7 @@
   "SPY": -0.0001,
   "VFV.TO": 0.0317
  },
- "built_at": "2026-10-01T22:05:11+00:00",
+ "built_at": "2026-10-02T12:21:37+00:00",
  "cash": 76889.92,
  "closed": [],
  "curve": [
@@ -483,8 +483,8 @@
    "wrong_if": "CAG recurring growth under 6%, US clinic visits down more than 3% for a full year, or a close under $410."
   }
  ],
- "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-30 to 2026-10-01, pulled 2026-10-01T22:04:05+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
- "quotes_age_sessions": 0,
+ "price_source": "quotes file: 1509 names, 450 sessions, 2024-12-30 to 2026-10-01, pulled 2026-10-02T01:47:54+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
+ "quotes_age_sessions": 1,
  "refused": [],
  "ret_since_start": -0.0124,
  "rule_checks": [
