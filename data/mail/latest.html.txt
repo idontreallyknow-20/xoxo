@@ -1,18 +1,20 @@
-Morning note, Friday 2 October 2026
+Morning note, Monday 5 October 2026
 
 THE MARKET
 
-The S&P 500 (SPY) closed at $763.99 on Thursday, up 0.2% on the day, down 0.4% on the week and up 12.9% since 1 January. The Nasdaq 100 (QQQ) was up 0.3% on the day, up 0.1% on the week and up 21.2% since 1 January. VFV, the Toronto-listed S&P 500 fund, was up 0.1% on the day, up 0.1% on the week and up 16.8% since 1 January.
+The S&P 500 (SPY) closed at $769.64 on Friday, up 0.7% on the day, down 0.2% on the week and up 13.7% since 1 January. The Nasdaq 100 (QQQ) was up 1.0% on the day, up 0.7% on the week and up 22.4% since 1 January. VFV, the Toronto-listed S&P 500 fund, was up 0.9% on the day, up 0.5% on the week and up 17.9% since 1 January.
 
-Among the names I watch, the moves worth a look on the day: ACN +15.8%, LRCX +3.5%, REGN -3.1%.
+Among the names I watch, the moves worth a look on the day: KLAC +3.3%, LRCX +2.2%, ACN -6.3%, NOW -2.5%.
 
 MY BOOK
 
-$98,760, down 1.2% since I started on 8 September. SPY was flat over the same stretch, so I am 1.2 points behind. 3 positions and $76,890 in cash.
+$98,784, down 1.2% since I started on 8 September. SPY was up 0.7% over the same stretch, so I am 1.9 points behind. 5 positions and $63,344 in cash.
 
-  BKNG: 44 shares at $179.87, now $160.28, -10.9%. Wrong if it closes under $150.
-  REGN: 9 shares at $810.31, now $734.81, -9.3%. Wrong if it closes under $650.
-  MSFT: 16 shares at $493.95, now $512.80, +3.8%. Wrong if it closes under $400.
+  BKNG: 44 shares at $179.87, now $159.02, -11.6%. Wrong if it closes under $150.
+  REGN: 9 shares at $810.31, now $735.20, -9.3%. Wrong if it closes under $650.
+  MSFT: 16 shares at $493.95, now $517.53, +4.8%. Wrong if it closes under $400.
+  ADBE: 33 shares at $237.69, now $237.69, flat. Wrong if it closes under $220.
+  IDXX: 11 shares at $518.39, now $518.39, flat. Wrong if it closes under $410.
 
 Nothing is under the level I said would prove me wrong.
 
@@ -20,15 +22,14 @@ WHAT I'D BUY THIS WEEK
 
 If I were putting fresh money in, in this order. Sizes are for a $100,000 account, and the last line of each is what would make me wrong.
 
-  1. ADBE at $241.28, bought into my book on Thursday after reading the note again. $8,000. In my book since Thursday; it fills at tonight's close. Wrong if: Digital Media ARR growth under 8%, net new ARR down twice, or a close under $220.
-  2. ADSK at $211.31, the note calls it a buy now. $6,000. Wrong if: Billings growth under 5% twice, or a close under $185.
-  3. ISRG at $401.24, the note calls it a buy now. $7,000. Wrong if: Procedure growth under 10%, placements down twice, or a close under $290.
-  4. KLAC at $200.33, the note said October, and it is October. $5,000. I passed on it on Thursday at $194.93; the reason is in the book. Wrong if: December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.
-  5. BKNG at $160.28, the note calls it a buy now. $8,000. Already in my book. Wrong if: Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.
-  6. MSFT at $512.80, the note said October, and it is October. $8,000. Already in my book. Wrong if: Azure growth under 30% with capex still rising, or a close under $400.
-  7. REGN at $734.81, the note calls it a buy now. $7,000. Already in my book. Wrong if: Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.
-  8. IDXX at $517.75, inside the $470 to $535 buy zone. $6,000. In my book since Thursday; it fills at tonight's close. Wrong if: CAG recurring growth under 6%, or a close under $410.
+  1. ADSK at $212.00, the note calls it a buy now. $6,000. Wrong if: Billings growth under 5% twice, or a close under $185.
+  2. ISRG at $391.95, the note calls it a buy now. $7,000. Wrong if: Procedure growth under 10%, placements down twice, or a close under $290.
+  3. KLAC at $206.89, the note said October, and it is October. $5,000. I passed on it on Thursday at $194.93; the reason is in the book. Wrong if: December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.
+  4. BKNG at $159.02, the note calls it a buy now. $8,000. Already in my book. Wrong if: Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.
+  5. MSFT at $517.53, the note said October, and it is October. $8,000. Already in my book. Wrong if: Azure growth under 30% with capex still rising, or a close under $400.
+  6. REGN at $735.20, the note calls it a buy now. $7,000. Already in my book. Wrong if: Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.
+  7. IDXX at $518.39, inside the $470 to $535 buy zone. $6,000. Already in my book. Wrong if: CAG recurring growth under 6%, or a close under $410.
 
-Waiting: GOOGL (above its $300 to $335 buy zone, now $338.24); CPRT (the September 10 report has printed; the note wants a read of it before buying, now $27.29); LRCX (above its $250 to $290 buy zone, now $340.10).
+Waiting: GOOGL (above its $300 to $335 buy zone, now $343.50); CPRT (the September 10 report has printed; the note wants a read of it before buying, now $27.22); LRCX (above its $250 to $290 buy zone, now $347.49).
 
-Prices are Yahoo closes through Thursday. Fake money in the book, real closes. Research from public data, not personalised financial advice; every buy or sell is your call.
+Prices are Yahoo closes through Friday. Fake money in the book, real closes. Research from public data, not personalised financial advice; every buy or sell is your call.
