@@ -5,7 +5,7 @@
   "SPY": 0.0141,
   "VFV.TO": 0.0489
  },
- "built_at": "2026-10-05T22:15:02+00:00",
+ "built_at": "2026-10-06T12:12:12+00:00",
  "cash": 63343.86,
  "closed": [],
  "curve": [
@@ -15,7 +15,7 @@
   ],
   [
    "2026-10-05",
-   98929.17
+   98929.33
   ]
  ],
  "curve_last_20": [
@@ -97,12 +97,12 @@
   ],
   [
    "2026-10-05",
-   98929.17
+   98929.33
   ]
  ],
- "deployed": 35585.3,
+ "deployed": 35585.47,
  "disclaimer": "Research and analysis from public data, not personalised financial advice.",
- "equity": 98929.17,
+ "equity": 98929.33,
  "excess_since_start": {
   "QQQ": -0.0645,
   "SPY": -0.0248,
@@ -244,11 +244,11 @@
    "horizon_date": null,
    "horizon_days": null,
    "kind": "long",
-   "last": 238.785,
+   "last": 238.79,
    "last_date": "2026-10-05",
    "low_since_fill": 237.69,
-   "market_value": 7879.905,
-   "pnl": 36.135,
+   "market_value": 7880.07,
+   "pnl": 36.3,
    "refused_because": null,
    "ret": 0.0046,
    "sector": "Technology",
@@ -432,11 +432,11 @@
    "horizon_date": null,
    "horizon_days": null,
    "kind": "long",
-   "last": 238.785,
+   "last": 238.79,
    "last_date": "2026-10-05",
    "low_since_fill": 237.69,
-   "market_value": 7879.905,
-   "pnl": 36.135,
+   "market_value": 7880.07,
+   "pnl": 36.3,
    "refused_because": null,
    "ret": 0.0046,
    "sector": "Technology",
@@ -490,8 +490,8 @@
   }
  ],
  "pending": [],
- "price_source": "quotes file: 1509 names, 450 sessions, 2025-01-02 to 2026-10-05, pulled 2026-10-05T22:13:41+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
- "quotes_age_sessions": 0,
+ "price_source": "quotes file: 1509 names, 450 sessions, 2025-01-02 to 2026-10-05, pulled 2026-10-06T02:27:41+00:00 via yfinance via an.prices.PriceClient (auto_adjust=True)",
+ "quotes_age_sessions": 1,
  "refused": [],
  "ret_since_start": -0.0107,
  "rule_checks": [
