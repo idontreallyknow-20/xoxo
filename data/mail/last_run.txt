@@ -1,3 +1,3 @@
-Email: sent via Gmail (id 1a11121d83b5dc08) to josephislockedin@gmail.com and j_k-leung@yahoo.ca, subject "Morning note, Tue 6 Oct: book -1.1%, 7 names in a buy zone". Sent about 12:15 UTC: cold container again, the suite took 48 minutes detached and polled.
-Tests: whole suite 1059 passed, 0 failed. setups.json SCANNED, 37 setups, as of 2026-10-06.
-Calls: no calls. Book MARKED at the 2026-10-05 close, equity $98,929 (-1.07%), 5 open, cash $63,344; BKNG 5.5% and REGN 11.8% above their wrong-ifs, ADBE +0.5% and IDXX +1.7% since Friday's fills, nothing breached. KLAC at $206.85 stays above its zone; the pass stands. Quotes branch already carried Monday's close.
+Email: sent via Gmail (id 1a11340cb8d523e8) to josephislockedin@gmail.com, subject "Desk close, Tue 6 Oct: nothing crossed a rule".
+Book: MARKED at the 2026-10-06 close, equity $98,924 (-1.08%), 5 open (BKNG -12.4% at $157.63, 5.1% above its $150 wrong-if; REGN -8.8% at $738.72, 13.7% above its $650 wrong-if; MSFT +7.2%; ADBE +0.2%; IDXX -0.6%); no stop or falsifier breached; 3.0 points behind SPY since the start. The per-name table is still a session behind (NOTES 13d); the book block is authoritative.
+Tests: fast subset 99 passed. No calls (close edition). Quotes dispatched by refresh_quotes.py itself, complete.
