@@ -1,20 +1,12 @@
 {
- "args": [
-  "tests/test_book.py",
-  "tests/test_quotes.py",
-  "tests/test_note.py",
-  "tests/test_ghactions.py",
-  "tests/test_digest_book.py",
-  "tests/test_digest.py",
-  "tests/test_tracker.py"
- ],
+ "args": [],
  "errors": 0,
  "failed": 0,
  "failed_tests": [],
- "passed": 99,
- "ran_at": "2026-10-08T22:05:23+00:00",
+ "passed": 1059,
+ "ran_at": "2026-10-09T11:57:37+00:00",
  "returncode": 0,
- "seconds": 10.3,
+ "seconds": 2760.5,
  "skipped": 0,
- "summary": "99 passed in 9.31s"
+ "summary": "1059 passed in 2759.11s (0:45:59)"
 }
