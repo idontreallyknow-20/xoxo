@@ -1,10 +1,10 @@
 {
  "basis": "adjusted daily closes as yfinance returns them (auto_adjust=True)",
- "first": "2025-01-07",
- "last": "2026-10-08",
+ "first": "2025-01-08",
+ "last": "2026-10-09",
  "missing": [],
  "n_tickers": 1509,
- "pulled_at": "2026-10-09T02:29:00+00:00",
+ "pulled_at": "2026-10-09T17:08:13+00:00",
  "requested": 1509,
  "sessions": 450,
  "source": "yfinance via an.prices.PriceClient (auto_adjust=True)"
