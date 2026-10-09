@@ -1,35 +1,99 @@
-Morning note, Friday 9 October 2026
+Desk close
+Friday 9 October 2026   closes as of 2026-10-09
 
-THE MARKET
+Nothing crossed a written rule as of the close. 1 line worth a glance.
 
-The S&P 500 (SPY) closed at $773.93 on Thursday, down 0.4% on the day, up 1.3% on the week and up 14.4% since 1 January. The Nasdaq 100 (QQQ) was down 1.3% on the day, up 0.7% on the week and up 22.1% since 1 January. VFV, the Toronto-listed S&P 500 fund, was down 0.8% on the day, up 1.3% on the week and up 18.3% since 1 January.
+16 names watched   1 lines   0 rules fired   status SCANNED
 
-Among the names I watch, the moves worth a look on the day: ACN +6.0%, ADBE +3.6%, LRCX -2.7%, AMAT -2.1%.
+What crossed a rule 0 of 1 are written rules
 
-MY BOOK
+ACN move day · prices · 2026-10-08
+ACN moved +6.0% on 2026-10-08.
+rule: single session move of 5% or more
 
-$99,000, down 1.0% since I started on 8 September. SPY was up 1.3% over the same stretch, so I am 2.3 points behind. 5 positions and $63,344 in cash.
+Every watched name close, one day, five days, since the call, and room above the falsifier
 
-  BKNG: 44 shares at $179.87, now $159.97, -11.1%. Wrong if it closes under $150.
-  REGN: 9 shares at $810.31, now $739.57, -8.7%. Wrong if it closes under $650.
-  MSFT: 16 shares at $493.95, now $522.61, +5.8%. Wrong if it closes under $400.
-  ADBE: 33 shares at $237.69, now $241.05, +1.4%. Wrong if it closes under $220.
-  IDXX: 11 shares at $518.39, now $513.14, -1.0%. Wrong if it closes under $410.
+name close 1d 5d since call falsifier room
+ACNWatch or Pass
+$208.36Thu 8 Oct
++6.0% -1.9% +7.9% none set none set
+ADBEBuy after September 10 earnings
+$241.05Thu 8 Oct
++3.6% -0.1% -15.6% $220.00 +9.6%
+ADSKBuy now
+$233.60Thu 8 Oct
+-0.6% +10.5% -1.7% $185.00 +26.3%
+AMATWatch or Pass
+$509.57Thu 8 Oct
+-2.1% -3.7% +16.9% none set none set
+BKNGBuy now
+$159.97Thu 8 Oct
++2.6% -0.2% -18.0% $150.00 +6.6%
+CPRTBuy after September 10 earnings
+$27.48Thu 8 Oct
++3.2% +0.7% -18.2% $25.00 +9.9%
+GOOGLBuy on pullback to $300 to $335
+$348.29Thu 8 Oct
+-0.6% +3.0% +1.7% $260.00 +34.0%
+IDXXBuy on pullback to $470 to $535
+$513.14Thu 8 Oct
++1.3% -0.9% -3.1% $410.00 +25.2%
+ISRGBuy now
+$415.41Thu 8 Oct
++0.2% +3.5% +12.3% $290.00 +43.2%
+KLACBuy in October
+$196.72Thu 8 Oct
+-0.1% -1.8% +13.8% $130.00 +51.3%
+LRCXBuy on pullback to $250 to $290
+$320.59Thu 8 Oct
+-2.7% -5.7% +9.5% $215.00 +49.1%
+METAWatch or Pass
+$720.89Thu 8 Oct
+-0.1% -0.7% +18.0% none set none set
+MSFTBuy in October
+$522.61Thu 8 Oct
+-1.3% +1.9% +2.4% $400.00 +30.7%
+NOWWatch or Pass
+$139.75Thu 8 Oct
++1.4% +1.4% -4.0% none set none set
+NVRWatch or Pass
+$6,002.55Thu 8 Oct
++1.2% -2.0% -5.8% none set none set
+REGNBuy now
+$739.57Thu 8 Oct
+-0.3% +0.6% -12.3% $650.00 +13.8%
 
-Nothing is under the level I said would prove me wrong.
+benchmarks 1d / 5d: SPY -0.4% / +1.3%   QQQ -1.3% / +0.7%
+● a written rule fired. Room is the distance above the journal's close-under level; negative means under it.
 
-WHAT I'D BUY THIS WEEK
+My book fake money, real closes, my own calls
 
-If I were putting fresh money in, in this order. Sizes are for a $100,000 account, and the last line of each is what would make me wrong.
+Equity $99,372 (-0.6% since 2026-09-08), 5 open, $63,344 cash, marked at the 2026-10-09 close. SPY +1.9% over the same window (-2.5% for the book against it). QQQ +4.7% over the same window (-5.3% for the book against it). VFV.TO +5.4% over the same window (-6.1% for the book against it).
+BKNG long 44 @ $179.87 last $160.34 -10.9% vs SPY -12.8% 6.9% above its wrong-if
+REGN long 9 @ $810.31 last $746.54 -7.9% vs SPY -9.8% 14.8% above its wrong-if
+MSFT long 16 @ $493.95 last $535.07 +8.3% vs SPY +6.4% 33.8% above its wrong-if
+ADBE long 33 @ $237.69 last $242.27 +1.9% vs SPY +0.8% 10.1% above its wrong-if
+IDXX long 11 @ $518.39 last $518.00 -0.1% vs SPY -1.2% 26.3% above its wrong-if
 
-  1. ADSK at $233.60, the note calls it a buy now. $6,000. Wrong if: Billings growth under 5% twice, or a close under $185.
-  2. ISRG at $415.41, the note calls it a buy now. $7,000. Wrong if: Procedure growth under 10%, placements down twice, or a close under $290.
-  3. KLAC at $196.72, the note said October, and it is October. $5,000. I passed on it on Thursday 1 October at $194.93; the reason is in the book. Wrong if: December quarter guide under $3.6 billion, 2027 equipment spending cut 15%, or a close under $130.
-  4. BKNG at $159.97, the note calls it a buy now. $8,000. Already in my book. Wrong if: Two quarters of negative room nights, take rate down 100 basis points, or a close under $150.
-  5. MSFT at $522.61, the note said October, and it is October. $8,000. Already in my book. Wrong if: Azure growth under 30% with capex still rising, or a close under $400.
-  6. REGN at $739.57, the note calls it a buy now. $7,000. Already in my book. Wrong if: Dupixent growth under 15%, Eylea HD down sequentially twice, or a close under $650.
-  7. IDXX at $513.14, inside the $470 to $535 buy zone. $6,000. Already in my book. Wrong if: CAG recurring growth under 6%, or a close under $410.
+6 of 6 book calls graded against prices so far, 1 of 5 buys ahead of SPY, 0 falsified on their own terms.
 
-Waiting: GOOGL (above its $300 to $335 buy zone, now $348.29); CPRT (the September 10 report has printed; the note wants a read of it before buying, now $27.48); LRCX (above its $250 to $290 buy zone, now $320.59).
+Standing state
 
-Prices are Yahoo closes through Thursday. Fake money in the book, real closes. Research from public data, not personalised financial advice; every buy or sell is your call.
+Positioning memo as of 2026-09-04: 0 positions, $100,000 cash. The ranked memo is on /positioning/. Nothing in this email is a trade recommendation.
+
+Where this came from
+
+prices: not live, yfinance adjusted closes: 0 live, 18 from cache
+edgar: not live, not pulled: dry run: no request was sent
+rss: not live, 0 new headline(s); no feed for ACN, ADBE, ADSK, AMAT, BKNG, CPRT, GOOGL, IDXX, ISRG, KLAC, LRCX, META, MSFT, NOW, NVR, REGN
+
+tests: 99 tests passed, 0 failed, 0 errors, in 10s at 2026-10-09T22:06:22+00:00
+Prices are yfinance adjusted closes and can be stale on a holiday or after a throttled pull; each row carries the date its close is from.
+Only the 'close under $X' falsifier is checked. Guidance and growth falsifiers are real and are left to the reader.
+Filings are as listed in EDGAR's submissions index. A filing accepted after 17:30 ET carries that day's date and reached the market the next session.
+Headlines come from one syndication feed and are not scored. A quiet feed is not a quiet company.
+Names without a CIK, which is every Canadian listing here, are not scanned for filings, and the row says so.
+Filings were not pulled, so nothing new from EDGAR is listed.
+No feed could be read, so no headlines are listed.
+
+Research and analysis from public data, not personalised financial advice.
