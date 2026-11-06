@@ -4,7 +4,7 @@
  "last": "2026-11-05",
  "missing": [],
  "n_tickers": 1509,
- "pulled_at": "2026-11-05T18:12:02+00:00",
+ "pulled_at": "2026-11-06T02:46:20+00:00",
  "requested": 1509,
  "sessions": 450,
  "source": "yfinance via an.prices.PriceClient (auto_adjust=True)"
